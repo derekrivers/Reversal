@@ -1,0 +1,817 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "atlas_sha256": "f877b8bdc086d6a3e77608d537c30dfb94c49fbeada934b7784906b86e8ae26d",
+  "population": "Ghidra-inferred entries named Unwind@ in the investigation-08 structural atlas",
+  "scope": "Complete local instruction shapes and parameters; direct target effects, parent frame validity and runtime invocation are unresolved.",
+  "counts": {
+    "atlas_internal_functions": 9241,
+    "unwind_entries": 3873,
+    "templates": 20,
+    "direct_targets": 24,
+    "decoded_instructions": 12563,
+    "call_entries": 1501,
+    "tail_jump_entries": 2372,
+    "original_bytes_redistributed": 0
+  },
+  "templates": [
+    {
+      "id": "U01",
+      "count": 1354,
+      "body_bytes": 14,
+      "shape": [
+        [
+          "mov",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "pop",
+          [
+            "reg:ecx"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U02",
+      "count": 1258,
+      "body_bytes": 11,
+      "shape": [
+        [
+          "lea",
+          [
+            "reg:ecx",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "jmp",
+          [
+            "imm"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "U03",
+      "count": 432,
+      "body_bytes": 8,
+      "shape": [
+        [
+          "lea",
+          [
+            "reg:ecx",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "jmp",
+          [
+            "imm"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "U04",
+      "count": 236,
+      "body_bytes": 8,
+      "shape": [
+        [
+          "mov",
+          [
+            "reg:ecx",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "jmp",
+          [
+            "imm"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "U05",
+      "count": 232,
+      "body_bytes": 11,
+      "shape": [
+        [
+          "mov",
+          [
+            "reg:ecx",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "jmp",
+          [
+            "imm"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "U06",
+      "count": 108,
+      "body_bytes": 11,
+      "shape": [
+        [
+          "mov",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "pop",
+          [
+            "reg:ecx"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U07",
+      "count": 104,
+      "body_bytes": 14,
+      "shape": [
+        [
+          "mov",
+          [
+            "reg:ecx",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "add",
+          [
+            "reg:ecx",
+            "imm"
+          ]
+        ],
+        [
+          "jmp",
+          [
+            "imm"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "U08",
+      "count": 59,
+      "body_bytes": 17,
+      "shape": [
+        [
+          "mov",
+          [
+            "reg:ecx",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "add",
+          [
+            "reg:ecx",
+            "imm"
+          ]
+        ],
+        [
+          "jmp",
+          [
+            "imm"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "U09",
+      "count": 49,
+      "body_bytes": 11,
+      "shape": [
+        [
+          "mov",
+          [
+            "reg:ecx",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "add",
+          [
+            "reg:ecx",
+            "imm"
+          ]
+        ],
+        [
+          "jmp",
+          [
+            "imm"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "U10",
+      "count": 19,
+      "body_bytes": 25,
+      "shape": [
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "lea",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U11",
+      "count": 9,
+      "body_bytes": 27,
+      "shape": [
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "mov",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "add",
+          [
+            "reg:eax",
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U12",
+      "count": 2,
+      "body_bytes": 22,
+      "shape": [
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "lea",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U13",
+      "count": 2,
+      "body_bytes": 22,
+      "shape": [
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "mov",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U14",
+      "count": 2,
+      "body_bytes": 28,
+      "shape": [
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "mov",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "add",
+          [
+            "reg:eax",
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U15",
+      "count": 2,
+      "body_bytes": 29,
+      "shape": [
+        [
+          "mov",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "and",
+          [
+            "reg:eax",
+            "imm"
+          ]
+        ],
+        [
+          "test",
+          [
+            "reg:eax",
+            "reg:eax"
+          ]
+        ],
+        [
+          "je",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "lea",
+          [
+            "reg:ecx",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "jmp",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U16",
+      "count": 1,
+      "body_bytes": 19,
+      "shape": [
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "lea",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U17",
+      "count": 1,
+      "body_bytes": 24,
+      "shape": [
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "mov",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "add",
+          [
+            "reg:eax",
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U18",
+      "count": 1,
+      "body_bytes": 25,
+      "shape": [
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "mov",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "add",
+          [
+            "reg:eax",
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U19",
+      "count": 1,
+      "body_bytes": 28,
+      "shape": [
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "mov",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    },
+    {
+      "id": "U20",
+      "count": 1,
+      "body_bytes": 30,
+      "shape": [
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "mov",
+          [
+            "reg:eax",
+            "mem32:ebp:None:1"
+          ]
+        ],
+        [
+          "add",
+          [
+            "reg:eax",
+            "imm"
+          ]
+        ],
+        [
+          "push",
+          [
+            "reg:eax"
+          ]
+        ],
+        [
+          "call",
+          [
+            "imm"
+          ]
+        ],
+        [
+          "ret",
+          []
+        ]
+      ]
+    }
+  ]
+}
