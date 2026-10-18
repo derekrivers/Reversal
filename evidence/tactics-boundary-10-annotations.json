@@ -1,0 +1,27 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses",
+  "status": "Proposals only; canonical native writer is coordinator. No prototype or structure change proposed.",
+  "confidence": "High for bounded local effects/widths; names retain candidate semantics. Evidence: tactics-boundary-10-sites.json and tactics-boundary-10.md.",
+  "previous_names": [
+    ["00896290", "FUN_00896290"],
+    ["00896660", "FUN_00896660"],
+    ["008967d0", "FUN_008967d0"]
+  ],
+  "annotations": [
+    ["00896290", "cm0102_accumulate_tactic_result_candidate", "Investigation10 static contract: ECX tactical context; stack match-record pointer; EAX0/1,RET4. Preflight00600a50 club predicates can skip all writes. For both clubs+1c/+20, signed16 plan word at context+601+club.id*91 selects28-byte stats row from context+0. Updates word games/outcome counts/score sums/points then three float64metrics+10/+18/+20. Null side diagnoses and continues; no duplicate guard/rollback/overflow saturation. No new numerical oracle."],
+    ["00896660", "cm0102_resolve_club_tactic_candidate", "Investigation10 static contract: ECX context; club ptr32 and opaque32 registry option; EAX ptr32,RET8. Bank path signed16 mapping word at context+601+club.id*91 selects18e3-byte record in+5f9 bank split by+5fd count, else+5f1 bank. No local index lower/total bound. Alternate guarded club+cf registry path calls modifying005fbe20 then returns005fbd00. Null club diagnoses/returns0. Lookup is not pure; plan internal layout and registry lifecycle unresolved."],
+    ["008967d0", "cm0102_set_club_tactic_index_candidate", "Investigation10 static contract: ECX context; club ptr32, signed16 low-word plan ID, opaque32 row option; EAX0/1,RETc. Validates nonnull club and ID0..(+5fd + +5f5 -1), calls008982b0 row resolver, rejects -1, writes16-bit ID to context+601+91*row at00896862. Does not copy plan contents. Diagnostics clear00b67a34; row-domain/bank lifecycle remains external."]
+  ],
+  "code_comments": [
+    ["0089641b", "Signed16 selected plan word; stats row stride28. Selection comes from mapping row91*club.id; no local index bound before stats writes."],
+    ["00896436", "Word games count increments and may wrap; following outcome counts/goal sums/points are also16-bit. Metric inputs are re-read signed and clamped>=1."],
+    ["00896520", "First of three float64 metric stores (+10/+18/+20). x87 live values and intermediate float64 spills matter; report expressions are real-arithmetic dependencies, not validated replacements."],
+    ["00896737", "Alternate registry path calls state-changing005fbe20(option,club,club+cf) before005fbd00 pointer lookup. Do not annotate this boundary as a pure getter."],
+    ["00896769", "Sign extends selection word. Signed compare at00896773 against first-bank count only; no k>=0 or combined-bank-capacity guard here."],
+    ["00896817", "Plan ID is consumed as signed16 low word; upper argument bits ignored. Counts/limit arithmetic use32-bit registers."],
+    ["00896862", "Only local normal-path persistent write: selected plan word at mapping+91*008982b0(club,option). Row helper can remap index when option nonzero."]
+  ],
+  "partial_data_types": [],
+  "global_labels": []
+}
