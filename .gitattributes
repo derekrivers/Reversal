@@ -4,4 +4,7 @@
 *.java text eol=lf
 *.ts text eol=lf
 *.json text eol=lf
+*.jsonl text eol=lf
+evidence/** text eol=lf
+checkpoints/** text eol=lf
 *.bin binary

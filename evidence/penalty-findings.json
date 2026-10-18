@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-18",
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "scope": "Calculation-only penalty preparation, complete inferred function inventory and port architecture",
+  "inventory": {
+    "internal_functions": 9241,
+    "external_function_symbols": 143,
+    "source_path_strings": 396,
+    "functions_with_direct_source_path_reference": 1892,
+    "functions_with_working_research_name": 22,
+    "call_instructions": 93349,
+    "unresolved_indirect_call_instructions": 851,
+    "executable_memory_bytes": 5660672,
+    "executable_bytes_in_inferred_function_bodies": 4309884
+  },
+  "penalty": {
+    "slices": [
+      [
+        "006be9d7",
+        "006beacd"
+      ],
+      [
+        "00700d19",
+        "00700d3d"
+      ],
+      [
+        "006beaf0",
+        "006beb06"
+      ]
+    ],
+    "base_error_budget": "2 * (200 - bounded_random(signed8(player+0x35)) * (remaining+4))",
+    "must_score": "remaining-1+own_score < opposing_score: add bounded_random(trunc(base_error_budget*2.25))",
+    "score_to_win": "otherwise opponent_remaining+opposing_score < own_score+1: add bounded_random(trunc(base_error_budget*0.75))",
+    "base_quality": "signed16(150 + bounded_random(signed16(slot+0x180)*5))",
+    "quality_argument": "base_quality - bounded_random(error_budget)",
+    "event_code": "0x1f7f -> config63 EVENT_TAKE_PENALTY",
+    "attribute_boundary": "player+0x35 is community-corroborated OneOnOnes. Penalties is+0x38 and is not read by this budget slice.",
+    "slot_19e_correction": "Runtime match-context pointer; replaces earlier activity-word-unknown label."
+  },
+  "validation": {
+    "status": "passed",
+    "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+    "cases": 3584,
+    "comparisons": "preparation outputs and complete exposed RNG state",
+    "oracle": "original x86 calculation slices with original RNG/ftol helpers",
+    "limitations": [
+      "Sudden-death flag=1 suppresses commentary calls; presentation can consume shared RNG when enabled.",
+      "Synthetic frames/context join calculation slices; full routine/caller setup and shared shot outcome do not execute.",
+      "Shot rating meaning at roster+0x180 is unresolved; its signed16*5 bound is restricted to the recovered small-RNG domain.",
+      "Player+0x35 is community-corroborated OneOnOnes, not Penalties at+0x38.",
+      "No keeper-save probability, goal decision or complete penalty attempt equivalence claimed."
+    ]
+  },
+  "database_restore": {
+    "status": "passed",
+    "mode": "restored archive opened read-only; no reanalysis",
+    "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+    "named_functions_and_comments": 22,
+    "global_labels": 10,
+    "partial_structures": 8,
+    "structure_fields": 82,
+    "original_code_signatures": 32,
+    "code_comments": 9,
+    "total_function_symbols": 9384,
+    "project_file_hashes_verified": 10
+  },
+  "architecture": "docs/ARCHITECTURE.md: TypeScript simulation owns RNG/event variant choices; React consumes snapshots and sends commands",
+  "next_targets": [
+    "Trace shared shot resolver00702050 action33h into keeper/goal outcome; preparation is not a complete penalty attempt.",
+    "Use source-unit anchors/call graph to establish contracts for database, tactics, competitions and UI workstreams.",
+    "Introduce engine/worker/React packages only when a stable verified behavioral contract can drive a useful UI."
+  ]
+}

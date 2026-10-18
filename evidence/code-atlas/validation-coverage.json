@@ -1,0 +1,62 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "meaning": "Scope registry; working names and structural byte coverage are not behavior-completion percentages",
+  "entries": [
+    {
+      "function": "00946a04",
+      "scope": "whole-function",
+      "behavior": "CRT generator",
+      "module": "reconstruction/bounded-random.ts",
+      "evidence": "evidence/random-validation/x86-oracle.json",
+      "boundary": "Supplied state; OS-time seeding/save restoration untested"
+    },
+    {
+      "function": "0090cfc0",
+      "scope": "small-bound-branch",
+      "behavior": "Bounded RNG",
+      "module": "reconstruction/bounded-random.ts",
+      "evidence": "evidence/random-validation/x86-oracle.json",
+      "boundary": "Bounds -65535..65535 only; synthetic table public fixture; x87 large-bound branch unrecovered"
+    },
+    {
+      "function": "006d6f70",
+      "scope": "instruction-slice",
+      "behavior": "Commentary timestamp conversion",
+      "module": "reconstruction/match-clock.ts",
+      "evidence": "evidence/clock-validation/clock-oracle.json",
+      "boundary": "006d70c4..006d70ef only; event routine and later minute adjustment not reproduced"
+    },
+    {
+      "function": "006d5cd0",
+      "scope": "whole-function",
+      "behavior": "Event-priority lookup",
+      "module": "reconstruction/event-rules.ts",
+      "evidence": "evidence/event-rule-validation/event-rule-oracle.json",
+      "boundary": "Synthetic priority tables; no loader/formatter execution"
+    },
+    {
+      "function": "006d4250",
+      "scope": "whole-function",
+      "behavior": "Post-goal stop-rule predicate",
+      "module": "reconstruction/event-rules.ts",
+      "evidence": "evidence/event-rule-validation/event-rule-oracle.json",
+      "boundary": "Predicate only; no goal outcome or valid-period precondition enforced"
+    },
+    {
+      "function": "006be710",
+      "scope": "calculation-slices",
+      "behavior": "Penalty error budget and quality subtraction",
+      "module": "reconstruction/penalty-preparation.ts",
+      "evidence": "evidence/penalty-preparation-validation/x86-penalty-preparation.json",
+      "boundary": "Sudden-death flag suppresses commentary; no full shootout, shot resolver or keeper outcome"
+    },
+    {
+      "function": "00700bd0",
+      "scope": "action-0x33-branch-slice",
+      "behavior": "Penalty base-quality calculation and take-penalty event code",
+      "module": "reconstruction/penalty-preparation.ts",
+      "evidence": "evidence/penalty-preparation-validation/x86-penalty-preparation.json",
+      "boundary": "Synthetic entry frame; prelude skipped; rating*5 restricted to supported RNG domain"
+    }
+  ]
+}
