@@ -2,7 +2,7 @@
 
 Evidence-led reverse engineering of **Championship Manager 01/02, SI patch 3.9.68**, with small TypeScript reconstructions checked against the original x86 instructions.
 
-This repository contains investigations 01–09: an executable-wide code atlas, recovered layouts, narrow TypeScript reconstructions and numerical validation fixtures. It is an early research project: no complete match or playable browser game has been reproduced.
+This repository contains investigations 01–10: an executable-wide code atlas, recovered layouts, narrow TypeScript reconstructions and numerical validation fixtures. It is an early research project: no complete match or playable browser game has been reproduced.
 
 ## Current findings
 
@@ -18,10 +18,11 @@ This repository contains investigations 01–09: an executable-wide code atlas, 
 | Penalty resolution boundaries | Keeper base draws, signed16 shot categories and a scoring-branch gate; 139,224 independent original-slice cases; complete outcomes still open |
 | Keeper response body | Connected penalty base+postlude; 8,192 cases at explicit 53/64-bit precision; entry prelude and full outcome still open |
 | Penalty keeper entry | Action33 entry-to-return, including tactical/grid/variant guards; 9,056 public cases plus a local original-grid repeat |
-| Native database | 31 named functions, 16 globals, 9 recovered structures and 93 fields; restored independently |
+| Native database | 41 named functions, 16 globals, 9 recovered structures and 93 fields; restored independently |
 | Investigation 09 | Static shot-resolution RNG ordering, keeper field producers, two database read wrappers and CRT x87 precision request; see the scoped reports |
+| Investigation 10 | Static shot-helper refresh/effect dependencies, tactical plan boundaries and league aggregation/amount boundaries; see the scoped reports |
 
-Start with [investigation 08](reports/investigation-08.md), [investigation 09's research queue](coordination/QUEUE.md), [the executable code atlas](evidence/code-atlas/README.md), [port architecture](docs/ARCHITECTURE.md) and [the research roadmap](docs/ROADMAP.md). The [historical HTML report](reports/investigation-04.html) includes investigations 01–04; download it to view its formatting.
+Start with [investigation 08](reports/investigation-08.md), [the current research queue](coordination/QUEUE.md), [the executable code atlas](evidence/code-atlas/README.md), [port architecture](docs/ARCHITECTURE.md) and [the research roadmap](docs/ROADMAP.md). The [historical HTML report](reports/investigation-04.html) includes investigations 01–04; download it to view its formatting.
 
 ## Run the checks
 
@@ -53,11 +54,11 @@ The same checks run in [GitHub Actions](.github/workflows/research-checks.yml). 
 
 The native Ghidra database and full research bundle are preserved separately as private artifacts. The database contains imported game bytes, so this public repository tracks its **manifest, restore receipt, expected annotations and rebuild scripts** rather than the native project.
 
-- [Current checkpoint metadata](checkpoints/2026-10-18-investigation-09/) and [latest checkpoint pointer](checkpoints/latest.json)
+- [Current checkpoint metadata](checkpoints/2026-10-18-investigation-10/) and [latest checkpoint pointer](checkpoints/latest.json)
 - [Database recovery instructions](docs/DATABASE.md)
 - [Data and evidence inventory](docs/PROVENANCE.md)
 
-The saved database was opened from a fresh archive extraction in **Ghidra 12.1.4 / JDK 21**, read-only and without reanalysis. Verification checked the names and layouts above, 81 original code samples, 49 code comments and all 10 project-file hashes. The CI metadata check does not repeat this native reopen test.
+The saved database was opened from a fresh archive extraction in **Ghidra 12.1.4 / JDK 21**, read-only and without reanalysis. Verification checked the names and layouts above, 107 original code samples, 65 code comments and all 10 project-file hashes. The CI metadata check does not repeat this native reopen test.
 
 ## Tooling and specimen
 

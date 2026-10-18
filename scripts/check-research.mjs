@@ -59,10 +59,11 @@ assert.equal(functions.reduce((n,f)=>n+f.call_instruction_count,0),atlas.counts.
 assert.equal(functions.reduce((n,f)=>n+f.unresolved_indirect_call_sites.length,0),atlas.counts.unresolved_indirect_call_instructions);
 const coverage=JSON.parse(readFileSync('evidence/code-atlas/validation-coverage.json','utf8'));
 for(const entry of coverage.entries)assert.ok(functions.some(f=>f.entry===entry.function),entry.function);
-const currentNames=JSON.parse(readFileSync('evidence/investigation-09-annotations.json','utf8'));
-assert.equal(currentNames.sha256,expected.sha256);
-const nameOverlay=new Map(currentNames.annotations.map(([address,name])=>[address,name]));
-assert.equal(nameOverlay.size,currentNames.annotations.length);
+const overlayReceipts=['09','10'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
+for(const receipt of overlayReceipts)assert.equal(receipt.sha256,expected.sha256);
+const overlayRows=overlayReceipts.flatMap(receipt=>receipt.annotations.map(([address,name])=>[address,name]));
+const nameOverlay=new Map(overlayRows);
+assert.equal(nameOverlay.size,overlayRows.length);
 for(const [address,name] of nameOverlay)assert.equal(expected.functions.find(f=>f.address===address)?.name,name);
 for(const entry of expected.functions)assert.equal(nameOverlay.get(entry.address)??functions.find(f=>f.entry===entry.address)?.name,entry.name);
 const workstreams=JSON.parse(readFileSync('evidence/code-atlas/workstreams.json','utf8'));

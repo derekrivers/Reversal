@@ -16,7 +16,7 @@ This inventories the pinned 3.9.68 executable's Ghidra-inferred functions. It is
 
 The function-body byte count measures structural analysis only. It must not be presented as a percentage of simulation or source code reconstructed. Most functions still have no established behavioral contract.
 
-This atlas is the investigation-08 structural snapshot. Investigation 09 adds four native working names in [`investigation-09-annotations.json`](../investigation-09-annotations.json); the checkpoint verifier applies that small name overlay while retaining the original atlas rows.
+This atlas is the investigation-08 structural snapshot. Investigation 09 adds four native working names in [`investigation-09-annotations.json`](../investigation-09-annotations.json), and investigation 10 adds ten in [`investigation-10-annotations.json`](../investigation-10-annotations.json). The checkpoint verifier applies these small name overlays while retaining the original atlas rows.
 
 ## Query the map
 
