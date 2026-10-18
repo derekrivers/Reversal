@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "unit": "R22-D",
+  "evidence_class": "complete local static PE/native mapping; no execution oracle",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "export_manifest_sha256": "81e524e19f5a48da5feb994b1c49aeb7a54483983eb21cf6645595b19950f401",
+  "preflight_sha256": "239bc3cbef548589d959c9cc123726b5f910d0f48873c4b627aaef94640eb27d",
+  "checkpoint_archive_sha256": "bf4e1739d0c1ab1780fca5f95ec9bf0f9447d7cbe28520366a79aa36b6cc5971",
+  "decoder": "Capstone 5.0.7 x86-32",
+  "address_kind": "virtual unless file_offset is explicit",
+  "python_optimized_integrity": "explicit ValueError gates; no assert",
+  "bodies": [
+    {
+      "entry_va": "005a8f60",
+      "old_native_name": "FUN_005a8f60",
+      "body_bytes": 1,
+      "instruction_count": 1,
+      "file_offset": "001a8f60",
+      "body_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "range_end_exclusive_va": "005a8f61",
+      "native_asm_sha256": "fb3bb57b082aabe97f6a8d4d66d42b8778274e606a889916a993e28b5a948fd0",
+      "all_native_instructions_match": true,
+      "branch_sites": [],
+      "direct_call_sites": [],
+      "return_site": "005a8f60",
+      "ret_immediate_bytes": 0,
+      "selected_sites": [
+        {
+          "address": "005a8f60",
+          "mnemonic": "ret",
+          "operand": ""
+        }
+      ]
+    },
+    {
+      "entry_va": "0090d130",
+      "old_native_name": "FUN_0090d130",
+      "body_bytes": 6,
+      "instruction_count": 2,
+      "file_offset": "0050d130",
+      "body_sha256": "dfef46c15aece5a1d33ece925eaf3b9cee666de68776bd136a4ca1ae9f0a74f4",
+      "range_end_exclusive_va": "0090d136",
+      "native_asm_sha256": "292d5478e5ee744352b9ac49946dc62074a7ff9d2cf8f43cd009028427b5e4f8",
+      "all_native_instructions_match": true,
+      "branch_sites": [],
+      "direct_call_sites": [],
+      "return_site": "0090d135",
+      "ret_immediate_bytes": 0,
+      "selected_sites": [
+        {
+          "address": "0090d135",
+          "mnemonic": "ret",
+          "operand": ""
+        }
+      ]
+    },
+    {
+      "entry_va": "00945640",
+      "old_native_name": "__ftol",
+      "body_bytes": 39,
+      "instruction_count": 15,
+      "file_offset": "00545640",
+      "body_sha256": "d0a2aca68648a0ae9d5cbfae1b276d4a64d4f797fc0c60f28b64096cdfa3148c",
+      "range_end_exclusive_va": "00945667",
+      "native_asm_sha256": "260f116e854f9faed18fe32a81cf1a105048bd6dbff0527021273f7bb5167937",
+      "all_native_instructions_match": true,
+      "branch_sites": [],
+      "direct_call_sites": [],
+      "return_site": "00945666",
+      "ret_immediate_bytes": 0,
+      "selected_sites": [
+        {
+          "address": "00945646",
+          "mnemonic": "fstcw",
+          "operand": "word ptr [ebp - 2]"
+        },
+        {
+          "address": "0094564a",
+          "mnemonic": "wait",
+          "operand": ""
+        },
+        {
+          "address": "0094564f",
+          "mnemonic": "or",
+          "operand": "ah, 0xc"
+        },
+        {
+          "address": "00945656",
+          "mnemonic": "fldcw",
+          "operand": "word ptr [ebp - 4]"
+        },
+        {
+          "address": "00945659",
+          "mnemonic": "fistp",
+          "operand": "qword ptr [ebp - 0xc]"
+        },
+        {
+          "address": "0094565c",
+          "mnemonic": "fldcw",
+          "operand": "word ptr [ebp - 2]"
+        },
+        {
+          "address": "00945666",
+          "mnemonic": "ret",
+          "operand": ""
+        }
+      ]
+    },
+    {
+      "entry_va": "00945934",
+      "old_native_name": "FUN_00945934",
+      "body_bytes": 17,
+      "instruction_count": 6,
+      "file_offset": "00545934",
+      "body_sha256": "eb00d73ae511ddb6d11845de8f595e51c02f123dc8c11097756e577820909e43",
+      "range_end_exclusive_va": "00945945",
+      "native_asm_sha256": "48028c7a5069e6798e5bedc915c0e5ac5c78d1a3dd25dc26514907a715082ea8",
+      "all_native_instructions_match": true,
+      "branch_sites": [],
+      "direct_call_sites": [
+        {
+          "site": "0094593c",
+          "target": "00945956"
+        }
+      ],
+      "return_site": "00945944",
+      "ret_immediate_bytes": 0,
+      "selected_sites": [
+        {
+          "address": "0094593c",
+          "mnemonic": "call",
+          "operand": "0x945956"
+        },
+        {
+          "address": "00945944",
+          "mnemonic": "ret",
+          "operand": ""
+        }
+      ]
+    }
+  ],
+  "pointer_target": {
+    "address_va": "00ad4394",
+    "string_length_bytes": 6,
+    "string_sha256": "82ba85736de13eb3ab1d55b0bf1e16a71c65cfea8a5d454f47bca3449044d877",
+    "semantic": "ASCII 3.9.68; not read by 0090d130"
+  },
+  "limits": [
+    "No transitive 00945956 effects or imported API behavior",
+    "No x87 execution/exception/numeric precision validation",
+    "No connected selection, match, UI or game equivalence"
+  ]
+}

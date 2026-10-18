@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "native_checkpoint": "2026-10-18-investigation-21",
+  "preflight_sha256": "239bc3cbef548589d959c9cc123726b5f910d0f48873c4b627aaef94640eb27d",
+  "status": "Optional exact-old name-only proposals; coordinator applies after independent review and disposable/canonical checks",
+  "proposals": [
+    {
+      "address": "005a8f60",
+      "kind": "function_name",
+      "old": "FUN_005a8f60",
+      "new": "empty_return_005a8f60",
+      "evidence": "Complete one-byte RET; no direct data effect",
+      "confidence": "High for local body; callers and asynchronous effects outside scope"
+    },
+    {
+      "address": "0090d130",
+      "kind": "function_name",
+      "old": "FUN_0090d130",
+      "new": "return_version_string_pointer_0090d130",
+      "evidence": "Complete MOV EAX,00ad4394; RET and pinned null-terminated ASCII 3.9.68 at that VA",
+      "confidence": "High for local PE body and pinned data; runtime relocation/caller use outside scope"
+    },
+    {
+      "address": "00945934",
+      "kind": "function_name",
+      "old": "FUN_00945934",
+      "new": "forward_argument_with_two_zeroes_00945934",
+      "evidence": "Complete six-instruction wrapper calls 00945956(arg,0,0) and cleans 12 pushed bytes on ordinary return",
+      "confidence": "High for local forwarding and stack arithmetic; callee effects and return unknown"
+    }
+  ],
+  "existing_named_function_unchanged": {"address": "00945640", "name": "__ftol"}
+}
