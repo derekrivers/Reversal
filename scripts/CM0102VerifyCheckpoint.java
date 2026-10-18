@@ -14,7 +14,7 @@ public class CM0102VerifyCheckpoint extends GhidraScript {
     public void run() throws Exception {
         JsonObject expected=JsonParser.parseString(Files.readString(Paths.get(getScriptArgs()[0]))).getAsJsonObject();
         require(expected.get("sha256").getAsString().equals(currentProgram.getExecutableSHA256()),"input hash");
-        int functions=0,labels=0,types=0,fields=0,signatures=0,comments=0;
+        int functions=0,labels=0,types=0,fields=0,signatures=0,comments=0,bodySites=0;
         for(JsonElement element:expected.getAsJsonArray("functions")) {
             JsonObject row=element.getAsJsonObject();
             Function f=currentProgram.getFunctionManager().getFunctionAt(toAddr(Long.parseLong(row.get("address").getAsString(),16)));
@@ -59,6 +59,12 @@ public class CM0102VerifyCheckpoint extends GhidraScript {
             JsonObject row=element.getAsJsonObject();String note=currentProgram.getListing().getComment(CodeUnit.EOL_COMMENT,toAddr(Long.parseLong(row.get("address").getAsString(),16)));
             require(row.get("text").getAsString().equals(note),"code comment "+row);comments++;
         }
+        if(expected.has("function_body_sites"))for(JsonElement element:expected.getAsJsonArray("function_body_sites")){
+            JsonObject row=element.getAsJsonObject();var site=toAddr(Long.parseLong(row.get("address").getAsString(),16));
+            Function f=currentProgram.getFunctionManager().getFunctionAt(toAddr(Long.parseLong(row.get("function").getAsString(),16)));
+            require(f!=null&&f.getBody().contains(site)&&currentProgram.getListing().getInstructionAt(site)!=null,"function body site "+row);
+            bodySites++;
+        }
         JsonObject receipt=new JsonObject();receipt.addProperty("status","passed");
         receipt.addProperty("mode","restored archive opened read-only; no reanalysis");
         receipt.addProperty("sha256",currentProgram.getExecutableSHA256());
@@ -66,6 +72,7 @@ public class CM0102VerifyCheckpoint extends GhidraScript {
         receipt.addProperty("partial_structures",types);receipt.addProperty("structure_fields",fields);
         receipt.addProperty("original_code_signatures",signatures);
         receipt.addProperty("code_comments",comments);
+        if(expected.has("function_body_sites"))receipt.addProperty("function_body_sites_verified",bodySites);
         receipt.addProperty("total_function_symbols",currentProgram.getFunctionManager().getFunctionCount());
         Files.writeString(Paths.get(getScriptArgs()[1]),new GsonBuilder().setPrettyPrinting().create().toJson(receipt)+"\n");
         println(receipt.toString());
