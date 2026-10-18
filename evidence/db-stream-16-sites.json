@@ -1,0 +1,165 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "native_manifest_sha256": "fc92c27bcc9f2f15bedebb4aadbebba7bf0ed5f8801c787e2f0e262c48a7e960",
+  "private_preflight_sha256": "2be810e149b9d5ebe8de028bf9542aab932afd31514e2ec8d737bef8450374bc",
+  "address_space": "virtual addresses unless file_offset is explicit",
+  "method": "capstone==5.0.7 complete body/native comparison and internal branch target verification; static only",
+  "functions": [
+    {
+      "entry_va": "00945bfe",
+      "file_offset": "00545bfe",
+      "span_bytes": 232,
+      "span_sha256": "ddd083ef777a62b4874e400302374d9c0f705e5aec5f6aadc28b378f37cf8cfd",
+      "last_instruction_va": "00945ce4",
+      "instruction_count": 92,
+      "native_matched_instructions": 92,
+      "native_file_sha256": {
+        "asm": "7f8dfb437467723840e6ca533ee3e0e26401e715765f9f76744209e8c857ca4e",
+        "c": "b9e18ad64c40277d40c816ec2a5250856727a26a2bf558eaad3791c64af33bf3"
+      },
+      "old_function_name": "FUN_00945bfe",
+      "verified_internal_branch_count": 18,
+      "return_sites_va": [
+        "00945ccf"
+      ],
+      "calls": [
+        {
+          "site_va": "00945c5c",
+          "target_va": "0094ab50",
+          "argument_pushes": [
+            "edi",
+            "dword ptr [esi]",
+            "ebx"
+          ]
+        },
+        {
+          "site_va": "00945c8e",
+          "target_va": "0094b3e0",
+          "argument_pushes": [
+            "eax",
+            "ebx",
+            "dword ptr [esi + 0x10]"
+          ]
+        },
+        {
+          "site_va": "00945ca7",
+          "target_va": "0094b307",
+          "argument_pushes": [
+            "esi"
+          ]
+        }
+      ],
+      "selected_instructions": {
+        "00945c08": "imul edi, dword ptr [ebp + 0x10]",
+        "00945c19": "jne 0x945c22",
+        "00945c25": "test word ptr [esi + 0xc], 0x10c",
+        "00945c35": "mov dword ptr [ebp + 0x14], 0x1000",
+        "00945c50": "cmp ecx, eax",
+        "00945c64": "sub dword ptr [esi + 4], edi",
+        "00945c67": "add dword ptr [esi], edi",
+        "00945c73": "cmp ecx, dword ptr [ebp + 0x14]",
+        "00945c82": "div dword ptr [ebp + 0x14]",
+        "00945c96": "test eax, eax",
+        "00945c9a": "cmp eax, -1",
+        "00945cb2": "mov byte ptr [ebx], al",
+        "00945cbe": "cmp dword ptr [ebp + 8], 0",
+        "00945cc8": "mov eax, dword ptr [ebp + 0x10]",
+        "00945cd0": "or dword ptr [esi + 0xc], 0x10",
+        "00945cd6": "or dword ptr [esi + 0xc], 0x20",
+        "00945ce1": "div dword ptr [ebp + 0xc]"
+      }
+    },
+    {
+      "entry_va": "00932c30",
+      "file_offset": "00532c30",
+      "span_bytes": 468,
+      "span_sha256": "ffe5e300e5358a7d265e1500b4b58a09a13c432aac814073c13cb7651a574d41",
+      "last_instruction_va": "00932e03",
+      "instruction_count": 169,
+      "native_matched_instructions": 169,
+      "native_file_sha256": {
+        "asm": "b05ec884ddb75e7816f580ae123a832a4623612359a50af46cabcf95a50a6df3",
+        "c": "8c6efdcb59b569c584d9bedaf5a966c5556c98ce23803830bb5cc6bfaf399685"
+      },
+      "old_function_name": "FUN_00932c30",
+      "verified_internal_branch_count": 22,
+      "return_sites_va": [
+        "00932c42",
+        "00932c50",
+        "00932c88",
+        "00932ddb",
+        "00932e03"
+      ],
+      "calls": [
+        {
+          "site_va": "00932d25",
+          "target_va": "00945bfe",
+          "argument_pushes": [
+            "edx",
+            "0x30d40",
+            "1",
+            "edi"
+          ]
+        },
+        {
+          "site_va": "00932d99",
+          "target_va": "00945bfe",
+          "argument_pushes": [
+            "edx",
+            "0x30d40",
+            "1",
+            "edi"
+          ]
+        },
+        {
+          "site_va": "00932df7",
+          "target_va": "00945bfe",
+          "argument_pushes": [
+            "ecx",
+            "eax",
+            "edi",
+            "edx"
+          ]
+        }
+      ],
+      "selected_instructions": {
+        "00932c37": "test esi, esi",
+        "00932c43": "mov eax, dword ptr [esi + 4]",
+        "00932c5c": "imul ebp, dword ptr [esp + 0x1c]",
+        "00932c6e": "mov eax, dword ptr [esi + edx*4 + 0x29]",
+        "00932c78": "jle 0x932c89",
+        "00932c7a": "sub eax, ecx",
+        "00932c80": "jg 0x932c89",
+        "00932c91": "cmp eax, 4",
+        "00932c94": "mov dword ptr [esi + 8], ecx",
+        "00932c9f": "jle 0x932dd2",
+        "00932cb2": "cmp dword ptr [esi + 0x10], eax",
+        "00932cc6": "mov byte ptr [ebx + ecx], al",
+        "00932cd3": "mov dword ptr [esi + 0x10], edx",
+        "00932ce2": "mov dword ptr [esi + 0x14], 0",
+        "00932ce9": "mov dword ptr [esi + 0x10], 0",
+        "00932cfe": "jge 0x932d14",
+        "00932d0c": "mov dword ptr [esi + 0xa3185], ecx",
+        "00932d1d": "push 0x30d40",
+        "00932d2a": "mov dword ptr [esi + 0xa318d], eax",
+        "00932d30": "mov al, byte ptr [edi]",
+        "00932d35": "mov dword ptr [esi + 0xa3185], 1",
+        "00932d43": "cmp al, 0x80",
+        "00932d45": "ja 0x932d52",
+        "00932d4c": "mov byte ptr [ebx + ecx - 1], al",
+        "00932d68": "sub edx, 0x80",
+        "00932d70": "mov dword ptr [esi + 0x14], edx",
+        "00932d73": "jge 0x932d88",
+        "00932d7d": "mov byte ptr [esi + 0x18], cl",
+        "00932d80": "mov dword ptr [esi + 0xa3185], eax",
+        "00932d9e": "mov dword ptr [esi + 0xa318d], eax",
+        "00932da4": "mov al, byte ptr [edi]",
+        "00932da9": "mov dword ptr [esi + 0xa3185], 1",
+        "00932db3": "mov byte ptr [esi + 0x18], al",
+        "00932dd5": "idiv edi",
+        "00932ddf": "idiv edi",
+        "00932dec": "mov dword ptr [esi + 8], edx"
+      }
+    }
+  ]
+}

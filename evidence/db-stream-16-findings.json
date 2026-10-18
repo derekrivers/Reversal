@@ -1,0 +1,55 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "scope": "Two complete local static contracts; no execution oracle, full disk compatibility or transitive I/O contract",
+  "abi": {
+    "arguments": ["destination", "item_size_raw32", "item_count_raw32", "stream"],
+    "argument_locations": "entry ESP+4,+8,+0xc,+0x10",
+    "return": "EAX",
+    "convention": "cdecl supported by plain RET and caller cleanup",
+    "preserved": ["EBX", "EBP", "ESI", "EDI"]
+  },
+  "functions": [
+    {
+      "entry_va": "00945bfe",
+      "state": "contract-supported",
+      "bytes": 232,
+      "instructions": 92,
+      "total": "T=low32(size*count); zero returns zero without stream/destination dereference",
+      "buffered_path": "WORD flags +0xc intersects 0x10c and DWORD availability +4 !=0: K=min_unsigned(remaining,availability); call copy-shaped 0094ab50(dest,[stream],K); decrement remaining/availability and advance both pointers by K",
+      "direct_path": "remaining>=unsigned quantum; quantum=+18 if flagged else initially 4096; N=remaining-(remaining%quantum), or remaining if quantum zero; call 0094b3e0([stream+10],dest,N)",
+      "direct_result": "0 ORs DWORD +0xc with 0x10 and stops; -1 ORs with 0x20 and stops; every other DWORD advances dest and subtracts from remaining unchecked",
+      "single_byte_path": "remaining<unsigned quantum: call 0094b307(stream); -1 stops; otherwise store AL, advance one, reload quantum from DWORD +18",
+      "return": "remaining==0 returns original raw count; stopped transfer unsigned-divides low32(T-remaining) by size",
+      "mutation_widths": {"destination_single_byte": 1, "cached_pointer_add": 4, "availability_subtract": 4, "flag_test": 2, "flag_or": 4},
+      "failure_limit": "Partial destination/stream changes persist; no positive/result<=request check on lower direct read, no rollback or rewind; lower helper error/position effects unresolved"
+    },
+    {
+      "entry_va": "00932c30",
+      "state": "contract-supported",
+      "bytes": 468,
+      "instructions": 169,
+      "early_zero": ["null stream", "DWORD stream+4 nonzero", "bound reduction produces signed effective_bytes<=0"],
+      "bound": "B=low32(size*count); C=DWORD +8; L=unaligned DWORD at +low32((DWORD +c)*0x10c)+0x29; if C>signed low32(L-B), B=low32(L-C) and return 0 if B<=signed0",
+      "position": "Store low32(C+B) at DWORD +8 before mode test/I/O",
+      "mode_selection": "unaligned DWORD +19 exactly 4 selects byte-run decoder; every other value selects whole-item delegation",
+      "other_mode": "J=signed_trunc(B/size); +8=low32(C+size*J), then 00945bfe(dest,size,J,[stream]); forward EAX. Position is not corrected after short read",
+      "mode4": "Emit B bytes for positive signed B, retain pending repeats, return signed_trunc(B/size); nonpositive B skips output but still divides",
+      "tokens": {"00..80": "one literal including 0x80", "81..ff": "repeat next byte token-0x80 times (1..127)"},
+      "repeat_fields": {"+10": "DWORD emitted count read/write", "+14": "DWORD length read/write", "+18": "BYTE repeated value read/write"},
+      "encoded_fields": {"+41705": "refill destination and byte reads", "+a3185": "unaligned DWORD cursor read/write", "+a318d": "unaligned DWORD fill count read/write"},
+      "refill": "00945bfe(stream+0x41705,1,200000,[stream]); store EAX fill count; read buffer[0] and set cursor=1 without testing result",
+      "refill_sites_va": ["00932d25", "00932d99"],
+      "signedness": "All custom bounds/cursor comparisons and IDIV are signed; token split is unsigned; arithmetic wraps at 32 bits",
+      "failure_limit": "Size zero can divide by zero after position update; mode4 refill zero can use stale/uninitialized byte; decoder does not propagate refill failure; partial-item output and optimistic position persist"
+    }
+  ],
+  "caller_relationship": "R14/R15 full caller mode DWORD zero selects 00945bfe, nonzero selects 00932c30. This outer mode is not passed into either helper. R14 checks exact item count; R15 accepts any nonzero raw helper result",
+  "direct_dependencies": [
+    {"caller": "00945bfe", "target": "0094ab50", "site": "00945c5c", "boundary": "(dest,cached_pointer,K); return ignored; complete body/overlap behavior unresolved"},
+    {"caller": "00945bfe", "target": "0094b3e0", "site": "00945c8e", "boundary": "([stream+10],dest,N); result interpreted as byte count, zero or -1; complete I/O/position/translation behavior unresolved"},
+    {"caller": "00945bfe", "target": "0094b307", "site": "00945ca7", "boundary": "(stream); -1 or AL byte; refill and flag/position changes unresolved"},
+    {"caller": "00932c30", "target": "00945bfe", "sites": ["00932d25", "00932d99", "00932df7"], "boundary": "Two byte refills and one whole-item delegation"}
+  ],
+  "ownership": "Borrow stream and destination. No direct heap allocation/free, open/close, RNG or explicit global access. Lower helper effects remain unresolved",
+  "limits": ["No full database/save schema or file compatibility", "No recovered stream constructor, capacity/lifetime or valid input corpus", "No physical-position equivalence to logical or encoded cursors", "No malformed-input safety or runtime equivalence claim"]
+}
