@@ -1,0 +1,146 @@
+{
+  "work_unit": "R26-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "670587a05d1f75ae729c32a93e3ba5739f3d513a3c27126ddd4d9185b8620b6a",
+  "export_manifest_sha256": "e86692ed3575e204e9e22c5c6d15bba0f5a299d1bc30ce64111b25f0e66cad75",
+  "annotation_preflight_sha256": "b06dff40898efb2ba18f02c7cfe49d272377bc9854920eb1ab1332c4093331fd",
+  "state": "two complete local static contracts; one bounded execution domain",
+  "functions": [
+    {
+      "address": "0062e700",
+      "body_bytes": 284,
+      "file_offset": "0x22e700",
+      "instruction_count": 97,
+      "body_sha256": "ff6fea6922e4604ba849ab3cefd8173c7f1418dde6e18fb97c6e363168f4c8f6",
+      "abi": {
+        "receiver": "ECX",
+        "stack_arguments": [
+          "player-like pointer",
+          "DWORD notification flag"
+        ],
+        "return_pop_bytes": 8,
+        "saved_nonvolatiles": [
+          "EBX",
+          "EDI",
+          "ESI on active link path"
+        ],
+        "untouched": "EBP",
+        "return": "void-like; path-dependent EAX"
+      },
+      "local_contract": "Null diagnostics; signed index guard; stride31 row-link lookup; stride48 linked status; conditional update and notification; BYTE status=ff then reloaded player/table row-link DWORD=ffffffff.",
+      "write_order": [
+        "diagnostic null path writes global 00b67a34=0 after four calls",
+        "active link: conditional callees then *record BYTE=ff",
+        "reload *player DWORD then *receiver DWORD; row+e DWORD=ffffffff"
+      ],
+      "guard_details": [
+        "signed index >= global count exits",
+        "link exactly ffffffff exits",
+        "status BYTE 51 bypasses 0058e340",
+        "zero flag or player+39 DWORD null bypasses notifications"
+      ],
+      "execution": {
+        "state": "bounded original-entry-to-RET8 no-callee paths",
+        "cases": 77,
+        "instruction_steps": 2185,
+        "covered_instruction_starts": 44,
+        "synthetic_only": true,
+        "domains": [
+          "36 signed count-guard pairs",
+          "5 sentinel-link paths",
+          "36 status51 invalidations with notification bypass"
+        ],
+        "compared": [
+          "EAX/ECX/EDX",
+          "ordered interleaved external read/write effects",
+          "all five full external region digests",
+          "RET8 ESP",
+          "EBX/ESI/EDI/EBP"
+        ],
+        "excluded": [
+          "EFLAGS",
+          "stack contents",
+          "null diagnostic",
+          "non51 status update",
+          "live notification",
+          "invalid or aliased pointers",
+          "real-game caller reachability"
+        ]
+      },
+      "unresolved": [
+        "0058e340 updates",
+        "00600a50 result/effects",
+        "00630ee0 notification effects and argument upper bits",
+        "diagnostics",
+        "record lifetime",
+        "transitive RNG and exception effects"
+      ]
+    },
+    {
+      "address": "0062be00",
+      "body_bytes": 342,
+      "file_offset": "0x22be00",
+      "instruction_count": 117,
+      "body_sha256": "5ebecd72b2789eba875aa0eaf0f45c87f29996873b93635ec58caa1153adbbc7",
+      "abi": {
+        "receiver": "ECX",
+        "stack_arguments": [
+          "key DWORD pointer",
+          "kind BYTE pointer",
+          "severity BYTE pointer"
+        ],
+        "return_pop_bytes": 12,
+        "saved_nonvolatiles": [
+          "ESI",
+          "EDI",
+          "EBX/EBP briefly on same-kind branch"
+        ],
+        "return": "void-like; found row in EAX or insertion callee EAX; ECX restored old SEH head"
+      },
+      "local_contract": "Initialize receiver+28 if null; reset pointed +a from +2; iterate through 0068d1b0 comparing DWORD key; append six-byte temporary or merge signed BYTE severity and output both BYTE values.",
+      "seh": {
+        "old_head": "FS:[0]",
+        "handler_va": "0095b0db",
+        "registration": "entry ESP minus 12",
+        "allocation_state": "0 across constructor attempt, -1 otherwise",
+        "normal_returns_restore_head": true,
+        "handler_or_unwind_executed": false
+      },
+      "merge_rules": [
+        "same kind: signed8 severities added in signed32; sum>100 stores100, otherwise low8 sum; no lower clamp",
+        "same-kind capped arm: read row kind at 0062bee1, write row severity100 at 0062bee4, write cached kind to incoming kind at 0062bee8; uncapped arm: write row severity at 0062bf04, read row kind at 0062bf07, write incoming kind at 0062bf0a; both then read row severity and write incoming severity",
+        "different kind: signed8 incoming severity strictly greater replaces row severity then row kind; otherwise keep prior",
+        "found row always copied back as kind then severity; reads and writes remain ordered and alias-sensitive"
+      ],
+      "null_allocation": "No post-constructor null guard; null reaches dereference at address2.",
+      "execution": {
+        "state": "static only",
+        "reason": "0068d1b0 executes on every normal path; no validated callee model supplied"
+      },
+      "unresolved": [
+        "allocator and constructor",
+        "0068d1b0 cursor/enumeration effects and termination",
+        "0068d0d0 insertion",
+        "exception handler0095b0db",
+        "ownership and alias/reentrancy effects",
+        "transitive RNG"
+      ]
+    }
+  ],
+  "context_only": [
+    "007160e0 already mapped/validated in R21",
+    "0062c680 caller",
+    "006d0980 caller"
+  ],
+  "validation_proposal": {
+    "function": "0062e700",
+    "scope": "bounded original-entry-to-return no-callee domain; not whole-body branch coverage",
+    "cases": 77,
+    "steps": 2185,
+    "starts_covered": 44,
+    "starts_total": 97,
+    "oracle": "evidence/match-dependencies-26-oracle.json",
+    "checker": "reconstruction/check-match-dependencies-26.ts"
+  },
+  "privacy": "Original executable bytes, game memory, native projects and bulk native exports stay private."
+}

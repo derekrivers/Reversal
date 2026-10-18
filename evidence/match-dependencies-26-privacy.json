@@ -1,0 +1,32 @@
+{
+  "work_unit": "R26-A",
+  "status": "passed",
+  "staged_authored_files_scanned": 11,
+  "files": [
+    "evidence/match-dependencies-26-annotations-proposal.json",
+    "evidence/match-dependencies-26-findings.json",
+    "evidence/match-dependencies-26-negative.json",
+    "evidence/match-dependencies-26-oracle.json",
+    "evidence/match-dependencies-26-sites.json",
+    "reconstruction/check-match-dependencies-26.ts",
+    "reconstruction/match-dependencies-26.ts",
+    "reports/match-dependencies-26.md",
+    "scripts/check_match_dependencies_26_negative.py",
+    "scripts/emulate_match_dependencies_26.py",
+    "scripts/extract_match_dependencies_26.py"
+  ],
+  "checks": [
+    "text files only; task-specific paths only",
+    "no native project/archive/executable/bulk-export extensions",
+    "no raw or hex-encoded contiguous 16-byte fragment from either assigned original body"
+  ],
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "limitations": "This scoped code-fragment scan supplements review of authored content; it is not a general secret detector.",
+  "verification": {
+    "node": "24.19.0",
+    "npm_run_check": "passed",
+    "task_checker": "77 cases, 2185 x86 steps, 44 starts",
+    "normal_optimized": "identical static sites and oracle",
+    "negative_checks": 13
+  }
+}
