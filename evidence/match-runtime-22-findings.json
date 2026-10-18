@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "work_unit": "R22-D",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "evidence": "match-runtime-22-sites.json",
+  "confidence_state": "four complete local static contracts; zero original-instruction execution validations",
+  "contracts": [
+    {
+      "entry": "005a8f60",
+      "abi": "Plain RET; consumes only the return address. Apart from RET's implicit stack read, no argument or data read, call, branch or data write in this one-byte body",
+      "return": "General registers other than ESP retain their incoming values; EFLAGS is unchanged. ESP advances by four on normal RET, and EIP changes to the return address",
+      "effect_boundary": "No direct mutable-global or RNG effect. Caller and asynchronous behavior are outside this local body"
+    },
+    {
+      "entry": "0090d130",
+      "abi": "No argument read; plain RET; EAX is overwritten by immediate VA 00ad4394. General registers other than EAX and ESP are untouched locally, as is EFLAGS; RET advances ESP by four",
+      "return": "The pinned image's null-terminated bytes at 00ad4394 decode to ASCII 3.9.68. This body returns that address; it does not load or copy the pointed-to bytes",
+      "effect_boundary": "No explicit data memory access apart from RET's implicit stack read; no write, call or RNG. Pointer lifetime/mapping after loader relocation and caller use remain outside this local contract"
+    },
+    {
+      "entry": "00945640",
+      "existing_native_name": "__ftol",
+      "abi": "Input x87 ST(0), no stack argument read, plain RET. Saves/restores EBP and a 12-byte local frame; on normal completion returns low signed-64 bits in EAX and high bits in EDX",
+      "ordered_effects": [
+        "WAIT-prefixed FNSTCW saves original x87 control word to local word EBP-2; a separate WAIT follows",
+        "Copy that word to AX and OR AH with 0x0c, setting rounding-control bits 10 and 11 to 11 (toward zero); install modified word with FLDCW",
+        "FISTP writes the rounded-to-integer 64-bit value from ST(0) to local qword EBP-0x0c and pops ST(0)",
+        "Restore the saved x87 control word with FLDCW, load low/high dwords from the local qword into EAX/EDX, LEAVE, RET"
+      ],
+      "direct_memory": "Local stack reads/writes only. No direct global memory write, RNG call or imported call",
+      "limits": "No original-instruction numeric execution oracle here; NaN, overflow, underflow, masked/unmasked exceptions, status-word flags and exact x87 precision at the caller remain unresolved. Control-word restoration is shown for ordinary completion, not fault/exception unwinding"
+    },
+    {
+      "entry": "00945934",
+      "abi": "Reads one dword caller argument at entry ESP+4; plain RET. On ordinary callee return it discards its own three pushed dwords with ADD ESP,12, leaving caller cleanup of the original argument",
+      "ordered_effects": [
+        "Push zero twice, then push the original caller dword from [ESP+0xc] after those two pushes",
+        "Call local 00945956 with stack arguments (original dword, zero, zero)",
+        "If the callee returns with ordinary caller-cleanup discipline, ADD ESP,12 and RET; EAX passes through the callee-supplied value"
+      ],
+      "direct_memory": "Own stack argument reads/pushes only. No direct global data write or RNG call",
+      "limits": "00945956 is outside R22-D. Its effects, imports, nonreturn paths, cleanup convention and returned value meaning remain unverified. This wrapper alone does not establish termination, error handling or a game-state effect"
+    }
+  ],
+  "caller_context": "Read-only R22-B native export of 006ceb90 contains 13 calls to 00945640, two calls to 0090d130, two to 005a8f60 and two to 00945934; caller branch feasibility and connected effects are R22-B scope",
+  "caller_context_export": {"manifest_sha256": "2001cb0b2f047ddd573fd17ae5c0e89ebefa24f4f224a8bcf4bb023c04cc61dc", "006ceb90.asm_sha256": "279700bcaae733b4537327bfa34cc5b38d89fe9ebe1d74830f330b794694bee7"},
+  "direct_rng_call_sites": 0,
+  "direct_nonframe_data_write_sites": 0,
+  "external_or_transitive_boundaries": ["00945956", "x87 exception/status behavior", "caller handling of returned version pointer and EDX:EAX"],
+  "excluded_claims": ["complete selection lifecycle", "original compiler identity beyond existing __ftol label", "x87 numerical equivalence", "connected match outcome", "game/UI behavior"]
+}

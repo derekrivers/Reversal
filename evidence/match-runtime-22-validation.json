@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "work_unit": "R22-D",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "sites_sha256": "974a8604f1d6a61faaff3fba240cbc7262d3fef205eb4f6986b5833dd93b805c",
+  "negative_receipt_sha256": "98bbac3d8bd1ae79586600be35a1a11ac2ef59a0f050f9a13242a98dfee93839",
+  "input_manifest_sha256": "81e524e19f5a48da5feb994b1c49aeb7a54483983eb21cf6645595b19950f401",
+  "input_preflight_sha256": "239bc3cbef548589d959c9cc123726b5f910d0f48873c4b627aaef94640eb27d",
+  "checkpoint_archive_sha256": "bf4e1739d0c1ab1780fca5f95ec9bf0f9447d7cbe28520366a79aa36b6cc5971",
+  "static_coverage": {"complete_bodies": 4, "body_bytes": 63, "native_instruction_rows": 24, "branches": 0, "direct_calls": 1, "plain_returns": 4, "direct_rng_calls": 0, "direct_nonframe_data_writes": 0},
+  "native_comparison": "Every PE byte decoded, all 24 Ghidra instruction addresses/mnemonics/operands matched. Capstone WAIT+FNSTCW at 00945646 is folded to the native FSTCW row only after exact byte/address checks",
+  "normal_and_optimized_regeneration": "Sites and negative receipts are byte-identical under regular Python and python -O; all checks use explicit ValueError gates",
+  "negative_checks": ["One-bit original specimen mutation rejected before evidence output", "Self-consistent replacement native manifest with changed PUSH operand rejected by PE/native instruction comparison"],
+  "research_checks": {"command": "Node v24.19.0 scripts/check-research.mjs", "status": "passed", "scope": "Existing retained oracles and metadata; no R22-D execution validation"},
+  "privacy": "Only compact site hashes/selected local operands, findings, scripts and report retained; no executable bytes, complete native assembly/decompilation, original table or native project",
+  "limits": ["No original-instruction execution oracle or TypeScript unit", "00945956 effects remain transitive", "x87 exceptional/numeric behavior unvalidated", "No connected selection or match claim"]
+}
