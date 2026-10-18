@@ -48,17 +48,26 @@ def stage():
     names.update({row[0]:row[1] for row in annotations['annotations']})
     types={t['path']:t for t in annotations['partial_data_types']}
     comments_by_address={}
-    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json']:
+    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json']:
       event_receipt=ROOT/'evidence'/receipt_name
       if event_receipt.exists():
         event_annotations=json.loads(event_receipt.read_text())
-        names.update({row[0]:row[1] for row in event_annotations['annotations']})
+        names.update({row[0]:(row[2] if receipt_name=='investigation-12-annotations.json' else row[1])
+                      for row in event_annotations['annotations']})
         labels.update(dict(event_annotations['global_labels']))
         types.update({t['path']:t for t in event_annotations['partial_data_types']})
         comments_by_address.update({a:{'address':a,'text':note} for a,note in event_annotations['code_comments']})
     comments=list(comments_by_address.values())
-    functions=[{'address':a,'name':n,**({'return_bytes':1} if a in ['006b98c0','006bd930'] else {'return_bytes':2} if a=='006c38c0' else {})}
-               for a,n in sorted(names.items())]
+    r12=json.loads((ROOT/'evidence/investigation-12-annotations.json').read_text())
+    r12_names={row[0] for row in r12['annotations']}
+    r12_notes={row[0]:'CM0102 investigation12 (2026-10-18): '+row[1] for row in r12['function_comments']}
+    functions=[]
+    for a,n in sorted(names.items()):
+      row={'address':a,'name':n}
+      if a in ['006b98c0','006bd930']:row['return_bytes']=1
+      elif a=='006c38c0':row['return_bytes']=2
+      if a in r12_names:row['comment']=r12_notes.get(a)
+      functions.append(row)
     pe=struct.unpack_from('<I',data,0x3c)[0];optional=pe+24
     base=struct.unpack_from('<I',data,optional+28)[0]
     count=struct.unpack_from('<H',data,pe+6)[0];size=struct.unpack_from('<H',data,pe+20)[0]

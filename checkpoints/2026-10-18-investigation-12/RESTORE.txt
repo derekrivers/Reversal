@@ -1,0 +1,25 @@
+CM 01/02 3.9.68 — Ghidra database checkpoint
+
+Unzip the complete archive to a writable directory. Keep cm0102.gpr and
+cm0102.rep together inside ghidra-project. Open cm0102.gpr in Ghidra 12.1.4
+(JDK 21), then open cm0102.exe in the project. Do not reimport the executable
+or create a new project: the database already contains the imported image.
+
+The original SHA-256 is recorded in DB-MANIFEST.json. Every saved project
+file has a SHA-256 and byte count. expected-database.json specifies the
+working function names, global labels, recovered structures and code samples.
+The structure names and candidate fields are research annotations, not
+recovered original C++ declarations. Types are saved in /CM0102/Recovered.
+
+The final archive includes RESTORE-VERIFICATION.json from reopening an
+independent extracted copy read-only without reanalysis. The complete
+archive retains scripts/CM0102VerifyCheckpoint.java for repeating that test:
+
+Set JAVA_HOME to JDK 21. Use Ghidra's support/analyzeHeadless executable:
+  analyzeHeadless /absolute/unzipped/ghidra-project cm0102 \
+    -process cm0102.exe -noanalysis -readOnly \
+    -scriptPath /absolute/unzipped/scripts \
+    -postScript CM0102VerifyCheckpoint.java \
+    /absolute/unzipped/expected-database.json /new/verification.json
+
+The complete research bundle additionally retains checkpoint_database.py.

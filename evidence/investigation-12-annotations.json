@@ -1,0 +1,81 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 12,
+  "scope": "Reviewed static names and comments only; no behavior oracle, prototype or data type applied.",
+  "annotations": [
+    [
+      "006f09b0",
+      "FUN_006f09b0",
+      "match_grid_lookup_from_slot_006f09b0"
+    ],
+    [
+      "006cb960",
+      "FUN_006cb960",
+      "match_signed_rectangle_predicate_006cb960"
+    ],
+    [
+      "006bce20",
+      "FUN_006bce20",
+      "match_candidate_filter_006bce20"
+    ],
+    [
+      "004c7560",
+      "FUN_004c7560",
+      "cm0102_initialize_staff_contract_rows_candidate"
+    ],
+    [
+      "004c79a0",
+      "FUN_004c79a0",
+      "cm0102_reserve_staff_contract_row_candidate"
+    ],
+    [
+      "00727e20",
+      "FUN_00727e20",
+      "cm0102_select_eleven_slot_max_score_index"
+    ],
+    [
+      "00727f00",
+      "FUN_00727f00",
+      "cm0102_dispatch_match_screen_callbacks_candidate"
+    ]
+  ],
+  "function_comments": [
+    [
+      "006f09b0",
+      "R12-A static contract: ECX\u003dslot; low-byte x/y at entry ESP+4/+8; RET8. Read signed slot+102/+103 and signed target bytes; abs each signed32 delta, retain signed low8; index\u003d9*dy+dx. FLD float32 at a15e44+4*index returns via ST0. Saves ESI; clobbers EAX/ECX/EDX. No calls or game-state writes; no coordinate/index/null guard. No original grid data or execution equivalence added."
+    ],
+    [
+      "006cb960",
+      "R12-A static contract: low-byte side/x/y at entry ESP+4/+8/+c; RETc; ECX unused. AL\u003d1 iff signed x in 2..6 and signed y in 10..11 when side byte exactly1, otherwise y in 0..1; else AL\u003d0. EAX upper24 unchanged. No calls, game-state reads/writes or RNG. 007103e0 calls twice using side\u003d(slot+27\u003d\u003d0), x/y\u003dmatch+8ea7/+8ea8 and tests AL only. Semantic region label provisional."
+    ],
+    [
+      "006bce20",
+      "R12-A static contract: ECX\u003dmatch; candidate dword and low-byte x/y at entry ESP+4/+8/+c; RETc, normalized EAX0/1. In order reject null, equal coordinate bytes, signed candidate+2b\u003e\u003d2, candidate\u003d\u003dmatch+f582 or +f57a; then call unresolved 006f4600 with ECX\u003dcandidate, no explicit args, require AL!\u003d0; finally require post-call match+8eb2\u003d\u003d0. Saves ESI; no direct game-state writes/RNG. Transitive effects and full callee ABI remain open; AL gates R11 candidate RNG paths, not a proven outcome."
+    ],
+    [
+      "00727e20",
+      "R12-C static: two raw32 stack args, caller cleanup/plain RET; only AL result specified. Nonnull arg1 scans indices0..10 via008968f0(ECX\u003dglobal32[00de1d08],arg1,index,arg2), scores nonnull candidates via006e1cf0(candidate,0,arg1), returns earliest maximal signed16 AX score\u0027s index. First candidate accepted even if negative; ties keep earlier index. No candidates/null arg1 returnsAL\u003dff; null diagnostic clearsDWORD00b67a34. No direct input-field stores or allocations; dependency008968f0 can invalidate shared mapping IDs and caller00727c30 can separately commit selected mapped ID via00897760. No purity, full score, transitive RNG or simulation-boundary claim."
+    ],
+    [
+      "00727f00",
+      "R12-C static: one raw32 stack key, caller cleanup/plain RET. Nonzero key calls007fe4a0(ECX\u003d00b74450,key,00727fa0,00727fb0,0,0,0), forwarding callee EAX. Dependency scans16 manager groups, filters by key, mutates/restores WORD+382a and normally returns1 even with no match. Null key diagnoses, clearsDWORD00b67a34 and has no explicit EAX status assignment. Wrapper has no direct receiver construction/allocation/free. Callback invocation, storage lifetime, transitive simulation and RNG effects remain open."
+    ]
+  ],
+  "code_comments": [
+    [
+      "00727ed3",
+      "R12-C: signed16 AX versus DI; following JLE skips replacement on lower/equal score. Sentinel path accepts first nonnull candidate even with negative score. EDI holds raw helper EAX, but only DI is compared; winner is returned in AL."
+    ],
+    [
+      "00727f8e",
+      "R12-C: ECX\u003d00b74450; six stack args in logical order: key,00727fa0,00727fb0,0,0,0. CalleeRET18; scans/filter-dispatches manager groups, may mutate/allocate through007fe600. Return1 does not prove screen construction or callback success."
+    ]
+  ],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "match-helpers-12-annotations.json",
+    "contract-boundary-12-annotations.json",
+    "match-ui-12-annotations.json"
+  ]
+}
