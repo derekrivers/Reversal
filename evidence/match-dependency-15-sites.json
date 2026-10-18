@@ -1,0 +1,1893 @@
+{
+  "work_unit": "R15-A",
+  "baseline_commit": "a4fa4bc7745ad3fbc67759325c45a9058ceaecc0",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "export_manifest_sha256": "65503dc3cf33eff2a9a40c1cdc456f5798bc8e04d1d9bbad6132c06b9677ca58",
+  "annotation_preflight_sha256": "c20393d151da0afff24f0ff7f806f91857d90f454cbff5a52d7bc0463517d1f1",
+  "evidence_class": "static original-instruction mapping; no execution oracle",
+  "decoder": "Capstone 5.0.7 x86-32",
+  "address_kind": "virtual addresses; raw file offsets explicitly labelled",
+  "function": {
+    "entry": "00714d40",
+    "end_exclusive": "00715f27",
+    "bytes": 4583,
+    "raw_file_offset": "0x314d40",
+    "code_sha256": "3d2a1085dcb8a21cd987e08fa845a21a297970d12d1cd02120934739943c1047",
+    "instruction_count": 1388,
+    "direct_call_count": 75,
+    "branch_count": 209,
+    "native_corroboration": {
+      "asm_sha256": "a35afc33ba8767ec01898e2d4b17e221222e7d8fc4bcd4b8ef7161b5cd5d4ff7",
+      "c_sha256": "76d311c818dc9303a8f2db367b2aaf066afd6c753aa94515cc522bb30e3143f5",
+      "refs_sha256": "71378807579a46b1554388ea5de69f20a928ca7a958d301ed4de19fa99c9645d",
+      "checkpoint": "2026-10-18-investigation-14",
+      "all_instruction_addresses_mnemonics_operands_agree": true,
+      "incoming_targets_verified": true
+    },
+    "incoming_direct_call_sites": [
+      "00710637",
+      "0071073f",
+      "007107d3",
+      "00710892",
+      "0071094c",
+      "007109df",
+      "006f0ad1",
+      "006f0bee",
+      "006f3c64",
+      "006bed04"
+    ],
+    "direct_calls": [
+      {
+        "site": "00714d7b",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "00714dbd",
+        "target": "006cfda0"
+      },
+      {
+        "site": "00714e00",
+        "target": "005b57c0"
+      },
+      {
+        "site": "00714e32",
+        "target": "006c38c0"
+      },
+      {
+        "site": "00714e60",
+        "target": "006c2a40"
+      },
+      {
+        "site": "00714e7a",
+        "target": "006f46b0"
+      },
+      {
+        "site": "00714eb3",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "00714f85",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00714fa4",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "00715020",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00715043",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "00715115",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00715134",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "007151a7",
+        "target": "006f09f0"
+      },
+      {
+        "site": "0071520f",
+        "target": "006c4180"
+      },
+      {
+        "site": "0071523b",
+        "target": "006cfda0"
+      },
+      {
+        "site": "00715263",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00715284",
+        "target": "006c38c0"
+      },
+      {
+        "site": "007152a2",
+        "target": "006c38c0"
+      },
+      {
+        "site": "007152bd",
+        "target": "006c38c0"
+      },
+      {
+        "site": "007152df",
+        "target": "006c38c0"
+      },
+      {
+        "site": "007152f7",
+        "target": "006c38c0"
+      },
+      {
+        "site": "0071530f",
+        "target": "006c38c0"
+      },
+      {
+        "site": "00715372",
+        "target": "00945640"
+      },
+      {
+        "site": "00715378",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "0071538e",
+        "target": "00945640"
+      },
+      {
+        "site": "00715394",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "007153bb",
+        "target": "006f09f0"
+      },
+      {
+        "site": "007154b4",
+        "target": "006f09f0"
+      },
+      {
+        "site": "007154e9",
+        "target": "006cb930"
+      },
+      {
+        "site": "00715502",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "00715576",
+        "target": "006f09f0"
+      },
+      {
+        "site": "007155b7",
+        "target": "00945640"
+      },
+      {
+        "site": "007155bd",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "007155ec",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "0071564a",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "007156e1",
+        "target": "005b5270"
+      },
+      {
+        "site": "0071571b",
+        "target": "005b5270"
+      },
+      {
+        "site": "00715783",
+        "target": "006c38c0"
+      },
+      {
+        "site": "0071579b",
+        "target": "006c38c0"
+      },
+      {
+        "site": "007157c2",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "007157cb",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "007157de",
+        "target": "006cd5f0"
+      },
+      {
+        "site": "0071580e",
+        "target": "006c2be0"
+      },
+      {
+        "site": "00715841",
+        "target": "006c2be0"
+      },
+      {
+        "site": "0071585a",
+        "target": "006c2be0"
+      },
+      {
+        "site": "00715866",
+        "target": "00715f50"
+      },
+      {
+        "site": "007158c1",
+        "target": "006c4130"
+      },
+      {
+        "site": "007158e0",
+        "target": "006f5b80"
+      },
+      {
+        "site": "0071590f",
+        "target": "006cb960"
+      },
+      {
+        "site": "00715922",
+        "target": "006ce110"
+      },
+      {
+        "site": "00715941",
+        "target": "00944cff"
+      },
+      {
+        "site": "0071595b",
+        "target": "0090d130"
+      },
+      {
+        "site": "0071596b",
+        "target": "00944c9f"
+      },
+      {
+        "site": "0071597c",
+        "target": "005e8290"
+      },
+      {
+        "site": "0071598e",
+        "target": "005cc7d0"
+      },
+      {
+        "site": "00715993",
+        "target": "005a8f60"
+      },
+      {
+        "site": "0071599a",
+        "target": "00945934"
+      },
+      {
+        "site": "007159be",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00715a39",
+        "target": "006f4920"
+      },
+      {
+        "site": "00715a5e",
+        "target": "006d6f70"
+      },
+      {
+        "site": "00715a65",
+        "target": "006f0630"
+      },
+      {
+        "site": "00715a8b",
+        "target": "006cfda0"
+      },
+      {
+        "site": "00715af3",
+        "target": "006cb960"
+      },
+      {
+        "site": "00715b35",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00715b5e",
+        "target": "006c3950"
+      },
+      {
+        "site": "00715bbf",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00715be7",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00715c0f",
+        "target": "006cfda0"
+      },
+      {
+        "site": "00715c90",
+        "target": "006cc4e0"
+      },
+      {
+        "site": "00715d3a",
+        "target": "006f4920"
+      },
+      {
+        "site": "00715dbc",
+        "target": "006d6f70"
+      },
+      {
+        "site": "00715dc3",
+        "target": "006f0630"
+      },
+      {
+        "site": "00715de6",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00715f1a",
+        "target": "006f09f0"
+      }
+    ],
+    "returns": [
+      {
+        "site": "00714e86",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00714f91",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "0071502c",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715121",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "007151b3",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715278",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "007153ce",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "007154c0",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715582",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "007158f5",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "007159d3",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715a7f",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715b41",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715bcb",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715bf3",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715dcf",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715df2",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715e6e",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715eed",
+        "cleanup_bytes": 0
+      },
+      {
+        "site": "00715f26",
+        "cleanup_bytes": 0
+      }
+    ],
+    "branches": [
+      {
+        "site": "00714d69",
+        "kind": "jne",
+        "target": "00714dda"
+      },
+      {
+        "site": "00714d71",
+        "kind": "jne",
+        "target": "00714dac"
+      },
+      {
+        "site": "00714d88",
+        "kind": "je",
+        "target": "00714dac"
+      },
+      {
+        "site": "00714da7",
+        "kind": "jmp",
+        "target": "00715261"
+      },
+      {
+        "site": "00714dba",
+        "kind": "jne",
+        "target": "00714dda"
+      },
+      {
+        "site": "00714dc4",
+        "kind": "je",
+        "target": "00714dda"
+      },
+      {
+        "site": "00714dd4",
+        "kind": "je",
+        "target": "0071524a"
+      },
+      {
+        "site": "00714e07",
+        "kind": "je",
+        "target": "00714e0e"
+      },
+      {
+        "site": "00714e4a",
+        "kind": "jne",
+        "target": "00714e87"
+      },
+      {
+        "site": "00714e53",
+        "kind": "je",
+        "target": "00714e87"
+      },
+      {
+        "site": "00714e97",
+        "kind": "jne",
+        "target": "0071502d"
+      },
+      {
+        "site": "00714ed0",
+        "kind": "jle",
+        "target": "007151b4"
+      },
+      {
+        "site": "00714ee4",
+        "kind": "je",
+        "target": "007151b4"
+      },
+      {
+        "site": "00714eee",
+        "kind": "je",
+        "target": "007151b4"
+      },
+      {
+        "site": "00714f00",
+        "kind": "jle",
+        "target": "007151b4"
+      },
+      {
+        "site": "00714f08",
+        "kind": "jge",
+        "target": "007151b4"
+      },
+      {
+        "site": "00714f16",
+        "kind": "je",
+        "target": "00714f20"
+      },
+      {
+        "site": "00714f1e",
+        "kind": "jmp",
+        "target": "00714f22"
+      },
+      {
+        "site": "00714f2a",
+        "kind": "jg",
+        "target": "007151b4"
+      },
+      {
+        "site": "00714f4b",
+        "kind": "je",
+        "target": "00714f92"
+      },
+      {
+        "site": "00714f5c",
+        "kind": "jge",
+        "target": "00714f92"
+      },
+      {
+        "site": "00714f61",
+        "kind": "jle",
+        "target": "00714f92"
+      },
+      {
+        "site": "00714fb9",
+        "kind": "jle",
+        "target": "007151b4"
+      },
+      {
+        "site": "00714fd8",
+        "kind": "jne",
+        "target": "007151b4"
+      },
+      {
+        "site": "00714fe6",
+        "kind": "je",
+        "target": "00714ff0"
+      },
+      {
+        "site": "00714fee",
+        "kind": "jmp",
+        "target": "00714ff2"
+      },
+      {
+        "site": "00714ff8",
+        "kind": "jg",
+        "target": "007151b4"
+      },
+      {
+        "site": "00715060",
+        "kind": "jle",
+        "target": "007151b4"
+      },
+      {
+        "site": "00715074",
+        "kind": "je",
+        "target": "007151b4"
+      },
+      {
+        "site": "0071507e",
+        "kind": "je",
+        "target": "007151b4"
+      },
+      {
+        "site": "00715090",
+        "kind": "jge",
+        "target": "007151b4"
+      },
+      {
+        "site": "00715098",
+        "kind": "jle",
+        "target": "007151b4"
+      },
+      {
+        "site": "007150a6",
+        "kind": "je",
+        "target": "007150b0"
+      },
+      {
+        "site": "007150ae",
+        "kind": "jmp",
+        "target": "007150b2"
+      },
+      {
+        "site": "007150ba",
+        "kind": "jl",
+        "target": "007151b4"
+      },
+      {
+        "site": "007150db",
+        "kind": "je",
+        "target": "00715122"
+      },
+      {
+        "site": "007150ec",
+        "kind": "jge",
+        "target": "00715122"
+      },
+      {
+        "site": "007150f1",
+        "kind": "jle",
+        "target": "00715122"
+      },
+      {
+        "site": "00715149",
+        "kind": "jle",
+        "target": "007151b4"
+      },
+      {
+        "site": "00715166",
+        "kind": "jne",
+        "target": "007151b4"
+      },
+      {
+        "site": "00715170",
+        "kind": "je",
+        "target": "0071517a"
+      },
+      {
+        "site": "00715178",
+        "kind": "jmp",
+        "target": "0071517d"
+      },
+      {
+        "site": "00715183",
+        "kind": "jl",
+        "target": "007151b4"
+      },
+      {
+        "site": "007151d1",
+        "kind": "je",
+        "target": "007153cf"
+      },
+      {
+        "site": "007151e4",
+        "kind": "je",
+        "target": "0071521c"
+      },
+      {
+        "site": "007151ee",
+        "kind": "je",
+        "target": "007153cf"
+      },
+      {
+        "site": "007151fc",
+        "kind": "je",
+        "target": "007153cf"
+      },
+      {
+        "site": "00715216",
+        "kind": "jl",
+        "target": "007153cf"
+      },
+      {
+        "site": "0071522a",
+        "kind": "je",
+        "target": "0071523a"
+      },
+      {
+        "site": "00715234",
+        "kind": "je",
+        "target": "007153cf"
+      },
+      {
+        "site": "00715242",
+        "kind": "je",
+        "target": "00715279"
+      },
+      {
+        "site": "00715281",
+        "kind": "je",
+        "target": "0071528b"
+      },
+      {
+        "site": "00715289",
+        "kind": "jmp",
+        "target": "0071528d"
+      },
+      {
+        "site": "00715295",
+        "kind": "jne",
+        "target": "007152d4"
+      },
+      {
+        "site": "0071529f",
+        "kind": "je",
+        "target": "007152a9"
+      },
+      {
+        "site": "007152a7",
+        "kind": "jmp",
+        "target": "007152ab"
+      },
+      {
+        "site": "007152b0",
+        "kind": "jne",
+        "target": "007152d4"
+      },
+      {
+        "site": "007152ba",
+        "kind": "je",
+        "target": "007152c4"
+      },
+      {
+        "site": "007152c2",
+        "kind": "jmp",
+        "target": "007152c6"
+      },
+      {
+        "site": "007152ce",
+        "kind": "je",
+        "target": "007153cf"
+      },
+      {
+        "site": "007152dc",
+        "kind": "je",
+        "target": "007152e6"
+      },
+      {
+        "site": "007152e4",
+        "kind": "jmp",
+        "target": "007152e8"
+      },
+      {
+        "site": "007152ea",
+        "kind": "jne",
+        "target": "00715320"
+      },
+      {
+        "site": "007152f4",
+        "kind": "je",
+        "target": "007152fe"
+      },
+      {
+        "site": "007152fc",
+        "kind": "jmp",
+        "target": "00715300"
+      },
+      {
+        "site": "00715302",
+        "kind": "jne",
+        "target": "00715320"
+      },
+      {
+        "site": "0071530c",
+        "kind": "je",
+        "target": "00715316"
+      },
+      {
+        "site": "00715314",
+        "kind": "jmp",
+        "target": "00715318"
+      },
+      {
+        "site": "0071531a",
+        "kind": "je",
+        "target": "007153cf"
+      },
+      {
+        "site": "0071539e",
+        "kind": "jle",
+        "target": "007153cf"
+      },
+      {
+        "site": "007153d7",
+        "kind": "je",
+        "target": "0071558d"
+      },
+      {
+        "site": "00715401",
+        "kind": "je",
+        "target": "00715470"
+      },
+      {
+        "site": "0071540b",
+        "kind": "je",
+        "target": "00715470"
+      },
+      {
+        "site": "0071540f",
+        "kind": "jne",
+        "target": "00715438"
+      },
+      {
+        "site": "00715419",
+        "kind": "jge",
+        "target": "00715438"
+      },
+      {
+        "site": "00715426",
+        "kind": "jl",
+        "target": "00715470"
+      },
+      {
+        "site": "00715436",
+        "kind": "jle",
+        "target": "00715470"
+      },
+      {
+        "site": "0071543b",
+        "kind": "jne",
+        "target": "0071558d"
+      },
+      {
+        "site": "00715449",
+        "kind": "jle",
+        "target": "0071558d"
+      },
+      {
+        "site": "0071545a",
+        "kind": "jg",
+        "target": "00715470"
+      },
+      {
+        "site": "0071546a",
+        "kind": "jl",
+        "target": "0071558d"
+      },
+      {
+        "site": "00715475",
+        "kind": "je",
+        "target": "00715583"
+      },
+      {
+        "site": "0071547d",
+        "kind": "jle",
+        "target": "00715487"
+      },
+      {
+        "site": "00715481",
+        "kind": "jl",
+        "target": "00715583"
+      },
+      {
+        "site": "0071548f",
+        "kind": "je",
+        "target": "007154c1"
+      },
+      {
+        "site": "00715497",
+        "kind": "jne",
+        "target": "007154c1"
+      },
+      {
+        "site": "007154f0",
+        "kind": "jne",
+        "target": "00715564"
+      },
+      {
+        "site": "007154f8",
+        "kind": "jne",
+        "target": "00715564"
+      },
+      {
+        "site": "0071551d",
+        "kind": "jne",
+        "target": "00715564"
+      },
+      {
+        "site": "00715524",
+        "kind": "jne",
+        "target": "00715534"
+      },
+      {
+        "site": "0071552c",
+        "kind": "jle",
+        "target": "00715534"
+      },
+      {
+        "site": "00715532",
+        "kind": "jmp",
+        "target": "00715542"
+      },
+      {
+        "site": "00715536",
+        "kind": "jne",
+        "target": "00715546"
+      },
+      {
+        "site": "0071553e",
+        "kind": "jge",
+        "target": "00715546"
+      },
+      {
+        "site": "0071554c",
+        "kind": "jg",
+        "target": "00715556"
+      },
+      {
+        "site": "00715550",
+        "kind": "jge",
+        "target": "00715556"
+      },
+      {
+        "site": "00715554",
+        "kind": "jmp",
+        "target": "00715560"
+      },
+      {
+        "site": "00715558",
+        "kind": "jl",
+        "target": "00715564"
+      },
+      {
+        "site": "0071555c",
+        "kind": "jle",
+        "target": "00715564"
+      },
+      {
+        "site": "0071559a",
+        "kind": "je",
+        "target": "0071584d"
+      },
+      {
+        "site": "007155a5",
+        "kind": "jne",
+        "target": "0071584d"
+      },
+      {
+        "site": "007155c7",
+        "kind": "jne",
+        "target": "007155d4"
+      },
+      {
+        "site": "007155cf",
+        "kind": "jmp",
+        "target": "00715672"
+      },
+      {
+        "site": "007155f9",
+        "kind": "jle",
+        "target": "0071560b"
+      },
+      {
+        "site": "00715613",
+        "kind": "jne",
+        "target": "00715623"
+      },
+      {
+        "site": "0071562b",
+        "kind": "jne",
+        "target": "0071563b"
+      },
+      {
+        "site": "0071566a",
+        "kind": "je",
+        "target": "00715672"
+      },
+      {
+        "site": "007156b5",
+        "kind": "je",
+        "target": "0071582e"
+      },
+      {
+        "site": "007156ef",
+        "kind": "jne",
+        "target": "0071581a"
+      },
+      {
+        "site": "00715729",
+        "kind": "je",
+        "target": "00715753"
+      },
+      {
+        "site": "0071574d",
+        "kind": "jne",
+        "target": "0071581a"
+      },
+      {
+        "site": "00715778",
+        "kind": "jne",
+        "target": "0071581a"
+      },
+      {
+        "site": "00715780",
+        "kind": "je",
+        "target": "0071578a"
+      },
+      {
+        "site": "00715788",
+        "kind": "jmp",
+        "target": "0071578c"
+      },
+      {
+        "site": "0071578e",
+        "kind": "jne",
+        "target": "007157fb"
+      },
+      {
+        "site": "00715798",
+        "kind": "je",
+        "target": "007157a2"
+      },
+      {
+        "site": "007157a0",
+        "kind": "jmp",
+        "target": "007157a4"
+      },
+      {
+        "site": "007157a6",
+        "kind": "jne",
+        "target": "007157fb"
+      },
+      {
+        "site": "007157d5",
+        "kind": "jle",
+        "target": "007157fb"
+      },
+      {
+        "site": "007157e5",
+        "kind": "jne",
+        "target": "007157fb"
+      },
+      {
+        "site": "007157f9",
+        "kind": "jmp",
+        "target": "00715873"
+      },
+      {
+        "site": "00715818",
+        "kind": "jmp",
+        "target": "00715864"
+      },
+      {
+        "site": "0071582c",
+        "kind": "jmp",
+        "target": "00715873"
+      },
+      {
+        "site": "0071584b",
+        "kind": "jmp",
+        "target": "00715864"
+      },
+      {
+        "site": "00715879",
+        "kind": "je",
+        "target": "007159d4"
+      },
+      {
+        "site": "00715894",
+        "kind": "je",
+        "target": "007158ba"
+      },
+      {
+        "site": "007158a2",
+        "kind": "jne",
+        "target": "007158f6"
+      },
+      {
+        "site": "007158a6",
+        "kind": "jl",
+        "target": "007158ba"
+      },
+      {
+        "site": "007158aa",
+        "kind": "jg",
+        "target": "007158ba"
+      },
+      {
+        "site": "007158b4",
+        "kind": "jl",
+        "target": "007158ba"
+      },
+      {
+        "site": "007158b8",
+        "kind": "jle",
+        "target": "0071590c"
+      },
+      {
+        "site": "007158c8",
+        "kind": "jl",
+        "target": "00715c08"
+      },
+      {
+        "site": "007158d6",
+        "kind": "je",
+        "target": "00715c08"
+      },
+      {
+        "site": "007158f8",
+        "kind": "jl",
+        "target": "007158ba"
+      },
+      {
+        "site": "007158fc",
+        "kind": "jg",
+        "target": "007158ba"
+      },
+      {
+        "site": "00715906",
+        "kind": "jl",
+        "target": "007158ba"
+      },
+      {
+        "site": "0071590a",
+        "kind": "jg",
+        "target": "007158ba"
+      },
+      {
+        "site": "00715916",
+        "kind": "je",
+        "target": "007158ba"
+      },
+      {
+        "site": "00715929",
+        "kind": "jne",
+        "target": "0071599f"
+      },
+      {
+        "site": "007159a3",
+        "kind": "jle",
+        "target": "007158ba"
+      },
+      {
+        "site": "007159e0",
+        "kind": "jne",
+        "target": "00715a80"
+      },
+      {
+        "site": "007159f2",
+        "kind": "jne",
+        "target": "00715a84"
+      },
+      {
+        "site": "00715a05",
+        "kind": "jne",
+        "target": "00715f1f"
+      },
+      {
+        "site": "00715a12",
+        "kind": "jge",
+        "target": "00715f1f"
+      },
+      {
+        "site": "00715a20",
+        "kind": "jne",
+        "target": "00715f1f"
+      },
+      {
+        "site": "00715a92",
+        "kind": "je",
+        "target": "00715bf4"
+      },
+      {
+        "site": "00715ad9",
+        "kind": "je",
+        "target": "00715bf4"
+      },
+      {
+        "site": "00715afa",
+        "kind": "je",
+        "target": "00715b42"
+      },
+      {
+        "site": "00715b09",
+        "kind": "je",
+        "target": "00715b1f"
+      },
+      {
+        "site": "00715b13",
+        "kind": "jne",
+        "target": "00715b42"
+      },
+      {
+        "site": "00715b1d",
+        "kind": "jne",
+        "target": "00715b42"
+      },
+      {
+        "site": "00715b4f",
+        "kind": "jne",
+        "target": "00715bcc"
+      },
+      {
+        "site": "00715b6e",
+        "kind": "je",
+        "target": "00715b84"
+      },
+      {
+        "site": "00715b78",
+        "kind": "jne",
+        "target": "00715bcc"
+      },
+      {
+        "site": "00715b82",
+        "kind": "jne",
+        "target": "00715bcc"
+      },
+      {
+        "site": "00715b8a",
+        "kind": "jl",
+        "target": "00715f1f"
+      },
+      {
+        "site": "00715b92",
+        "kind": "jge",
+        "target": "00715f1f"
+      },
+      {
+        "site": "00715b9a",
+        "kind": "jl",
+        "target": "00715f1f"
+      },
+      {
+        "site": "00715ba3",
+        "kind": "jge",
+        "target": "00715f1f"
+      },
+      {
+        "site": "00715c03",
+        "kind": "jmp",
+        "target": "00715f0e"
+      },
+      {
+        "site": "00715c16",
+        "kind": "je",
+        "target": "00715e0c"
+      },
+      {
+        "site": "00715c2b",
+        "kind": "jne",
+        "target": "00715c6c"
+      },
+      {
+        "site": "00715c32",
+        "kind": "jne",
+        "target": "00715c3d"
+      },
+      {
+        "site": "00715c3b",
+        "kind": "jge",
+        "target": "00715ca6"
+      },
+      {
+        "site": "00715c3f",
+        "kind": "jne",
+        "target": "00715c4a"
+      },
+      {
+        "site": "00715c48",
+        "kind": "jl",
+        "target": "00715ca6"
+      },
+      {
+        "site": "00715c4d",
+        "kind": "jne",
+        "target": "00715c6c"
+      },
+      {
+        "site": "00715c54",
+        "kind": "jne",
+        "target": "00715c5f"
+      },
+      {
+        "site": "00715c5d",
+        "kind": "jge",
+        "target": "00715c6c"
+      },
+      {
+        "site": "00715c61",
+        "kind": "jne",
+        "target": "00715c76"
+      },
+      {
+        "site": "00715c6a",
+        "kind": "jge",
+        "target": "00715c76"
+      },
+      {
+        "site": "00715c74",
+        "kind": "jne",
+        "target": "00715ca6"
+      },
+      {
+        "site": "00715c7e",
+        "kind": "je",
+        "target": "00715e0c"
+      },
+      {
+        "site": "00715ca0",
+        "kind": "je",
+        "target": "00715e0c"
+      },
+      {
+        "site": "00715cac",
+        "kind": "jl",
+        "target": "00715df3"
+      },
+      {
+        "site": "00715cb4",
+        "kind": "jge",
+        "target": "00715df3"
+      },
+      {
+        "site": "00715cc0",
+        "kind": "jl",
+        "target": "00715df3"
+      },
+      {
+        "site": "00715cc9",
+        "kind": "jge",
+        "target": "00715df3"
+      },
+      {
+        "site": "00715cd7",
+        "kind": "jne",
+        "target": "00715dd0"
+      },
+      {
+        "site": "00715ce5",
+        "kind": "jne",
+        "target": "00715dd0"
+      },
+      {
+        "site": "00715cf8",
+        "kind": "jne",
+        "target": "00715edd"
+      },
+      {
+        "site": "00715d05",
+        "kind": "jge",
+        "target": "00715edd"
+      },
+      {
+        "site": "00715d13",
+        "kind": "jne",
+        "target": "00715edd"
+      },
+      {
+        "site": "00715d56",
+        "kind": "je",
+        "target": "00715da5"
+      },
+      {
+        "site": "00715d5a",
+        "kind": "jne",
+        "target": "00715d71"
+      },
+      {
+        "site": "00715d5f",
+        "kind": "jl",
+        "target": "00715d71"
+      },
+      {
+        "site": "00715d6a",
+        "kind": "jg",
+        "target": "00715d71"
+      },
+      {
+        "site": "00715d6f",
+        "kind": "jge",
+        "target": "00715d92"
+      },
+      {
+        "site": "00715d73",
+        "kind": "je",
+        "target": "00715da5"
+      },
+      {
+        "site": "00715d78",
+        "kind": "jne",
+        "target": "00715da5"
+      },
+      {
+        "site": "00715d80",
+        "kind": "jg",
+        "target": "00715da5"
+      },
+      {
+        "site": "00715d8b",
+        "kind": "jg",
+        "target": "00715da5"
+      },
+      {
+        "site": "00715d90",
+        "kind": "jl",
+        "target": "00715da5"
+      },
+      {
+        "site": "00715da3",
+        "kind": "jmp",
+        "target": "00715db6"
+      },
+      {
+        "site": "00715e07",
+        "kind": "jmp",
+        "target": "00715f05"
+      },
+      {
+        "site": "00715e18",
+        "kind": "jne",
+        "target": "00715e6f"
+      },
+      {
+        "site": "00715e1d",
+        "kind": "jl",
+        "target": "00715e34"
+      },
+      {
+        "site": "00715e22",
+        "kind": "jg",
+        "target": "00715e34"
+      },
+      {
+        "site": "00715e2d",
+        "kind": "jl",
+        "target": "00715e34"
+      },
+      {
+        "site": "00715e32",
+        "kind": "jle",
+        "target": "00715e88"
+      },
+      {
+        "site": "00715e38",
+        "kind": "jne",
+        "target": "00715eee"
+      },
+      {
+        "site": "00715e4a",
+        "kind": "jne",
+        "target": "00715eee"
+      },
+      {
+        "site": "00715e72",
+        "kind": "jl",
+        "target": "00715e34"
+      },
+      {
+        "site": "00715e77",
+        "kind": "jg",
+        "target": "00715e34"
+      },
+      {
+        "site": "00715e81",
+        "kind": "jl",
+        "target": "00715e34"
+      },
+      {
+        "site": "00715e86",
+        "kind": "jg",
+        "target": "00715e34"
+      },
+      {
+        "site": "00715eb5",
+        "kind": "je",
+        "target": "00715e34"
+      },
+      {
+        "site": "00715ec9",
+        "kind": "jne",
+        "target": "00715e34"
+      },
+      {
+        "site": "00715ed7",
+        "kind": "je",
+        "target": "00715e34"
+      }
+    ],
+    "direct_state_stores": [
+      {
+        "site": "00714e14",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0xffff"
+      },
+      {
+        "site": "00714e71",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x68"
+      },
+      {
+        "site": "00714f69",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x7a"
+      },
+      {
+        "site": "00714ffe",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x7a"
+      },
+      {
+        "site": "007150f9",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x7a"
+      },
+      {
+        "site": "00715185",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x7a"
+      },
+      {
+        "site": "00715268",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x100"
+      },
+      {
+        "site": "007153c0",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "bp"
+      },
+      {
+        "site": "007154ab",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x105"
+      },
+      {
+        "site": "007154c1",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x105"
+      },
+      {
+        "site": "00715583",
+        "width_bytes": 4,
+        "operation": "mov",
+        "destination": "dword ptr [esi + 0x1aa]",
+        "source": "0"
+      },
+      {
+        "site": "007158e5",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x6b"
+      },
+      {
+        "site": "00715984",
+        "width_bytes": 4,
+        "operation": "mov",
+        "destination": "dword ptr [0xb67a34]",
+        "source": "0"
+      },
+      {
+        "site": "007159c3",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x78"
+      },
+      {
+        "site": "00715a6a",
+        "width_bytes": 2,
+        "operation": "add",
+        "destination": "word ptr [esi + 0x35]",
+        "source": "4"
+      },
+      {
+        "site": "00715a6f",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x103"
+      },
+      {
+        "site": "00715b2c",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x103"
+      },
+      {
+        "site": "00715bb6",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x103"
+      },
+      {
+        "site": "00715bde",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x71"
+      },
+      {
+        "site": "00715bf8",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x71"
+      },
+      {
+        "site": "00715d1c",
+        "width_bytes": 2,
+        "operation": "add",
+        "destination": "word ptr [esi + 0x35]",
+        "source": "4"
+      },
+      {
+        "site": "00715d27",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x100"
+      },
+      {
+        "site": "00715ddd",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x100"
+      },
+      {
+        "site": "00715e00",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "bx"
+      },
+      {
+        "site": "00715e60",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "ax"
+      },
+      {
+        "site": "00715edd",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "0x104"
+      },
+      {
+        "site": "00715efe",
+        "width_bytes": 2,
+        "operation": "mov",
+        "destination": "word ptr [esi + 0x198]",
+        "source": "ax"
+      }
+    ],
+    "all_explicit_memory_store_sites": [
+      "00714d52",
+      "00714d5d",
+      "00714e09",
+      "00714e14",
+      "00714e2a",
+      "00714e2e",
+      "00714e3f",
+      "00714e71",
+      "00714eab",
+      "00714eaf",
+      "00714f69",
+      "00714fa0",
+      "00714ffe",
+      "0071503b",
+      "0071503f",
+      "007150f9",
+      "00715130",
+      "00715185",
+      "007151c4",
+      "007151c8",
+      "00715268",
+      "00715368",
+      "007153c0",
+      "007154ab",
+      "007154c1",
+      "007154d6",
+      "007154da",
+      "00715507",
+      "00715542",
+      "00715560",
+      "00715583",
+      "007155dc",
+      "007155e4",
+      "007155fb",
+      "00715603",
+      "0071561f",
+      "00715637",
+      "00715641",
+      "00715655",
+      "007157eb",
+      "007157f1",
+      "007157f5",
+      "0071581e",
+      "00715824",
+      "00715828",
+      "0071586f",
+      "007158e5",
+      "00715984",
+      "007159c3",
+      "00715a6a",
+      "00715a6f",
+      "00715b2c",
+      "00715bb6",
+      "00715bde",
+      "00715bf8",
+      "00715d1c",
+      "00715d27",
+      "00715ddd",
+      "00715e00",
+      "00715e60",
+      "00715edd",
+      "00715efe"
+    ],
+    "rng_sites": [
+      {
+        "site": "00714d7b",
+        "bound": "20",
+        "gate": "entry sentinel ff and match+f57a==slot; snapshot slot+107 before call"
+      },
+      {
+        "site": "00714eb3",
+        "bound": "25",
+        "gate": "side==0; snapshot signed bytes +105,+106,+10a before call"
+      },
+      {
+        "site": "00714fa4",
+        "bound": "100",
+        "gate": "side0 product gate and region pass, first mask/delta dispatch fails"
+      },
+      {
+        "site": "00715043",
+        "bound": "25",
+        "gate": "side!=0; snapshot signed bytes +105,+106,+10a before call"
+      },
+      {
+        "site": "00715134",
+        "bound": "100",
+        "gate": "nonzero-side product gate and region pass, first mask/delta dispatch fails"
+      },
+      {
+        "site": "00715378",
+        "bound": "EAX from 00945640(float32(slot+dd))",
+        "gate": "tactical and opposing/sentinel gate; snapshot signed slot+10d first"
+      },
+      {
+        "site": "00715394",
+        "bound": "EAX from 00945640(x87(float32 grid distance * float32 8.0))",
+        "gate": "after 00715378; distance stored float32 before first call"
+      },
+      {
+        "site": "00715502",
+        "bound": "21",
+        "gate": "eligible valid partner; 006cb930 AL zero and saved entry lookup bit2 clear"
+      },
+      {
+        "site": "007155bd",
+        "bound": "EAX from 00945640(x87(float32(slot+e1)+float64 0.5))",
+        "gate": "no accepted partner; match sentinel !=ff and saved tactical bit0 clear"
+      },
+      {
+        "site": "007155ec",
+        "bound": "10",
+        "gate": "007155bd result nonzero; signed slot+10d snapshotted before draw"
+      },
+      {
+        "site": "0071564a",
+        "bound": "150",
+        "gate": "007155bd result nonzero; compare result+30 with snapshot float32(slot+1a2)"
+      },
+      {
+        "site": "007157c2",
+        "bound": "s8(match+8d46+(side==0))",
+        "gate": "grid threshold and flags permit; tactical bits1 and2 both clear"
+      },
+      {
+        "site": "007157cb",
+        "bound": "25",
+        "gate": "immediately after 007157c2"
+      }
+    ],
+    "local_cfg_acyclic": true,
+    "cfg_upper_bound_direct_rng_calls": 10,
+    "stack_checks": [
+      {
+        "entry_esp_mod8": 0,
+        "all_cfg_joins_balanced": true,
+        "all_returns_restore_entry_esp": true,
+        "all_explicit_stack_accesses_below_entry_esp": true
+      },
+      {
+        "entry_esp_mod8": 4,
+        "all_cfg_joins_balanced": true,
+        "all_returns_restore_entry_esp": true,
+        "all_explicit_stack_accesses_below_entry_esp": true
+      }
+    ],
+    "inferred_callee_cleanup_bytes": {
+      "0090cfc0": 0,
+      "006cfda0": 4,
+      "005b57c0": 4,
+      "006c38c0": 4,
+      "006c2a40": 12,
+      "006f46b0": 8,
+      "006f09f0": 20,
+      "006c4180": 8,
+      "00945640": 0,
+      "006cb930": 8,
+      "005b5270": 4,
+      "006cd5f0": 4,
+      "006c2be0": 16,
+      "00715f50": 4,
+      "006c4130": 4,
+      "006f5b80": 4,
+      "006cb960": 12,
+      "006ce110": 4,
+      "00944cff": 0,
+      "0090d130": 0,
+      "00944c9f": 0,
+      "005e8290": 0,
+      "005cc7d0": 0,
+      "005a8f60": 0,
+      "00945934": 0,
+      "006f4920": 16,
+      "006d6f70": 28,
+      "006f0630": 0,
+      "006c3950": 16,
+      "006cc4e0": 16
+    },
+    "diagnostic_terminal_call": "0071599a -> 00945934; normal nonreturn assumed for stack/CFG checks"
+  },
+  "constants": [
+    {
+      "address": "0096d784",
+      "width_bytes": 4,
+      "value": 8.0,
+      "sha256": "03e3c2420f5066a5fa6e36735ed8cc4f6a251046263e1a6024f009deeee3b952"
+    },
+    {
+      "address": "00968968",
+      "width_bytes": 8,
+      "value": 0.5,
+      "sha256": "4cfa5b42ca669328764e67cd9a34bb8f90b16ed7ca8d85e8443783d7ccce15ed"
+    },
+    {
+      "address": "009689a0",
+      "width_bytes": 8,
+      "value": 0.0,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "address": "00968ee0",
+      "width_bytes": 8,
+      "value": 1.33,
+      "sha256": "0deda5aefea69e3373d1cd49055e4de6cd6dc0b940e6b7c2ab83894f65d7a13d"
+    },
+    {
+      "address": "00968940",
+      "width_bytes": 8,
+      "value": 1.5,
+      "sha256": "e163f8cb0f7067a7fc78ca859a77f849aea3214f38fb75b884e4a16be725c905"
+    },
+    {
+      "address": "00968e18",
+      "width_bytes": 8,
+      "value": 2.5,
+      "sha256": "5caaabe50da77f59f448b3edf650d68fbca7b858390664c251c52b3f458a881c"
+    },
+    {
+      "address": "009689a8",
+      "width_bytes": 4,
+      "value": 2.0,
+      "sha256": "d88c86f15bbea365d658ad95a81d45367c465f7af6f7264fb077f01747ddc77d"
+    }
+  ],
+  "limits": [
+    "No execution oracle or connected shot outcome",
+    "Callee effects and transitive RNG unresolved except prior bounded contracts",
+    "CFG RNG upper bound ignores correlated predicates; R(0) need not advance exposed state",
+    "Normal callee ABI and diagnostic exit nonreturn assumed",
+    "Supplied incoming references are checked, not proved exhaustive"
+  ]
+}
