@@ -1,0 +1,134 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "native_manifest_sha256": "3c5da196118b891f3dcd84f8126355d3c36888c3c7b72ca1f6d89772d8a22935",
+  "private_preflight_sha256": "a8b6f47a04ac2dcc2d6fb13537a55b223db5630d50e857ceb014f40f7069cf78",
+  "address_space": "VA unless explicitly file offset",
+  "method": "Capstone 5.0.7 full original-PE decode/native instruction membership and operand comparison; complete branch/fallthrough graph; static only",
+  "functions": [
+    {
+      "entry_va": "0094fded",
+      "native_name": "FUN_0094fded",
+      "entry_file_offset": "0054fded",
+      "end_exclusive_va": "0094fe2a",
+      "body_bytes": 61,
+      "instruction_count": 16,
+      "matched_native_instructions": 16,
+      "owned_instruction_bytes_sha256": "bc15fa380be7e1320498ba101d1f41e7bf28ecdfa284dfc1438c4a44ff0cc1c9",
+      "native_file_sha256": {
+        "asm": "f5b8380d00d50539877ec35f2042aeb3cc0b93576608db635218395cbc85d533",
+        "c": "90721ca7ee6eae0e4f9bb915a72d48a0371a3225caf83578c54456740dc9abce"
+      },
+      "native_instruction_membership": "Exactly matches complete contiguous PE decode; no omitted native starts or decoded bytes",
+      "structurally_reached_instruction_count": 16,
+      "branches": [
+        {
+          "site_va": "0094fdf7",
+          "target_va": "0094fe15"
+        },
+        {
+          "site_va": "0094fe10",
+          "target_va": "0094fe15"
+        }
+      ],
+      "calls": [],
+      "return_sites_va": [
+        "0094fe14",
+        "0094fe29"
+      ],
+      "selected_instructions": {
+        "0094fdf1": "cmp eax, dword ptr [0xde43e0]",
+        "0094fdfe": "sar ecx, 5",
+        "0094fe08": "test byte ptr [ecx + eax*8 + 4], 1",
+        "0094fe12": "mov eax, dword ptr [eax]",
+        "0094fe15": "and dword ptr [0xde2f90], 0",
+        "0094fe1c": "mov dword ptr [0xde2f8c], 9"
+      }
+    },
+    {
+      "entry_va": "00944e46",
+      "native_name": "_malloc",
+      "entry_file_offset": "00544e46",
+      "end_exclusive_va": "00944e58",
+      "body_bytes": 18,
+      "instruction_count": 6,
+      "matched_native_instructions": 6,
+      "owned_instruction_bytes_sha256": "caf38706ea9769913ce2e6174e3c40eabc2bc831a149d512e94fa1a2f032c96f",
+      "native_file_sha256": {
+        "asm": "40fb7e547cf7d53cee156fe1deff030cc6d63dc440bb78ee719717c2587432d2",
+        "c": "5f4281ad50ca820c56096822e73637d194053ccd267249d7e9fac56b942d31c8"
+      },
+      "native_instruction_membership": "Exactly matches complete contiguous PE decode; no omitted native starts or decoded bytes",
+      "structurally_reached_instruction_count": 6,
+      "branches": [],
+      "calls": [
+        {
+          "site_va": "00944e50",
+          "target_va": "00944e58"
+        }
+      ],
+      "return_sites_va": [
+        "00944e57"
+      ],
+      "selected_instructions": {
+        "00944e46": "push dword ptr [0xde3008]",
+        "00944e4c": "push dword ptr [esp + 8]",
+        "00944e50": "call 0x944e58"
+      }
+    },
+    {
+      "entry_va": "00944e58",
+      "native_name": "__nh_malloc",
+      "entry_file_offset": "00544e58",
+      "end_exclusive_va": "00944e84",
+      "body_bytes": 44,
+      "instruction_count": 16,
+      "matched_native_instructions": 16,
+      "owned_instruction_bytes_sha256": "a820b9f2f0d73f39f7f7f4769451dca7458d287496d2c367daf94b52d0d74477",
+      "native_file_sha256": {
+        "asm": "6422411ecd7aa47936a92d658eb6dca05277e82f161fbd9a4887edb55364c276",
+        "c": "eda170802f1dab861651b20a1f4a64052cc11752bdca39406e4dbd4bed9933a9"
+      },
+      "native_instruction_membership": "Exactly matches complete contiguous PE decode; no omitted native starts or decoded bytes",
+      "structurally_reached_instruction_count": 16,
+      "branches": [
+        {
+          "site_va": "00944e5d",
+          "target_va": "00944e81"
+        },
+        {
+          "site_va": "00944e6b",
+          "target_va": "00944e83"
+        },
+        {
+          "site_va": "00944e71",
+          "target_va": "00944e83"
+        },
+        {
+          "site_va": "00944e7f",
+          "target_va": "00944e5f"
+        }
+      ],
+      "calls": [
+        {
+          "site_va": "00944e63",
+          "target_va": "00944e84"
+        },
+        {
+          "site_va": "00944e77",
+          "target_va": "0094895b"
+        }
+      ],
+      "return_sites_va": [
+        "00944e83"
+      ],
+      "selected_instructions": {
+        "00944e58": "cmp dword ptr [esp + 4], -0x20",
+        "00944e63": "call 0x944e84",
+        "00944e6d": "cmp dword ptr [esp + 8], eax",
+        "00944e77": "call 0x94895b",
+        "00944e7f": "jne 0x944e5f",
+        "00944e81": "xor eax, eax"
+      }
+    }
+  ]
+}
