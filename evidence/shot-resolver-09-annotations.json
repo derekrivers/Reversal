@@ -1,0 +1,29 @@
+{
+  "investigation": 9,
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses",
+  "status": "proposal for the coordinator; no native project modified",
+  "code_comments": [
+    [
+      "007023e3",
+      "Investigation09 static action33 switch: default variant R(2) before keeper entry. This draw is part of caller stream; keep before00702416."
+    ],
+    [
+      "007024b4",
+      "Investigation09: action33 still calls006cfe10(shooter,6d,null,0,0). Its entry runs two nested R(102)/R(previous) groups plus conditional R(3)/R(76)/R(previous), before null-participant checks. Additional conditional R25/R50000/R11 and006d0980 effects remain unvalidated. Do not join independent keeper/category oracles by skipping this call."
+    ],
+    [
+      "00703e24",
+      "Investigation09: unconditional R(15) after classification. Quantized distance>25+draw enables007103e0 work over eligible other slots; temporary match+8ea9=5 is restored. Transitive RNG/state must be admitted before connected-attempt claims."
+    ],
+    [
+      "00703fb7",
+      "Investigation09: selected keeper==match+f5ae forces saved response0. Subsequent00703ffb and00704004 sign extend keeper/quality words for gate; action33 first output flag+20 stays0, while fallback output+14 can be1."
+    ],
+    [
+      "00707dd6",
+      "Investigation09 static mode3/4 successful path: increments tiebreak-score BYTE match+f5bc+54*signed8(slot+27). Event2000 follows; mode3 additionally212e. Post-score R3, presentation and state helpers still execute; this is not a complete return/outcome oracle."
+    ]
+  ],
+  "native_corroboration": "Critical proposed comment sites cross-checked against coordinator read-only exports-09; no discrepancy. Static agreement only; no native project modified."
+}

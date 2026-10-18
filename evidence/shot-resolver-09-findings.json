@@ -1,0 +1,311 @@
+{
+  "investigation": 9,
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses, never file offsets",
+  "function": "00702050",
+  "action_kind": 51,
+  "method": "Read-only hash-checked PE bytes; Capstone5.0.7 32-bit x86 static disassembly; existing private Ghidra exports for00700420/00713e90/006ce310; code-atlas direct call inventory. No new dynamic oracle.",
+  "scope": "Static caller data flow and RNG dependency mapping, primarily action33/mode3; not full outcomes or return-state equivalence",
+  "abi": {
+    "this": "ECX slot",
+    "stack_cleanup_bytes": 24,
+    "frame_after_fixed_prologue": {
+      "action": "esp+698",
+      "quality": "esp+69c",
+      "event_code": "esp+6a0",
+      "mode": "esp+6a4",
+      "further_argument5": "esp+6a8",
+      "further_argument6": "esp+6ac"
+    }
+  },
+  "switch_observations": [
+    {
+      "site": "007023a6",
+      "index_table": "0070a5a8",
+      "destination_table": "0070a594",
+      "action_index": 29,
+      "selected_index": 4,
+      "destination": "007023e1",
+      "result": "R(2) at007023e3; variant stored esp+1c"
+    },
+    {
+      "site": "00704039",
+      "index_table": "0070a784",
+      "destination_table": "0070a760",
+      "action_index": 46,
+      "selected_index": 8,
+      "destination": "00704080",
+      "result": "default scale float32=1 at00968e70; affects match+4786, not replacing gate terms"
+    }
+  ],
+  "keeper_to_gate": {
+    "keeper_call": "00702416",
+    "save": "0070241f esp+38=EAX",
+    "output5": "esp+20; remains0 action33",
+    "output6": "esp+14; fallback flag",
+    "suppress_when": "selected keeper EBX == match+f5ae at00703faf",
+    "suppress_write": "00703fb7 esp+38=0",
+    "load_keeper": "00703ffb EBP=sign16(esp+38)",
+    "load_quality": "00704004 EDI=sign16(esp+69c)",
+    "eligible_categories": [
+      1,
+      14,
+      15
+    ],
+    "gate": "00706cba..00706d26",
+    "quality_changes": "Action33 receives zero adjustment00713e90; R0 at00702241; bypasses caller collision,006cfd70,006cc540 and first-output-dependent quality changes. Helper alias effects remain unvalidated."
+  },
+  "pre_gate_rng_order": [
+    {
+      "site": "00702241",
+      "operation": "R(0); no state advance"
+    },
+    {
+      "site": "007023e3",
+      "operation": "R(2)"
+    },
+    {
+      "site": "00702416",
+      "operation": "00700420; rejected0 calls, eligible4 calls retained or7 calls fallback; zero bounds can avoid state advances; exact x87 bounds in existing keeper oracle"
+    },
+    {
+      "site": "007024b4",
+      "operation": "006cfe10(shooter,6d,null,0,0); nontrivial nested draws and state effects"
+    },
+    {
+      "site": "00703641",
+      "operation": "R(10), conditional selector2==slot+2c"
+    },
+    {
+      "site": "0070387e",
+      "operation": "event wrapper007002f0 ->006d6f70; actual presentation/suppression changes RNG"
+    },
+    {
+      "sites": [
+        "00703b32",
+        "00703b6e",
+        "00703b9d"
+      ],
+      "operation": "classification conditional R(quality)/R4"
+    },
+    {
+      "site": "00703d2f",
+      "operation": "mode1 ineligible category only: R(signed8(player+5a)), possibly007172d0/006eecb0"
+    },
+    {
+      "site": "00703e24",
+      "operation": "R(15), then optional other-slot updates007103e0"
+    },
+    {
+      "site": "00703ff2",
+      "operation": "006ce310; no direct RNG; sole direct callee004b0850 not certified transitively"
+    },
+    {
+      "site": "00706cba",
+      "operation": "gate arithmetic no RNG; failed gate has later statistics draws"
+    }
+  ],
+  "unconditional_helper_entry": {
+    "function": "006cfe10",
+    "caller": "007024b4",
+    "first_group": {
+      "sites": [
+        "006cfe35",
+        "006cfe3b"
+      ],
+      "operations": [
+        "a=R(102)",
+        "b=R(a)"
+      ],
+      "optional": "if signed8(b)>50: R3 at006cfe50; if nonzero: R76 at006cfe5e then R(previous) at006cfe64"
+    },
+    "second_group": {
+      "sites": [
+        "006cfe74",
+        "006cfe7a"
+      ],
+      "operations": [
+        "a=R(102)",
+        "b=R(a)"
+      ],
+      "optional": "if signed8(b)>50: R3 at006cfe8c; if nonzero: R76 at006cfe9a then R(previous) at006cfea0"
+    },
+    "participant1_test": "006cfeb0, after both groups",
+    "remaining_action33_dependencies": [
+      "conditional manager lookup R25 at006cfee7",
+      "float+4d early006d0980 at006d00f8",
+      "otherwise participant loop R50000 at006d0394",
+      "conditional R11 at006d0474",
+      "006d0980 selected side effects at006d04c5/006d055f"
+    ],
+    "fully_reconstructed": false
+  },
+  "score_and_state_writes": [
+    {
+      "site": "00703d80",
+      "condition": "mode3 or4 after category",
+      "write": "increment uint8(match+1a9+signed8(side))"
+    },
+    {
+      "site": "00707dd6",
+      "condition": "eligible category; ratio>71; mode3 or4",
+      "write": "increment uint8(match+f5bc+54*signed8(side)); f5f2 on side1",
+      "following_events": [
+        "2000",
+        "212e only mode3"
+      ],
+      "following_rng": "R3 at00707cfa plus conditional clock/presentation/helper draws; score write is not return"
+    },
+    {
+      "site": "00708a3a",
+      "condition": "later mode1 branch reaching this site; full path not reconstructed",
+      "write": "increment uint8(match+f5bd+54*signed8(side))"
+    },
+    {
+      "site": "006bedcd",
+      "condition": "tiebreak caller after resolver returns",
+      "write": "decrement remaining byte match+8ea1+currentSide; toggle current side at006bede3"
+    }
+  ],
+  "range_digests": [
+    {
+      "start": "00702050",
+      "end_exclusive": "007021d5",
+      "sha256": "f99642aea3f1b2e761e389465851ec7331f2292998d26b6ae4b2949848b957e2"
+    },
+    {
+      "start": "007021ea",
+      "end_exclusive": "0070225f",
+      "sha256": "64a7110abed8bcc8fd1861cc74cd05bbc07b493fc02da40de95384e5b3dc57fd"
+    },
+    {
+      "start": "0070238e",
+      "end_exclusive": "007024c1",
+      "sha256": "a421216536dee724426b67dc75e6769d346913c6ce392f9dda71234d46d7858f"
+    },
+    {
+      "start": "0070354d",
+      "end_exclusive": "00703659",
+      "sha256": "ca4f161d4c67eb74762a631853e5c1771fda351d96e90b7a9f9bf41adef8cd8f"
+    },
+    {
+      "start": "00703883",
+      "end_exclusive": "00703b25",
+      "sha256": "9bda3ca5489855336027bb80d6d3ec8142a5fa4ebed7ec4aa9b917855b42dc0f"
+    },
+    {
+      "start": "00703b25",
+      "end_exclusive": "00703beb",
+      "sha256": "804534459619a164ce1cc4e06bc837ef0494c8e020c4de133234000273999aca"
+    },
+    {
+      "start": "00703d66",
+      "end_exclusive": "007040cb",
+      "sha256": "dd562759acee0d4b26cabb79f4ff546a3754d0bd4ed84ef468bce1b04e1dcf4f"
+    },
+    {
+      "start": "00706cba",
+      "end_exclusive": "00706e2e",
+      "sha256": "e14454e8d525032e9b64098eb14b204b09e25c41723cd56ae2823f6c7dbeffaa"
+    },
+    {
+      "start": "00707db2",
+      "end_exclusive": "00707e2b",
+      "sha256": "5565c1f4aa74b59716fe86d1401bfb7ab0a771ac53f91aa5448b9d1237483965"
+    },
+    {
+      "start": "006cfe10",
+      "end_exclusive": "006cfeac",
+      "sha256": "26212f9e3c09e9183ca9c9d93e76a8b5d3b1bde583d3cb5b98cd6801db95c7b6"
+    },
+    {
+      "start": "006d038f",
+      "end_exclusive": "006d03b5",
+      "sha256": "85db0b6598c451d8b9c67fedbd28054763f37d634892ca66e1fbe3e6e9bd2f3d"
+    }
+  ],
+  "limitations": [
+    "Static mapping only; no new original-instruction numerical oracle or connected attempt.",
+    "Live producer values, alias conditions, helper side effects and transitive RNG remain dependencies.",
+    "Public existing fixtures are synthetic; actual match-entry x87 precision remains unobserved.",
+    "No binary, original grid, private trace, bulk listing, pseudocode or native database redistributed."
+  ],
+  "report": "reports/shot-resolver-09.md",
+  "native_corroboration": {
+    "source": "Coordinator read-only Ghidra exports-09; bulk exports kept private",
+    "method": "Compare all instruction addresses and all direct-call sites/targets with independent pinned-byte listing; manually check operands at listed critical sites. Not dynamic validation.",
+    "functions": [
+      {
+        "function": "00702050",
+        "matching_instruction_addresses": 10263,
+        "matching_direct_call_targets": 688,
+        "native_assembly_export_sha256": "40afb06c0e55a22091d0aff2bcca1521feadc9fae0bb87f9416ab4a72472f8cf"
+      },
+      {
+        "function": "00700bd0",
+        "matching_instruction_addresses": 1572,
+        "matching_direct_call_targets": 82,
+        "native_assembly_export_sha256": "c8d94a106c6af7b30e58c5aacc111f557f548e4aa494432ae417edfa8d941082"
+      },
+      {
+        "function": "006cfe10",
+        "matching_instruction_addresses": 887,
+        "matching_direct_call_targets": 54,
+        "native_assembly_export_sha256": "91c571aa3902a311fac6ea69f36836dde6cb2d2427c9a9d9ce687e82e3e91cf9"
+      },
+      {
+        "function": "007002f0",
+        "matching_instruction_addresses": 14,
+        "matching_direct_call_targets": 1,
+        "native_assembly_export_sha256": "784fbd6640aa4da25b558e02774fe9d6f4a8ddae4cd212a62aa53fbc25e583f6"
+      },
+      {
+        "function": "006f09b0",
+        "matching_instruction_addresses": 20,
+        "matching_direct_call_targets": 0,
+        "native_assembly_export_sha256": "208e1339503ad34b1e76a8c7aac52998a65651a0a120d3403b6e426d30adf677"
+      },
+      {
+        "function": "006ce110",
+        "matching_instruction_addresses": 155,
+        "matching_direct_call_targets": 0,
+        "native_assembly_export_sha256": "47b2d364849ec830b1eab5612af4090aad6e3da12087aa99b98a8f7bd912324c"
+      }
+    ],
+    "manual_operand_sites": [
+      "006cfe35",
+      "006cfe3b",
+      "006cfe74",
+      "006cfe7a",
+      "00703fb7",
+      "00703ffb",
+      "00704004",
+      "00703d80",
+      "00707dd6"
+    ],
+    "discrepancies_in_reported_core_claims": [],
+    "additional_dependency": {
+      "function": "006d0980",
+      "conditional_rng_sites": [
+        "006d099d",
+        "006d09ae",
+        "006d0a41",
+        "006d0a6c"
+      ],
+      "selected_slot_float_writes": {
+        "4d": [
+          "006d0a23",
+          "006d0a59"
+        ],
+        "59": [
+          "006d0a7c"
+        ],
+        "d5": [
+          "006d0a8b"
+        ]
+      },
+      "native_assembly_export_sha256": "bdbc5f548d56b6bdd14456e2c2bce140364e9815024d005bb99296c28e316fcc",
+      "fully_reconstructed": false
+    }
+  }
+}
