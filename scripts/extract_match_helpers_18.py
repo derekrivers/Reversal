@@ -1,4 +1,8 @@
 """Verify four R18-A original-PE bodies against pinned native exports; emit no code bytes."""
+
+# Integrity assertions must remain active before reading or writing evidence.
+if not __debug__:
+    raise SystemExit("Integrity checks require assertions; rerun without Python optimization (-O/-OO).")
 import argparse
 from collections import defaultdict
 import hashlib

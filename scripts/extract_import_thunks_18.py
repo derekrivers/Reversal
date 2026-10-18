@@ -2,6 +2,10 @@
 """Characterize all six-byte absolute-IAT jump thunks in the pinned PE."""
 from __future__ import annotations
 
+# Integrity assertions must remain active before reading or writing evidence.
+if not __debug__:
+    raise SystemExit("Integrity checks require assertions; rerun without Python optimization (-O/-OO).")
+
 import argparse
 import hashlib
 import json
