@@ -1,0 +1,14 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-13",
+  "status": "Name-only proposal; coordinator alone applies canonical changes after independent review",
+  "old_annotation_evidence": "Read-only native preflight verifies exact old function names and instruction existence; .c headers corroborate. Recheck old names before mutation. No comment, structure, calling convention or prototype replacement proposed.",
+  "private_preflight_sha256": "728f0dbb5ccd7860c03a35203f30b7bb377048879c2b95601b1744fd78e7fc3d",
+  "proposals": [
+    {"address":"007f6af0","kind":"function_name","old":"FUN_007f6af0","new":"cm0102_set_scout_dword_slot_u8_index","evidence":"007f6b44..6b56 byte key/global arithmetic and signed0..15 guard; 007f6b60 writes value32 to receiver+0xc+4*i; EAX1/0; key0 fallback","confidence":"high static width and store; slot meaning open"},
+    {"address":"007f6be0","kind":"function_name","old":"FUN_007f6be0","new":"cm0102_get_scout_dword_slot_u8_index","evidence":"007f6c35..6c47 same byte arithmetic/guard; 007f6c4a returns dword receiver+0xc+4*i; key0 fallback","confidence":"high static width and load; slot meaning open"},
+    {"address":"007f6cd0","kind":"function_name","old":"FUN_007f6cd0","new":"cm0102_get_scout_688byte_record","evidence":"007f6cda..6ce5 signed byte selector0..9; 007f6d3f..6d61 n=10*(key32-global32+16)+j with signed count guard; 007f6d63..6d77 returns receiver base+688*n","confidence":"high static alias formula; record meaning and complete lifetime open"},
+    {"address":"007f6e30","kind":"function_name","old":"FUN_007f6e30","new":"cm0102_get_scout_byte_slot_u32_index","evidence":"007f6e85..6e97 full dword key/global arithmetic and signed0..15 guard; 007f6e99 returns byte at receiver+0x4c+i in AL; failure ALff","confidence":"high static width and load; byte meaning open"},
+    {"address":"007f6f20","kind":"function_name","old":"FUN_007f6f20","new":"cm0102_set_scout_byte_slot_u32_index","evidence":"007f6f75..6f87 same full dword arithmetic/guard; 007f6f89..6f90 writes low input byte to receiver+0x4c+i; EAX1/0","confidence":"high static width and store; byte meaning open"}
+  ]
+}
