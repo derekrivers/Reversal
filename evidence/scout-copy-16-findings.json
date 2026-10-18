@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "15eb7357500cf2dfd1838487e2a28e05d4965410",
+  "native_checkpoint": "2026-10-18-investigation-15",
+  "address_kind": "PE virtual addresses; field offsets and lengths in bytes",
+  "evidence": "scout-copy-16-sites.json",
+  "classification": "Two contract-supported complete local static bodies; callees/exception handlers remain boundaries; no execution validation",
+  "contracts": [
+    {
+      "entry": "007b7690",
+      "abi": "ECX destination D; one four-byte source S stack argument; RET4; EAX unspecified; EBX/EBP/ESI/EDI preserved",
+      "ordered_effects": [
+        "If read32(D+0x1ee) nonzero: 009452ca(pointer), then clear D+0x1ee",
+        "If read32(D+0x170) nonzero: 0068d1f0(pointer) with ECX00b74438, 00944c94(pointer), then clear D+0x170",
+        "REP MOVSD 0xac dwords from S to D; 688 bytes with ordinary DF0",
+        "If signed32(read32(D+0x1f2)) positive: allocate u32(45*read32(D+0x1f2)) via00944e46; store result at D+0x1ee; zero triggers diagnostic chain",
+        "Within preceding positive-allocation-count branch, if signed32(read32(D+0x1f6)) positive: m=u32(45*read32(D+0x1f6)); reread S+0x1ee; copy m>>2 dwords then m&3 bytes to the allocation result on its nonzero path",
+        "If copied D+0x170 nonzero: allocate20904 via00944cf1; if result nonzero copy0x146a dwords from reread S+0x170 and call0068d0d0(new_pointer,4) with ECX00b74438; finally publish saved new pointer or zero at D+0x170"
+      ],
+      "fields": [
+        {"offset": "0x170", "width_bits": 32, "role": "Pointer with cleanup and conditional20904-byte replacement"},
+        {"offset": "0x1ee", "width_bits": 32, "role": "Pointer with cleanup and conditional variable-size replacement"},
+        {"offset": "0x1f2", "width_bits": 32, "role": "Signed positive allocation count, multiplied by45 with wrapping32"},
+        {"offset": "0x1f6", "width_bits": 32, "role": "Independent signed positive copy count, multiplied by45 with wrapping32"}
+      ],
+      "nonpositive_allocation_count": "Skip variable allocation/copy; copied S+0x1ee pointer remains at D+0x1ee",
+      "variable_allocation_failure": {
+        "store": "D+0x1ee already zero",
+        "ordered_calls": ["00944cff", "0090d130", "00944c9f", "005e8290", "005cc7d0", "005a8f60", "00945934(-1)"],
+        "direct_global_clear": "00b67a34 after005e8290 and before005cc7d0",
+        "diagnostic_source_va": "00a701b0",
+        "diagnostic_number": "0x127f",
+        "local_behavior_if_last_call_returns": "Fall through to copy-count check; EAX allocation pointer not restored; no local recoverable error return or rollback"
+      },
+      "fixed_allocation_zero": "Skip copy/tracking call, publish zero at D+0x170, reach normal epilogue",
+      "unchecked": ["D/S pointers", "Count relationship", "Extents", "Multiplication overflow", "Self-copy/equality/overlap", "0068d0d0 return"],
+      "direction_flag": "No CLD; REP byte ranges assume ordinary DF0",
+      "ownership_limit": "Local cleanup and conditional replacement of two pointers; fixed-buffer internal pointers copied raw; no complete deep-copy or exclusive-ownership claim"
+    },
+    {
+      "entry": "00813140",
+      "abi": "ECX object O; no consumed stack arguments or observed EDX input; RET; EAX unspecified; ESI preserved",
+      "ordered_calls": [
+        {"site": "0081316b", "target": "0068d040", "receiver": "O+0x361e", "stack_arguments": []},
+        {"site": "00813188", "target": "009462bb", "stack_arguments": ["O+0x1b0e", 688, 10, "007ae4f0"]},
+        {"site": "008131a3", "target": "009462bb", "stack_arguments": ["O+1", 688, 10, "007ae4f0"]}
+      ],
+      "direct_object_writes": "None; direct writes are exception-frame/local-stack bookkeeping",
+      "outer_object_release": "No local release of O; R15 selected caller releases separately",
+      "limits": ["Callback/helper effects unresolved", "No proven safe repeat cleanup", "No direct metadata clearing", "Exception handler00961246 outside owned body"]
+    }
+  ],
+  "r15_connection": "007b7690 is the688-byte replacement target in both ten-record copy directions;00813140 cleans the two embedded arrays and trailing subobject constructed by008041c0",
+  "exception_frame": "Both bodies install/restore FS:[0]; handlers0095f5de/00961246 and exceptional paths unresolved",
+  "rng": "No direct known RNG call or RNG-state access identified; transitive effects unresolved",
+  "confidence": "High direct instruction contracts; shared tracking/lifetime interpretation bounded",
+  "excluded_claims": ["Full scouting persistence", "Transactional success", "Complete deep copying or nested cleanup", "Exclusive ownership", "Safe self-copy/overlap", "Execution equivalence"]
+}
