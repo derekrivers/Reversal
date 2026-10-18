@@ -8,7 +8,7 @@
     {
       "address": "007103e0",
       "old": null,
-      "old_note": "Existing comment not exported; merge with existing canonical text rather than overwrite blindly.",
+      "old_note": "Coordinator confirmed checkpoint 10 expected-database records no EOL comment at 007103e0; canonical annotator preflight also confirmed that EOL comment was blank before application.",
       "proposed": "R11-A static map: ECX=other slot, no explicit stack args, plain RET. May draw RNG, write slot state, iterate candidate pointers, call 007109f0/00713fc0/00714d40 and retry after 007109f0. No dynamic equivalence or complete shot outcome validated.",
       "confidence": "high for static ABI/sites; semantics provisional"
     },
