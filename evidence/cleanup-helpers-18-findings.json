@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "267756ebe6d797b6477efd5f829d45ed6cb54d07",
+  "native_checkpoint": "2026-10-18-investigation-17",
+  "address_kind": "PE virtual addresses; field offsets and sizes in bytes",
+  "evidence": "cleanup-helpers-18-sites.json",
+  "classification": "Three complete local static bodies: one list unlink contract and two narrow forwarding mechanics; no execution validation or complete lifetime contract",
+  "contracts": [
+    {
+      "entry": "0068d010",
+      "abi": "ECX=N; no stack arguments consumed; RET; no EDX input read; EBX/EBP/ESI/EDI untouched locally",
+      "mechanics": "Read32(N), push that value, call00944c94, pop into ECX, RET; normal EAX forwarded from callee without a declared semantic result",
+      "direct_object_writes": [],
+      "boundary": "00944c94 forwards its stack argument to009452ca; neither wrapper establishes allocator compatibility, nested ownership, pointer validity or null safety",
+      "limits": ["No field clear", "No null check before N dereference", "No local exception frame", "Normal guarantees assume returning ABI-conforming callee"]
+    },
+    {
+      "entry": "0068d1f0",
+      "abi": "ECX=H, dword query pointer Q at entry ESP+4; RET4; returns EAX=0 for exhausted traversal, EAX=1 after matched-node cleanup returns; EBX/EBP/ESI/EDI preserved",
+      "fields": [
+        {"base": "H", "offset": "0", "width_bits": 16, "role": "Decremented modulo2^16 after unlink"},
+        {"base": "H", "offset": "2", "width_bits": 32, "role": "Head"},
+        {"base": "H", "offset": "6", "width_bits": 32, "role": "Tail"},
+        {"base": "H", "offset": "10", "width_bits": 32, "role": "Cursor-like pointer, advanced if matched node"},
+        {"base": "N", "offset": "0", "width_bits": 32, "role": "Payload comparison pointer, later forwarded to00944c94"},
+        {"base": "N", "offset": "4", "width_bits": 16, "role": "Signed length, sign-extended to ECX"},
+        {"base": "N", "offset": "6", "width_bits": 32, "role": "Successor"},
+        {"base": "N", "offset": "10", "width_bits": 32, "role": "Predecessor"}
+      ],
+      "search": "Start N=read32(H+2), retain initial head; for each nonzero N reset EDI=Q, ESI=read32(N), ECX=sign_extend32(read16(N+4)); XOR EBP,EBP sets ZF; REPE CMPSB then JE accepts ZF=1, else advance N=read32(N+6)",
+      "comparison_edges": [
+        "Zero length makes no comparison accesses and preserves XOR-set ZF=1, so first such node matches even for Q=0",
+        "For nonnegative lengths and DF=0, compares exactly length bytes unless mismatch occurs earlier; no NUL or query-length check, so matching a shorter node prefix is sufficient",
+        "Negative signed16 length becomes ECX in0xffff8000..0xffffffff; repeat uses unsigned32 count, can run billions of byte comparisons if memory permits and bytes match",
+        "No CLD; inherited DF determines whether ESI/EDI advance or retreat; DS:ESI and ES:EDI are used"
+      ],
+      "ordered_effects_on_match": [
+        "If N equals initial head, H+2=N.next; otherwise N.prev+6=N.next",
+        "If N equals current tail at H+6, H+6=N.prev; otherwise N.next+10=N.prev",
+        "Decrement word H modulo2^16",
+        "If N equals current H+10, H+10=read32(H+10+6)",
+        "Call0068d010 with ECX=N, then00944c94(N), then return1"
+      ],
+      "no_match": "Return0 without object-field writes or calls; null head avoids query argument load and payload comparison",
+      "failure_boundary": "All unlink/count/cursor writes precede both cleanup calls. No local exception frame, rollback, callee-result test or recoverable error result; interrupted cleanup may leave the node detached and the count decremented",
+      "limits": ["First byte-content match only; not pointer identity or assured whole-string equality", "No cycle, extent, negative-length, null-query, link-consistency or alias check", "No complete ownership or thread/reentrancy safety", "Node fields not cleared before release"]
+    },
+    {
+      "entry": "00946323",
+      "abi": "Inherited EBP must point to enclosing frame; no own stack arguments read or consumed; RET; no standalone ordinary C prototype established",
+      "guard": "Read32(EBP-0x1c)!=0 returns immediately without calls or pushes; EAX unchanged on this branch",
+      "zero_guard": "Push parent-frame dwords in order +0x14,+0x10,+0xc,+8; call0094633b; RET; normal EAX unchanged after that callee and not interpreted",
+      "forwarding": "Callee receives parent frame +8,+0xc,+0x10,+0x14 in that argument order, not the helper's own entry-stack arguments",
+      "stack_balance_context": "Original PE instruction at00946396 is RET0x10; normal callee return removes the four forwarded dwords",
+      "direct_object_writes": [],
+      "r17_connection": "009462bb sets parent flag at EBP-0x1c=1 before ordinary call to00946323, so that observed path performs no further cleanup call. While flag0, forwarded base/count are the current mutable frame values rather than guaranteed original inputs",
+      "limits": ["Parent exception handler, actual exceptional reachability and0094633b effects remain boundaries", "No own frame/receiver validation", "No complete exceptional cleanup or lifetime guarantee"]
+    }
+  ],
+  "r17_refinement": "007ae4f0 supplies query P to0068d1f0 on receiver00b74438, ignores its result and then calls00944c94(P). The search uses bytes at P; matching is not proven to be allocation identity, and target-node payload may alias P. No disjointness or double-release safety follows",
+  "rng_io": "No direct identified RNG or I/O operations; transitive effects remain open",
+  "excluded_claims": ["Execution equivalence", "Whole scouting workflow/persistence", "Complete object lifetime or allocator contract", "Safe aliasing/self-cleanup", "Complete exceptional cleanup", "Compiler-source identity"]
+}
