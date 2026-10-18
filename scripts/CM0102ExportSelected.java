@@ -8,7 +8,7 @@ public class CM0102ExportSelected extends GhidraScript {
  public void run() throws Exception {
   String[] args=getScriptArgs();Path out=Paths.get(args[0]);Files.createDirectories(out);
   DecompInterface dc=new DecompInterface();dc.openProgram(currentProgram);
-  try {for(String address:args[1].split(",")) {
+  try {for(int i=1;i<args.length;i++) for(String address:args[i].split(",")) {
    Function f=currentProgram.getFunctionManager().getFunctionAt(toAddr(Long.parseLong(address,16)));
    if(f==null)throw new Exception("Missing function: "+address);
    StringBuilder asm=new StringBuilder();
