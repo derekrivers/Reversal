@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "0ab803b3adb19eb9ecdb70d4a31d759127376b78",
+  "native_checkpoint": "2026-10-18-investigation-18",
+  "address_kind": "PE virtual addresses; field offsets and sizes in bytes",
+  "evidence": "cleanup-runtime-19-sites.json",
+  "classification": "Five complete included native bodies: static local contracts; no execution equivalence",
+  "contracts": [
+    {
+      "entry": "0094633b",
+      "abi": "Four dword stack arguments B,S,C,F; own EBP frame; RET16. EBX/ESI/EDI/EBP restored on ordinary ABI-conforming callback return. No incoming ECX/EDX semantic argument established",
+      "coverage": "81 bytes in ranges0094633b..00946376 and00946384..00946398; excluded13-byte hole00946377..00946383 is not owned instruction coverage",
+      "ordered_effects": [
+        "Save incoming EBP, exception-chain head FS:[0], exception handler0094bf5c and scope table009713e0; publish own registration at FS:[0]",
+        "Save nonvolatile registers and current ESP at EBP-0x18; write dword state EBP-4=0",
+        "Decrement dword count at EBP+0x10 modulo2^32; exit if SF=1",
+        "Otherwise ECX=read32(EBP+8)-read32(EBP+0xc) modulo2^32, store ECX at EBP+8, call indirect read32(EBP+0x14), repeat",
+        "Write state EBP-4=0xffffffff; restore FS:[0] from EBP-0x10, restore registers, LEAVE, RET16"
+      ],
+      "count_edges": "If all callbacks return normally and preserve the active B,S,C,F stack argument copies, C=0..0x7fffffff gives C callbacks at B-S through B-C*S; C=0x80000000 wraps on first DEC and gives 2^31 callbacks. C=0 and C=0x80000001..0xffffffff stop before any callback. No overflow, extent, stride or callback validation",
+      "frame_alias_limit": "Every iteration reloads count, base, stride and callback from the active frame. Callback mutation of these copies can change addresses, target or termination, so fixed totals and B-k*S require preservation. Instruction-derived example: C=3,S=0,B=&active_count; callback writes zero through ECX, so only one visit occurs. No execution fixture or frame-alias validation; mutation of other frame data can also affect normal restoration and exception handling",
+      "return": "No result defined; EAX is previous FS:[0] if no callback runs, otherwise callback-supplied. ECX is previous FS:[0] on normal exit",
+      "exception_boundary": "Scope-table dwords are0xffffffff,00946377,00946381. Excluded fragments,0094bf5c,00946399 and callback behavior are not complete mapped contracts. Installing an exception frame proves no complete cleanup/rollback guarantee",
+      "r18_connection": "00946323 forwards its enclosing frame's current B,S,C,F values here only when its guard is zero; this target creates its own frame and walks backwards"
+    },
+    {
+      "entry": "009452ca",
+      "abi": "P=dword entry ESP+4; caller-cleaned plain RET; own EBP frame and saved ESI; EBX/EDI untouched locally. EAX has no unified success/result meaning",
+      "ordered_dispatch": [
+        "Load P into ESI; P=0 returns without mode/heap-global reads, calls or payload dereference; EAX unchanged on this path",
+        "Read mode dword00de4404 once. Mode3 calls00948b90(P); nonzero R calls00948bbb(R,P), then returns; zero falls back",
+        "Mode2 calls009498eb(P,&local_R,&stack_argument_P); nonzero M calls00949942(local_R,rewritten_stack_argument_P,M), then returns; zero falls back",
+        "Other modes or failed lookup call imported KERNEL32.dll!HeapFree(read32(00de4400),0,original_P) via IAT0096715c"
+      ],
+      "stack_balance": "00948b90 argument removed by POP;00948bbb two arguments removed by two POPs;009498eb/00949942 arguments removed by ADD ESP,12. HeapFree's three pushes require12-byte callee cleanup on ordinary import return; imported implementation not mapped",
+      "direct_writes": "Own frame only, including successful mode2 output rewriting the caller-supplied argument copy. No direct payload clear or global update",
+      "limits": "No release-result test, local exception frame, retry or fallback after a selected release call fails/nonreturns. Mode/global lookup and release are unsynchronized locally; repeated release, provenance, nested-resource ownership and thread safety remain unproved"
+    },
+    {
+      "entry": "00948b90",
+      "abi": "P=dword entry ESP+4; caller cleanup RET; EAX=matching20-byte table-entry address or0. Only volatile EAX/ECX/EDX modified locally",
+      "mechanics": "Read count=read32(00de43f4), start=read32(00de43f8); end=start+20*count modulo2^32. While unsigned cursor<end, accept first cursor for which unsigned32(P-read32(cursor+0xc))<0x100000; otherwise cursor+=20 modulo2^32. Return0 at exhaustion",
+      "direct_writes_calls": "None",
+      "limits": "No alignment, extent, allocation identity or liveness validation; corrupted/wrapped bounds may skip entries or cause excessive traversal/access faults. Matching only establishes this arithmetic1MiB-window predicate"
+    },
+    {
+      "entry": "009498eb",
+      "abi": "P,out_R,out_B=dwords at entry ESP+4,+8,+12; caller cleanup RET; ESI saved, other nonvolatiles untouched; EAX=M on success or0 on rejection",
+      "search": "Begin R=00ad6d58, including sentinel candidate itself. Accept first R with unsigned P>read32(R+0x10) and P<read32(R+0x14); otherwise R=read32(R), stop with0 upon returning to sentinel",
+      "success": "After first interval match require(P&15)=0 and(P&0xfff)>=0x100; failure returns0 without seeking a later overlapping interval. B=P&0xfffff000, encoded by AND CX,0xf000 after ECX=P. Write32(*out_R)=R, then load out_B from stack and write32(*out_B)=B. Return M=B+8+SAR32(P-B-0x100,4); admitted offsets make shift operand0..0xef0",
+      "direct_calls": "None",
+      "limits": "Rejected paths perform no output writes. No output-pointer validation, list cycle detection or descriptor contents/liveness check. Aliased output pointers/stack/list memory can change effects; a fault between output stores can leave partial outputs"
+    },
+    {
+      "entry": "00949942",
+      "abi": "R,B,M=dwords at entry ESP+4,+8,+12; caller cleanup RET; no direct nonvolatile changes; EAX=row unless00949829 is called, then callee-supplied",
+      "ordered_effects": [
+        "row=R+0x18+8*SAR32(B-read32(R+0x10),12), all address arithmetic modulo2^32",
+        "Read unsigned byte n=read8(M); add n to dword row modulo2^32",
+        "Write byte M=0, compare current dword row with0xf0, then write dword row+4=0xf1 without altering comparison flags",
+        "If compared row equaled0xf0, increment dword00de3010 modulo2^32; when resulting value equals0x20, call00949829(0x10), then POP argument"
+      ],
+      "limits": "Zero descriptor still clears byte and writes row+4, and can increment the global again if row already0xf0. No duplicate-release, negative-index, bounds, alias or saturation guard; no local lock/atomic prefix/exception frame. Aliasing M with row can change the compared value. Larger00949829 behavior and resulting global invariants remain open"
+    }
+  ],
+  "transitive_boundaries": ["00948bbb", "00949829", "0094bf5c", "00946399 and excluded exception fragments", "indirect callbacks", "HeapFree imported implementation"],
+  "cross_workstream_limits": "R18/R17 forwarding now reaches a null-guarded mode dispatcher; compatible allocator provenance, disjoint payload/query ownership and freedom from repeated-release hazards remain unproved",
+  "rng_io": "No direct RNG or file I/O call identified; transitive effects remain open",
+  "excluded_claims": ["Execution oracle", "Complete allocator or object lifetime", "Thread/reentrancy safety", "Complete exceptional cleanup", "Original compiler/source identity", "Whole scouting workflow"]
+}
