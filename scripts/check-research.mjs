@@ -104,8 +104,8 @@ for(const row of importRows){
   assert.ok(!mappedAddresses.has(row.entry)&&!unwindAddresses.has(row.entry)&&!wrapperAddresses.has(row.entry)&&!cleanupAddresses.has(row.entry),row.entry);
   importAddresses.add(row.entry);
 }
-assert.equal(functions.length-mappedAddresses.size-unwindAddresses.size-wrapperAddresses.size-cleanupAddresses.size-importAddresses.size,4912);
-const overlayReceipts=['09','10','11','12','13','14','15','16','17','18'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
+assert.equal(functions.length-mappedAddresses.size-unwindAddresses.size-wrapperAddresses.size-cleanupAddresses.size-importAddresses.size,4902);
+const overlayReceipts=['09','10','11','12','13','14','15','16','17','18','19'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
 for(const receipt of overlayReceipts)assert.equal(receipt.sha256,expected.sha256);
 const overlayRows=overlayReceipts.flatMap(receipt=>receipt.annotations.map(row=>[row[0],receipt.investigation>=12?row[2]:row[1]]));
 const nameOverlay=new Map(overlayRows);
