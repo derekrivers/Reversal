@@ -19,6 +19,7 @@ const checks=[
  ['reconstruction/check-strncpy-runtime-26.ts','evidence/strncpy-runtime-26-oracle.json.gz'],
  ['reconstruction/check-status-lookup-helpers.ts','evidence/status-lookup-25-oracle.json'],
  ['reconstruction/check-slot-effect-severe.ts','evidence/slot-effect-25-oracle.json'],
+ ['reconstruction/check-match-dependencies-26.ts','evidence/match-dependencies-26-oracle.json'],
  ['reconstruction/check-random.ts','evidence/random-validation/x86-oracle.json','evidence/random-validation/random-table.bin','results/random.json'],
  ['reconstruction/check-clock.ts','evidence/clock-validation/clock-oracle.json','evidence/clock-validation/clock-oracle.bin','results/clock.json'],
  ['reconstruction/check-event-rules.ts','evidence/event-rule-validation','results/event-rules.json'],
