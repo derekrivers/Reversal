@@ -1,0 +1,71 @@
+{
+  "work_unit": "R13-A",
+  "baseline_commit": "87ea0f39d5dcb62fe6969ad6570c3dca8b152673",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "evidence_class": "static original-instruction mapping; no new execution oracle",
+  "address_kind": "virtual addresses",
+  "evidence": ["reports/match-dependencies-13.md", "evidence/match-dependencies-13-sites.json", "scripts/extract_match_dependencies_13.py"],
+  "functions": [
+    {
+      "entry": "005b57c0",
+      "coverage_recommendation": "contract-supported",
+      "coverage_limitation": "Whole leaf mapped; field semantics and safe index domain remain open.",
+      "contract": "ECX=base, signed low-byte index at entry ESP+4; AL=byte(base+5b4+s8(index)); RET4",
+      "return_width": "AL data; EAX upper24 retain sign fill of input index",
+      "state_reads": ["one signed-byte stack argument", "one indexed byte at ECX+5b4+s8(index)"],
+      "state_writes": [],
+      "register_effects": "EAX changed; flags and other general registers unchanged; stack cleanup4",
+      "calls": [],
+      "direct_and_transitive_rng": "none",
+      "confidence": "high for bounded machine contract; field meaning and safe index domain open"
+    },
+    {
+      "entry": "006f4600",
+      "coverage_recommendation": "contract-supported",
+      "coverage_limitation": "Whole body and leaf mapped; raw selected-byte semantics and runtime validity remain open.",
+      "contract": "ECX=slot, no stack arguments; return raw AL from slot+108 when lookup bit1 clear, else slot+10a; RET",
+      "lookup_formula": "byte(dword(slot+19e)+9796+18e3*s8(byte(slot+27))+s8(byte(slot+19))); constants hexadecimal; 32-bit address wrap",
+      "return_width": "AL data; EAX upper24 are sign fill from slot+19, not returned byte",
+      "state_reads": ["slot+19 byte", "slot+27 signed byte", "slot+19e dword pointer", "one computed lookup byte", "one of slot+108/+10a byte"],
+      "state_writes": [],
+      "register_effects": "saves ESI; EBX/EDI/EBP preserved; EAX/ECX/EDX/flags changed",
+      "calls": [{"site": "006f4629", "target": "005b57c0", "arguments": "ECX=calculated base; slot+19 low byte pushed"}],
+      "caller_consumers": [{"site": "006bce62", "use": "TEST AL,AL after 006bce5d"}, {"site": "006bcc9b", "use": "MOVSX EDX,AL after 006bcc96"}],
+      "direct_and_transitive_rng": "none",
+      "dependency_closed": "R12 006bce20 callee has no intervening game-state writes or RNG in ordinary execution",
+      "confidence": "high for static lookup/selection/ABI; byte semantics provisional"
+    },
+    {
+      "entry": "006f46b0",
+      "coverage_recommendation": "contract-supported",
+      "coverage_limitation": "Whole owned body mapped; diagnostic/cleanup transitive effects and termination remain unassigned.",
+      "contract": "ECX=slot, x/y low bytes at entry ESP+4/+8; RET8 on two explicit return paths; no defined result established",
+      "cell_formula": "dword(slot+19e)+215e+5a*(12*s8(x)+s8(y)); constants hexadecimal except decimal12; 32-bit address wrap",
+      "count_address": "cell+58+s8(byte(slot+27)); 58 hexadecimal",
+      "pointer_address": "cell+4*(11*s8(byte(slot+27))+s8(index)); decimal11",
+      "control_order": [
+        "equal target/current coordinate bytes return immediately without registration repair",
+        "signed slot+28<=-1 takes insertion; nonnegative takes removal then insertion",
+        "existing zero old-count takes diagnostics and early return if callees return",
+        "existing nonzero count swaps last pointer over old index, decrements byte count, fixes nonnull replacement's +28, then appends without capacity guard",
+        "negative index copies destination count to slot+28 and increments byte count, then signed newcount<=11 permits pointer append; otherwise diagnostics/cleanup/00945934(-1)",
+        "successful append writes slot+102/+103 and mirrors match+8ea7/+8ea8 only when slot==dword(match+f582)"
+      ],
+      "direct_state_writes": ["cell pointer dwords", "cell count bytes", "slot+28 byte", "replacement pointer's +28 byte if nonnull", "slot+102/+103 bytes", "match+8ea7/+8ea8 conditional bytes", "00b67a34 dword zero on diagnostic paths"],
+      "non_atomic_error": "negative-index insertion updates slot index and destination count before overflow diagnostics",
+      "direct_rng": "none",
+      "transitive_rng": "none on successful/equal-coordinate routes; unknown inside diagnostic and cleanup dependencies",
+      "unresolved_callees": ["00944cff", "00944c9f", "005e8290", "005cc7d0", "00945934->00945956"],
+      "tiny_dependency_checks": {"0090d130": "returns constant EAX=00ad4394", "005a8f60": "RET only", "00945934": "17-byte wrapper calls 00945956 then contains ADD ESP,c; RET; transitive nonreturn unproved"},
+      "boundary_challenge": "Ghidra's nonreturn assumption for 00945934 depends on its callee. If it returned, insertion continuation would have an outstanding argument and clobbered registers; safe return/recovery is not established.",
+      "confidence": "high for direct normal control/data flow and widths; error transitive effects and runtime invariants unresolved"
+    }
+  ],
+  "unresolved": [
+    "live coordinate, side, index and count domains; cell alias/lifetime invariants",
+    "semantic meaning of lookup bit1 and raw slot+108/+10a bytes",
+    "diagnostic, cleanup and termination transitive effects",
+    "large R11 dispatch callee bodies and connected action33 outcomes"
+  ],
+  "scope_limits": ["No game/UI build or TypeScript reconstruction", "No original data/code redistributed", "No connected shot outcome or full-match equivalence"]
+}
