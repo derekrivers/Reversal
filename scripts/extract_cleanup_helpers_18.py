@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """R18-C compact static evidence, from pinned private inputs; Capstone 5.0.7."""
+
+# Integrity assertions must remain active before reading or writing evidence.
+if not __debug__:
+    raise SystemExit("Integrity checks require assertions; rerun without Python optimization (-O/-OO).")
 import argparse
 import hashlib
 import json

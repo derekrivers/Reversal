@@ -4,6 +4,10 @@
 Reads the pinned PE and optional read-only checkpoint-12 exports. Retains hashes,
 selected instruction sites and call targets; never writes native or bulk exports.
 """
+
+# Integrity assertions must remain active before reading or writing evidence.
+if not __debug__:
+    raise SystemExit("Integrity checks require assertions; rerun without Python optimization (-O/-OO).")
 import argparse
 import hashlib
 import json

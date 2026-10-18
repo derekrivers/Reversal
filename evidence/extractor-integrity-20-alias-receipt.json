@@ -1,0 +1,75 @@
+{
+  "work_unit": "R20-V2",
+  "check": "private input receipt aliases rejected before specimen validation and at write",
+  "runs": [
+    {
+      "work_unit": "R20-V2",
+      "synthetic_inputs_only": true,
+      "python_version": "3.13.7",
+      "platform": "win32",
+      "alias_cases": [
+        "binary:direct",
+        "binary:hardlink",
+        "preflight:direct",
+        "preflight:hardlink",
+        "export-manifest:direct",
+        "export-manifest:hardlink",
+        "nested-export:direct",
+        "nested-export:hardlink",
+        "export-directory:new-output",
+        "binary:normalized-path"
+      ],
+      "cli_modes": [
+        "normal",
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "cli_rejections": 40,
+      "writer_rejections": 10,
+      "skipped": [
+        "binary:symlink:Windows privilege unavailable",
+        "preflight:symlink:Windows privilege unavailable",
+        "export-manifest:symlink:Windows privilege unavailable",
+        "nested-export:symlink:Windows privilege unavailable",
+        "export-directory:symlink-parent:Windows privilege unavailable"
+      ],
+      "private_stand_ins_unchanged": true,
+      "valid_receipt_create_and_replace": "passed"
+    },
+    {
+      "work_unit": "R20-V2",
+      "synthetic_inputs_only": true,
+      "python_version": "3.12.3",
+      "platform": "linux",
+      "alias_cases": [
+        "binary:direct",
+        "binary:symlink",
+        "binary:hardlink",
+        "preflight:direct",
+        "preflight:symlink",
+        "preflight:hardlink",
+        "export-manifest:direct",
+        "export-manifest:symlink",
+        "export-manifest:hardlink",
+        "nested-export:direct",
+        "nested-export:symlink",
+        "nested-export:hardlink",
+        "export-directory:new-output",
+        "export-directory:symlink-parent",
+        "binary:normalized-path"
+      ],
+      "cli_modes": [
+        "normal",
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "cli_rejections": 60,
+      "writer_rejections": 15,
+      "skipped": [],
+      "private_stand_ins_unchanged": true,
+      "valid_receipt_create_and_replace": "passed"
+    }
+  ]
+}

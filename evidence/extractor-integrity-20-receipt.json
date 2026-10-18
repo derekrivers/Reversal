@@ -1,0 +1,280 @@
+{
+  "work_unit": "R20-V2",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "specimen_read_only": true,
+  "python_version": "3.13.7",
+  "decoder": "Capstone 5.0.7 (checked by R17 extractor)",
+  "check": "optimized-mode integrity refusal; retained findings unchanged",
+  "excluded_extractor": "scripts/extract_cleanup_family_18.py",
+  "audited_assert_extractors": 21,
+  "assertion_free_extractors": [
+    "scripts/extract_db_helpers_18.py",
+    "scripts/extract_db_lower_17.py",
+    "scripts/extract_db_runtime_19.py",
+    "scripts/extract_db_stream_16.py"
+  ],
+  "negative_checks": [
+    {
+      "script": "scripts/extract_cleanup_helpers_18.py",
+      "integrity_assertions": 21,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_cleanup_runtime_19.py",
+      "integrity_assertions": 23,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_delete_wrapper_family_17.py",
+      "integrity_assertions": 21,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_import_thunks_18.py",
+      "integrity_assertions": 24,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_match_action_19.py",
+      "integrity_assertions": 30,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_match_core_16.py",
+      "integrity_assertions": 35,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_match_dependencies_13.py",
+      "integrity_assertions": 15,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_match_dependency_15.py",
+      "integrity_assertions": 24,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_match_dispatch_14.py",
+      "integrity_assertions": 30,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_match_dispatch_17.py",
+      "integrity_assertions": 35,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_match_helpers_12.py",
+      "integrity_assertions": 16,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_match_helpers_18.py",
+      "integrity_assertions": 35,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_match_ui_12.py",
+      "integrity_assertions": 15,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_scout_cleanup_17.py",
+      "integrity_assertions": 15,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_scout_copy_16.py",
+      "integrity_assertions": 15,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_scouting_boundary_14.py",
+      "integrity_assertions": 16,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_scouting_lifecycle_15.py",
+      "integrity_assertions": 17,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_shot_helper_11.py",
+      "integrity_assertions": 16,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_training_boundary_13.py",
+      "integrity_assertions": 13,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_unwind_family_15.py",
+      "integrity_assertions": 15,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_unwind_targets_16.py",
+      "integrity_assertions": 22,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    }
+  ],
+  "normal_r17_regeneration": {
+    "entries": [
+      "006fa250",
+      "006fa490",
+      "006f09f0"
+    ],
+    "retained_output_byte_identical": true,
+    "sha256": "c6bf10b88d03d14b3152020d715199965cf474004f4d10faccc6e56805c4f1a1"
+  },
+  "public_data": "Hashes and status only; synthetic wrong input and all extractor outputs were temporary"
+}

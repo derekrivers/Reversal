@@ -3,6 +3,10 @@
 
 Requires Capstone 5.0.7. This is a decoder/static CFG check, not an execution oracle.
 """
+
+# Integrity assertions must remain active before reading or writing evidence.
+if not __debug__:
+    raise SystemExit("Integrity checks require assertions; rerun without Python optimization (-O/-OO).")
 import argparse
 import hashlib
 import json

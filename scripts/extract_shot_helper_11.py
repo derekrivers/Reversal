@@ -5,6 +5,10 @@ Requires Capstone 5.0.7 and the private pinned specimen. Optional read-only
 Ghidra assembly exports corroborate owned instruction addresses and direct calls.
 This is not an emulator and does not certify dynamic paths or helper effects.
 """
+
+# Integrity assertions must remain active before reading or writing evidence.
+if not __debug__:
+    raise SystemExit("Integrity checks require assertions; rerun without Python optimization (-O/-OO).")
 import argparse
 import hashlib
 import json
