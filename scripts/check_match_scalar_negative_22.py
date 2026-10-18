@@ -71,7 +71,19 @@ if __name__=='__main__':
             command=[str(a.node),'reconstruction/check-match-scalar.ts',str(a.oracle),'--mutate-word']
             done=subprocess.run(command,capture_output=True,text=True)
             m.need(done.returncode != 0 and 'register mismatch' in done.stderr,'TypeScript word mutation not rejected')
-            out.append({'mode':'Node24','checks':[{'case':'changed WORD read','rejected':True,'reason':'register mismatch'}]})
+            node_checks=[{'case':'changed WORD read','rejected':True,'reason':'register mismatch'}]
+            with tempfile.TemporaryDirectory(prefix='r22a-oracle-negative-') as tmp:
+                raw=json.loads(a.oracle.read_text(encoding='utf-8'))
+                for label,change in (('truncated oracle',lambda item:item['cases'].pop()),
+                                     ('tampered register',lambda item:item['cases'][0].__setitem__('eax',item['cases'][0]['eax']^1))):
+                    modified=json.loads(json.dumps(raw))
+                    change(modified)
+                    path=Path(tmp)/(label.replace(' ','-')+'.json')
+                    path.write_text(json.dumps(modified)+'\n',encoding='utf-8',newline='\n')
+                    done=subprocess.run([str(a.node),'reconstruction/check-match-scalar.ts',str(path)],capture_output=True,text=True)
+                    m.need(done.returncode != 0 and 'oracle SHA-256 mismatch' in done.stderr,label+' accepted')
+                    node_checks.append({'case':label,'rejected':True,'reason':'oracle SHA-256 mismatch'})
+            out.append({'mode':'Node24','checks':node_checks})
         if a.output:
             a.output.write_text(json.dumps({'work_unit':'R22-A','negative_checks':out},indent=2)+'\n',encoding='utf-8',newline='\n')
-        print(json.dumps({'normal_and_optimized_rejections':6,'typescript_mutation_rejected':bool(a.node and a.oracle)}))
+        print(json.dumps({'normal_and_optimized_rejections':6,'node_rejections':3 if a.node and a.oracle else 0}))

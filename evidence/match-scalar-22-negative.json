@@ -48,6 +48,16 @@
           "case": "changed WORD read",
           "rejected": true,
           "reason": "register mismatch"
+        },
+        {
+          "case": "truncated oracle",
+          "rejected": true,
+          "reason": "oracle SHA-256 mismatch"
+        },
+        {
+          "case": "tampered register",
+          "rejected": true,
+          "reason": "oracle SHA-256 mismatch"
         }
       ]
     }
