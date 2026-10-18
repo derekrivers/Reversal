@@ -138,6 +138,14 @@
     "R19-C": {
       "report": "reports/cleanup-runtime-19.md",
       "evidence": "evidence/cleanup-runtime-19-sites.json"
+    },
+    "R21-A": {
+      "report": "reports/match-microhelpers-21.md",
+      "evidence": "evidence/match-microhelpers-21-instructions.json"
+    },
+    "R21-B": {
+      "report": "reports/match-state-21.md",
+      "evidence": "evidence/match-state-21-sites.json"
     }
   },
   "functions": [
@@ -680,6 +688,31 @@
       "address": "00949942",
       "state": "contract-supported",
       "source": "R19-C"
+    },
+    {
+      "address": "006f0970",
+      "state": "contract-supported",
+      "source": "R21-A"
+    },
+    {
+      "address": "007160d0",
+      "state": "contract-supported",
+      "source": "R21-A"
+    },
+    {
+      "address": "007160e0",
+      "state": "contract-supported",
+      "source": "R21-A"
+    },
+    {
+      "address": "006f5810",
+      "state": "contract-supported",
+      "source": "R21-B"
+    },
+    {
+      "address": "006c50d0",
+      "state": "contract-supported",
+      "source": "R21-B"
     }
   ]
 }
