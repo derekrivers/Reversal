@@ -1,0 +1,67 @@
+{
+  "work_unit": "R18-A",
+  "baseline": "267756e",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "scope": "Four new complete local static bodies; 006f09b0 is previously reviewed context only",
+  "address_kind": "virtual; offsets and tokens hexadecimal in expressions; decimal quantities stated",
+  "notation": "p=entry ECX; m=dword(p+19e); R=0090cfc0; F=00945640; low-width arithmetic wraps",
+  "functions": [
+    {
+      "entry": "006f0630",
+      "contract": "Clear previous active slot state, conditionally credit same-side predecessor, install p into match active pointer and copy coordinates/heading with side counters",
+      "abi": "ECX=p, no stack args, plain RET; saves EBX/ESI; EBP/EDI untouched; no normalized result",
+      "bytes": 819,
+      "instructions": 191,
+      "direct_rng_sites": 0,
+      "nonframe_stores": 38,
+      "call_order": "Conditional 006c38c0(m;p) after q+2 increment, unconditional second lookup after clearing f576/f57a/477e; both test AX==1",
+      "predecessor_credit_decimal": "108 for first AX==1; otherwise96 for side1 y>=6 or side0 y<6; otherwise150 for side1 y<3 or side0 y>8; otherwise120; add240 to m+4782",
+      "indexed_side_effects": "m+1a5+s8(side)=1 then m+1a5+(side==0)=0; after m+8eab update, side!=ff increments m+8d46+s8(side), opposite positive signed byte loses10",
+      "limits": ["Initial m null guard does not validate later reloads", "Old slot and predecessor can alias p or each other", "Side is not restricted to0/1", "Repeated field/pointer reads and tactical calls cannot be folded into stable snapshots"]
+    },
+    {
+      "entry": "006f4920",
+      "contract": "Write perturbed coordinate-derived heading word p+19a and apply one signed +/-360 correction",
+      "abi": "ECX=p; low bytes x0,y0,x1,y1 in four dword stack slots; RET16 bytes; saves EBX/ESI and conditional EDI; no normalized result",
+      "bytes": 264,
+      "instructions": 78,
+      "direct_rng_sites": 4,
+      "nonframe_stores": 7,
+      "heading_table_index": "24*s8(low8(x1-x0))+s8(low8(y1-y0)); read word at b67c30+2*index",
+      "rng_order": "Optional R(360) for coincident nonspecial coordinates; always R(120); if snapshotted s8(p+10c)*s8(p+105)<result, R(30) then R(30)",
+      "post_draw_adjustment": "Add low16(2*(s8(dword(p+6d)+3b)-s8(dword(p+6d)+30))); negative signed16 heading adds360 once, else heading>359 subtracts360 once",
+      "limits": ["Original heading table content/producer unreviewed", "No table/index/profile/null guard", "Single correction does not guarantee range0..359 for arbitrary input"]
+    },
+    {
+      "entry": "006f56c0",
+      "contract": "Subtract amount-dependent or mode-dependent x87 cost from float32 p+4d; write zero on negative or unordered comparison",
+      "abi": "ECX=p; float32 amount at ESP+4, signed16 mode at ESP+8; RET8; no nonvolatile integer modification; no defined integer result",
+      "bytes": 282,
+      "instructions": 70,
+      "direct_rng_sites": 0,
+      "nonframe_stores": 5,
+      "sentinel_minus1": "Ordered greater thresholds9500/8750/7750 choose12/10/8, else6; p+4d -= amount*chosen*float32(0.09090909361839294); FSTP then reload before zero comparison",
+      "other_modes": "p+4d -= (float64(200)-float32(p+d5)*float64(8.5))*coefficient; amount unused; FST retains unrounded x87 value for zero comparison",
+      "coefficient_cases": {"006f5770": [19,33], "006f5756": [21,36,46], "default": "006f57a5"},
+      "coefficient_addresses": {"006f5770": "0096d770", "006f5756": "0096d778", "006f57a5": "0096d768"},
+      "limits": ["No execution oracle or runtime x87 control measurement", "Unordered threshold tests descend, unordered final result writes0", "Sentinel compares rounded store; other modes compare retained x87 result", "No upper clamp or domain proof"]
+    },
+    {
+      "entry": "0070d430",
+      "contract": "Return1 after fallback commentary, or0 after selected action delegation with ordered draws and optional scalar/refresh effects",
+      "abi": "ECX=p; signed16 threshold at ESP+4, whose dword slot is reused as signed profile scratch; RET4; preserves ESI, conditional EBX, transient EDI, untouched EBP; normalized EAX0/1",
+      "bytes": 504,
+      "instructions": 167,
+      "direct_rng_sites": 11,
+      "nonframe_stores": 3,
+      "entry_gate": "threshold>1000 =>event1fe2 return1; otherwise R(F(s8(dword(p+6d)+21)+float32(p+a5))) then R(20), first>=second =>event1fe2 return1",
+      "interception_gate": "snapshot s8(p+106), draw R(8); snapshot>result selects event1fe3/kind3, else event216f/kind1",
+      "kind3_order": "commentary, R(2), byte p+2b +=AL, R(10), conditional R(200), 006cd770(kind3), return0",
+      "kind1_order": "commentary, R(3), byte p+2b +=AL, R(10), conditional R(200), 006cd770(kind1), word p+35 -=250, R(30*s8(dword(p+69)+5a)+20), conditional R(3)/NEG AL/007172d0, conditional 006eecb0(p;0), return0",
+      "action_low_view_arguments": "(p.x,p.y,kind,p.side,flag,1,last), where R(10)!=0 gives(1,0), else R(200)==0 gives(0,p), else(0,0)",
+      "limits": ["Byte assignments precede full register pushes: upper bits of coordinate/side/id arguments unnormalized", "NEG AL does not sign-extend full EAX argument", "Dynamic bound positivity unchecked", "Commentary/action/conversion/refresh transitive effects excluded"]
+    }
+  ],
+  "totals": {"new_bodies":4,"body_bytes":1869,"instructions":506,"branches":72,"calls":26,"rng_sites":15,"nonframe_stores":53,"normal_return_sites":9,"supplied_R17_callers":10},
+  "validation_kind": "Static complete local bodies, no numerical/original-entry oracle, live match trace or connected gameplay claim"
+}
