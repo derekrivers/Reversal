@@ -1,0 +1,40 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "status": "proposal only; no canonical native change",
+  "annotations": [
+    [
+      "00682b30",
+      "cm0102_write_league_peer_bucket_bytes_candidate",
+      "R10-C static: ECX receiver; one borrowed table of 0x3b-byte rows; RET 4. Signed16 receiver +0x3e count. Equal input WORD +0x19 peers select 14-byte nested entries through row +5; byte/word aggregates enter local zeroed scratch. Sort uses 006834f0 dependency, then low8 bucket count/decrements are stored at input row +4; scratch is freed. Comparator depends on global 00b679fc; caller 006471a0 later rewrites row +4. Full ranking/fixture algorithm unresolved."
+    ],
+    [
+      "00682e10",
+      "cm0102_apply_league_weighted_amounts_candidate",
+      "R10-C static: ECX receiver; no stack args or EDX input; plain RET, no return contract. BYTE +0xe1: 2 skips, 3 calls registry vtable +0x6c; others divide signed32 +0x28 by signed low16 triangular sum of signed16 count +0x3e, then credit weighted32 amounts through finance helpers. IDIV precedes positive-count guard: nonpositive count yields divisor 0. No direct receiver latch; dispatch and full lifecycle unresolved."
+    ],
+    [
+      "00682f70",
+      "cm0102_sum_league_weighted_amounts_candidate",
+      "R10-C static: ECX receiver; one raw32 increment argument; RET 4; EAX32 sum. Positive signed16 receiver +0x3e count n sums increment*(1+...+n) modulo 2^32 by original additions. Negative count returns 0; zero diagnoses, then rechecks count (unchanged zero returns 0). No direct receiver/table writes. Static contract only; no new oracle or complete fixture/outcome claim."
+    ]
+  ],
+  "code_comments": [
+    [
+      "00682d94",
+      "R10-C: store low8 bucket to first input row matching scratch raw32 key. Bucket starts at count and decrements only when adjacent comparator is nonzero."
+    ],
+    [
+      "00682ed6",
+      "R10-C: divisor is signed low16 of triangular sum. IDIV at 00682edf precedes count guard at 00682ee8; nonpositive count reaches division by 0 on weighted path."
+    ],
+    [
+      "00682f1f",
+      "R10-C: amount pushed at 00682f01 survives resolver RET 4; resolver EAX becomes ECX here and remaining amount argument is consumed by 005999a0 (RET 4)."
+    ],
+    [
+      "00682ff3",
+      "R10-C: wrap32 accumulation of increment, 2*increment, ..., n*increment; n is signed16 receiver +0x3e."
+    ]
+  ],
+  "datatype_policy": "No structure/prototype replacement proposed. Receiver/row layouts are partial, names provisional, and zero-stack ECX convention cannot distinguish all compiler labels."
+}
