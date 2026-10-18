@@ -8,13 +8,15 @@ This inventories the pinned 3.9.68 executable's Ghidra-inferred functions. It is
 | External function symbols | 143 |
 | Embedded original source-path strings | 396 |
 | Functions directly referencing a source path | 1,892 |
-| Functions carrying working research names | 27 |
+| Functions carrying working research names in this snapshot | 27 |
 | Call instructions | 93,349 |
 | Call instructions without a static target | 851 |
 | Executable memory bytes | 5,660,672 |
 | Executable bytes in inferred function bodies | 4,309,884 |
 
 The function-body byte count measures structural analysis only. It must not be presented as a percentage of simulation or source code reconstructed. Most functions still have no established behavioral contract.
+
+This atlas is the investigation-08 structural snapshot. Investigation 09 adds four native working names in [`investigation-09-annotations.json`](../investigation-09-annotations.json); the checkpoint verifier applies that small name overlay while retaining the original atlas rows.
 
 ## Query the map
 

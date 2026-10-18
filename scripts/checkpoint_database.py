@@ -14,7 +14,7 @@ ARCHIVE=ROOT/'cm0102-ghidra-database.zip'
 EXPECTED='0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86'
 
 def digest(p): return hashlib.sha256(p.read_bytes()).hexdigest()
-def write_json(p,obj): p.write_text(json.dumps(obj,indent=2)+'\n')
+def write_json(p,obj): p.write_text(json.dumps(obj,indent=2)+'\n',encoding='utf-8',newline='\n')
 def files(base):
     return {str(p.relative_to(base)): {'bytes':p.stat().st_size,'sha256':digest(p)}
             for p in sorted(base.rglob('*')) if p.is_file()
@@ -41,7 +41,7 @@ def stage():
     names.update({row[0]:row[1] for row in annotations['annotations']})
     types={t['path']:t for t in annotations['partial_data_types']}
     comments_by_address={}
-    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json']:
+    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json']:
       event_receipt=ROOT/'evidence'/receipt_name
       if event_receipt.exists():
         event_annotations=json.loads(event_receipt.read_text())
@@ -98,7 +98,7 @@ Set JAVA_HOME to JDK 21. Use Ghidra's support/analyzeHeadless executable:
     /absolute/unzipped/expected-database.json /new/verification.json
 
 The complete research bundle additionally retains checkpoint_database.py.
-''')
+''',encoding='utf-8',newline='\n')
     (STAGE/'scripts').mkdir()
     shutil.copyfile(ROOT/'scripts/CM0102VerifyCheckpoint.java',STAGE/'scripts/CM0102VerifyCheckpoint.java')
     archive()
@@ -125,7 +125,7 @@ def finalize():
     with zipfile.ZipFile(ARCHIVE) as z:
         assert z.testzip() is None
         for name,spec in manifest['project_files'].items():
-            b=z.read('cm0102-ghidra-database/ghidra-project/'+name)
+            b=z.read('cm0102-ghidra-database/ghidra-project/'+name.replace('\\','/'))
             assert len(b)==spec['bytes'] and hashlib.sha256(b).hexdigest()==spec['sha256']
     print(json.dumps({'status':'passed','archive':str(ARCHIVE),'bytes':ARCHIVE.stat().st_size,'sha256':digest(ARCHIVE),
                       'restored_checks':receipt},indent=2))
