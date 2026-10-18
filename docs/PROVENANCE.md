@@ -19,6 +19,7 @@ Full mirror and input metadata are in [provenance.json](../evidence/provenance.j
 - `evidence/event-config-map.json`: factual config metadata and selected semantic links; the complete config text is acquired locally when needed.
 - `evidence/analysis-index.json`: compact direct-call index from the four focused exports. The full graphs and bulk pseudocode remain in the private bundle.
 - `evidence/code-atlas/`: executable-wide inferred function/source-path inventory, filename-based research workstreams and a scope registry separating whole-function checks from instruction slices. It is not the complete original source.
+- `evidence/penalty-resolution-validation/`: independent original-instruction category, keeper base-draw and ratio-gate outputs with synthetic frames; the binary fixture contains category/draw-count bytes only, never code or original game memory.
 - `evidence/penalty-preparation-validation/`: original calculation-slice outputs with commentary suppressed, synthetic frames and the public synthetic RNG table; no complete shot/goal execution.
 - `evidence/*-annotations.*`: reproducible working names, comments and recovered field layouts.
 - `evidence/*-validation/`: synthetic numerical inputs and outputs captured from admitted original x86 instruction ranges. No executable instructions are stored in the binary fixtures.

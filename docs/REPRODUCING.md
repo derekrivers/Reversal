@@ -44,6 +44,19 @@ Only admitted original code ranges execute, using synthetic state. Large-bound R
 
 The penalty-preparation harness joins three calculation slices with synthetic frames, sets sudden-death=1 to suppress commentary and uses the retained synthetic table. It does not execute the shared keeper/goal resolver or establish complete penalty-attempt equivalence.
 
+Regenerate investigation 06's independent shot-resolution boundaries:
+
+```sh
+python3 scripts/emulate_penalty_resolution.py downloads/cm0102.exe \
+  evidence/random-validation/random-table.bin results/new-penalty-resolution
+node reconstruction/check-penalty-resolution.ts results/new-penalty-resolution \
+  evidence/random-validation/random-table.bin results/new-penalty-resolution-validation.json
+```
+
+The 131,072 classification cases share one synthetic initial RNG state (at table wrap) and sweep both variant bytes and all raw quality words. The 4,096 keeper base cases use sampled ratings/states including wrap and zero bounds. The 4,056 gate cases use signed16 terms and match-state bytes 0/2/8/255. Endpoints are admitted only to stop before executing their instructions. No original instructions are replaced, no complete goal routine executes, and the slices are not composed into an attempt.
+
+`CM0102ExportSelected.java OUTPUT_DIRECTORY HEX_ADDRESS[,HEX_ADDRESS...]` exports assembly and inferred pseudocode locally without modifying the native database. Keep its generated bulk output in an ignored `evidence/*-map/` directory.
+
 ## Native analysis
 
 Install Ghidra 12.1.4 and JDK 21, set `GHIDRA_INSTALL_DIR` and `JAVA_HOME`, then:

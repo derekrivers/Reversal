@@ -1,0 +1,88 @@
+{
+  "investigation": 6,
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses, not file offsets",
+  "method": "Static assembly verification plus isolated original-instruction emulation with synthetic state and the retained synthetic RNG table",
+  "keeper": {
+    "function": "00700420",
+    "inputs": {
+      "variant0_rating": "signed16 slot+0x168",
+      "variant_nonzero_rating": "signed16 slot+0x16a"
+    },
+    "base_formula": "bound=sign16(rating+220); first=random(bound); base=random(bound-first)",
+    "tested_slice": [
+      "007004d6",
+      "007004ec"
+    ],
+    "unrecovered_postlude": [
+      "00700a4f",
+      "00700b87"
+    ],
+    "postlude_inputs": [
+      "float32 slot+0xd1",
+      "uint8 slot+0xf",
+      "signed8 match+0x8eaa",
+      "signed16 slot+0x3b",
+      "selected signed16 rating"
+    ],
+    "postlude_constants": {
+      "009688b0": 10,
+      "00968950": 2,
+      "00968e40": 0.7,
+      "00968e80": 0.3,
+      "0096d698": 0.5714285714285714,
+      "00968ea8": 20
+    }
+  },
+  "classification": {
+    "function": "00702050",
+    "penalty_threshold": 120,
+    "slice": [
+      "00703b25",
+      "00703be7"
+    ],
+    "eligible_categories": [
+      1,
+      14,
+      15
+    ],
+    "quality_width": "signed16",
+    "variant": "byte selected upstream; raw0 vs nonzero, without assigned semantic names"
+  },
+  "scoring_branch_gate": {
+    "slice": [
+      "00706cba",
+      "00706d26"
+    ],
+    "formula": "float32(100*quality/(keeperTerm+quality)); zero denominator->0; if nonzero denominator and ratio<=68 and match+1 in[2,8], ratio=float32(ratio+2); enter scoring branch iff ratio>71",
+    "threshold_is_probability": false,
+    "adjustment_can_change_gate_boolean": false
+  },
+  "static_links": [
+    {
+      "function": "006ce110",
+      "contract": "Select/correct cached goalkeeper slot by tactical position1 and side; fallback/reassignment branches remain untested"
+    },
+    {
+      "function": "00713e90",
+      "action33": "Returns byte2 and output adjustment word0 through early exit; whole helper not reconstructed"
+    },
+    {
+      "function": "006be710",
+      "penalty_call_mode": 3,
+      "action_kind": 51
+    }
+  ],
+  "coverage": {
+    "classification": 131072,
+    "keeper_base": 4096,
+    "ratio_gate": 4056
+  },
+  "next": "Reconstruct common keeper postlude00700a4f..00700b87 with exact original x87 rounding and exposed RNG state, then trace final quality and score writes before joining slices.",
+  "limitations": [
+    "Independent synthetic frames; not a full penalty or match run",
+    "Synthetic negative ratings/quality and singular denominators exercise machine behavior, not reachable game states",
+    "No full goal/save or probability formula recovered",
+    "No original game bytes or bulk decompiled source published"
+  ]
+}

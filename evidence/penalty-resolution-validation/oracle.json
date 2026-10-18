@@ -1,0 +1,71 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "oracle": "original x86 instruction slices; independent synthetic frames",
+  "synthetic_table_sha256": "befdec88f802582bba7450e418aaa39837036c8d038810158cfc7a998be1b3db",
+  "classification": {
+    "start": "00703b25",
+    "end_exclusive": "00703beb",
+    "threshold": 120,
+    "order": "variant=0 then1; raw quality0..65535 in each; records category:u8, RNG-draw-count:u8",
+    "cases": 131072,
+    "initial": {
+      "cursorIndex": 50999,
+      "offset": 12345,
+      "crtState": 1
+    },
+    "final_states_by_draw_count": {
+      "0": {
+        "cursorIndex": 50999,
+        "offset": 12345,
+        "crtState": 1
+      },
+      "1": {
+        "cursorIndex": 0,
+        "offset": 41,
+        "crtState": 2745024
+      }
+    },
+    "category_counts": {
+      "2": 32778,
+      "5": 50,
+      "8": 35,
+      "10": 11,
+      "12": 15,
+      "1": 65224,
+      "14": 35,
+      "3": 32778,
+      "6": 50,
+      "9": 35,
+      "11": 11,
+      "13": 15,
+      "15": 35
+    },
+    "bytes": 262144,
+    "sha256": "7cf6d7f0092cf4d72186dc55f6d78743a14332c1e4e3da4a2e4e4830737aa26b"
+  },
+  "keeper": {
+    "start": "007004d6",
+    "end_exclusive": "00700a4f",
+    "cases": 4096
+  },
+  "gate": {
+    "start": "00706cba",
+    "stop_addresses": [
+      "00706d2c",
+      "00706dfd"
+    ],
+    "cases": 4056,
+    "constants": {
+      "0096d808": 71,
+      "0096d80c": 68,
+      "009689a8": 2
+    }
+  },
+  "limitations": [
+    "Slices are tested independently; no full shot, penalty or match equivalence.",
+    "Classification receives quality after earlier adjustments and an externally supplied variant byte; penalty threshold120 only.",
+    "Keeper base branch skips validity/position checks and stops before00700a4f floating-point adjustment and additional RNG.",
+    "Ratio gate requires shot category1,14 or15; keeperTerm and quality are supplied after upstream changes.",
+    "The71 threshold is a branch comparison, not a probability or unconditional goal; score changes and commentary do not execute."
+  ]
+}
