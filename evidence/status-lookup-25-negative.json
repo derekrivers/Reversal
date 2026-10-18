@@ -1,0 +1,42 @@
+{
+  "work_unit": "R25-A",
+  "normal_optimized_sites_identical": true,
+  "normal_optimized_oracle_identical": true,
+  "sites_sha256": "0fc73d9c1c73c6f7903ee1020a03e49b105f3c45c07fa4f35dd30c00e042f587",
+  "oracle_sha256": "188f069ba861e142c0cc6f204b674b4ca19031cd9842c0e2e13cbb5519db66df",
+  "negative_checks": {
+    "altered_specimen_normal": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_specimen_optimized": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_native_operand_normal": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_native_operand_optimized": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "resealed_native_operand_normal": {
+      "rejected": true,
+      "reason": "operand mismatch"
+    },
+    "resealed_native_operand_optimized": {
+      "rejected": true,
+      "reason": "operand mismatch"
+    },
+    "changed_typescript_result": {
+      "rejected": true,
+      "reason": "register mismatch"
+    },
+    "tampered_oracle": {
+      "rejected": true,
+      "reason": "oracle SHA mismatch"
+    }
+  },
+  "scope": "synthetic call-free original entry-to-return cases; refresh and diagnostics remain static"
+}

@@ -1,0 +1,29 @@
+{
+  "work_unit": "R25-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "77fb2072a25ff030ab3c0e58c5cd289730a9a8c5345ceaaf56e948e727c1dd0b",
+  "exact_old_preflight_sha256": "34ca2e277634b5a4bdbde668ffcc7d3b91a65a4c1689844f54c454b644834899",
+  "proposals": [
+    {
+      "address": "0062ec00",
+      "old_name": "FUN_0062ec00",
+      "new_name": "status_signed_byte_table_lookup_0062ec00",
+      "change": "name only",
+      "confidence": "high for signed8 indexing and byte extraction; table meaning unknown",
+      "evidence": "0062ec00 MOVSX, 0062ec05 LEA triple, 0062ec08 byte load at 009e7ad9+13*signed8, 0062ec0f RET4; all 256 signed-byte inputs executed"
+    },
+    {
+      "address": "0062ece0",
+      "old_name": "FUN_0062ece0",
+      "new_name": "status_row_byte_condition_0062ece0",
+      "change": "name only",
+      "confidence": "medium name; high local ABI/control/width contract",
+      "evidence": "0062ece0..0062ed23; 31-byte row, signed byte sentinel at +12 and signed byte floor-to-one at +13; all 28 starts executed in 32 synthetic original-entry cases"
+    }
+  ],
+  "retain_existing": {
+    "address": "0062ed70",
+    "name": "cm0102_get_refreshed_status_record_candidate",
+    "comment": "Retain exact saved R10-A function comment from native preflight; upgrade public contract in place without a native annotation change."
+  }
+}
