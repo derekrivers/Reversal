@@ -1,0 +1,1088 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "native_manifest_sha256": "233ec2078dc3eacf0d1b83a3d093028caf57c634329bacce4af4ea2efb5c7f86",
+  "method": "static PE32 x86 decode; capstone==5.0.7; complete owned-body native comparison; no execution",
+  "address_space": "virtual addresses unless file_offset is explicit",
+  "functions": [
+    {
+      "entry_va": "0054d8a0",
+      "file_offset": "0014d8a0",
+      "span_bytes": 241,
+      "last_instruction_va": "0054d98c",
+      "span_sha256": "702de2ee7d80f616235d27a692459e286df75c5978b9804d41dfc8d82325f992",
+      "instruction_count": 71,
+      "native_comparison": {
+        "matched_instructions": 71,
+        "file_sha256": {
+          "asm": "aed1c0707a10c0d4f90f57eba73fbfb38e761376e6d2fe79d27b25b9028d906d",
+          "c": "f997312aa47f06422ea698efef146c8b2aeba2c4934f8fa440e4a456ed61f180",
+          "refs": "a6275fb34ae2cad3030ebf9159d9f41f4af33eaa5ec8ead3fe80dfe000dd5a2e"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052b809",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "0054d8a0": "mov eax, dword ptr [esp + 0x10]",
+        "0054d8ab": "mov esi, dword ptr [eax + 0x37]",
+        "0054d8ae": "mov eax, dword ptr [eax + 0x3f]",
+        "0054d8b1": "test eax, eax",
+        "0054d8b3": "jle 0x54d91d",
+        "0054d8b5": "cmp eax, 2",
+        "0054d8b8": "jg 0x54d91d",
+        "0054d8ba": "mov eax, dword ptr [esp + 0x20c]",
+        "0054d8c1": "test eax, eax",
+        "0054d8c3": "je 0x54d8f1",
+        "0054d8d5": "push 0x38",
+        "0054d8d8": "call 0x932c30",
+        "0054d8e0": "xor ecx, ecx",
+        "0054d8e2": "cmp eax, esi",
+        "0054d8e4": "sete cl",
+        "0054d901": "push 0x38",
+        "0054d904": "call 0x945bfe",
+        "0054d90c": "xor ecx, ecx",
+        "0054d90e": "cmp eax, esi",
+        "0054d910": "sete cl",
+        "0054d946": "push 0x207",
+        "0054d976": "mov dword ptr [0xb67a34], 0",
+        "0054d98c": "call 0x945934"
+      }
+    },
+    {
+      "entry_va": "0054da00",
+      "file_offset": "0014da00",
+      "span_bytes": 235,
+      "last_instruction_va": "0054daea",
+      "span_sha256": "a68692d4da391d5fc65688b62fdc1d908e9a18c10c72549c777301529ef0ab32",
+      "instruction_count": 69,
+      "native_comparison": {
+        "matched_instructions": 69,
+        "file_sha256": {
+          "asm": "c448fa2fb92e993d79e05eceba41c9eefe7b793d790484d023029d1c16a1bdd9",
+          "c": "9510aa0f108a021a01fa9241919a939cf2a6698f084713eef51b8dc37308aef9",
+          "refs": "e2322f356d8ee4188b9b3935ec3c4c6529758c05135cfa5f943ec74f9203642e"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052c130",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "0054da00": "mov eax, dword ptr [esp + 0x10]",
+        "0054da0b": "mov esi, dword ptr [eax + 0x37]",
+        "0054da0e": "mov eax, dword ptr [eax + 0x3f]",
+        "0054da11": "dec eax",
+        "0054da12": "je 0x54da88",
+        "0054da3d": "push 0x23d",
+        "0054da6d": "mov dword ptr [0xb67a34], 0",
+        "0054da83": "call 0x945934",
+        "0054da88": "mov eax, dword ptr [esp + 0x20c]",
+        "0054da8f": "test eax, eax",
+        "0054da91": "je 0x54dabf",
+        "0054daa3": "push 0x4e",
+        "0054daa6": "call 0x932c30",
+        "0054daae": "xor edx, edx",
+        "0054dab0": "cmp eax, esi",
+        "0054dab2": "sete dl",
+        "0054dacf": "push 0x4e",
+        "0054dad2": "call 0x945bfe",
+        "0054dada": "xor edx, edx",
+        "0054dadc": "cmp eax, esi",
+        "0054dade": "sete dl"
+      }
+    },
+    {
+      "entry_va": "0054db50",
+      "file_offset": "0014db50",
+      "span_bytes": 314,
+      "last_instruction_va": "0054dc89",
+      "span_sha256": "ef6a8139cf125831aab8573913caab87597c897da46fab763ac98fbdf746559e",
+      "instruction_count": 92,
+      "native_comparison": {
+        "matched_instructions": 92,
+        "file_sha256": {
+          "asm": "68de85b40f9efe49391c0133c253977428fa04cfcaa9406e3b1b2c247e2667dd",
+          "c": "f2e3f786a355e2d6f9bbcc14356e5af78904ae834bf2b56b38a1fcaf17e0ff89",
+          "refs": "6fc2164b823d6459fb64ce72a81b21c092d1c26d20485ee97073f10642dc0a26"
+        }
+      },
+      "direct_callees": [
+        "0054dc90",
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052b8c8",
+          "kind": "UNCONDITIONAL_CALL"
+        },
+        {
+          "site_va": "0052b987",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "0054db50": "mov eax, dword ptr [esp + 0x10]",
+        "0054db5b": "mov esi, dword ptr [eax + 0x37]",
+        "0054db5e": "mov eax, dword ptr [eax + 0x3f]",
+        "0054db62": "dec eax",
+        "0054db63": "je 0x54dc60",
+        "0054db69": "dec eax",
+        "0054db6a": "je 0x54dbe0",
+        "0054db95": "push 0x285",
+        "0054dbc5": "mov dword ptr [0xb67a34], 0",
+        "0054dbdb": "call 0x945934",
+        "0054dbe0": "mov eax, dword ptr [esp + 0x210]",
+        "0054dbe7": "test eax, eax",
+        "0054dbe9": "je 0x54dc08",
+        "0054dbfb": "push 0x245",
+        "0054dc01": "call 0x932c30",
+        "0054dc18": "push 0x245",
+        "0054dc1e": "call 0x945bfe",
+        "0054dc26": "cmp eax, esi",
+        "0054dc28": "je 0x54dc35",
+        "0054dc35": "test esi, esi",
+        "0054dc37": "jbe 0x54dc52",
+        "0054dc39": "lea eax, [edi + 0x80]",
+        "0054dc3f": "cmp word ptr [eax], 0",
+        "0054dc43": "jne 0x54dc4a",
+        "0054dc45": "mov word ptr [eax], 1",
+        "0054dc4a": "add eax, 0x245",
+        "0054dc4f": "dec esi",
+        "0054dc50": "jne 0x54dc3f",
+        "0054dc52": "pop edi",
+        "0054dc53": "mov eax, 1",
+        "0054dc58": "pop esi",
+        "0054dc75": "push esi",
+        "0054dc76": "push eax",
+        "0054dc77": "push ecx",
+        "0054dc78": "push edx",
+        "0054dc79": "call 0x54dc90"
+      }
+    },
+    {
+      "entry_va": "0054e630",
+      "file_offset": "0014e630",
+      "span_bytes": 237,
+      "last_instruction_va": "0054e71c",
+      "span_sha256": "1382a01b83bf1dc77d91056b5b80dd2bf12183aa9c45407c26658c03a9c5204c",
+      "instruction_count": 69,
+      "native_comparison": {
+        "matched_instructions": 69,
+        "file_sha256": {
+          "asm": "690ba52fd348a52e9099f07a895dc75334d096365b3e13740ac0a6413f51bb02",
+          "c": "a8dc9a253dc7dff18fe3854ef281285923b649449311ebd31521e746d556d29b",
+          "refs": "ad95adfef28de2618fb26a71182f959202d4175539dfae0ff3e1b78140855032"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052c2b0",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "0054e630": "mov eax, dword ptr [esp + 0x10]",
+        "0054e63b": "mov esi, dword ptr [eax + 0x37]",
+        "0054e63e": "mov eax, dword ptr [eax + 0x3f]",
+        "0054e641": "sub eax, 2",
+        "0054e644": "je 0x54e6ba",
+        "0054e66f": "push 0x33a",
+        "0054e69f": "mov dword ptr [0xb67a34], 0",
+        "0054e6b5": "call 0x945934",
+        "0054e6ba": "mov eax, dword ptr [esp + 0x20c]",
+        "0054e6c1": "test eax, eax",
+        "0054e6c3": "je 0x54e6f1",
+        "0054e6d5": "push 0x6e",
+        "0054e6d8": "call 0x932c30",
+        "0054e6e0": "xor edx, edx",
+        "0054e6e2": "cmp eax, esi",
+        "0054e6e4": "sete dl",
+        "0054e701": "push 0x6e",
+        "0054e704": "call 0x945bfe",
+        "0054e70c": "xor edx, edx",
+        "0054e70e": "cmp eax, esi",
+        "0054e710": "sete dl"
+      }
+    },
+    {
+      "entry_va": "0054e780",
+      "file_offset": "0014e780",
+      "span_bytes": 241,
+      "last_instruction_va": "0054e870",
+      "span_sha256": "2d338e147e35224ef46a830fcca7317bac310604a49394998f9c4078e9e12a9a",
+      "instruction_count": 69,
+      "native_comparison": {
+        "matched_instructions": 69,
+        "file_sha256": {
+          "asm": "af4c28ad928ce823846c81545b0c9fa1d9524b1269107b7c52f3b5d56fe807e5",
+          "c": "8271497ff9703a9e018ffbc43050f757f8240b0e793dd7a06b428f4f520d8c3a",
+          "refs": "e16d7d2572a5ad02675d46a52df3f0628efb895d4bd4c2f99771353b8e6e3d35"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052c1f0",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "0054e780": "mov eax, dword ptr [esp + 0x10]",
+        "0054e78b": "mov esi, dword ptr [eax + 0x37]",
+        "0054e78e": "mov eax, dword ptr [eax + 0x3f]",
+        "0054e791": "dec eax",
+        "0054e792": "je 0x54e808",
+        "0054e7bd": "push 0x38e",
+        "0054e7ed": "mov dword ptr [0xb67a34], 0",
+        "0054e803": "call 0x945934",
+        "0054e808": "mov eax, dword ptr [esp + 0x20c]",
+        "0054e80f": "test eax, eax",
+        "0054e811": "je 0x54e842",
+        "0054e823": "push 0x9d",
+        "0054e829": "call 0x932c30",
+        "0054e831": "xor edx, edx",
+        "0054e833": "cmp eax, esi",
+        "0054e835": "sete dl",
+        "0054e852": "push 0x9d",
+        "0054e858": "call 0x945bfe",
+        "0054e860": "xor edx, edx",
+        "0054e862": "cmp eax, esi",
+        "0054e864": "sete dl"
+      }
+    },
+    {
+      "entry_va": "0054e880",
+      "file_offset": "0014e880",
+      "span_bytes": 283,
+      "last_instruction_va": "0054e99a",
+      "span_sha256": "b17b30cdbefd28d0ed0f0e6cf2744ac778c5f64337a8f1359dcc328dfe997e12",
+      "instruction_count": 83,
+      "native_comparison": {
+        "matched_instructions": 83,
+        "file_sha256": {
+          "asm": "1ae4d37814abfeb24e3e0694e7e72877d48d94f0e614899615371ae5dfa36a4e",
+          "c": "c394d7168e4e916874ddfd9ca8e687484b9636e35425490f97b06a01ff115539",
+          "refs": "407a838a3f5f9339598db6d7bf2caf252a0d1375c96347b50f5cc0947585b49b"
+        }
+      },
+      "direct_callees": [
+        "0054e9a0",
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052c430",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "0054e880": "mov eax, dword ptr [esp + 0x10]",
+        "0054e88b": "mov esi, dword ptr [eax + 0x37]",
+        "0054e88e": "mov eax, dword ptr [eax + 0x3f]",
+        "0054e891": "dec eax",
+        "0054e892": "je 0x54e972",
+        "0054e898": "dec eax",
+        "0054e899": "je 0x54e90f",
+        "0054e8c4": "push 0x3ef",
+        "0054e8f4": "mov dword ptr [0xb67a34], 0",
+        "0054e90a": "call 0x945934",
+        "0054e90f": "mov eax, dword ptr [esp + 0x20c]",
+        "0054e916": "test eax, eax",
+        "0054e918": "je 0x54e946",
+        "0054e92a": "push 0x44",
+        "0054e92d": "call 0x932c30",
+        "0054e935": "xor edx, edx",
+        "0054e937": "cmp eax, esi",
+        "0054e939": "sete dl",
+        "0054e956": "push 0x44",
+        "0054e959": "call 0x945bfe",
+        "0054e961": "xor edx, edx",
+        "0054e963": "cmp eax, esi",
+        "0054e965": "sete dl",
+        "0054e987": "push esi",
+        "0054e988": "push eax",
+        "0054e989": "push ecx",
+        "0054e98a": "push edx",
+        "0054e98b": "call 0x54e9a0"
+      }
+    },
+    {
+      "entry_va": "0054f030",
+      "file_offset": "0014f030",
+      "span_bytes": 283,
+      "last_instruction_va": "0054f14a",
+      "span_sha256": "22788c06e195e8caefe65c3d5e924d3dd1c8b355ad30ce1bad3db91215d122d5",
+      "instruction_count": 83,
+      "native_comparison": {
+        "matched_instructions": 83,
+        "file_sha256": {
+          "asm": "0715dca739325a561a63d3c1987b9afff419f449ea62ffcde3a6cefb40256047",
+          "c": "1fb645b8b6f45df6b7955a542c950cd3036051a08cce6f662327289392034653",
+          "refs": "dc8c778c07888d540ff3cfc045a3e5d26e022ef10e50f80b9356954c05ca5552"
+        }
+      },
+      "direct_callees": [
+        "0054f150",
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052c4f0",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "0054f030": "mov eax, dword ptr [esp + 0x10]",
+        "0054f03b": "mov esi, dword ptr [eax + 0x37]",
+        "0054f03e": "mov eax, dword ptr [eax + 0x3f]",
+        "0054f041": "dec eax",
+        "0054f042": "je 0x54f122",
+        "0054f048": "dec eax",
+        "0054f049": "je 0x54f0bf",
+        "0054f074": "push 0x47a",
+        "0054f0a4": "mov dword ptr [0xb67a34], 0",
+        "0054f0ba": "call 0x945934",
+        "0054f0bf": "mov eax, dword ptr [esp + 0x20c]",
+        "0054f0c6": "test eax, eax",
+        "0054f0c8": "je 0x54f0f6",
+        "0054f0da": "push 0x46",
+        "0054f0dd": "call 0x932c30",
+        "0054f0e5": "xor edx, edx",
+        "0054f0e7": "cmp eax, esi",
+        "0054f0e9": "sete dl",
+        "0054f106": "push 0x46",
+        "0054f109": "call 0x945bfe",
+        "0054f111": "xor edx, edx",
+        "0054f113": "cmp eax, esi",
+        "0054f115": "sete dl",
+        "0054f137": "push esi",
+        "0054f138": "push eax",
+        "0054f139": "push ecx",
+        "0054f13a": "push edx",
+        "0054f13b": "call 0x54f150"
+      }
+    },
+    {
+      "entry_va": "0054fc10",
+      "file_offset": "0014fc10",
+      "span_bytes": 235,
+      "last_instruction_va": "0054fcfa",
+      "span_sha256": "ecc499513fce67df63dcdaa88957c21bd2081214027866590dc2a819d5f02640",
+      "instruction_count": 69,
+      "native_comparison": {
+        "matched_instructions": 69,
+        "file_sha256": {
+          "asm": "5838a3b21fe0ed96f30831408155e202389093b6290efad43f10d327bdd87dae",
+          "c": "81dcc7e856c3a1cb515c41abf4f8f48d9bb252dfc98f04e3fbc8ea1d64073be3",
+          "refs": "10f3d83fb40dd9fc048879bfea32b8ce061deb794dd82f6f3617cc7918d80814"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052c370",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "0054fc10": "mov eax, dword ptr [esp + 0x10]",
+        "0054fc1b": "mov esi, dword ptr [eax + 0x37]",
+        "0054fc1e": "mov eax, dword ptr [eax + 0x3f]",
+        "0054fc21": "dec eax",
+        "0054fc22": "je 0x54fc98",
+        "0054fc4d": "push 0x539",
+        "0054fc7d": "mov dword ptr [0xb67a34], 0",
+        "0054fc93": "call 0x945934",
+        "0054fc98": "mov eax, dword ptr [esp + 0x20c]",
+        "0054fc9f": "test eax, eax",
+        "0054fca1": "je 0x54fccf",
+        "0054fcb3": "push 0x34",
+        "0054fcb6": "call 0x932c30",
+        "0054fcbe": "xor edx, edx",
+        "0054fcc0": "cmp eax, esi",
+        "0054fcc2": "sete dl",
+        "0054fcdf": "push 0x34",
+        "0054fce2": "call 0x945bfe",
+        "0054fcea": "xor edx, edx",
+        "0054fcec": "cmp eax, esi",
+        "0054fcee": "sete dl"
+      }
+    },
+    {
+      "entry_va": "0054fd60",
+      "file_offset": "0014fd60",
+      "span_bytes": 235,
+      "last_instruction_va": "0054fe4a",
+      "span_sha256": "1d20d679f8ea1f256d30f74ae06e2c2d4ce1e43c08568b58be847f49233d037a",
+      "instruction_count": 69,
+      "native_comparison": {
+        "matched_instructions": 69,
+        "file_sha256": {
+          "asm": "55eba1d6214ad4334faa6caeaaf8e8b5e64e9411b051e1c7c4e854f990a05b14",
+          "c": "870db23442864489daa8de982b66d9632e84b5a1b15ef78dbd9a30924e284cf3",
+          "refs": "f6447257df51b8cf5e463b1b2e91233053850925b388b9f46208f36bdb2ea748"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052c60f",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "0054fd60": "mov eax, dword ptr [esp + 0x10]",
+        "0054fd6b": "mov esi, dword ptr [eax + 0x37]",
+        "0054fd6e": "mov eax, dword ptr [eax + 0x3f]",
+        "0054fd71": "dec eax",
+        "0054fd72": "je 0x54fde8",
+        "0054fd9d": "push 0x572",
+        "0054fdcd": "mov dword ptr [0xb67a34], 0",
+        "0054fde3": "call 0x945934",
+        "0054fde8": "mov eax, dword ptr [esp + 0x20c]",
+        "0054fdef": "test eax, eax",
+        "0054fdf1": "je 0x54fe1f",
+        "0054fe03": "push 0x11",
+        "0054fe06": "call 0x932c30",
+        "0054fe0e": "xor edx, edx",
+        "0054fe10": "cmp eax, esi",
+        "0054fe12": "sete dl",
+        "0054fe2f": "push 0x11",
+        "0054fe32": "call 0x945bfe",
+        "0054fe3a": "xor edx, edx",
+        "0054fe3c": "cmp eax, esi",
+        "0054fe3e": "sete dl"
+      }
+    },
+    {
+      "entry_va": "0054feb0",
+      "file_offset": "0014feb0",
+      "span_bytes": 283,
+      "last_instruction_va": "0054ffca",
+      "span_sha256": "852a5b22033aeb3d5a8db18bd86433c24a8532a2c3be0e75ff7119a8dc91eb35",
+      "instruction_count": 83,
+      "native_comparison": {
+        "matched_instructions": 83,
+        "file_sha256": {
+          "asm": "a6b9974e6bd8a5ca449829d7d1683add09867d01f98452f21c0814c85932c06f",
+          "c": "eccbce8a37b25fc3c89e19c09b1a7242ab21efa042c425baf9ef8f8ef7d1d7bd",
+          "refs": "b992725412705e87414e02c23da7374ecae241ec61827113ce4562225378f2c0"
+        }
+      },
+      "direct_callees": [
+        "0054ffd0",
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052bb05",
+          "kind": "UNCONDITIONAL_CALL"
+        },
+        {
+          "site_va": "0052bbc4",
+          "kind": "UNCONDITIONAL_CALL"
+        },
+        {
+          "site_va": "0052bc46",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "0054feb0": "mov eax, dword ptr [esp + 0x10]",
+        "0054febb": "mov esi, dword ptr [eax + 0x37]",
+        "0054febe": "mov eax, dword ptr [eax + 0x3f]",
+        "0054fec1": "dec eax",
+        "0054fec2": "je 0x54ffa2",
+        "0054fec8": "dec eax",
+        "0054fec9": "je 0x54ff3f",
+        "0054fef4": "push 0x5a9",
+        "0054ff24": "mov dword ptr [0xb67a34], 0",
+        "0054ff3a": "call 0x945934",
+        "0054ff3f": "mov eax, dword ptr [esp + 0x20c]",
+        "0054ff46": "test eax, eax",
+        "0054ff48": "je 0x54ff76",
+        "0054ff5a": "push 0x6b",
+        "0054ff5d": "call 0x932c30",
+        "0054ff65": "xor edx, edx",
+        "0054ff67": "cmp eax, esi",
+        "0054ff69": "sete dl",
+        "0054ff86": "push 0x6b",
+        "0054ff89": "call 0x945bfe",
+        "0054ff91": "xor edx, edx",
+        "0054ff93": "cmp eax, esi",
+        "0054ff95": "sete dl",
+        "0054ffb7": "push esi",
+        "0054ffb8": "push eax",
+        "0054ffb9": "push ecx",
+        "0054ffba": "push edx",
+        "0054ffbb": "call 0x54ffd0"
+      }
+    },
+    {
+      "entry_va": "00550230",
+      "file_offset": "00150230",
+      "span_bytes": 235,
+      "last_instruction_va": "0055031a",
+      "span_sha256": "df4e199ed4f0aa4f79a4d5a8107b68de33a730d3d40b6bbcc5defa8a260980a6",
+      "instruction_count": 69,
+      "native_comparison": {
+        "matched_instructions": 69,
+        "file_sha256": {
+          "asm": "e76f7e8d7f12977ecbccdf9cc3ca66a11aba72bdd27d87939c800786850680c6",
+          "c": "e3f523ba95c409c814976d33c07bac6d366ba731bd7485955cb612ac2f893460",
+          "refs": "272035d4a1c69dcd0d3af040e31782073a72c0c1a492a2447b39472f84ddba19"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052be30",
+          "kind": "UNCONDITIONAL_CALL"
+        },
+        {
+          "site_va": "0052bef0",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "00550230": "mov eax, dword ptr [esp + 0x10]",
+        "0055023b": "mov esi, dword ptr [eax + 0x37]",
+        "0055023e": "mov eax, dword ptr [eax + 0x3f]",
+        "00550241": "dec eax",
+        "00550242": "je 0x5502b8",
+        "0055026d": "push 0x605",
+        "0055029d": "mov dword ptr [0xb67a34], 0",
+        "005502b3": "call 0x945934",
+        "005502b8": "mov eax, dword ptr [esp + 0x20c]",
+        "005502bf": "test eax, eax",
+        "005502c1": "je 0x5502ef",
+        "005502d3": "push 0x1a",
+        "005502d6": "call 0x932c30",
+        "005502de": "xor edx, edx",
+        "005502e0": "cmp eax, esi",
+        "005502e2": "sete dl",
+        "005502ff": "push 0x1a",
+        "00550302": "call 0x945bfe",
+        "0055030a": "xor edx, edx",
+        "0055030c": "cmp eax, esi",
+        "0055030e": "sete dl"
+      }
+    },
+    {
+      "entry_va": "00550380",
+      "file_offset": "00150380",
+      "span_bytes": 237,
+      "last_instruction_va": "0055046c",
+      "span_sha256": "a07f0872893f4f4006046886562e38aac05f52db66d8dfae8b10e1294cfdb18a",
+      "instruction_count": 69,
+      "native_comparison": {
+        "matched_instructions": 69,
+        "file_sha256": {
+          "asm": "867e3fde4fd22e92e7fe6876d256f65a80d0f51ebc0232ea826ebea0f5852b45",
+          "c": "7f3f540a3f7477370371e477b99324a8b9293745d0682815885ba46709a70248",
+          "refs": "a3b6edd815b7fff724d66d2cc6bcd7b748c86de88699510f1e1bbfa9c4436110"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052ba46",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "00550380": "mov eax, dword ptr [esp + 0x10]",
+        "0055038b": "mov esi, dword ptr [eax + 0x37]",
+        "0055038e": "mov eax, dword ptr [eax + 0x3f]",
+        "00550391": "sub eax, 2",
+        "00550394": "je 0x55040a",
+        "005503bf": "push 0x638",
+        "005503ef": "mov dword ptr [0xb67a34], 0",
+        "00550405": "call 0x945934",
+        "0055040a": "mov eax, dword ptr [esp + 0x20c]",
+        "00550411": "test eax, eax",
+        "00550413": "je 0x550441",
+        "00550425": "push 0x65",
+        "00550428": "call 0x932c30",
+        "00550430": "xor edx, edx",
+        "00550432": "cmp eax, esi",
+        "00550434": "sete dl",
+        "00550451": "push 0x65",
+        "00550454": "call 0x945bfe",
+        "0055045c": "xor edx, edx",
+        "0055045e": "cmp eax, esi",
+        "00550460": "sete dl"
+      }
+    },
+    {
+      "entry_va": "005504d0",
+      "file_offset": "001504d0",
+      "span_bytes": 235,
+      "last_instruction_va": "005505ba",
+      "span_sha256": "8d9d2427375a4f35516d7d74aeb3d92df8dd2fc8b0860f6b4902f82bbe28cd5a",
+      "instruction_count": 69,
+      "native_comparison": {
+        "matched_instructions": 69,
+        "file_sha256": {
+          "asm": "6ac0df892a7eb8d6c22de275ea77900ab1a1b842c2292278ceb46ad208860d35",
+          "c": "fcfe12ec7d403810b2bcff00589bcb556fa2bb1f905e2aa544093a810d379efa",
+          "refs": "355ff68b045f18ef711862a80c5a9bc4204b572974df35f4b16e4891938e9e8e"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052bd70",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "005504d0": "mov eax, dword ptr [esp + 0x10]",
+        "005504db": "mov esi, dword ptr [eax + 0x37]",
+        "005504de": "mov eax, dword ptr [eax + 0x3f]",
+        "005504e1": "dec eax",
+        "005504e2": "je 0x550558",
+        "0055050d": "push 0x68d",
+        "0055053d": "mov dword ptr [0xb67a34], 0",
+        "00550553": "call 0x945934",
+        "00550558": "mov eax, dword ptr [esp + 0x20c]",
+        "0055055f": "test eax, eax",
+        "00550561": "je 0x55058f",
+        "00550573": "push 0x3a",
+        "00550576": "call 0x932c30",
+        "0055057e": "xor edx, edx",
+        "00550580": "cmp eax, esi",
+        "00550582": "sete dl",
+        "0055059f": "push 0x3a",
+        "005505a2": "call 0x945bfe",
+        "005505aa": "xor edx, edx",
+        "005505ac": "cmp eax, esi",
+        "005505ae": "sete dl"
+      }
+    },
+    {
+      "entry_va": "005505c0",
+      "file_offset": "001505c0",
+      "span_bytes": 235,
+      "last_instruction_va": "005506aa",
+      "span_sha256": "0903ce10d657853d587b60b9692f0e9e04e93793d3c2345202b2da06b6819c25",
+      "instruction_count": 69,
+      "native_comparison": {
+        "matched_instructions": 69,
+        "file_sha256": {
+          "asm": "b1a520585863cdb0aba265d384b5dd27903599e7dce25f25de971db15943390c",
+          "c": "a14ca13c810b5fa1493e2f5106c534e5f519ea442b8d7bc40c5e0d23740ddf9d",
+          "refs": "1455aa6f372e41c4fa5c1fc1a1da8043fd436d4b0cce09a69bfe3865301c3228"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052b50d",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "005505c0": "mov eax, dword ptr [esp + 0x10]",
+        "005505cb": "mov esi, dword ptr [eax + 0x37]",
+        "005505ce": "mov eax, dword ptr [eax + 0x3f]",
+        "005505d1": "dec eax",
+        "005505d2": "je 0x550648",
+        "005505fd": "push 0x6ca",
+        "0055062d": "mov dword ptr [0xb67a34], 0",
+        "00550643": "call 0x945934",
+        "00550648": "mov eax, dword ptr [esp + 0x20c]",
+        "0055064f": "test eax, eax",
+        "00550651": "je 0x55067f",
+        "00550663": "push 0x2b",
+        "00550666": "call 0x932c30",
+        "0055066e": "xor edx, edx",
+        "00550670": "cmp eax, esi",
+        "00550672": "sete dl",
+        "0055068f": "push 0x2b",
+        "00550692": "call 0x945bfe",
+        "0055069a": "xor edx, edx",
+        "0055069c": "cmp eax, esi",
+        "0055069e": "sete dl"
+      }
+    },
+    {
+      "entry_va": "00550710",
+      "file_offset": "00150710",
+      "span_bytes": 235,
+      "last_instruction_va": "005507fa",
+      "span_sha256": "27c61d39b0f1680803dc90f235b03885663fc60c19ad682aeb8cd6d67c679eff",
+      "instruction_count": 69,
+      "native_comparison": {
+        "matched_instructions": 69,
+        "file_sha256": {
+          "asm": "bdb781403ee04e58a6ff60980aece9054ea12806e1d923dc2d5a00aa77b851a8",
+          "c": "3054004565e031a5430db9de9baf68b875b0652fc0dd0b3d770b97f53b3eebfd",
+          "refs": "7e17459ff37e3302e26ff4b72228a3a3474d578432e589ffe860e89b4d26da94"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052bfb0",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "00550710": "mov eax, dword ptr [esp + 0x10]",
+        "0055071b": "mov esi, dword ptr [eax + 0x37]",
+        "0055071e": "mov eax, dword ptr [eax + 0x3f]",
+        "00550721": "dec eax",
+        "00550722": "je 0x550798",
+        "0055074d": "push 0x709",
+        "0055077d": "mov dword ptr [0xb67a34], 0",
+        "00550793": "call 0x945934",
+        "00550798": "mov eax, dword ptr [esp + 0x20c]",
+        "0055079f": "test eax, eax",
+        "005507a1": "je 0x5507cf",
+        "005507b3": "push 0x3a",
+        "005507b6": "call 0x932c30",
+        "005507be": "xor edx, edx",
+        "005507c0": "cmp eax, esi",
+        "005507c2": "sete dl",
+        "005507df": "push 0x3a",
+        "005507e2": "call 0x945bfe",
+        "005507ea": "xor edx, edx",
+        "005507ec": "cmp eax, esi",
+        "005507ee": "sete dl"
+      }
+    },
+    {
+      "entry_va": "00550860",
+      "file_offset": "00150860",
+      "span_bytes": 235,
+      "last_instruction_va": "0055094a",
+      "span_sha256": "113b2b73670bceb0fdcc899e423d7019284515c3f77e5b0e968f8261f05ed45d",
+      "instruction_count": 69,
+      "native_comparison": {
+        "matched_instructions": 69,
+        "file_sha256": {
+          "asm": "4bc4601611ed73d9343f5bf31e30cb915d0625b284b465b275396df15807a87e",
+          "c": "0058408cc063a176045d6597c8e45f8c56cd94e03dd30c18cd6e845c417bfcba",
+          "refs": "cc9eec62e00f0115e54ea3a9e4381422ebb091de0a2267fa0b48927fc1bf5995"
+        }
+      },
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ],
+      "incoming_native_refs": [
+        {
+          "site_va": "0052b5cc",
+          "kind": "UNCONDITIONAL_CALL"
+        },
+        {
+          "site_va": "0052b68b",
+          "kind": "UNCONDITIONAL_CALL"
+        },
+        {
+          "site_va": "0052b74a",
+          "kind": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "selected_instructions": {
+        "00550860": "mov eax, dword ptr [esp + 0x10]",
+        "0055086b": "mov esi, dword ptr [eax + 0x37]",
+        "0055086e": "mov eax, dword ptr [eax + 0x3f]",
+        "00550871": "dec eax",
+        "00550872": "je 0x5508e8",
+        "0055089d": "push 0x73a",
+        "005508cd": "mov dword ptr [0xb67a34], 0",
+        "005508e3": "call 0x945934",
+        "005508e8": "mov eax, dword ptr [esp + 0x20c]",
+        "005508ef": "test eax, eax",
+        "005508f1": "je 0x55091f",
+        "00550903": "push 0x3c",
+        "00550906": "call 0x932c30",
+        "0055090e": "xor edx, edx",
+        "00550910": "cmp eax, esi",
+        "00550912": "sete dl",
+        "0055092f": "push 0x3c",
+        "00550932": "call 0x945bfe",
+        "0055093a": "xor edx, edx",
+        "0055093c": "cmp eax, esi",
+        "0055093e": "sete dl"
+      }
+    }
+  ],
+  "read_and_termination_dependency_sites": {
+    "00932cc6": "mov byte ptr [ebx + ecx], al",
+    "00932df7": "call 0x945bfe",
+    "00945c5c": "call 0x94ab50",
+    "00945cb2": "mov byte ptr [ebx], al",
+    "00945ce1": "div dword ptr [ebp + 0xc]",
+    "009459e7": "call dword ptr [0x967164]"
+  },
+  "delegate_dependency_boundaries": {
+    "0054dc90": {
+      "scope": "immediate dependency boundaries only; no native whole-body comparison",
+      "spans": [
+        {
+          "start_va": "0054dc90",
+          "span_bytes": 108,
+          "sha256": "09176e88cc32d531c2b3a61a1a7a4281083f03a9d49adb1bff8ed634ad081d0a"
+        },
+        {
+          "start_va": "0054e5ba",
+          "span_bytes": 19,
+          "sha256": "7a717ea1b513228472ba2cf7e10ff7f04a33af7e2f88aa79446e22854fba9a96"
+        }
+      ],
+      "selected_instructions": {
+        "0054dc91": "mov eax, dword ptr [esp + 0x14]",
+        "0054dc98": "test eax, eax",
+        "0054dcb5": "test ebx, ebx",
+        "0054dcc8": "push 1",
+        "0054dcca": "push 4",
+        "0054dcd0": "call 0x932c30",
+        "0054dceb": "call 0x945bfe",
+        "0054dcf3": "cmp eax, 1",
+        "0054e5bd": "mov eax, 1",
+        "0054e5c8": "xor eax, eax"
+      }
+    },
+    "0054e9a0": {
+      "scope": "immediate dependency boundaries only; no native whole-body comparison",
+      "spans": [
+        {
+          "start_va": "0054e9a0",
+          "span_bytes": 94,
+          "sha256": "79e079012273755e9eb43c55c3840657437666005360b51aea04eef5393733b3"
+        },
+        {
+          "start_va": "0054efbe",
+          "span_bytes": 17,
+          "sha256": "f3271d6cea7f6c1f6b081b10de6275bb8059a7cf43639a4d125a62cd72f26f65"
+        }
+      ],
+      "selected_instructions": {
+        "0054e9a0": "mov eax, dword ptr [esp + 0x10]",
+        "0054e9aa": "test eax, eax",
+        "0054e9ba": "test ebx, ebx",
+        "0054e9ca": "push 1",
+        "0054e9cc": "push 4",
+        "0054e9d2": "call 0x932c30",
+        "0054e9ed": "call 0x945bfe",
+        "0054e9f5": "cmp eax, 1",
+        "0054efc1": "mov eax, 1",
+        "0054efcb": "xor eax, eax"
+      }
+    },
+    "0054f150": {
+      "scope": "immediate dependency boundaries only; no native whole-body comparison",
+      "spans": [
+        {
+          "start_va": "0054f150",
+          "span_bytes": 97,
+          "sha256": "9eb252c39e9949c18261bd0c8efc7e81199e09274f6ea50edc1aaeee653d0e84"
+        },
+        {
+          "start_va": "0054fb9b",
+          "span_bytes": 17,
+          "sha256": "f3271d6cea7f6c1f6b081b10de6275bb8059a7cf43639a4d125a62cd72f26f65"
+        }
+      ],
+      "selected_instructions": {
+        "0054f150": "mov eax, dword ptr [esp + 0x10]",
+        "0054f15a": "test eax, eax",
+        "0054f16a": "test ebx, ebx",
+        "0054f17c": "push 1",
+        "0054f181": "push 4",
+        "0054f187": "call 0x932c30",
+        "0054f1a0": "call 0x945bfe",
+        "0054f1a8": "cmp eax, 1",
+        "0054fb9e": "mov eax, 1",
+        "0054fba8": "xor eax, eax"
+      }
+    },
+    "0054ffd0": {
+      "scope": "immediate dependency boundaries only; no native whole-body comparison",
+      "spans": [
+        {
+          "start_va": "0054ffd0",
+          "span_bytes": 74,
+          "sha256": "c2cb3538964c3f6a6a1e2dcd054068174dda954efc1746768c8730a8345a194d"
+        },
+        {
+          "start_va": "005501bd",
+          "span_bytes": 17,
+          "sha256": "f3271d6cea7f6c1f6b081b10de6275bb8059a7cf43639a4d125a62cd72f26f65"
+        }
+      ],
+      "selected_instructions": {
+        "0054ffd0": "mov eax, dword ptr [esp + 0x10]",
+        "0054ffda": "test eax, eax",
+        "0054fff2": "push 1",
+        "0054fff4": "test ebx, ebx",
+        "0054fff6": "push 4",
+        "0054fffe": "call 0x932c30",
+        "00550009": "call 0x945bfe",
+        "00550011": "cmp eax, 1",
+        "005501c0": "mov eax, 1",
+        "005501ca": "xor eax, eax"
+      }
+    }
+  }
+}
