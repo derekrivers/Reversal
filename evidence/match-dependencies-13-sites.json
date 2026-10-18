@@ -1,0 +1,376 @@
+{
+  "work_unit": "R13-A",
+  "baseline_commit": "87ea0f39d5dcb62fe6969ad6570c3dca8b152673",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "export_manifest_sha256": "fa2728212d3189f2a0ec9f4db14b2355b0da8457bc9bff091d5c2b442b38a489",
+  "address_kind": "virtual addresses; raw file offsets explicitly labelled",
+  "evidence_class": "static original-instruction mapping; no execution oracle",
+  "decoder": "Capstone 5.0.7 x86-32",
+  "functions": [
+    {
+      "start": "006f4600",
+      "end_exclusive": "006f4642",
+      "bytes": 66,
+      "raw_file_offset": "0x2f4600",
+      "code_sha256": "8347c9f84ef26fd15f244c11811bede90ba93001fafcd578671ee5285bb0cfd9",
+      "instruction_count": 22,
+      "direct_calls": [
+        {
+          "site": "006f4629",
+          "target": "005b57c0"
+        }
+      ],
+      "returns": [
+        {
+          "site": "006f4639",
+          "cleanup_bytes": 0
+        },
+        {
+          "site": "006f4641",
+          "cleanup_bytes": 0
+        }
+      ],
+      "explicit_memory_store_sites": [],
+      "branches": [
+        {
+          "site": "006f4630",
+          "kind": "jne",
+          "target": "006f463a"
+        }
+      ],
+      "native_corroboration": {
+        "asm_sha256": "b92ef8126c118acdd5b361a964114b3eba80c56d2f9134fe3ef63e27a7c1f9f7",
+        "c_sha256": "adfdc06f6f676670b5b798d2571dd9219bff31523ff521d8c747291c4d3c1ace",
+        "refs_sha256": "9680fe5a7f39abfbb4347784787a4e009e6c5bc98cb871d68dba5d786b7788d0",
+        "checkpoint_12_exported_name": "FUN_006f4600",
+        "reference_count": 2,
+        "all_reference_targets_verified": true,
+        "instruction_addresses_and_direct_calls_agree": true
+      },
+      "incoming_direct_call_sites": [
+        "006bce5d",
+        "006bcc96"
+      ]
+    },
+    {
+      "start": "005b57c0",
+      "end_exclusive": "005b57cf",
+      "bytes": 15,
+      "raw_file_offset": "0x1b57c0",
+      "code_sha256": "ff925d5b71f3d6c43f7e2c7443fe30e91aa200412feee3da8f413e0bbb164806",
+      "instruction_count": 3,
+      "direct_calls": [],
+      "returns": [
+        {
+          "site": "005b57cc",
+          "cleanup_bytes": 4
+        }
+      ],
+      "explicit_memory_store_sites": [],
+      "branches": [],
+      "native_corroboration": {
+        "asm_sha256": "9757cfcdf447256bc6ff9a7c488a05fb4eae0fb49fe200981c676d89344a7a7d",
+        "c_sha256": "a85182601fde907977d8c77287d959bf7db857e9a6269e8359c3e08430b0bc10",
+        "refs_sha256": "5588ba3c61f640cca152380181936057bcbadaa0911b0dd4f192841c609750f7",
+        "checkpoint_12_exported_name": "FUN_005b57c0",
+        "reference_count": 17,
+        "all_reference_targets_verified": true,
+        "instruction_addresses_and_direct_calls_agree": true
+      },
+      "incoming_direct_call_sites": [
+        "006ba1bc",
+        "006bbf91",
+        "006bbfa7",
+        "006bc073",
+        "006dd0e5",
+        "006dd203",
+        "006e081d",
+        "006e11d2",
+        "006e1b87",
+        "006f4629",
+        "00713ff6",
+        "00714e00",
+        "0071611c",
+        "007161b9",
+        "0089de11",
+        "008abbe5",
+        "008a6a8d"
+      ]
+    },
+    {
+      "start": "006f46b0",
+      "end_exclusive": "006f491c",
+      "bytes": 620,
+      "raw_file_offset": "0x2f46b0",
+      "code_sha256": "c253552ebc08174e986a5d4f5991aa6c0d384e6ab81232fb4990b697ebf1f57c",
+      "instruction_count": 165,
+      "direct_calls": [
+        {
+          "site": "006f474b",
+          "target": "00944cff"
+        },
+        {
+          "site": "006f4765",
+          "target": "0090d130"
+        },
+        {
+          "site": "006f4775",
+          "target": "00944c9f"
+        },
+        {
+          "site": "006f4786",
+          "target": "005e8290"
+        },
+        {
+          "site": "006f486a",
+          "target": "00944cff"
+        },
+        {
+          "site": "006f4884",
+          "target": "0090d130"
+        },
+        {
+          "site": "006f4894",
+          "target": "00944c9f"
+        },
+        {
+          "site": "006f48a5",
+          "target": "005e8290"
+        },
+        {
+          "site": "006f48b7",
+          "target": "005cc7d0"
+        },
+        {
+          "site": "006f48bc",
+          "target": "005a8f60"
+        },
+        {
+          "site": "006f48c3",
+          "target": "00945934"
+        }
+      ],
+      "returns": [
+        {
+          "site": "006f47a1",
+          "cleanup_bytes": 8
+        },
+        {
+          "site": "006f4919",
+          "cleanup_bytes": 8
+        }
+      ],
+      "explicit_memory_store_sites": [
+        "006f46df",
+        "006f478e",
+        "006f47ba",
+        "006f47cb",
+        "006f47e6",
+        "006f47f5",
+        "006f47f8",
+        "006f4811",
+        "006f4844",
+        "006f4847",
+        "006f48ad",
+        "006f48d4",
+        "006f48de",
+        "006f48e4",
+        "006f48f8",
+        "006f490a"
+      ],
+      "branches": [
+        {
+          "site": "006f46cc",
+          "kind": "jne",
+          "target": "006f46da"
+        },
+        {
+          "site": "006f46d4",
+          "kind": "je",
+          "target": "006f4910"
+        },
+        {
+          "site": "006f46e3",
+          "kind": "jle",
+          "target": "006f4819"
+        },
+        {
+          "site": "006f4733",
+          "kind": "jne",
+          "target": "006f47a4"
+        },
+        {
+          "site": "006f47e4",
+          "kind": "je",
+          "target": "006f47e9"
+        },
+        {
+          "site": "006f4814",
+          "kind": "jmp",
+          "target": "006f48d7"
+        },
+        {
+          "site": "006f4852",
+          "kind": "jle",
+          "target": "006f48c8"
+        },
+        {
+          "site": "006f48f6",
+          "kind": "jne",
+          "target": "006f4910"
+        }
+      ],
+      "native_corroboration": {
+        "asm_sha256": "b840981e298a357b6a438621facbaca795f4e53b6149a3f93b70d94d8ddcaa19",
+        "c_sha256": "638ed7af7023ece8ac3c8fc56197a4ff7e88a8f9abc0a74e41f2a64057d91ade",
+        "refs_sha256": "476cb0d364bf374d36445fef920f3dbc3122e6dea6d34907e0fb7b11e2409e31",
+        "checkpoint_12_exported_name": "FUN_006f46b0",
+        "reference_count": 32,
+        "all_reference_targets_verified": true,
+        "instruction_addresses_and_direct_calls_agree": true
+      },
+      "incoming_direct_call_sites": [
+        "006b9e29",
+        "0071404c",
+        "006f5bbb",
+        "006f5c07",
+        "00714e7a",
+        "00716aed",
+        "00704265",
+        "00704ad6",
+        "00709295",
+        "00709794",
+        "006c437d",
+        "006c43b8",
+        "006c46a3",
+        "006c471b",
+        "006c47da",
+        "006c4f79",
+        "006c501c",
+        "006c5114",
+        "006c5164",
+        "006c51ba",
+        "006c4947",
+        "006c49fd",
+        "006c4dd2",
+        "006c52e4",
+        "006beb67",
+        "006beb74",
+        "006beb9e",
+        "006bebcc",
+        "006bec37",
+        "006bec44",
+        "006bec6e",
+        "006bec9c"
+      ]
+    }
+  ],
+  "checked_contract_sites": [
+    "005b57c0",
+    "005b57c5",
+    "006f4603",
+    "006f4607",
+    "006f460b",
+    "006f460e",
+    "006f4611",
+    "006f4613",
+    "006f4616",
+    "006f461f",
+    "006f4619",
+    "006f4622",
+    "006f462e",
+    "006f4632",
+    "006f463a",
+    "006f46b6",
+    "006f46c3",
+    "006f46dd",
+    "006f46e3",
+    "006f4729",
+    "006f472d",
+    "006f4733",
+    "006f47a7",
+    "006f47ad",
+    "006f47b6",
+    "006f47ba",
+    "006f47cb",
+    "006f47e6",
+    "006f47f5",
+    "006f47f8",
+    "006f4811",
+    "006f4844",
+    "006f4847",
+    "006f484d",
+    "006f4852",
+    "006f48d4",
+    "006f48de",
+    "006f48e4",
+    "006f48f0",
+    "006f48f8",
+    "006f490a"
+  ],
+  "dependency_context_ranges": [
+    {
+      "start": "006bce20",
+      "end_exclusive": "006bce7f",
+      "bytes": 95,
+      "raw_file_offset": "0x2bce20",
+      "code_sha256": "de002d611bb6d1881dc144f639db724b93f94a59bcdba69d338a161e020ec2d9",
+      "instruction_count": 31
+    },
+    {
+      "start": "006bcc90",
+      "end_exclusive": "006bcc9e",
+      "bytes": 14,
+      "raw_file_offset": "0x2bcc90",
+      "code_sha256": "ff6e725b410cf0d50191d25302b2f4584deaae2f4eb6aeca178c5a8bb033f54b",
+      "instruction_count": 4
+    },
+    {
+      "start": "00714037",
+      "end_exclusive": "00714051",
+      "bytes": 26,
+      "raw_file_offset": "0x314037",
+      "code_sha256": "593d61dd7e3c1346e08e912d59fb816cce7d18fcdff6c36ec4dea5640917b95e",
+      "instruction_count": 7
+    },
+    {
+      "start": "00714e65",
+      "end_exclusive": "00714e7f",
+      "bytes": 26,
+      "raw_file_offset": "0x314e65",
+      "code_sha256": "25e0f47f13163d5aca4231dd779ec77bd0970743dcc7c054ddc5f39ab6b85e17",
+      "instruction_count": 7
+    },
+    {
+      "start": "00945934",
+      "end_exclusive": "00945945",
+      "bytes": 17,
+      "raw_file_offset": "0x545934",
+      "code_sha256": "eb00d73ae511ddb6d11845de8f595e51c02f123dc8c11097756e577820909e43",
+      "instruction_count": 6
+    },
+    {
+      "start": "0090d130",
+      "end_exclusive": "0090d136",
+      "bytes": 6,
+      "raw_file_offset": "0x50d130",
+      "code_sha256": "dfef46c15aece5a1d33ece925eaf3b9cee666de68776bd136a4ca1ae9f0a74f4",
+      "instruction_count": 2
+    },
+    {
+      "start": "005a8f60",
+      "end_exclusive": "005a8f61",
+      "bytes": 1,
+      "raw_file_offset": "0x1a8f60",
+      "code_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "instruction_count": 1
+    }
+  ],
+  "limitations": [
+    "No execution oracle or numerical equivalence claim",
+    "No code bytes, bulk disassembly/pseudocode or private paths emitted",
+    "Incoming references are exported direct calls, not a completeness proof",
+    "Diagnostics and termination transitive effects remain open; 00945934 wrapper contains RET",
+    "No live coordinate/count/side invariants or caller reachability established"
+  ]
+}

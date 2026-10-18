@@ -1,0 +1,13 @@
+{
+  "work_unit": "R13-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "status": "proposal only; coordinator owns native writes",
+  "scope": "Three working function names only; no prototype, comment or layout changes",
+  "old_state_evidence": "Checkpoint-12 read-only preflight and exported generic names; extractor corroborates names. Coordinator must recheck exact old names before application.",
+  "functions": [
+    {"address": "005b57c0", "old_name": "FUN_005b57c0", "new_name": "signed_index_byte_load_005b57c0", "evidence_sites": ["005b57c0", "005b57c5", "005b57cc"], "confidence": "high for descriptive machine operation"},
+    {"address": "006f4600", "old_name": "FUN_006f4600", "new_name": "match_slot_select_byte_by_flag_006f4600", "evidence_sites": ["006f4607", "006f4622", "006f4629", "006f462e", "006f4632", "006f463a"], "confidence": "high for raw-byte flag selection; semantic byte meaning open"},
+    {"address": "006f46b0", "old_name": "FUN_006f46b0", "new_name": "match_slot_relocate_cell_006f46b0", "evidence_sites": ["006f46dd", "006f47ba", "006f47e6", "006f4811", "006f48d4", "006f48de", "006f490a"], "confidence": "high for normal list/coordinate mutation; diagnostic transitive effects open"}
+  ],
+  "evidence": ["reports/match-dependencies-13.md", "evidence/match-dependencies-13-findings.json", "evidence/match-dependencies-13-sites.json"]
+}
