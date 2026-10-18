@@ -28,7 +28,7 @@ This repository contains investigations 01–17: an executable-wide code atlas, 
 | Investigation 15 | Static other-slot match dispatch, four database field readers, four scouting lifecycle bodies and a separate structural classification of 3,873 unwind bodies; see the scoped reports |
 | Investigation 16 | Local match slot/action dispatch, two database stream helpers, two scouting copy bodies and three common unwind targets; eight exact-old native names accepted |
 | Investigation 17 | Three match action dispatch bodies, three low-level database helpers and three cleanup bodies mapped; a 21-byte reachable switch arm was restored to its Ghidra function body |
-| Structural families | Separate registries classify 3,873 unwind bodies, 192 conditional receiver-release wrappers and 143 receiver-cleanup bodies; these are structural local-body classifications |
+| Structural families | Separate registries classify 3,873 unwind bodies, 192 conditional receiver-release wrappers, 143 receiver-cleanup bodies and 23 import jump thunks; these are structural local-body classifications |
 
 Start with [investigation 08](reports/investigation-08.md), [the current research queue](coordination/QUEUE.md), [the executable code atlas](evidence/code-atlas/README.md), [port architecture](docs/ARCHITECTURE.md) and [the research roadmap](docs/ROADMAP.md). The [historical HTML report](reports/investigation-04.html) includes investigations 01–04; download it to view its formatting.
 
