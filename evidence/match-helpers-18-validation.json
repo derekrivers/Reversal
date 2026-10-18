@@ -1,0 +1,16 @@
+{
+  "work_unit": "R18-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "method": "Capstone5.0.7 full original-PE body decode followed by complete pinned native export comparison; no function execution",
+  "sites_sha256": "237446bf7b133a3b63d346428ad76a6fdaf013cfeed7a02bd683ecf619b2cec0",
+  "deterministic_regeneration": "Second invocation byte-identical to retained sites",
+  "negative_check": "Wrong specimen rejected before decoding with specimen SHA-256 mismatch; no output created",
+  "native_inputs": "Pinned manifest and preflight digests, every exported file size/digest, four exact-old FUN_* names and absent/blank comments checked",
+  "instruction_check": "All506 instructions/1869 bytes match native exports; contiguous bodies, no body correction",
+  "coverage": {"new_bodies":4,"branches":72,"direct_calls":26,"direct_rng_sites":15,"nonframe_stores":53,"switches":1,"normal_returns":9,"supplied_R17_callers":10},
+  "normal_stack": "All local instruction joins balance; all9 returns restore entry ESP under explicit normal callee-cleanup assumptions; entry stack access widths/RET cleanup asserted; saved-register sequences inspected",
+  "public_consistency": "All JSON parses; authored findings counts, generated branch/call/RNG/store/return inventories, coefficient switch cases and exact-old name-only proposals agree",
+  "research_checks": {"command":"node scripts/check-research.mjs","node":"v24.19.0","status":"passed","scope":"Earlier retained numerical fixtures and checkpoint/atlas metadata; does not execute R18-A bodies"},
+  "diff_check": "git diff --check and git diff --cached --check passed",
+  "limits": ["No runtime x87 control, natural-input domain, original-entry oracle or connected gameplay verification", "Callee effects, aliases, exceptional exits and table initialization remain boundaries", "Structural RNG maxima0/4/0/8 are conservative local counts and exclude callees", "Canonical Ghidra, shared semantic overlay, checkpoint and queue unchanged"]
+}

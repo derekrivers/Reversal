@@ -1,0 +1,13 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-17",
+  "status": "Name-only proposals; coordinator alone applies after independent review and fresh exact-old checks",
+  "private_preflight_sha256": "8749c47798c3758dc7509d0b3b71b7147f169ee0390066f01ef023baf670bcbb",
+  "old_annotation_evidence": "Pinned preflight checks exact FUN_* names, absent/blank comments and instruction existence; no comment, prototype, calling convention, structure or body change proposed",
+  "proposals": [
+    {"address":"006f0630","kind":"function_name","old":"FUN_006f0630","new":"match_install_active_slot_state_006f0630","evidence":"191 instructions/819 bytes; old-slot reset, two conditional/unconditional tactical queries, predecessor credit, active-pointer/coordinate/heading/counter writes","confidence":"High for local mechanical state installation; field meanings, alias domains and transitive query effects remain open"},
+    {"address":"006f4920","kind":"function_name","old":"FUN_006f4920","new":"match_update_heading_from_coordinates_006f4920","evidence":"78 instructions/264 bytes; signed low-byte delta word-table lookup, coincident special headings, ordered RNG perturbation, profile adjustment and one signed360 correction","confidence":"High for coordinate-derived heading mechanics; table content/producer and live input domains remain open"},
+    {"address":"006f56c0","kind":"function_name","old":"FUN_006f56c0","new":"match_subtract_slot_scalar_cost_006f56c0","evidence":"70 instructions/282 bytes; amount or mode-selected x87 subtraction into float32 slot+4d, with negative/unordered zeroing and distinct rounded/reused-x87 comparisons","confidence":"High for local scalar arithmetic; physical scalar identity, runtime precision and exceptional input behavior remain unvalidated"},
+    {"address":"0070d430","kind":"function_name","old":"FUN_0070d430","new":"match_threshold_action_gate_0070d430","evidence":"167 instructions/504 bytes; signed16 threshold gate, ordered random predicates, event1fe2/1fe3/216f, kind3/1 action calls, optional scalar/refresh calls and explicit EAX0/1 returns","confidence":"High for local threshold/action gate; natural-language gameplay identity and transitive outcomes remain open"}
+  ]
+}
