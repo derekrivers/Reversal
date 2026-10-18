@@ -6,6 +6,10 @@ Requires Capstone 5.0.7 and the ignored specimen and Ghidra export.
 """
 from __future__ import annotations
 
+# Integrity assertions must remain active before reading or writing evidence.
+if not __debug__:
+    raise SystemExit("Integrity checks require assertions; rerun without Python optimization (-O/-OO).")
+
 import argparse
 from collections import Counter
 import hashlib

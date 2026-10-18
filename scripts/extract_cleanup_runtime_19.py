@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """R19-C static evidence: pinned PE32, Capstone 5.0.7, full native comparison."""
+
+# Integrity assertions must remain active before reading or writing evidence.
+if not __debug__:
+    raise SystemExit("Integrity checks require assertions; rerun without Python optimization (-O/-OO).")
 import argparse
 import hashlib
 import json

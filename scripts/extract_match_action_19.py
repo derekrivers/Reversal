@@ -2,6 +2,10 @@
 
 Outputs addresses, digests and selected semantic sites, never original code bytes.
 """
+
+# Integrity assertions must remain active before reading or writing evidence.
+if not __debug__:
+    raise SystemExit("Integrity checks require assertions; rerun without Python optimization (-O/-OO).")
 import argparse
 from collections import defaultdict
 import hashlib

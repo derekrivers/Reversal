@@ -1,4 +1,8 @@
 """Verify the complete R16-A body and retain compact static evidence, never code bytes."""
+
+# Integrity assertions must remain active before reading or writing evidence.
+if not __debug__:
+    raise SystemExit("Integrity checks require assertions; rerun without Python optimization (-O/-OO).")
 import argparse
 from collections import defaultdict
 import hashlib

@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """R14-C compact static evidence. Capstone 5.0.7; no execution or native writes."""
+
+# Integrity assertions must remain active before reading or writing evidence.
+if not __debug__:
+    raise SystemExit("Integrity checks require assertions; rerun without Python optimization (-O/-OO).")
 import argparse
 import hashlib
 import json
