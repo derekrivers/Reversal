@@ -1,0 +1,33 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-16",
+  "status": "Name-only proposal; coordinator alone applies after independent review and exact-old-value recheck",
+  "private_preflight_sha256": "0d084f0348af44eeb24a73d8cec0fc866525099b14180bd87bd9c6246beda10f",
+  "old_annotation_evidence": "Pinned read-only preflight verifies instruction existence and exact old names; no prototype, calling convention, structure or comment changes proposed",
+  "proposals": [
+    {
+      "address": "0068d040",
+      "kind": "function_name",
+      "old": "FUN_0068d040",
+      "new": "cm0102_cleanup_linked_nodes_head_02",
+      "evidence": "Read head at receiver+2, save successor at node+6, call node cleanup then release wrapper, publish saved successor and repeat",
+      "confidence": "High local traversal and call order; no complete node ownership or alias/lifetime safety claim"
+    },
+    {
+      "address": "009462bb",
+      "kind": "function_name",
+      "old": "FUN_009462bb",
+      "new": "cm0102_reverse_stride_cleanup_callbacks",
+      "evidence": "Four stack arguments supply base/stride/count/callback; wrapped end computation, DEC/JS loop and descending ECX callback receivers; final helper remains boundary",
+      "confidence": "High generic local iteration contract, including INT_MIN count wrap; exceptional finalization unresolved"
+    },
+    {
+      "address": "007ae4f0",
+      "kind": "function_name",
+      "old": "FUN_007ae4f0",
+      "new": "cm0102_cleanup_scout_record_storage",
+      "evidence": "Conditionally release and clear record+0x1ee; then tracking helper, release and clear record+0x170; observed callback in 688-byte scouting arrays",
+      "confidence": "High direct field/call contract; complete nested ownership and exceptional lifetime safety unresolved"
+    }
+  ]
+}
