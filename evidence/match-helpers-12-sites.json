@@ -1,0 +1,227 @@
+{
+  "work_unit": "R12-A",
+  "baseline_commit": "a5972e1659afa4b2937490cdc57ebd8f4a5887d3",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses; raw file offsets explicitly labelled",
+  "evidence_class": "static original-instruction mapping; no execution oracle",
+  "decoder": "Capstone 5.0.7 x86-32",
+  "functions": [
+    {
+      "start": "006f09b0",
+      "end_exclusive": "006f09ed",
+      "bytes": 61,
+      "raw_file_offset": "0x2f09b0",
+      "code_sha256": "ccbcb045b811b0f3f8d5e1060a34db0cec8bb8e86ead91391b2ed29dfff29774",
+      "instruction_count": 20,
+      "direct_calls": [],
+      "returns": [
+        {
+          "site": "006f09ea",
+          "cleanup_bytes": 8
+        }
+      ],
+      "explicit_memory_store_sites": [],
+      "native_corroboration": {
+        "asm_sha256": "208e1339503ad34b1e76a8c7aac52998a65651a0a120d3403b6e426d30adf677",
+        "refs_sha256": "c5ebc16870046521b156488e6963d75d2b613e6f4d9dc84049afc07eeca888b9",
+        "pseudocode_sha256": "a26499a2b2307ea27e42ec587b0d0c1a66b0aed9c9844b6556cfcee24ba8264a",
+        "checkpoint_11_exported_name": "FUN_006f09b0",
+        "reference_count": 56,
+        "all_reference_targets_verified": true,
+        "instruction_addresses_and_direct_calls_agree": true
+      }
+    },
+    {
+      "start": "006cb960",
+      "end_exclusive": "006cb9a3",
+      "bytes": 67,
+      "raw_file_offset": "0x2cb960",
+      "code_sha256": "08ba502d6f84f4bc9e6ea2f0e2d76f491a1d84625bf3000cf74ffdfeb87d1bbd",
+      "instruction_count": 28,
+      "direct_calls": [],
+      "returns": [
+        {
+          "site": "006cb982",
+          "cleanup_bytes": 12
+        },
+        {
+          "site": "006cb99b",
+          "cleanup_bytes": 12
+        },
+        {
+          "site": "006cb9a0",
+          "cleanup_bytes": 12
+        }
+      ],
+      "explicit_memory_store_sites": [],
+      "native_corroboration": {
+        "asm_sha256": "f4e35a9ff553cdb45552f1b4c1b0caefb08008fe1692abbe4a322924042f4c8a",
+        "refs_sha256": "ba82cc6ec57ccfb205b259918aedff0b68d9cdabb74a39e9fa2e32f6cddead2b",
+        "pseudocode_sha256": "307b45b4f49ef9cde9466a7f49beb2d5f6fdb0b3def9c9edd39e042bb68ead4b",
+        "checkpoint_11_exported_name": "FUN_006cb960",
+        "reference_count": 11,
+        "all_reference_targets_verified": true,
+        "instruction_addresses_and_direct_calls_agree": true
+      }
+    },
+    {
+      "start": "006bce20",
+      "end_exclusive": "006bce7f",
+      "bytes": 95,
+      "raw_file_offset": "0x2bce20",
+      "code_sha256": "de002d611bb6d1881dc144f639db724b93f94a59bcdba69d338a161e020ec2d9",
+      "instruction_count": 31,
+      "direct_calls": [
+        {
+          "site": "006bce5d",
+          "target": "006f4600"
+        }
+      ],
+      "returns": [
+        {
+          "site": "006bce76",
+          "cleanup_bytes": 12
+        },
+        {
+          "site": "006bce7c",
+          "cleanup_bytes": 12
+        }
+      ],
+      "explicit_memory_store_sites": [],
+      "native_corroboration": {
+        "asm_sha256": "920f1ccdf2f1326bcc616a0fa64311b6f54a6409d9c1cf630a2a68c45759a339",
+        "refs_sha256": "9e606a86fa38b590f760eff1de4a35df79937637c648b1c99229ac8826943824",
+        "pseudocode_sha256": "1cce4847c0fbaf6355389ab1b8c51eeeb0a2ba8e50879f78c096ee9dd2c7f3b3",
+        "checkpoint_11_exported_name": "FUN_006bce20",
+        "reference_count": 8,
+        "all_reference_targets_verified": true,
+        "instruction_addresses_and_direct_calls_agree": true
+      }
+    }
+  ],
+  "checked_contract_sites": [
+    "006f09b0",
+    "006f09b7",
+    "006f09c4",
+    "006f09ca",
+    "006f09d1",
+    "006f09dd",
+    "006f09e2",
+    "006cb960",
+    "006cb966",
+    "006cb96e",
+    "006cb97e",
+    "006cb991",
+    "006cb993",
+    "006cb99e",
+    "006bce23",
+    "006bce31",
+    "006bce3f",
+    "006bce47",
+    "006bce4b",
+    "006bce4d",
+    "006bce55",
+    "006bce5d",
+    "006bce66",
+    "006bce70",
+    "006bce79"
+  ],
+  "caller_boundary": {
+    "start": "007103e0",
+    "end_exclusive": "007109eb",
+    "bytes": 1547,
+    "raw_file_offset": "0x3103e0",
+    "code_sha256": "148c163c2dda7d5c79f5de5771ad222055b3b268781c4d697250a2794b1a70c2",
+    "instruction_count": 454,
+    "owned_calls": [
+      {
+        "site": "007104b9",
+        "target": "006cb960"
+      },
+      {
+        "site": "00710560",
+        "target": "006f09b0"
+      },
+      {
+        "site": "007105fd",
+        "target": "006bce20"
+      },
+      {
+        "site": "00710705",
+        "target": "006bce20"
+      },
+      {
+        "site": "00710799",
+        "target": "006bce20"
+      },
+      {
+        "site": "00710858",
+        "target": "006bce20"
+      },
+      {
+        "site": "00710912",
+        "target": "006bce20"
+      },
+      {
+        "site": "007109bb",
+        "target": "006cb960"
+      }
+    ],
+    "five_equivalent_candidate_setups": [
+      {
+        "start": "007105dc",
+        "end_exclusive": "007105fd",
+        "bytes": 33,
+        "raw_file_offset": "0x3105dc",
+        "code_sha256": "cd7fb8f924ffac795ca6fed7f1ee6ada616677208ec99b5c9392c93d8f9c70ef",
+        "instruction_count": 9
+      },
+      {
+        "start": "007106e4",
+        "end_exclusive": "00710705",
+        "bytes": 33,
+        "raw_file_offset": "0x3106e4",
+        "code_sha256": "cd7fb8f924ffac795ca6fed7f1ee6ada616677208ec99b5c9392c93d8f9c70ef",
+        "instruction_count": 9
+      },
+      {
+        "start": "00710778",
+        "end_exclusive": "00710799",
+        "bytes": 33,
+        "raw_file_offset": "0x310778",
+        "code_sha256": "da0dc09e7a9f15ab8a9b4ac88bd2b85a435319b81364f7c39c683aad79d83b57",
+        "instruction_count": 9
+      },
+      {
+        "start": "00710837",
+        "end_exclusive": "00710858",
+        "bytes": 33,
+        "raw_file_offset": "0x310837",
+        "code_sha256": "3f199d0f1bd2e50aaa7c44748dd9d9e0df5433e89ffb7acb2ec4d6ad1b0de251",
+        "instruction_count": 9
+      },
+      {
+        "start": "007108f1",
+        "end_exclusive": "00710912",
+        "bytes": 33,
+        "raw_file_offset": "0x3108f1",
+        "code_sha256": "da0dc09e7a9f15ab8a9b4ac88bd2b85a435319b81364f7c39c683aad79d83b57",
+        "instruction_count": 9
+      }
+    ]
+  },
+  "unresolved_dependency": {
+    "entry": "006f4600",
+    "owned_call_site": "006bce5d",
+    "entry_register": "ECX=candidate",
+    "explicit_stack_arguments": 0,
+    "consumed_result": "AL nonzero",
+    "full_body_and_transitive_effects": "unassigned"
+  },
+  "limitations": [
+    "No execution oracle or new reconstruction",
+    "No full grid data, helper code bytes, decompilation or private paths emitted",
+    "No safe coordinate bounds or live match reachability established",
+    "006f4600 transitive reads/writes/RNG and ABI preservation remain unverified"
+  ]
+}
