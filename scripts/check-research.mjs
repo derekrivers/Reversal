@@ -59,7 +59,7 @@ assert.equal(functions.reduce((n,f)=>n+f.call_instruction_count,0),atlas.counts.
 assert.equal(functions.reduce((n,f)=>n+f.unresolved_indirect_call_sites.length,0),atlas.counts.unresolved_indirect_call_instructions);
 const coverage=JSON.parse(readFileSync('evidence/code-atlas/validation-coverage.json','utf8'));
 for(const entry of coverage.entries)assert.ok(functions.some(f=>f.entry===entry.function),entry.function);
-const overlayReceipts=['09','10'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
+const overlayReceipts=['09','10','11'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
 for(const receipt of overlayReceipts)assert.equal(receipt.sha256,expected.sha256);
 const overlayRows=overlayReceipts.flatMap(receipt=>receipt.annotations.map(([address,name])=>[address,name]));
 const nameOverlay=new Map(overlayRows);

@@ -1,0 +1,77 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 11,
+  "scope": "Reviewed static mapping annotations; no behavior oracle, prototype or data type applied.",
+  "annotations": [
+    [
+      "008bba30",
+      "cm0102_construct_transfer_manager_candidate",
+      "R11-B static: ECX writable 0x94a-byte receiver, one optional raw32 load context, RET 4; EAX returns receiver on every normal exit including allocation diagnostics. Initializes 150 packed 14-byte headers at +18, embedded headers and scalar state; retains allocations at DWORD+86e/+91c. Nonzero context calls 008bc020; nonzero result skips fresh path. Zero result falls back without explicit rollback to 0xe0 object construction through 00839a80 stored at DWORD+856, then 008c6e60. Opaque callees/unwind/lifecycle remain open; no full transfer or money behavior claim."
+    ],
+    [
+      "005a0590",
+      "finance_row_for_normalized_record_005a0590",
+      "R11 static: ECX holder, one borrowed record pointer, RET4; null record diagnoses/clears 00b67a34/returns0. Calls 00540a50(record,\u0026flag32,1); adopts return only when nonnull and flag\u003d\u003d0. Returns holder[0]+DWORD(*effective_record)*0x167 modulo32. No holder/index/count/lifetime check or allocation. Dependency can clear input byte+244. Currency and complete finance effect unresolved."
+    ],
+    [
+      "005999a0",
+      "finance_add_signed32_amount_005999a0",
+      "R11 static: ECX row, signed32 stack amount, RET4. Ordered stores add amount modulo32 to DWORD+148 then DWORD+a8; CDQ/ADD/ADC then add sign-extended amount to 64-bit pair+0/+4 modulo64. No calls/allocations/guards. EAX ends as high DWORD, not established success return. Field meaning, units and completed transaction unresolved."
+    ],
+    [
+      "0059a370",
+      "finance_array_construct_or_load_0059a370",
+      "R11 static constructor-shaped body: ECX four-byte holder, one raw optional load context, returns holder/RET4. After prerequisite retry prelude, allocates 00ae235c*0x167+4 modulo32, writes count prefix and holder[0]\u003dallocation+4. Element constructor 005961c0 does no initialization. Nonzero context attempts 0059b2a0; absent/failed load calls 005961d0 per row from 00ae23b4 source stride245, destination stride167. Allocation failure publishes0 and diagnoses but still returns holder. No full initializer/domain/lifecycle claim."
+    ],
+    [
+      "0059b2a0",
+      "finance_read_array_from_context_0059b2a0",
+      "R11 static: ECX holder, one raw context, RET4, returns0/1. Null context returns0. Opens finance.dat via 009326e0(context,name,0,0x16,4), reads existing holder[0] via 00932c30(dest,0x167,00ae235c,stream), compares returned count with reloaded00ae235c. Equality closes/frees local stream through00932b00 and returns1. Open/count failure diagnoses, clears00b67a34, returns0; no direct short-read close or destination rollback here. Success validates count only, not row contents/full finance state."
+    ]
+  ],
+  "code_comments": [
+    [
+      "007103e0",
+      "R11-A static map: ECX\u003dother slot, no explicit stack args, plain RET. May draw RNG, write slot state, iterate candidate pointers, call 007109f0/00713fc0/00714d40 and retry after 007109f0. No dynamic equivalence or complete shot outcome validated."
+    ],
+    [
+      "00710449",
+      "For nonowner/tactical-low-bit-clear path: ordered slot4d_snapshot/128 + R(10) \u003c\u003d prior R(65), or unordered FCOMP, selects candidate loop then word slot+198\u003d67h and return. RNG order is R(65), R(10)."
+    ],
+    [
+      "00710654",
+      "Immediate dependency boundary only: ECX\u003dcurrent slot; pushed dword 0; callee 007109f0 normal RET4. Caller ignores return value, clears match+1a7, rereads owner/action/flags, then may draw two bounds and retry entry. Full callee body remains open."
+    ],
+    [
+      "007109d1",
+      "Immediate dependency boundary: ECX\u003dcurrent slot; pushed dword 1; 00713fc0 exported normal returns RET4. Caller ignores result and returns. Full callee RNG/writes not certified."
+    ],
+    [
+      "00703e8c",
+      "R11-A caller dependency: conditional scan after signed quantized distance \u003e 25+R(15). Two arrays of 20 slots, stride 1beh; signed slot+19 in 0..10, slot+2b\u003d0, exclude shooter. ECX\u003dother slot to 007103e0. match+8ea9 temporarily5 then restored; other effects persist. No live action33 reachability proof."
+    ],
+    [
+      "008bbc7b",
+      "R11-B: DWORD+86e retains 00945501(global32[00ae2364],8). Null diagnoses but returns receiver if diagnostic helpers return; no receiver null return here."
+    ],
+    [
+      "008bbccd",
+      "R11-B: DWORD+91c retains 00945501(global32[00ae235c],16). Null diagnoses; no explicit free of prior +86e allocation in owned body."
+    ],
+    [
+      "008bbd2c",
+      "R11-B: nonzero load result skips fresh dependent construction. Zero falls through; constructor performs no explicit rollback/reset after possible load-side writes before +856 is replaced."
+    ],
+    [
+      "008bbe05",
+      "R11-B: normal EAX return is receiver, including allocation-error paths. Observed caller pointer test cannot prove internal initialization succeeded."
+    ]
+  ],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "shot-helper-11-annotations.json",
+    "transfer-boundary-11-annotations.json",
+    "finance-boundary-11-annotations.json"
+  ]
+}
