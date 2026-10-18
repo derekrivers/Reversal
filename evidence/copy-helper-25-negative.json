@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "unit": "R25-C",
+  "optimized_python_safe": true,
+  "specimen_byte_mutation": "pinned specimen mismatch",
+  "native_operand_mutation": "native export mismatch: 00948851.asm",
+  "exact_old_name_mutation": "native manifest/preflight SHA-256 mismatch"
+}

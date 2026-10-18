@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "unit": "R25-C",
+  "entry_va": "00948851",
+  "old_native_name": "FUN_00948851",
+  "address_kind": "virtual unless file_offset is explicit",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "77fb2072a25ff030ab3c0e58c5cd289730a9a8c5345ceaaf56e948e727c1dd0b",
+  "export_manifest_sha256": "9f7e0de5968e38bac77fe8438678596f82ab31abee5e820c7ccb36b2f1ce531c",
+  "annotation_preflight_sha256": "34ca2e277634b5a4bdbde668ffcc7d3b91a65a4c1689844f54c454b644834899",
+  "file_offset": "00548851",
+  "body_bytes": 138,
+  "body_sha256": "bb0dd1f9dc927140bc857b8b48b2c621c272cbd9fbc67f3f0b1e693185aecf3f",
+  "instruction_count": 63,
+  "end_exclusive_va": "009488db",
+  "return_site": "009488da",
+  "return_stack_immediate": 0,
+  "branches": {
+    "00948862": "00948875",
+    "00948873": "009488d8",
+    "0094887b": "009488ba",
+    "0094888f": "009488a4",
+    "00948895": "009488b0",
+    "009488a0": "009488b6",
+    "009488a2": "009488aa",
+    "009488a8": "009488ba",
+    "009488ac": "00948880",
+    "009488ae": "009488ba",
+    "009488b4": "009488ba",
+    "009488c0": "009488d5"
+  },
+  "calls": {
+    "0094886b": "009466d0"
+  },
+  "critical_sites": {
+    "00948854": {
+      "mnemonic": "cmp",
+      "operand": "dword ptr [0xde441c], 0"
+    },
+    "00948886": {
+      "mnemonic": "test",
+      "operand": "byte ptr [esi + 0xde4521], 4"
+    },
+    "0094888d": {
+      "mnemonic": "mov",
+      "operand": "byte ptr [edi], al"
+    },
+    "009488b0": {
+      "mnemonic": "and",
+      "operand": "byte ptr [edi - 1], 0"
+    },
+    "009488b6": {
+      "mnemonic": "and",
+      "operand": "byte ptr [edi - 2], 0"
+    },
+    "009488c9": {
+      "mnemonic": "shr",
+      "operand": "ecx, 2"
+    },
+    "009488d0": {
+      "mnemonic": "and",
+      "operand": "ecx, 3"
+    }
+  },
+  "native_instructions_match": true,
+  "mode_zero": "delegated _strncpy at 009466d0; static boundary only",
+  "nonzero_mode": "call-free locale lead-byte loop, truncation and zero padding",
+  "python_optimized_integrity": "explicit ValueError gates; no assert"
+}
