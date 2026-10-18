@@ -1,0 +1,41 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-14",
+  "status": "Name-only proposals; coordinator applies after independent review and fresh exact-old check",
+  "private_preflight_sha256": "c20393d151da0afff24f0ff7f806f91857d90f454cbff5a52d7bc0463517d1f1",
+  "old_annotation_evidence": "Pinned preflight names and native .c headers agree; no comments, prototypes, calling conventions or structures proposed",
+  "proposals": [
+    {
+      "address": "0054dc90",
+      "kind": "function_name",
+      "old": "FUN_0054dc90",
+      "new": "cm0102_read_db_245_fields_expand_word80",
+      "evidence": "2365-byte complete body / 805 instructions match pinned native assembly; ordered field reads into stride 0x245 with byte-to-WORD conversion at 0x80",
+      "confidence": "high for local ordered reads, stride and conversions; semantic record identity and transitive stream effects unresolved"
+    },
+    {
+      "address": "0054e9a0",
+      "kind": "function_name",
+      "old": "FUN_0054e9a0",
+      "new": "cm0102_read_db_44_fields_expand_three_words",
+      "evidence": "1583-byte complete body / 583 instructions match pinned native assembly; ordered field reads into stride 0x44 with byte-to-WORD conversion at 0x8,0xa,0xc",
+      "confidence": "high for local ordered reads, stride and conversions; semantic record identity and transitive stream effects unresolved"
+    },
+    {
+      "address": "0054f150",
+      "kind": "function_name",
+      "old": "FUN_0054f150",
+      "new": "cm0102_read_db_46_fields_expand_three_words",
+      "evidence": "2652-byte complete body / 972 instructions match pinned native assembly; ordered field reads into stride 0x46 with byte-to-WORD conversion at 0x9,0xb,0xd",
+      "confidence": "high for local ordered reads, stride and conversions; semantic record identity and transitive stream effects unresolved"
+    },
+    {
+      "address": "0054ffd0",
+      "kind": "function_name",
+      "old": "FUN_0054ffd0",
+      "new": "cm0102_read_db_6b_fields_expand_word69",
+      "evidence": "510-byte complete body / 193 instructions match pinned native assembly; ordered field reads into stride 0x6b with byte-to-WORD conversion at 0x69",
+      "confidence": "high for local ordered reads, stride and conversions; semantic record identity and transitive stream effects unresolved"
+    }
+  ]
+}
