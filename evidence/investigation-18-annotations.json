@@ -1,0 +1,66 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 18,
+  "scope": "Ten reviewed static working names only; no behavior oracle, prototype, comment or data type applied.",
+  "annotations": [
+    [
+      "006f0630",
+      "FUN_006f0630",
+      "match_install_active_slot_state_006f0630"
+    ],
+    [
+      "006f4920",
+      "FUN_006f4920",
+      "match_update_heading_from_coordinates_006f4920"
+    ],
+    [
+      "006f56c0",
+      "FUN_006f56c0",
+      "match_subtract_slot_scalar_cost_006f56c0"
+    ],
+    [
+      "0070d430",
+      "FUN_0070d430",
+      "match_threshold_action_gate_0070d430"
+    ],
+    [
+      "0094b2a0",
+      "FUN_0094b2a0",
+      "cm0102_record_map_os_error"
+    ],
+    [
+      "0094c552",
+      "FUN_0094c552",
+      "cm0102_seek_descriptor_clear_text_eof"
+    ],
+    [
+      "0094ec37",
+      "FUN_0094ec37",
+      "cm0102_init_stream_buffer_or_inline"
+    ],
+    [
+      "0068d010",
+      "FUN_0068d010",
+      "cm0102_forward_node_payload_to_00944c94"
+    ],
+    [
+      "0068d1f0",
+      "FUN_0068d1f0",
+      "cm0102_unlink_first_node_byte_match"
+    ],
+    [
+      "00946323",
+      "FUN_00946323",
+      "cm0102_frame_guarded_cleanup_forwarder"
+    ]
+  ],
+  "function_comments": [],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "match-helpers-18-annotations.json",
+    "db-helpers-18-annotations.json",
+    "cleanup-helpers-18-annotations.json"
+  ]
+}

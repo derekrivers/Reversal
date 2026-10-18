@@ -1,0 +1,2420 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "functions": [
+    {
+      "address": "004c7560",
+      "name": "cm0102_initialize_staff_contract_rows_candidate",
+      "comment": null
+    },
+    {
+      "address": "004c79a0",
+      "name": "cm0102_reserve_staff_contract_row_candidate",
+      "comment": null
+    },
+    {
+      "address": "004cf5f0",
+      "name": "cm0102_find_staff_contract_context_row_candidate",
+      "comment": null
+    },
+    {
+      "address": "004d0c60",
+      "name": "cm0102_compute_staff_contract_scalar_candidate",
+      "comment": null
+    },
+    {
+      "address": "0054d5e0",
+      "name": "cm0102_read_db_c6_records_checked"
+    },
+    {
+      "address": "0054d740",
+      "name": "cm0102_read_db_122_records_checked"
+    },
+    {
+      "address": "0054d8a0",
+      "name": "cm0102_read_db_38_records_checked",
+      "comment": null
+    },
+    {
+      "address": "0054da00",
+      "name": "cm0102_read_db_4e_records_checked",
+      "comment": null
+    },
+    {
+      "address": "0054db50",
+      "name": "cm0102_read_db_245_records_dispatch_normalize_word80",
+      "comment": null
+    },
+    {
+      "address": "0054dc90",
+      "name": "cm0102_read_db_245_fields_expand_word80",
+      "comment": null
+    },
+    {
+      "address": "0054e630",
+      "name": "cm0102_read_db_6e_records_checked",
+      "comment": null
+    },
+    {
+      "address": "0054e780",
+      "name": "cm0102_read_db_9d_records_checked",
+      "comment": null
+    },
+    {
+      "address": "0054e880",
+      "name": "cm0102_read_db_44_records_or_delegate",
+      "comment": null
+    },
+    {
+      "address": "0054e9a0",
+      "name": "cm0102_read_db_44_fields_expand_three_words",
+      "comment": null
+    },
+    {
+      "address": "0054f030",
+      "name": "cm0102_read_db_46_records_or_delegate",
+      "comment": null
+    },
+    {
+      "address": "0054f150",
+      "name": "cm0102_read_db_46_fields_expand_three_words",
+      "comment": null
+    },
+    {
+      "address": "0054fc10",
+      "name": "cm0102_read_db_34_records_checked",
+      "comment": null
+    },
+    {
+      "address": "0054fd60",
+      "name": "cm0102_read_db_11_records_checked",
+      "comment": null
+    },
+    {
+      "address": "0054feb0",
+      "name": "cm0102_read_db_6b_records_or_delegate",
+      "comment": null
+    },
+    {
+      "address": "0054ffd0",
+      "name": "cm0102_read_db_6b_fields_expand_word69",
+      "comment": null
+    },
+    {
+      "address": "00550230",
+      "name": "cm0102_read_db_1a_records_checked",
+      "comment": null
+    },
+    {
+      "address": "00550380",
+      "name": "cm0102_read_db_65_records_checked",
+      "comment": null
+    },
+    {
+      "address": "005504d0",
+      "name": "cm0102_read_db_3a_records_checked_005504d0",
+      "comment": null
+    },
+    {
+      "address": "005505c0",
+      "name": "cm0102_read_db_2b_records_checked",
+      "comment": null
+    },
+    {
+      "address": "00550710",
+      "name": "cm0102_read_db_3a_records_checked_00550710",
+      "comment": null
+    },
+    {
+      "address": "00550860",
+      "name": "cm0102_read_db_3c_records_checked",
+      "comment": null
+    },
+    {
+      "address": "005999a0",
+      "name": "finance_add_signed32_amount_005999a0"
+    },
+    {
+      "address": "0059a370",
+      "name": "finance_array_construct_or_load_0059a370"
+    },
+    {
+      "address": "0059b2a0",
+      "name": "finance_read_array_from_context_0059b2a0"
+    },
+    {
+      "address": "005a0590",
+      "name": "finance_row_for_normalized_record_005a0590"
+    },
+    {
+      "address": "005a53c0",
+      "name": "cm0102_noop_return_005a53c0",
+      "comment": null
+    },
+    {
+      "address": "005b57c0",
+      "name": "signed_index_byte_load_005b57c0",
+      "comment": null
+    },
+    {
+      "address": "0062c680",
+      "name": "cm0102_refresh_player_status_row_candidate"
+    },
+    {
+      "address": "0062ed70",
+      "name": "cm0102_get_refreshed_status_record_candidate"
+    },
+    {
+      "address": "00682300",
+      "name": "cm0102_cleanup_receiver_ea_counted_array",
+      "comment": null
+    },
+    {
+      "address": "00682b30",
+      "name": "cm0102_write_league_peer_bucket_bytes_candidate"
+    },
+    {
+      "address": "00682e10",
+      "name": "cm0102_apply_league_weighted_amounts_candidate"
+    },
+    {
+      "address": "00682f70",
+      "name": "cm0102_sum_league_weighted_amounts_candidate"
+    },
+    {
+      "address": "0068d010",
+      "name": "cm0102_forward_node_payload_to_00944c94",
+      "comment": null
+    },
+    {
+      "address": "0068d040",
+      "name": "cm0102_cleanup_linked_nodes_head_02",
+      "comment": null
+    },
+    {
+      "address": "0068d1f0",
+      "name": "cm0102_unlink_first_node_byte_match",
+      "comment": null
+    },
+    {
+      "address": "006b7f20",
+      "name": "cm0102_prepare_match_candidate"
+    },
+    {
+      "address": "006b98c0",
+      "name": "cm0102_advance_match_candidate",
+      "return_bytes": 1
+    },
+    {
+      "address": "006bbb60",
+      "name": "cm0102_prepare_side_candidate"
+    },
+    {
+      "address": "006bbf60",
+      "name": "cm0102_assign_opponent_slots_candidate"
+    },
+    {
+      "address": "006bce20",
+      "name": "match_candidate_filter_006bce20",
+      "comment": "CM0102 investigation12 (2026-10-18): R12-A static contract: ECX=match; candidate dword and low-byte x/y at entry ESP+4/+8/+c; RETc, normalized EAX0/1. In order reject null, equal coordinate bytes, signed candidate+2b>=2, candidate==match+f582 or +f57a; then call unresolved 006f4600 with ECX=candidate, no explicit args, require AL!=0; finally require post-call match+8eb2==0. Saves ESI; no direct game-state writes/RNG. Transitive effects and full callee ABI remain open; AL gates R11 candidate RNG paths, not a proven outcome."
+    },
+    {
+      "address": "006bd930",
+      "name": "cm0102_check_period_boundary",
+      "return_bytes": 1
+    },
+    {
+      "address": "006be710",
+      "name": "cm0102_advance_tiebreak_sequence"
+    },
+    {
+      "address": "006c38c0",
+      "name": "cm0102_lookup_tactical_position_word",
+      "return_bytes": 2
+    },
+    {
+      "address": "006cb960",
+      "name": "match_signed_rectangle_predicate_006cb960",
+      "comment": "CM0102 investigation12 (2026-10-18): R12-A static contract: low-byte side/x/y at entry ESP+4/+8/+c; RETc; ECX unused. AL=1 iff signed x in 2..6 and signed y in 10..11 when side byte exactly1, otherwise y in 0..1; else AL=0. EAX upper24 unchanged. No calls, game-state reads/writes or RNG. 007103e0 calls twice using side=(slot+27==0), x/y=match+8ea7/+8ea8 and tests AL only. Semantic region label provisional."
+    },
+    {
+      "address": "006ce110",
+      "name": "cm0102_select_goalkeeper_slot_candidate"
+    },
+    {
+      "address": "006cfe10",
+      "name": "cm0102_apply_match_slot_effect_candidate"
+    },
+    {
+      "address": "006d0980",
+      "name": "cm0102_apply_slot_condition_effect_candidate"
+    },
+    {
+      "address": "006d1210",
+      "name": "cm0102_process_auxiliary_event_candidate"
+    },
+    {
+      "address": "006d4250",
+      "name": "cm0102_stop_after_goal_rule"
+    },
+    {
+      "address": "006d5b50",
+      "name": "cm0102_release_event_configuration"
+    },
+    {
+      "address": "006d5cd0",
+      "name": "cm0102_event_priority"
+    },
+    {
+      "address": "006d6f70",
+      "name": "cm0102_enqueue_commentary_event"
+    },
+    {
+      "address": "006d78b0",
+      "name": "cm0102_next_commentary_segment"
+    },
+    {
+      "address": "006d7b00",
+      "name": "cm0102_format_game_commentary_candidate"
+    },
+    {
+      "address": "006d8d10",
+      "name": "cm0102_format_report_commentary_candidate"
+    },
+    {
+      "address": "006d9e50",
+      "name": "cm0102_load_event_configuration"
+    },
+    {
+      "address": "006db500",
+      "name": "cm0102_build_side_descriptor_candidate"
+    },
+    {
+      "address": "006ec010",
+      "name": "cm0102_recompute_roster_attributes_candidate"
+    },
+    {
+      "address": "006eecb0",
+      "name": "cm0102_refresh_roster_ratings_candidate"
+    },
+    {
+      "address": "006f0630",
+      "name": "match_install_active_slot_state_006f0630",
+      "comment": null
+    },
+    {
+      "address": "006f09b0",
+      "name": "match_grid_lookup_from_slot_006f09b0",
+      "comment": "CM0102 investigation12 (2026-10-18): R12-A static contract: ECX=slot; low-byte x/y at entry ESP+4/+8; RET8. Read signed slot+102/+103 and signed target bytes; abs each signed32 delta, retain signed low8; index=9*dy+dx. FLD float32 at a15e44+4*index returns via ST0. Saves ESI; clobbers EAX/ECX/EDX. No calls or game-state writes; no coordinate/index/null guard. No original grid data or execution equivalence added."
+    },
+    {
+      "address": "006f09f0",
+      "name": "match_slot_move_contact_dispatch_006f09f0",
+      "comment": null
+    },
+    {
+      "address": "006f4600",
+      "name": "match_slot_select_byte_by_flag_006f4600",
+      "comment": null
+    },
+    {
+      "address": "006f46b0",
+      "name": "match_slot_relocate_cell_006f46b0",
+      "comment": null
+    },
+    {
+      "address": "006f4920",
+      "name": "match_update_heading_from_coordinates_006f4920",
+      "comment": null
+    },
+    {
+      "address": "006f56c0",
+      "name": "match_subtract_slot_scalar_cost_006f56c0",
+      "comment": null
+    },
+    {
+      "address": "006fa250",
+      "name": "match_candidate_action_dispatch_006fa250",
+      "comment": null
+    },
+    {
+      "address": "006fa490",
+      "name": "match_generated_coordinate_action_dispatch_006fa490",
+      "comment": null
+    },
+    {
+      "address": "00700420",
+      "name": "cm0102_compute_keeper_response_candidate"
+    },
+    {
+      "address": "00700bd0",
+      "name": "cm0102_prepare_shot_quality_candidate"
+    },
+    {
+      "address": "00702050",
+      "name": "cm0102_resolve_shot_candidate"
+    },
+    {
+      "address": "0070d430",
+      "name": "match_threshold_action_gate_0070d430",
+      "comment": null
+    },
+    {
+      "address": "007109f0",
+      "name": "match_slot_select_action_dispatch_007109f0",
+      "comment": null
+    },
+    {
+      "address": "00713fc0",
+      "name": "match_slot_coordinate_action_dispatch_00713fc0",
+      "comment": null
+    },
+    {
+      "address": "00714d40",
+      "name": "match_slot_state_coordinate_dispatch_00714d40",
+      "comment": null
+    },
+    {
+      "address": "00727e20",
+      "name": "cm0102_select_eleven_slot_max_score_index",
+      "comment": "CM0102 investigation12 (2026-10-18): R12-C static: two raw32 stack args, caller cleanup/plain RET; only AL result specified. Nonnull arg1 scans indices0..10 via008968f0(ECX=global32[00de1d08],arg1,index,arg2), scores nonnull candidates via006e1cf0(candidate,0,arg1), returns earliest maximal signed16 AX score's index. First candidate accepted even if negative; ties keep earlier index. No candidates/null arg1 returnsAL=ff; null diagnostic clearsDWORD00b67a34. No direct input-field stores or allocations; dependency008968f0 can invalidate shared mapping IDs and caller00727c30 can separately commit selected mapped ID via00897760. No purity, full score, transitive RNG or simulation-boundary claim."
+    },
+    {
+      "address": "00727f00",
+      "name": "cm0102_dispatch_match_screen_callbacks_candidate",
+      "comment": "CM0102 investigation12 (2026-10-18): R12-C static: one raw32 stack key, caller cleanup/plain RET. Nonzero key calls007fe4a0(ECX=00b74450,key,00727fa0,00727fb0,0,0,0), forwarding callee EAX. Dependency scans16 manager groups, filters by key, mutates/restores WORD+382a and normally returns1 even with no match. Null key diagnoses, clearsDWORD00b67a34 and has no explicit EAX status assignment. Wrapper has no direct receiver construction/allocation/free. Callback invocation, storage lifetime, transitive simulation and RNG effects remain open."
+    },
+    {
+      "address": "007ae4f0",
+      "name": "cm0102_cleanup_scout_record_storage",
+      "comment": null
+    },
+    {
+      "address": "007b7690",
+      "name": "cm0102_replace_scout_record_from_source",
+      "comment": null
+    },
+    {
+      "address": "007f6760",
+      "name": "cm0102_construct_scout_storage_manager",
+      "comment": null
+    },
+    {
+      "address": "007f6aa0",
+      "name": "cm0102_cleanup_scout_storage_manager",
+      "comment": null
+    },
+    {
+      "address": "007f6af0",
+      "name": "cm0102_set_scout_dword_slot_u8_index",
+      "comment": null
+    },
+    {
+      "address": "007f6be0",
+      "name": "cm0102_get_scout_dword_slot_u8_index",
+      "comment": null
+    },
+    {
+      "address": "007f6cd0",
+      "name": "cm0102_get_scout_688byte_record",
+      "comment": null
+    },
+    {
+      "address": "007f6e30",
+      "name": "cm0102_get_scout_byte_slot_u32_index",
+      "comment": null
+    },
+    {
+      "address": "007f6f20",
+      "name": "cm0102_set_scout_byte_slot_u32_index",
+      "comment": null
+    },
+    {
+      "address": "008041c0",
+      "name": "cm0102_construct_scout_record_copy_object",
+      "comment": null
+    },
+    {
+      "address": "00804450",
+      "name": "cm0102_copy_ten_records_to_scout_storage",
+      "comment": null
+    },
+    {
+      "address": "00813140",
+      "name": "cm0102_cleanup_scout_record_copy_object",
+      "comment": null
+    },
+    {
+      "address": "00896290",
+      "name": "cm0102_accumulate_tactic_result_candidate"
+    },
+    {
+      "address": "00896660",
+      "name": "cm0102_resolve_club_tactic_candidate"
+    },
+    {
+      "address": "008967d0",
+      "name": "cm0102_set_club_tactic_index_candidate"
+    },
+    {
+      "address": "00897590",
+      "name": "cm0102_find_designated_staff_slot"
+    },
+    {
+      "address": "008b23b0",
+      "name": "cm0102_copy_in_training_block_and_update_candidate",
+      "comment": null
+    },
+    {
+      "address": "008b35a0",
+      "name": "cm0102_copy_out_training_54byte_block",
+      "comment": null
+    },
+    {
+      "address": "008b3930",
+      "name": "cm0102_get_training_155byte_record",
+      "comment": null
+    },
+    {
+      "address": "008b3c50",
+      "name": "cm0102_allocate_default_training_6byte_rows_candidate",
+      "comment": null
+    },
+    {
+      "address": "008b4cd0",
+      "name": "cm0102_get_training_54byte_block",
+      "comment": null
+    },
+    {
+      "address": "008bba30",
+      "name": "cm0102_construct_transfer_manager_candidate"
+    },
+    {
+      "address": "0090cfc0",
+      "name": "cm0102_random_bounded"
+    },
+    {
+      "address": "0090d0a0",
+      "name": "cm0102_seed_random"
+    },
+    {
+      "address": "00932c30",
+      "name": "cm0102_read_items_bounded_or_byterun4",
+      "comment": null
+    },
+    {
+      "address": "00944c94",
+      "name": "cm0102_forward_pointer_to_009452ca",
+      "comment": null
+    },
+    {
+      "address": "00945bfe",
+      "name": "cm0102_read_items_buffered",
+      "comment": null
+    },
+    {
+      "address": "009462bb",
+      "name": "cm0102_reverse_stride_cleanup_callbacks",
+      "comment": null
+    },
+    {
+      "address": "00946323",
+      "name": "cm0102_frame_guarded_cleanup_forwarder",
+      "comment": null
+    },
+    {
+      "address": "009469fa",
+      "name": "cm0102_crt_srand"
+    },
+    {
+      "address": "00946a04",
+      "name": "cm0102_crt_rand"
+    },
+    {
+      "address": "0094a698",
+      "name": "cm0102_crt_request_precision53_candidate"
+    },
+    {
+      "address": "0094ab50",
+      "name": "cm0102_copy_bytes_overlap_aware",
+      "comment": null
+    },
+    {
+      "address": "0094b2a0",
+      "name": "cm0102_record_map_os_error",
+      "comment": null
+    },
+    {
+      "address": "0094b307",
+      "name": "cm0102_refill_stream_get_byte",
+      "comment": null
+    },
+    {
+      "address": "0094b3e0",
+      "name": "cm0102_read_descriptor_translate_text",
+      "comment": null
+    },
+    {
+      "address": "0094c552",
+      "name": "cm0102_seek_descriptor_clear_text_eof",
+      "comment": null
+    },
+    {
+      "address": "0094ec37",
+      "name": "cm0102_init_stream_buffer_or_inline",
+      "comment": null
+    }
+  ],
+  "function_body_sites": [
+    {
+      "function": "006f09f0",
+      "address": "006f1639"
+    },
+    {
+      "function": "006f09f0",
+      "address": "006f163e"
+    },
+    {
+      "function": "006f09f0",
+      "address": "006f1640"
+    },
+    {
+      "function": "006f09f0",
+      "address": "006f1645"
+    },
+    {
+      "function": "006f09f0",
+      "address": "006f1647"
+    },
+    {
+      "function": "006f09f0",
+      "address": "006f164c"
+    }
+  ],
+  "labels": [
+    {
+      "address": "00968e40",
+      "name": "cm0102_keeper_redraw_weight_double"
+    },
+    {
+      "address": "00968e80",
+      "name": "cm0102_keeper_base_weight_double"
+    },
+    {
+      "address": "00968ec8",
+      "name": "cm0102_must_score_error_multiplier"
+    },
+    {
+      "address": "00969040",
+      "name": "cm0102_score_to_win_error_multiplier"
+    },
+    {
+      "address": "0096d698",
+      "name": "cm0102_keeper_response_scale_double"
+    },
+    {
+      "address": "0096d808",
+      "name": "cm0102_shot_ratio_goal_threshold"
+    },
+    {
+      "address": "0096d80c",
+      "name": "cm0102_shot_ratio_adjustment_ceiling"
+    },
+    {
+      "address": "00a1599c",
+      "name": "cm0102_event_config_language"
+    },
+    {
+      "address": "00a15e44",
+      "name": "cm0102_grid_distance_lookup_candidate"
+    },
+    {
+      "address": "00aa2454",
+      "name": "cm0102_random_table_51000"
+    },
+    {
+      "address": "00ad6c30",
+      "name": "cm0102_crt_state"
+    },
+    {
+      "address": "00b68788",
+      "name": "cm0102_event_definitions_677"
+    },
+    {
+      "address": "00b6b723",
+      "name": "cm0102_event_config_loaded"
+    },
+    {
+      "address": "00de1f5c",
+      "name": "cm0102_rng_offset"
+    },
+    {
+      "address": "00de1f60",
+      "name": "cm0102_rng_cursor"
+    },
+    {
+      "address": "00de2798",
+      "name": "cm0102_rng_table_last"
+    }
+  ],
+  "partial_data_types": [
+    {
+      "path": "/CM0102/Recovered/MatchRosterSlotPartial",
+      "bytes": 446,
+      "fields": [
+        {
+          "offset": 15,
+          "name": "keeper_counter_raw",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Unsigned counter used in postlude bound; semantic label unresolved"
+        },
+        {
+          "offset": 25,
+          "name": "tactical_slot_index_raw",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Refines prior status_raw label: signed8 index0..10 into side tactical-position table"
+        },
+        {
+          "offset": 39,
+          "name": "side_index",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Observed0/1 side selector"
+        },
+        {
+          "offset": 43,
+          "name": "keeper_activity_raw",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Signed8 >1 rejects keeper response; enum/source unresolved"
+        },
+        {
+          "offset": 59,
+          "name": "keeper_fallback_rating_raw",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Signed16 fallback draw bound; source formula unresolved"
+        },
+        {
+          "offset": 105,
+          "name": "staff_record",
+          "bytes": 4,
+          "type": "pointer32",
+          "comment": "Runtime pointer, not saved-file ID"
+        },
+        {
+          "offset": 109,
+          "name": "player_record_candidate",
+          "bytes": 4,
+          "type": "pointer32",
+          "comment": "Pointee layout incomplete"
+        },
+        {
+          "offset": 209,
+          "name": "keeper_adjustment_float_raw",
+          "bytes": 4,
+          "type": "float",
+          "comment": "Finite float input to first postlude bound; source formula unresolved"
+        },
+        {
+          "offset": 258,
+          "name": "grid_x_candidate",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Keeper coordinate used by distance window; checked domain0..8"
+        },
+        {
+          "offset": 259,
+          "name": "grid_y_candidate",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Keeper coordinate used by distance window; checked domain0..11"
+        },
+        {
+          "offset": 360,
+          "name": "keeper_rating_variant0_raw",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Selected when variant byte=0; source/stat formula unresolved"
+        },
+        {
+          "offset": 362,
+          "name": "keeper_rating_variant1_raw",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Selected when variant byte!=0; source/stat formula unresolved"
+        },
+        {
+          "offset": 384,
+          "name": "shot_rating_raw",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Meaning unresolved; signed16*5 supplies penalty base-quality random bound"
+        },
+        {
+          "offset": 408,
+          "name": "action_code_candidate",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Observed action comparisons; enum incomplete"
+        },
+        {
+          "offset": 412,
+          "name": "shot_quality_raw",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Used in action state; 35-yard sequence clamps one write to[-200,200]"
+        },
+        {
+          "offset": 414,
+          "name": "match_context",
+          "bytes": 4,
+          "type": "pointer32",
+          "comment": "Corrects earlier activity-word-unknown label; dereferenced as match receiver by006f0630 and multiple action routines"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/MatchSideDescriptorPartial",
+      "bytes": 208,
+      "fields": [
+        {
+          "offset": 18,
+          "name": "match_context",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 23,
+          "name": "substitute_limit_candidate",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Exact meaning unresolved"
+        },
+        {
+          "offset": 24,
+          "name": "side_index",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 25,
+          "name": "team_kind_selector",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 27,
+          "name": "manager_staff",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 31,
+          "name": "manager_nonplayer",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 35,
+          "name": "match_roster",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 39,
+          "name": "club_squad",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 43,
+          "name": "side_state_buffer",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 47,
+          "name": "team",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 51,
+          "name": "opponent",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 55,
+          "name": "fixture",
+          "bytes": 4,
+          "type": "pointer32"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/CommentaryEvent14",
+      "bytes": 14,
+      "fields": [
+        {
+          "offset": 0,
+          "name": "event_code",
+          "bytes": 2,
+          "type": "word"
+        },
+        {
+          "offset": 2,
+          "name": "text_variant_index",
+          "bytes": 2,
+          "type": "word"
+        },
+        {
+          "offset": 4,
+          "name": "minute_byte",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Detailed mode converts signed clock/11 then truncates to byte"
+        },
+        {
+          "offset": 5,
+          "name": "player_argument",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 6,
+          "name": "side_argument",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 7,
+          "name": "argument_6",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 8,
+          "name": "argument_7",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 9,
+          "name": "argument_8",
+          "bytes": 4,
+          "type": "dword"
+        },
+        {
+          "offset": 13,
+          "name": "segment_index",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Initialized-1; pipe-separated game text advances this signed cursor; code bit8000 marks continuation"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/CommentaryBufferPartial",
+      "bytes": 11697,
+      "fields": [
+        {
+          "offset": 5,
+          "name": "display_pending_flag",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Zero makes006d78b0 return null"
+        },
+        {
+          "offset": 6,
+          "name": "history_count",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Capped at700 in inspected append path"
+        },
+        {
+          "offset": 8,
+          "name": "ring_write_index",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Wraps after11"
+        },
+        {
+          "offset": 12,
+          "name": "ring_display_index",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Used by006d78b0;0..11"
+        },
+        {
+          "offset": 14,
+          "name": "history_cursor_index",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Used by enqueue history-copy path"
+        },
+        {
+          "offset": 48,
+          "name": "ring_events",
+          "bytes": 168,
+          "type": "CommentaryEvent14[12]"
+        },
+        {
+          "offset": 216,
+          "name": "formatted_slot_area_unknown",
+          "bytes": 1608,
+          "type": "byte[1608]",
+          "comment": "Observed stride0x86; internal layout unknown"
+        },
+        {
+          "offset": 1824,
+          "name": "history_events",
+          "bytes": 9800,
+          "type": "CommentaryEvent14[700]"
+        },
+        {
+          "offset": 11624,
+          "name": "cached_period_target",
+          "bytes": 4,
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/MatchContextPartial",
+      "bytes": 63035,
+      "fields": [
+        {
+          "offset": 0,
+          "name": "simulation_mode",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 424,
+          "name": "golden_goal_stop_latch",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Set by inspected goal paths after predicate006d4250; emitted event1fd2 identifies golden-goal semantics"
+        },
+        {
+          "offset": 458,
+          "name": "initial_event_latch",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 18322,
+          "name": "fixture",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 18326,
+          "name": "home_roster",
+          "bytes": 8920,
+          "type": "MatchRosterSlotPartial[20]"
+        },
+        {
+          "offset": 27246,
+          "name": "away_roster",
+          "bytes": 8920,
+          "type": "MatchRosterSlotPartial[20]"
+        },
+        {
+          "offset": 36519,
+          "name": "coordinate_a_candidate",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36520,
+          "name": "coordinate_b_candidate",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36522,
+          "name": "keeper_adjustment_state_raw",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Signed8 factor of second postlude bound; enum/source unresolved"
+        },
+        {
+          "offset": 36526,
+          "name": "current_side",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36530,
+          "name": "play_event_state",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36531,
+          "name": "tiebreak_phase",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36532,
+          "name": "auxiliary_event_state",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36534,
+          "name": "next_restart_side",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36535,
+          "name": "added_time_units",
+          "bytes": 1,
+          "type": "sbyte"
+        },
+        {
+          "offset": 36536,
+          "name": "active_list_count",
+          "bytes": 1,
+          "type": "sbyte"
+        },
+        {
+          "offset": 36540,
+          "name": "tactical_position_tables",
+          "bytes": 8,
+          "type": "pointer32[2]",
+          "comment": "Side0/1 pointers to11-word tactical-position tables; runtime addresses, not saved-file IDs"
+        },
+        {
+          "offset": 36560,
+          "name": "clock_units",
+          "bytes": 2,
+          "type": "short",
+          "comment": "11 units per event minute in detailed mode; not uniform wall-clock ticks"
+        },
+        {
+          "offset": 36562,
+          "name": "step_accumulator",
+          "bytes": 2,
+          "type": "short"
+        },
+        {
+          "offset": 36564,
+          "name": "period_end_units",
+          "bytes": 2,
+          "type": "short",
+          "comment": "495/990/1155/1320 or terminal sentinel0/1"
+        },
+        {
+          "offset": 36730,
+          "name": "commentary_companion",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 36734,
+          "name": "active_list_first_entry",
+          "bytes": 4,
+          "type": "pointer32",
+          "comment": "Total capacity not established"
+        },
+        {
+          "offset": 36914,
+          "name": "side_descriptors",
+          "bytes": 416,
+          "type": "MatchSideDescriptorPartial[2]"
+        },
+        {
+          "offset": 62908,
+          "name": "home_tiebreak_score",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 62909,
+          "name": "home_match_score",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 62962,
+          "name": "away_tiebreak_score",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 62963,
+          "name": "away_match_score",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 63032,
+          "name": "pitch_abandonment_minute_threshold",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "-1disables; threshold*11 compared with signed clock in path emitting217b/config571"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/CommentaryEventDefinition18",
+      "bytes": 18,
+      "fields": [
+        {
+          "offset": 0,
+          "name": "priority",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 1,
+          "name": "silent_flag",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 2,
+          "name": "follow_on_flag",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 3,
+          "name": "flashing_flag",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 4,
+          "name": "report_count",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Loader clamps to0..11"
+        },
+        {
+          "offset": 5,
+          "name": "sound_centre",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 6,
+          "name": "wait_on_sound",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 7,
+          "name": "no_rollback",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 8,
+          "name": "variants",
+          "bytes": 4,
+          "type": "pointer32",
+          "comment": "Array of0x110-byte records"
+        },
+        {
+          "offset": 12,
+          "name": "variant_count",
+          "bytes": 2,
+          "type": "short"
+        },
+        {
+          "offset": 14,
+          "name": "weight_total",
+          "bytes": 4,
+          "type": "int",
+          "comment": "After EOF normalization; maxDivisor*10/divisor weights are summed"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/CommentaryVariant272",
+      "bytes": 272,
+      "fields": [
+        {
+          "offset": 0,
+          "name": "weight",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Config divisor replaced by normalized inverse weight at EOF"
+        },
+        {
+          "offset": 2,
+          "name": "delay_milliseconds",
+          "bytes": 2,
+          "type": "short"
+        },
+        {
+          "offset": 4,
+          "name": "sound_filename_buffer",
+          "bytes": 260,
+          "type": "byte[260]",
+          "comment": "Storage up to game-text pointer; original declared buffer type unknown"
+        },
+        {
+          "offset": 264,
+          "name": "game_text",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 268,
+          "name": "report_text",
+          "bytes": 4,
+          "type": "pointer32"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/PlayerAttributesPrefixPartial",
+      "bytes": 57,
+      "fields": [
+        {
+          "offset": 53,
+          "name": "one_on_ones_candidate",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Read by shootout budget; label corroborated by pinned community TPlayer layout"
+        },
+        {
+          "offset": 56,
+          "name": "penalties_candidate",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Community TPlayer label; this offset is not read by the verified budget slice"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/TacticalPositionTable22Partial",
+      "bytes": 22,
+      "fields": [
+        {
+          "offset": 0,
+          "name": "position_words",
+          "bytes": 22,
+          "type": "ushort[11]",
+          "comment": "Low-word position codes;1 is the keeper role in observed callers; other codes unresolved"
+        }
+      ]
+    }
+  ],
+  "code_signatures": [
+    {
+      "address": "006b7f20",
+      "hex": "558bec83e4f86aff6852d3950064a100"
+    },
+    {
+      "address": "006b98c0",
+      "hex": "81ec100200005355568bf15733ff803e"
+    },
+    {
+      "address": "006db500",
+      "hex": "8b54240481ec000200005355565733ff"
+    },
+    {
+      "address": "006bbb60",
+      "hex": "83ec14535556570fbe7424288bf9c744"
+    },
+    {
+      "address": "006bbf60",
+      "hex": "83ec1053558be95632db57885c24148d"
+    },
+    {
+      "address": "00897590",
+      "hex": "8b44240481ec000200005333db563bc3"
+    },
+    {
+      "address": "0090cfc0",
+      "hex": "51568b74240c85f6750533c05e59c38b"
+    },
+    {
+      "address": "0090d0a0",
+      "hex": "568b74240885f6750b56e80c9e030083"
+    },
+    {
+      "address": "00946a04",
+      "hex": "a1306cad0069c0fd43030005c39e2600"
+    },
+    {
+      "address": "009469fa",
+      "hex": "8b442404a3306cad00c3a1306cad0069"
+    },
+    {
+      "address": "006bd930",
+      "hex": "515355568bf15733ff8a86b28e000089"
+    },
+    {
+      "address": "006be710",
+      "hex": "83ec1853568bf1bb05000000570fbe86"
+    },
+    {
+      "address": "006d6f70",
+      "hex": "8a44241083ec2084c0535556578bf10f"
+    },
+    {
+      "address": "006d1210",
+      "hex": "83ec10568bf18a86b48e000084c07527"
+    },
+    {
+      "address": "006d9e50",
+      "hex": "81ec0c060000e87556f9ff39059c59a1"
+    },
+    {
+      "address": "006d5b50",
+      "hex": "535657be9087b6008b063d7086b60074"
+    },
+    {
+      "address": "006d5cd0",
+      "hex": "8b44240425ff7f00002d401f00006685"
+    },
+    {
+      "address": "006d78b0",
+      "hex": "518bd155568a420584c075085e33c05d"
+    },
+    {
+      "address": "006d7b00",
+      "hex": "b818260000e806db2600538b9c242026"
+    },
+    {
+      "address": "006d8d10",
+      "hex": "b8d81b0000e8f6c826008b8c24dc1b00"
+    },
+    {
+      "address": "006d4250",
+      "hex": "668b81d48e0000663def017418663dde"
+    },
+    {
+      "address": "00700bd0",
+      "hex": "81ec140200005355568bf1578a56278b"
+    },
+    {
+      "address": "00702050",
+      "hex": "81ec840600005355568bf133ed578b86"
+    },
+    {
+      "address": "00700420",
+      "hex": "8b44241883ec0853558b6c242456578b"
+    },
+    {
+      "address": "006ce110",
+      "hex": "8b819ef50000535533ed563bc557740d"
+    },
+    {
+      "address": "0094a698",
+      "hex": "68000003006800000100e8094f000059"
+    },
+    {
+      "address": "006c38c0",
+      "hex": "8b5424048a421984c07c193c0a7f150f"
+    },
+    {
+      "address": "006ec010",
+      "hex": "83ec545355568bf157c7442428000000"
+    },
+    {
+      "address": "006eecb0",
+      "hex": "83ec08535556578bf1e852d3ffff8b46"
+    },
+    {
+      "address": "0054d5e0",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "0054d740",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "006cfe10",
+      "hex": "83ec18535556578bf96a66c6442416ff"
+    },
+    {
+      "address": "0062ed70",
+      "hex": "81ec0002000056578bbc240c0200008b"
+    },
+    {
+      "address": "0062c680",
+      "hex": "6aff68f8b0950064a100000000506489"
+    },
+    {
+      "address": "006d0980",
+      "hex": "51578bf9c744240400000000668b8739"
+    },
+    {
+      "address": "00896290",
+      "hex": "558bec83e4f86aff684b33960064a100"
+    },
+    {
+      "address": "00896660",
+      "hex": "81ec0002000056578bbc240c0200008b"
+    },
+    {
+      "address": "008967d0",
+      "hex": "8b44240481ec0002000085c056578bf1"
+    },
+    {
+      "address": "00682b30",
+      "hex": "81ec10020000538bd9566a3b0fbf433e"
+    },
+    {
+      "address": "00682e10",
+      "hex": "81ec040200005356578bf98a87e10000"
+    },
+    {
+      "address": "00682f70",
+      "hex": "81ec0002000056578bf933f66639773e"
+    },
+    {
+      "address": "008bba30",
+      "hex": "6aff688839960064a100000000506489"
+    },
+    {
+      "address": "005a0590",
+      "hex": "81ec04020000568bb4240c020000578b"
+    },
+    {
+      "address": "005999a0",
+      "hex": "8b4424048b9148010000568bb1a80000"
+    },
+    {
+      "address": "0059a370",
+      "hex": "6aff680e90950064a100000000506489"
+    },
+    {
+      "address": "0059b2a0",
+      "hex": "8b44240481ec0402000085c0568bf10f"
+    },
+    {
+      "address": "006f09b0",
+      "hex": "0fbe81030100000fbe5424082bc25699"
+    },
+    {
+      "address": "006cb960",
+      "hex": "8a4424043c018a44240875193c027c2e"
+    },
+    {
+      "address": "006bce20",
+      "hex": "568bf18b4c240885c9744e8a81020100"
+    },
+    {
+      "address": "004c7560",
+      "hex": "6aff68716c950064a100000000506489"
+    },
+    {
+      "address": "004c79a0",
+      "hex": "8b44240481ec0002000085c0568bf175"
+    },
+    {
+      "address": "00727e20",
+      "hex": "81ec0402000053568bb4241002000033"
+    },
+    {
+      "address": "00727f00",
+      "hex": "8b44240481ec0002000085c0756a8d44"
+    },
+    {
+      "address": "005b57c0",
+      "hex": "0fbe4424048a8408b4050000c2040090"
+    },
+    {
+      "address": "006f4600",
+      "hex": "568bf18a4619500fbe46278d0c80c1e1"
+    },
+    {
+      "address": "006f46b0",
+      "hex": "8a81020100008a54240481ec04020000"
+    },
+    {
+      "address": "004d0c60",
+      "hex": "558bec83e4f883ec34538b5d08565785"
+    },
+    {
+      "address": "004cf5f0",
+      "hex": "8b44240453555685c0570f84b8000000"
+    },
+    {
+      "address": "008b23b0",
+      "hex": "81ec0002000053558bac240c0200008b"
+    },
+    {
+      "address": "008b35a0",
+      "hex": "8b44240481ec0002000050e820170000"
+    },
+    {
+      "address": "008b3930",
+      "hex": "8b542404a16423ae0081ec0002000056"
+    },
+    {
+      "address": "008b3c50",
+      "hex": "a16c23ae0081ec00020000566a068bf1"
+    },
+    {
+      "address": "008b4cd0",
+      "hex": "8b54240481ec0002000085d2752f8d44"
+    },
+    {
+      "address": "00713fc0",
+      "hex": "81ec2402000053568bf157c644242700"
+    },
+    {
+      "address": "0054d8a0",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "0054da00",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "0054db50",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "0054e630",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "0054e780",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "0054e880",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "0054f030",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "0054fc10",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "0054fd60",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "0054feb0",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "00550230",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "00550380",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "005504d0",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "005505c0",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "00550710",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "00550860",
+      "hex": "8b44241081ec00020000568b70378b40"
+    },
+    {
+      "address": "007f6af0",
+      "hex": "8b44240881ec0002000085c075460fbf"
+    },
+    {
+      "address": "007f6be0",
+      "hex": "8b44240481ec0002000085c075470fbf"
+    },
+    {
+      "address": "007f6cd0",
+      "hex": "8a54240481ec0002000084d20f8cd200"
+    },
+    {
+      "address": "007f6e30",
+      "hex": "8b44240481ec0002000085c075470fbf"
+    },
+    {
+      "address": "007f6f20",
+      "hex": "8b44240881ec0002000085c075470fbf"
+    },
+    {
+      "address": "00714d40",
+      "hex": "558bec83e4f881ec380200005355568b"
+    },
+    {
+      "address": "0054dc90",
+      "hex": "518b44241453555685c057c744241000"
+    },
+    {
+      "address": "0054e9a0",
+      "hex": "8b442410535533ed565785c00f860c06"
+    },
+    {
+      "address": "0054f150",
+      "hex": "8b442410535533ed565785c00f86390a"
+    },
+    {
+      "address": "0054ffd0",
+      "hex": "8b442410535533ed565785c00f86db01"
+    },
+    {
+      "address": "007f6760",
+      "hex": "6aff680e0f960064a100000000506489"
+    },
+    {
+      "address": "007f6aa0",
+      "hex": "568bf18b0685c074288b48fc578d78fc"
+    },
+    {
+      "address": "008041c0",
+      "hex": "6aff684411960064a100000000506489"
+    },
+    {
+      "address": "00804450",
+      "hex": "5153568bf16a008b0d4844b7008a0650"
+    },
+    {
+      "address": "007109f0",
+      "hex": "6aff686bd4950064a100000000506489"
+    },
+    {
+      "address": "00945bfe",
+      "hex": "558bec515356578b7d0c0faf7d108b5d"
+    },
+    {
+      "address": "00932c30",
+      "hex": "5355568b74241c85f65775075f5e5d33"
+    },
+    {
+      "address": "007b7690",
+      "hex": "64a1000000006aff68def59500506489"
+    },
+    {
+      "address": "00813140",
+      "hex": "6aff684612960064a100000000506489"
+    },
+    {
+      "address": "005a53c0",
+      "hex": "c3909090909090909090909090909090"
+    },
+    {
+      "address": "00944c94",
+      "hex": "ff742404e82d06000059c3558bec83ec"
+    },
+    {
+      "address": "00682300",
+      "hex": "6aff6854c9950064a100000000506489"
+    },
+    {
+      "address": "006fa250",
+      "hex": "53558b442418568b6c24148bf18b5c24"
+    },
+    {
+      "address": "006fa490",
+      "hex": "83ec145355568bf132db57668b869a01"
+    },
+    {
+      "address": "006f09f0",
+      "hex": "81ec5c0200005355568bf18bac247402"
+    },
+    {
+      "address": "0094ab50",
+      "hex": "558bec57568b750c8b4d108b7d088bc1"
+    },
+    {
+      "address": "0094b3e0",
+      "hex": "558bec83ec0c53568b7508573b35e043"
+    },
+    {
+      "address": "0094b307",
+      "hex": "568b7424088b460ca8830f84c4000000"
+    },
+    {
+      "address": "0068d040",
+      "hex": "568bf18b460285c0742753578b46028b"
+    },
+    {
+      "address": "009462bb",
+      "hex": "558bec6aff68d0139700685cbf940064"
+    },
+    {
+      "address": "007ae4f0",
+      "hex": "6aff6862f3950064a100000000506489"
+    },
+    {
+      "address": "006f0630",
+      "hex": "53568bf133db8b869e0100003bc30f84"
+    },
+    {
+      "address": "006f4920",
+      "hex": "8a542410538a5c2410568bf18ac38a4c"
+    },
+    {
+      "address": "006f56c0",
+      "hex": "668b442408663dffff7571d9414dd81d"
+    },
+    {
+      "address": "0070d430",
+      "hex": "66817c2404e803568bf10f8fba010000"
+    },
+    {
+      "address": "0094b2a0",
+      "hex": "8b4c240433d2890d902fde00b8c08dad"
+    },
+    {
+      "address": "0094c552",
+      "hex": "8b442404533b05e043de00565773738b"
+    },
+    {
+      "address": "0094ec37",
+      "hex": "ff054431de006800100000e8ff61ffff"
+    },
+    {
+      "address": "0068d010",
+      "hex": "8b0150e87c7c2b0059c3909090909090"
+    },
+    {
+      "address": "0068d1f0",
+      "hex": "8bc15355568b5002578bda85db74170f"
+    },
+    {
+      "address": "00946323",
+      "hex": "837de4007511ff7514ff7510ff750cff"
+    },
+    {
+      "address": "006d70c4",
+      "hex": "8a070fbf8fd48e000084c074088a97d0"
+    },
+    {
+      "address": "006ba9e7",
+      "hex": "6803200000e87fc501005f5e5db0045b"
+    },
+    {
+      "address": "006baa06",
+      "hex": "6802200000e860c501005f5e5db0045b"
+    },
+    {
+      "address": "00706eaf",
+      "hex": "c680a80100000180bc24980600003375"
+    },
+    {
+      "address": "007084a5",
+      "hex": "68d21f0000e8b1230000e9900300008a"
+    },
+    {
+      "address": "006be9dd",
+      "hex": "0fbe42350fbe8c2ea18e000050894c24"
+    },
+    {
+      "address": "006bea6e",
+      "hex": "dc0dc88e9600eb3f0fbe9430a18e0000"
+    },
+    {
+      "address": "006beaaf",
+      "hex": "dc0d40909600e8866b280050e800e524"
+    },
+    {
+      "address": "00700d20",
+      "hex": "66c7017f1f0fbf86800100008d148052"
+    },
+    {
+      "address": "006beb04",
+      "hex": "2be86a006a00535155e9970200008a86"
+    },
+    {
+      "address": "007004d6",
+      "hex": "0fbfff57e8e1ca20002bf857e8d9ca20"
+    },
+    {
+      "address": "00700a4f",
+      "hex": "d986d100000033c08b969e0100008a46"
+    },
+    {
+      "address": "00703b25",
+      "hex": "8b442464663be87e300fbfd552e88994"
+    },
+    {
+      "address": "00706cba",
+      "hex": "03ef85ed896c246c0f84bb0000008d3c"
+    },
+    {
+      "address": "00706d26",
+      "hex": "0f84d10000008a44241984c074598b8b"
+    },
+    {
+      "address": "00713eeb",
+      "hex": "6683f9330f84c50000006683f9350f84"
+    },
+    {
+      "address": "00700ab2",
+      "hex": "7e2b0fbf4c242cb8abaaaa2af7e98bc2"
+    },
+    {
+      "address": "00700b12",
+      "hex": "dc0d408e9600e8234b240050e89dc420"
+    },
+    {
+      "address": "00700b75",
+      "hex": "dc0d98d69600dec1dc05a88e9600e8b8"
+    },
+    {
+      "address": "0094a698",
+      "hex": "68000003006800000100e8094f000059"
+    },
+    {
+      "address": "00700420",
+      "hex": "8b44241883ec0853558b6c242456578b"
+    },
+    {
+      "address": "00700438",
+      "hex": "8a44242484c0740e668b8e6a01000066"
+    },
+    {
+      "address": "0070049f",
+      "hex": "8a462b3c01d9049d445ea100d95c2424"
+    },
+    {
+      "address": "007004a4",
+      "hex": "d9049d445ea100d95c24240f8fdd0600"
+    },
+    {
+      "address": "007004be",
+      "hex": "e8fd33fcff663d01000f85c50600008a"
+    },
+    {
+      "address": "006c38c0",
+      "hex": "8b5424048a421984c07c193c0a7f150f"
+    },
+    {
+      "address": "007023e3",
+      "hex": "e8d8ab200083c4048844241c8b942498"
+    },
+    {
+      "address": "007024b4",
+      "hex": "e857d9fcff85ff0f848c100000668b54"
+    },
+    {
+      "address": "00703e24",
+      "hex": "e89791200083c01983c4043bf80f8e93"
+    },
+    {
+      "address": "00703fb7",
+      "hex": "c74424380000000080bc249806000039"
+    },
+    {
+      "address": "00707dd6",
+      "hex": "88108a4e278a562e8b869e0100005152"
+    },
+    {
+      "address": "006f0255",
+      "hex": "668996680100006689966a010000e8d8"
+    },
+    {
+      "address": "006f0472",
+      "hex": "0fbf46370fbf1783c01e8d0cc5000000"
+    },
+    {
+      "address": "006ed98d",
+      "hex": "d996d1000000dc1da0899600dfe0f6c4"
+    },
+    {
+      "address": "006eca80",
+      "hex": "6689463b8b566d663d96000f9fc380f9"
+    },
+    {
+      "address": "0070701b",
+      "hex": "88430f8b53690fbe42584050e8945f20"
+    },
+    {
+      "address": "006cd88f",
+      "hex": "8886aa8e00008a4424142ac18acb2aca"
+    },
+    {
+      "address": "006bbec3",
+      "hex": "8896aa8e00007408fec88886a98e0000"
+    },
+    {
+      "address": "00700394",
+      "hex": "8881aa8e0000c20400909090668b4424"
+    },
+    {
+      "address": "006cd462",
+      "hex": "89b2aef500005e5d5b83c408c21c008a"
+    },
+    {
+      "address": "0054d5eb",
+      "hex": "8b70378b403f4874748d4424048d8c24"
+    },
+    {
+      "address": "0054d5ee",
+      "hex": "8b403f4874748d4424048d8c24040100"
+    },
+    {
+      "address": "0054d668",
+      "hex": "8b84240c02000085c0742f8b8c240802"
+    },
+    {
+      "address": "0054d693",
+      "hex": "3bc60f94c28bc25e81c400020000c38b"
+    },
+    {
+      "address": "0054d74b",
+      "hex": "8b70378b403f83e80274748d4424048d"
+    },
+    {
+      "address": "0054d74e",
+      "hex": "8b403f83e80274748d4424048d8c2404"
+    },
+    {
+      "address": "0054d7ca",
+      "hex": "8b84240c02000085c0742f8b8c240802"
+    },
+    {
+      "address": "0054d7f5",
+      "hex": "3bc60f94c28bc25e81c400020000c38b"
+    },
+    {
+      "address": "00945910",
+      "hex": "ffd068b870980068a0709800e8ce0000"
+    },
+    {
+      "address": "009455c1",
+      "hex": "e8d2500000dbe2c3c3b8d6aa9400c705"
+    },
+    {
+      "address": "0062edfc",
+      "hex": "e87fd8ffff8b078bd0c1e2052bd08b06"
+    },
+    {
+      "address": "0062ca4f",
+      "hex": "e86c052e0083c40485c0751d8b45008b"
+    },
+    {
+      "address": "006d00f8",
+      "hex": "e8830800005f5e5d5b83c418c214008a"
+    },
+    {
+      "address": "006d04c5",
+      "hex": "e8b60400008a4c34146a0055516a05e9"
+    },
+    {
+      "address": "006d0b4d",
+      "hex": "66ff8739f600005f59c2100090909090"
+    },
+    {
+      "address": "0089641b",
+      "hex": "0fbf04028d14808b038d34d08d542438"
+    },
+    {
+      "address": "00896436",
+      "hex": "66ff46028a4424518a4c2452668b5602"
+    },
+    {
+      "address": "00896520",
+      "hex": "dd5e10d9c0dc4c240cdc4c242cdc4c24"
+    },
+    {
+      "address": "00896737",
+      "hex": "e8e456d6ff8b97cf0000008b0d983cb6"
+    },
+    {
+      "address": "00896769",
+      "hex": "0fbf04118b8efd0500003bc17d248d0c"
+    },
+    {
+      "address": "00896817",
+      "hex": "668bbc24100200006685ff7c528b8efd"
+    },
+    {
+      "address": "00896862",
+      "hex": "66893c105fb8010000005e81c4000200"
+    },
+    {
+      "address": "00682d94",
+      "hex": "884c50048b7c24108b5c24180fbfc70f"
+    },
+    {
+      "address": "00682ed6",
+      "hex": "0fbff08b472833db99f7fe6685c98944"
+    },
+    {
+      "address": "00682f1f",
+      "hex": "e87c6af1ff81fee80300007e218ad36a"
+    },
+    {
+      "address": "00682ff3",
+      "hex": "03f003c24975f98bc65f5e81c4000200"
+    },
+    {
+      "address": "007103e0",
+      "hex": "83ec145356578bf18b8e9e0100003bb1"
+    },
+    {
+      "address": "00710449",
+      "hex": "0f85850200008b8e9e0100003bb182f5"
+    },
+    {
+      "address": "00710654",
+      "hex": "e8970300008b869e010000c680a70100"
+    },
+    {
+      "address": "007109d1",
+      "hex": "e8ea3500005f5e5b83c414c38bcee85c"
+    },
+    {
+      "address": "00703e8c",
+      "hex": "e84fc5000081c7be0100004d75da8b4c"
+    },
+    {
+      "address": "008bbc7b",
+      "hex": "89866e08000075378d4c24288d942428"
+    },
+    {
+      "address": "008bbccd",
+      "hex": "89861c09000075388d4424288d8c2428"
+    },
+    {
+      "address": "008bbd2c",
+      "hex": "0f85cc00000068e0000000e8b58f0800"
+    },
+    {
+      "address": "008bbe05",
+      "hex": "8bc65f5e5d5b64890d0000000081c404"
+    },
+    {
+      "address": "00727ed3",
+      "hex": "663bc77e06885c24138bf84383fb0b7c"
+    },
+    {
+      "address": "00727f8e",
+      "hex": "e80d650d0081c400020000c390909090"
+    }
+  ],
+  "code_comments": [
+    {
+      "address": "006ba9e7",
+      "text": "Phase1 announcement2003 -> config195:35-yard shootout"
+    },
+    {
+      "address": "006baa06",
+      "text": "Other nonzero entry phase announcement2002 -> config194:penalty shootout"
+    },
+    {
+      "address": "00706eaf",
+      "text": "Post-goal rule true sets golden-goal stop latch; predicate006d4250"
+    },
+    {
+      "address": "007084a5",
+      "text": "Golden-goal event1fd2 -> config146; latch+1a8 is nonzero"
+    },
+    {
+      "address": "006be9dd",
+      "text": "Signed player+35; community layout OneOnOnes. Penalties is+38, not used at this read."
+    },
+    {
+      "address": "006bea6e",
+      "text": "Must-score error-budget bound multiplier: double2.25; not a scoring probability."
+    },
+    {
+      "address": "006beaaf",
+      "text": "Score-to-win error-budget bound multiplier: double0.75; FIST conversion truncates."
+    },
+    {
+      "address": "00700d20",
+      "text": "Action33h writes event1f7f, config63 EVENT_TAKE_PENALTY."
+    },
+    {
+      "address": "006beb04",
+      "text": "Penalty quality argument = sign-extended returned AX minus bounded random error budget; goal/save decision is downstream."
+    },
+    {
+      "address": "007004d6",
+      "text": "Penalty keeper base only: sign16(rating+220), random twice (second bound=first bound-first draw). Shared postlude follows at700a4f."
+    },
+    {
+      "address": "00700a4f",
+      "text": "Verified keeper postlude: first bound=trunc(2*float(slot+d1)+uint8(slot+f)+10); second=trunc((2-float(distance))*signed8(match+8eaa)*10). Compare draws; first<=second selects fallback. Both53/64-bit x87 modes tested; no full function/caller equivalence."
+    },
+    {
+      "address": "00703b25",
+      "text": "Penalty threshold120; quality compared as signed16; category selection verified independently with original RNG."
+    },
+    {
+      "address": "00706cba",
+      "text": "Eligible categories1/14/15 only. Signed16 terms enter float32 ratio quality*100/(keeperTerm+quality). Not a probability."
+    },
+    {
+      "address": "00706d26",
+      "text": "Strict ratio>71 scoring-branch gate. Equal71 does not pass. State2/8 adds2 only to ratios<=68; this cannot itself change this gate's Boolean result."
+    },
+    {
+      "address": "00713eeb",
+      "text": "Action33h takes early exit with return byte2 and output adjustment word0; full function not reconstructed."
+    },
+    {
+      "address": "00700ab2",
+      "text": "first<=second sets output flag1; fallback compares random(signed16(slot+3b)) > random285 to choose weighted vs raw base redraw."
+    },
+    {
+      "address": "00700b12",
+      "text": "Bound trunc(sign16(base)*binary64(0.7)); x87 precision matters. Then random(bound)+sign16(base)*binary64(0.3), truncated before signed16 cast."
+    },
+    {
+      "address": "00700b75",
+      "text": "Final response: trunc(trunc(selected signed16 rating/6)+sign16(value)*binary64(4/7)+20). Do not round this whole expression with JavaScript Number under assumed64-bit x87 precision."
+    },
+    {
+      "address": "0094a698",
+      "text": "Static CRT precision request: value10000h under mask30000h maps to x87 precision53 via0094f5b0/0094f57b/0094f658; runtime match-entry state remains unobserved."
+    },
+    {
+      "address": "00700420",
+      "text": "Action33 entry-to-return oracle9056 cases; original callee ABI preserved. Synthetic108-entry grid and side tactical tables; no whole-function/all-actions or shot-outcome claim."
+    },
+    {
+      "address": "00700438",
+      "text": "Variant byte0 selects signed16 slot+168; any nonzero byte selects+16a. Output pointers already initialized to0."
+    },
+    {
+      "address": "0070049f",
+      "text": "Signed8 slot+2b >1 rejects; raw128..255 are negative and pass this guard. Tactical position must still equal1."
+    },
+    {
+      "address": "007004a4",
+      "text": "Grid read occurs before validity guards. Supported coordinates x0..8/y0..11 give108-index window atA15E44. Original lookup differs from exact hypot; public oracle supplies explicit synthetic values."
+    },
+    {
+      "address": "007004be",
+      "text": "Original tactical lookup006c38c0 executes; only low word AX compared with1. Side0/1 table pointers at match+8ebc/+8ec0."
+    },
+    {
+      "address": "006c38c0",
+      "text": "Low-word tactical position contract: slot+19 signed8 index0..10; side index selects11-word table; invalid slot returns AX0, upper EAX irrelevant."
+    },
+    {
+      "address": "007023e3",
+      "text": "Investigation09 static action33 switch: default variant R(2) before keeper entry. This draw is part of caller stream; keep before00702416."
+    },
+    {
+      "address": "007024b4",
+      "text": "Investigation09: action33 still calls006cfe10(shooter,6d,null,0,0). Its entry runs two nested R(102)/R(previous) groups plus conditional R(3)/R(76)/R(previous), before null-participant checks. Additional conditional R25/R50000/R11 and006d0980 effects remain unvalidated. Do not join independent keeper/category oracles by skipping this call."
+    },
+    {
+      "address": "00703e24",
+      "text": "Investigation09: unconditional R(15) after classification. Quantized distance>25+draw enables007103e0 work over eligible other slots; temporary match+8ea9=5 is restored. Transitive RNG/state must be admitted before connected-attempt claims."
+    },
+    {
+      "address": "00703fb7",
+      "text": "Investigation09: selected keeper==match+f5ae forces saved response0. Subsequent00703ffb and00704004 sign extend keeper/quality words for gate; action33 first output flag+20 stays0, while fallback output+14 can be1."
+    },
+    {
+      "address": "00707dd6",
+      "text": "Investigation09 static mode3/4 successful path: increments tiebreak-score BYTE match+f5bc+54*signed8(slot+27). Event2000 follows; mode3 additionally212e. Post-score R3, presentation and state helpers still execute; this is not a complete return/outcome oracle."
+    },
+    {
+      "address": "006f0255",
+      "text": "Equal initial keeper rating words are subsequently adjusted by indexed loop006f0428..006f05b1; do not use these stores alone as final producer formula."
+    },
+    {
+      "address": "006f0472",
+      "text": "Selected for rating indices39/40 in63-word loop; float64 constant0096a6e8 is0.775. Word store006f04a2 narrows ftol result."
+    },
+    {
+      "address": "006ed98d",
+      "text": "FST float32 slot+d1 leaves x87 value for comparison against0 before optional dword-zero write006ed9a0. Depends on signed16+3b, age-candidate-scaled signed player+3a, and local float adjustment."
+    },
+    {
+      "address": "006eca80",
+      "text": "Final observed+3b store in this routine: low16(ftol(0.5*s16(previous)+80)); earlier tactical lower/upper clamps operate before this rescale."
+    },
+    {
+      "address": "0070701b",
+      "text": "Byte counter+f increments modulo256 behind tactical-position1 guard. Parallel caller sites0070ae8f/0070c518. Initialization/reset and goals-conceded semantics remain open."
+    },
+    {
+      "address": "006cd88f",
+      "text": "Match+8eaa byte producer following coordinate perturbation: third stack argument byte0 ->0; otherwise low8(1+RNG(signed8(arg)+1)). Reachable input domain unresolved."
+    },
+    {
+      "address": "006bbec3",
+      "text": "Match+8eaa countdown decrement; +f582/+f57a nonnull suppress update; +8eb2 nonzero clears state instead. Movement/flight timer remains a candidate label."
+    },
+    {
+      "address": "00700394",
+      "text": "Direct byte setter for match+8eaa; caller006ffc7c supplies1+RNG(3)."
+    },
+    {
+      "address": "006cd462",
+      "text": "Candidate pointer stored to match+f5ae when0070dfd0 returnsAL2; AL1 path increments candidate+12 and stores at006cd47e. Contact/block semantics unresolved."
+    },
+    {
+      "address": "0054d5eb",
+      "text": "Read raw DWORD item count at descriptor +0x37; unaligned field; no wrapper count/range validation."
+    },
+    {
+      "address": "0054d5ee",
+      "text": "DWORD +0x3f must equal 1 for c6-byte reader; meaning of guard field unresolved."
+    },
+    {
+      "address": "0054d668",
+      "text": "Mode is full DWORD at entry ESP+0x8: zero=>ordinary fread-like 00945bfe; nonzero=>custom 00932c30. Both receive(dest,c6,count,stream)."
+    },
+    {
+      "address": "0054d693",
+      "text": "Compare returned items with original raw32 count; SETE then zero-extension yields EAX 0/1. Failure does not roll back helper side effects."
+    },
+    {
+      "address": "0054d74b",
+      "text": "Read raw DWORD item count at descriptor +0x37; unaligned field; no wrapper count/range validation."
+    },
+    {
+      "address": "0054d74e",
+      "text": "DWORD +0x3f must equal 2 for 0x122-byte reader; meaning of guard field unresolved."
+    },
+    {
+      "address": "0054d7ca",
+      "text": "Mode is full DWORD at entry ESP+0x8: zero=>ordinary fread-like 00945bfe; nonzero=>custom 00932c30. Both receive(dest,122,count,stream)."
+    },
+    {
+      "address": "0054d7f5",
+      "text": "Compare returned items with original raw32 count; SETE then zero-extension yields EAX 0/1. Failure does not roll back helper side effects."
+    },
+    {
+      "address": "00945910",
+      "text": "PE entry00947a13 calls00945907 before application0068d370. Original pointer00ad6c14=009455b2; this computed call takes the normal startup precision request. Later initializer callbacks and match-entry CW remain unobserved."
+    },
+    {
+      "address": "009455c1",
+      "text": "Normal startup calls0094a698 here; mask30000h/value10000h sets x87 precision-control bits0200h (53-bit) but does not by itself prove full CW027fh or match-entry precision. FNCLEX009455c6 clears exceptions."
+    },
+    {
+      "address": "0062edfc",
+      "text": "R10-A: refresh0062c680 is called before returning status record. Cached-stamp branch may skip direct RNG; stale no-record branch can consume loop RNG andR2. Do not model0062ed70 as pure getter."
+    },
+    {
+      "address": "0062ca4f",
+      "text": "R10-A: per-draw RNG argument=trunc(signed8(player+5b)/3)+2. Loop iteration limit=min(uint16(first elapsed helper result),elapsed-like quantity), selected at0062c9f9..0062ca19. Before each draw unsigned byte(global00ae2d0c base+79*index+a)>=50 stops; zero draw increments byte. RNG precedes caller006cfee7 R25."
+    },
+    {
+      "address": "006d00f8",
+      "text": "R10-A action33 early finite float4d<4000: call kind=-1,severity0,target=shooter,other0 then return beforeR50000. Admitted effect still changes slot/match state; two severityR0 calls do not advance RNG."
+    },
+    {
+      "address": "006d04c5",
+      "text": "R10-A null-other fallbackR11 code6/7 invokes kind2 here, then kind5 at006d055f. First effect can change latch/counter and therefore second effect gate/RNG."
+    },
+    {
+      "address": "006d0b4d",
+      "text": "R10-A increments match wordf639 when byte8eb5 is nonzero;006d0980 does not clear latch on entry, so this can count an already-set latch. No newly-set-flag inference from increment."
+    },
+    {
+      "address": "0089641b",
+      "text": "Signed16 selected plan word; stats row stride28. Selection comes from mapping row91*club.id; no local index bound before stats writes."
+    },
+    {
+      "address": "00896436",
+      "text": "Word games count increments and may wrap; following outcome counts/goal sums/points are also16-bit. Metric inputs are re-read signed and clamped>=1."
+    },
+    {
+      "address": "00896520",
+      "text": "First of three float64 metric stores (+10/+18/+20). x87 live values and intermediate float64 spills matter; report expressions are real-arithmetic dependencies, not validated replacements."
+    },
+    {
+      "address": "00896737",
+      "text": "Alternate registry path calls state-changing005fbe20(option,club,club+cf) before005fbd00 pointer lookup. Do not annotate this boundary as a pure getter."
+    },
+    {
+      "address": "00896769",
+      "text": "Sign extends selection word. Signed compare at00896773 against first-bank count only; no k>=0 or combined-bank-capacity guard here."
+    },
+    {
+      "address": "00896817",
+      "text": "Plan ID is consumed as signed16 low word; upper argument bits ignored. Counts/limit arithmetic use32-bit registers."
+    },
+    {
+      "address": "00896862",
+      "text": "Only local normal-path persistent write: selected plan word at mapping+91*008982b0(club,option). Row helper can remap index when option nonzero."
+    },
+    {
+      "address": "00682d94",
+      "text": "R10-C: store low8 bucket to first input row matching scratch raw32 key. Bucket starts at count and decrements only when adjacent comparator is nonzero."
+    },
+    {
+      "address": "00682ed6",
+      "text": "R10-C: divisor is signed low16 of triangular sum. IDIV at 00682edf precedes count guard at 00682ee8; nonpositive count reaches division by 0 on weighted path."
+    },
+    {
+      "address": "00682f1f",
+      "text": "R10-C: amount pushed at 00682f01 survives resolver RET 4; resolver EAX becomes ECX here and remaining amount argument is consumed by 005999a0 (RET 4)."
+    },
+    {
+      "address": "00682ff3",
+      "text": "R10-C: wrap32 accumulation of increment, 2*increment, ..., n*increment; n is signed16 receiver +0x3e."
+    },
+    {
+      "address": "007103e0",
+      "text": "R11-A static map: ECX=other slot, no explicit stack args, plain RET. May draw RNG, write slot state, iterate candidate pointers, call 007109f0/00713fc0/00714d40 and retry after 007109f0. No dynamic equivalence or complete shot outcome validated."
+    },
+    {
+      "address": "00710449",
+      "text": "For nonowner/tactical-low-bit-clear path: ordered slot4d_snapshot/128 + R(10) <= prior R(65), or unordered FCOMP, selects candidate loop then word slot+198=67h and return. RNG order is R(65), R(10)."
+    },
+    {
+      "address": "00710654",
+      "text": "Immediate dependency boundary only: ECX=current slot; pushed dword 0; callee 007109f0 normal RET4. Caller ignores return value, clears match+1a7, rereads owner/action/flags, then may draw two bounds and retry entry. Full callee body remains open."
+    },
+    {
+      "address": "007109d1",
+      "text": "Immediate dependency boundary: ECX=current slot; pushed dword 1; 00713fc0 exported normal returns RET4. Caller ignores result and returns. Full callee RNG/writes not certified."
+    },
+    {
+      "address": "00703e8c",
+      "text": "R11-A caller dependency: conditional scan after signed quantized distance > 25+R(15). Two arrays of 20 slots, stride 1beh; signed slot+19 in 0..10, slot+2b=0, exclude shooter. ECX=other slot to 007103e0. match+8ea9 temporarily5 then restored; other effects persist. No live action33 reachability proof."
+    },
+    {
+      "address": "008bbc7b",
+      "text": "R11-B: DWORD+86e retains 00945501(global32[00ae2364],8). Null diagnoses but returns receiver if diagnostic helpers return; no receiver null return here."
+    },
+    {
+      "address": "008bbccd",
+      "text": "R11-B: DWORD+91c retains 00945501(global32[00ae235c],16). Null diagnoses; no explicit free of prior +86e allocation in owned body."
+    },
+    {
+      "address": "008bbd2c",
+      "text": "R11-B: nonzero load result skips fresh dependent construction. Zero falls through; constructor performs no explicit rollback/reset after possible load-side writes before +856 is replaced."
+    },
+    {
+      "address": "008bbe05",
+      "text": "R11-B: normal EAX return is receiver, including allocation-error paths. Observed caller pointer test cannot prove internal initialization succeeded."
+    },
+    {
+      "address": "00727ed3",
+      "text": "R12-C: signed16 AX versus DI; following JLE skips replacement on lower/equal score. Sentinel path accepts first nonnull candidate even with negative score. EDI holds raw helper EAX, but only DI is compared; winner is returned in AL."
+    },
+    {
+      "address": "00727f8e",
+      "text": "R12-C: ECX=00b74450; six stack args in logical order: key,00727fa0,00727fb0,0,0,0. CalleeRET18; scans/filter-dispatches manager groups, may mutate/allocate through007fe600. Return1 does not prove screen construction or callback success."
+    }
+  ]
+}

@@ -114,6 +114,18 @@
     "R17-C": {
       "report": "reports/scout-cleanup-17.md",
       "evidence": "evidence/scout-cleanup-17-sites.json"
+    },
+    "R18-A": {
+      "report": "reports/match-helpers-18.md",
+      "evidence": "evidence/match-helpers-18-sites.json"
+    },
+    "R18-B": {
+      "report": "reports/db-helpers-18.md",
+      "evidence": "evidence/db-helpers-18-sites.json"
+    },
+    "R18-C": {
+      "report": "reports/cleanup-helpers-18.md",
+      "evidence": "evidence/cleanup-helpers-18-sites.json"
     }
   },
   "functions": [
@@ -556,6 +568,56 @@
       "address": "007ae4f0",
       "state": "contract-supported",
       "source": "R17-C"
+    },
+    {
+      "address": "006f0630",
+      "state": "contract-supported",
+      "source": "R18-A"
+    },
+    {
+      "address": "006f4920",
+      "state": "contract-supported",
+      "source": "R18-A"
+    },
+    {
+      "address": "006f56c0",
+      "state": "contract-supported",
+      "source": "R18-A"
+    },
+    {
+      "address": "0070d430",
+      "state": "contract-supported",
+      "source": "R18-A"
+    },
+    {
+      "address": "0094b2a0",
+      "state": "contract-supported",
+      "source": "R18-B"
+    },
+    {
+      "address": "0094c552",
+      "state": "contract-supported",
+      "source": "R18-B"
+    },
+    {
+      "address": "0094ec37",
+      "state": "contract-supported",
+      "source": "R18-B"
+    },
+    {
+      "address": "0068d010",
+      "state": "contract-supported",
+      "source": "R18-C"
+    },
+    {
+      "address": "0068d1f0",
+      "state": "contract-supported",
+      "source": "R18-C"
+    },
+    {
+      "address": "00946323",
+      "state": "contract-supported",
+      "source": "R18-C"
     }
   ]
 }
