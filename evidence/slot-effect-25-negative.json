@@ -1,0 +1,30 @@
+{
+  "work_unit": "R25-B",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "tests": {
+    "optimized_valid": {
+      "exit_code": 0,
+      "diagnostic": ""
+    },
+    "changed_pe_optimized": {
+      "exit_code": 1,
+      "diagnostic": "ValueError: specimen size/SHA-256 mismatch"
+    },
+    "changed_native_width_optimized": {
+      "exit_code": 1,
+      "diagnostic": "ValueError: native export mismatch: 006d0980.asm"
+    },
+    "resealed_native_width_optimized": {
+      "exit_code": 1,
+      "diagnostic": "ValueError: native/original operand width mismatch at 006d09f8"
+    },
+    "wrong_float_bits": {
+      "exit_code": 1,
+      "diagnostic": "Error: original-entry effect mismatch 0"
+    },
+    "reordered_effects": {
+      "exit_code": 1,
+      "diagnostic": "Error: original-entry effect mismatch 0"
+    }
+  }
+}

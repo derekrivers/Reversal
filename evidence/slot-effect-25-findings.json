@@ -1,0 +1,65 @@
+{
+  "work_unit": "R25-B",
+  "entry_va": "006d0980",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "body_sha256": "8a618f5a01c2e2a0796c5a564d642b7ff40618d07fa814ba9be4934353d2f74b",
+  "file_offset": "0x2d0980",
+  "native_export_manifest_sha256": "9f7e0de5968e38bac77fe8438678596f82ab31abee5e820c7ccb36b2f1ce531c",
+  "annotation_preflight_sha256": "34ca2e277634b5a4bdbde668ffcc7d3b91a65a4c1689844f54c454b644834899",
+  "scope": "complete local static body; one no-callee severe path original-entry validated",
+  "existing_name": "cm0102_apply_slot_condition_effect_candidate",
+  "native_annotation_proposal": null,
+  "semantic_overlay_proposal": {
+    "address": "006d0980",
+    "old_state": "boundary-mapped",
+    "new_state": "contract-supported",
+    "distinct_entry_delta": 0,
+    "condition": "after independent review of full local body and scoped oracle"
+  },
+  "body_census": {
+    "bytes": 473,
+    "instructions": 141,
+    "branches": 19,
+    "direct_calls": 9,
+    "direct_call_targets": 4,
+    "direct_integer_nonframe_writes": 9,
+    "direct_x87_nonframe_writes": 5,
+    "returns": [{"site": "006d0b56", "stack_bytes": 16}],
+    "unresolved_indirect_calls": 0,
+    "all_native_and_original_instructions_match": true,
+    "all_local_cfg_nodes_reachable": true
+  },
+  "abi": {
+    "receiver": "ECX match context",
+    "stack": ["kind signed low byte", "severity signed low byte", "target pointer", "other pointer"],
+    "ret_cleanup": 16,
+    "meaningful_return": "none established",
+    "callee_saved": ["EBX", "ESI", "EDI"]
+  },
+  "ordered_call_sites": [
+    ["006d099d", "0090cfc0", "R(signed16 match+f639) if counter>3"],
+    ["006d09ae", "0090cfc0", "R(500) if first draw nonzero"],
+    ["006d09ed", "0062be00", "kind byte merge if kind>=0"],
+    ["006d0a3b", "00945640", "ftol(severity squared times 0.5) if severity<=50"],
+    ["006d0a41", "0090cfc0", "first severity draw"],
+    ["006d0a66", "00945640", "ftol(float32(first draw) times 0.5)"],
+    ["006d0a6c", "0090cfc0", "second severity draw"],
+    ["006d0ada", "007160e0", "set byte+2b to 5 on middle float route"],
+    ["006d0ae5", "007160e0", "set byte+2b to 3 on high float route"]
+  ],
+  "original_instruction_oracle": {
+    "cases": 144,
+    "steps": 8568,
+    "covered_starts": 65,
+    "oracle_sha256": "26ffaca654946f429188fb39b97c176af10399163cf88ac242735cb0b4d6f66f",
+    "domain": "kind=-1; severity 51,75,127; initial float32 1,500,4000,6000; signed counter -3,0,3; latch 0/1; other null or pointer; resulting float below5000",
+    "comparisons": "full original entry-to-RET16, final fields, all external memory write order and values, callee-saved registers and stack cleanup",
+    "transitive_calls_executed": 0
+  },
+  "limitations": [
+    "No execution oracle for throttle RNG, kind merge, severity<=50 RNG, or +2b setter paths",
+    "No connected 006cfe10 or action33 caller execution",
+    "Slot field meanings and real lifecycle remain provisional; synthetic memory only",
+    "No full shot, goal or match outcome claim"
+  ]
+}
