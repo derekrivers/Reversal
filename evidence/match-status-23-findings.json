@@ -1,0 +1,33 @@
+{
+  "work_unit": "R23-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "entry_va": "0062c400",
+  "file_offset": "0x22c400",
+  "body_bytes": 271,
+  "instructions": 88,
+  "local_branches": 4,
+  "direct_calls": 6,
+  "ret4_sites": ["0062c47b", "0062c4f8", "0062c50c"],
+  "abi": "ECX is receiver; entry ESP+4 is a pointer, not the index value; RET4; ESI and EDI saved and restored",
+  "paths": [
+    {
+      "condition": "pointer == 0",
+      "local_effect": "Diagnostic call chain 00944cff, 0090d130, 00944c9f, 005e8290; write zero DWORD to 00b67a34; clear AL before RET4",
+      "execution_validated": false
+    },
+    {
+      "condition": "pointer != 0 and signed *pointer >= signed runtime DWORD count at 00ae2364",
+      "local_effect": "Return with AL=0, EAX upper 24 bits inherited from runtime count; no local nonframe write or call",
+      "execution_validated_cases": 43
+    },
+    {
+      "condition": "pointer != 0 and signed *pointer < signed runtime count",
+      "local_effect": "Call 0062c680 with receiver and pointer; reload *pointer; use index*31 modulo 2^32 and fresh receiver first DWORD to read DWORD record ID at table+index*31+14. A -1 ID returns AL=0. Other IDs select receiver[1]+ID*48, read two DWORDs at record+32/+36, call 0054cc30 with a local output pointer. Read signed WORD at local+8 and unsigned WORD at local+10. Form 32-bit wrapped (unsignedWord*365 + signedWord), compare signed with signed record WORD at +42 then +40; return AL=2 if below +42, otherwise AL=(value < +40).",
+      "execution_validated": false,
+      "transitive_callees": ["0062c680", "0054cc30"]
+    }
+  ],
+  "direct_nonframe_write_sites": ["0062c46b"],
+  "direct_rng_sites": [],
+  "limits": ["No lower-bound guard on the signed index", "Pointer validity, aliasing, callee mutations and failures are unresolved", "Only AL is written on returns; high EAX bits can differ by path", "No connected player-status or match equivalence"]
+}

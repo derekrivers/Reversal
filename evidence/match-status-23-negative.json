@@ -1,0 +1,42 @@
+{
+  "work_unit": "R23-A",
+  "normal_optimized_sites_identical": true,
+  "normal_optimized_oracle_identical": true,
+  "sites_sha256": "491ea07a8556c97998cdf54937ea626231d6e89c333f174a931820ae5d989c16",
+  "oracle_sha256": "55a960c68ff9d7d01ceba32b49da7cd1e902a2c6291a36e706ccf33cb846a36c",
+  "negative_checks": {
+    "altered_specimen_normal": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_specimen_optimized": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_native_operand_normal": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_native_operand_optimized": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "resealed_native_operand_normal": {
+      "rejected": true,
+      "reason": "original/native operand mismatch"
+    },
+    "resealed_native_operand_optimized": {
+      "rejected": true,
+      "reason": "original/native operand mismatch"
+    },
+    "changed_typescript_result": {
+      "rejected": true,
+      "reason": "register mismatch"
+    },
+    "tampered_oracle": {
+      "rejected": true,
+      "reason": "oracle SHA-256 mismatch"
+    }
+  },
+  "scope": "original-instruction no-callee guard domain; other body paths static only"
+}

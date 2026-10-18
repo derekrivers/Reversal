@@ -1,0 +1,193 @@
+{
+  "work_unit": "R23-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "ea4c9888f34fe4282434e41a38e842cabec61ded30d064d0417a166e18f7fcc2",
+  "export_manifest_sha256": "b8d302c629ba6fbb98cb45315ee5df6f238b5b9a8e02a1c8220db3e2f384844d",
+  "annotation_preflight_sha256": "c7128da6c29d92931c1e096fc17112f28b73a4cd0276f7869e80a6800aee9e3a",
+  "entry_va": "0062c400",
+  "file_offset": "0x22c400",
+  "body_bytes": 271,
+  "body_sha256": "d46c16dcd2399b668c86134339f40e225a4575e09318fac4d09e2a0de236babc",
+  "instruction_count": 88,
+  "all_original_and_native_instructions_match": true,
+  "branches": [
+    [
+      "0062c413",
+      "jne",
+      [
+        "0062c47e",
+        "0062c415"
+      ]
+    ],
+    [
+      "0062c487",
+      "jge",
+      [
+        "0062c471",
+        "0062c489"
+      ]
+    ],
+    [
+      "0062c4a7",
+      "je",
+      [
+        "0062c471",
+        "0062c4a9"
+      ]
+    ],
+    [
+      "0062c4ec",
+      "jge",
+      [
+        "0062c4fb",
+        "0062c4ee"
+      ]
+    ]
+  ],
+  "direct_calls": [
+    {
+      "target": "0054cc30",
+      "sites": [
+        "0062c4c8"
+      ]
+    },
+    {
+      "target": "005e8290",
+      "sites": [
+        "0062c463"
+      ]
+    },
+    {
+      "target": "0062c680",
+      "sites": [
+        "0062c48c"
+      ]
+    },
+    {
+      "target": "0090d130",
+      "sites": [
+        "0062c443"
+      ]
+    },
+    {
+      "target": "00944c9f",
+      "sites": [
+        "0062c453"
+      ]
+    },
+    {
+      "target": "00944cff",
+      "sites": [
+        "0062c429"
+      ]
+    }
+  ],
+  "memory_reads": [
+    [
+      "0062c407",
+      "mov",
+      4,
+      "esi, dword ptr [esp + 0x210]"
+    ],
+    [
+      "0062c47e",
+      "mov",
+      4,
+      "ecx, dword ptr [esi]"
+    ],
+    [
+      "0062c480",
+      "mov",
+      4,
+      "eax, dword ptr [0xae2364]"
+    ],
+    [
+      "0062c491",
+      "mov",
+      4,
+      "eax, dword ptr [esi]"
+    ],
+    [
+      "0062c49a",
+      "mov",
+      4,
+      "eax, dword ptr [edi]"
+    ],
+    [
+      "0062c49c",
+      "mov",
+      4,
+      "ecx, dword ptr [edx + eax + 0xe]"
+    ],
+    [
+      "0062c4ab",
+      "mov",
+      4,
+      "ecx, dword ptr [edi + 4]"
+    ],
+    [
+      "0062c4ba",
+      "mov",
+      4,
+      "ecx, dword ptr [esi + 0x24]"
+    ],
+    [
+      "0062c4bd",
+      "mov",
+      4,
+      "edx, dword ptr [esi + 0x20]"
+    ],
+    [
+      "0062c4cd",
+      "mov",
+      4,
+      "eax, dword ptr [esp + 0xa]"
+    ],
+    [
+      "0062c4d1",
+      "movsx",
+      2,
+      "edx, word ptr [esp + 8]"
+    ],
+    [
+      "0062c4e1",
+      "movsx",
+      2,
+      "ecx, word ptr [esi + 0x2a]"
+    ],
+    [
+      "0062c4fb",
+      "movsx",
+      2,
+      "edx, word ptr [esi + 0x28]"
+    ]
+  ],
+  "memory_writes": [
+    [
+      "0062c46b",
+      "mov",
+      4,
+      "dword ptr [0xb67a34], esi"
+    ]
+  ],
+  "returns": [
+    [
+      "0062c47b",
+      4
+    ],
+    [
+      "0062c4f8",
+      4
+    ],
+    [
+      "0062c50c",
+      4
+    ]
+  ],
+  "native_export_hashes": {
+    "asm": "7f3ace6737557ee2ab9d1c35571c553bc237bd411d593d57220d05c747a3bd67",
+    "c": "27af4608faee579702c706f042dee0051378f397034238e9e6082a09f75fe9f2"
+  },
+  "scope": "complete local body; transitive callee effects unresolved",
+  "integrity_under_python_optimized_mode": "explicit ValueError gates"
+}
