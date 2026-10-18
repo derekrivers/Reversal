@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "unit": "R26-B",
+  "synthetic_source_destination_stack_inputs_verified": 6912,
+  "fixture_contains_original_code": false,
+  "original_executable_native_exports_projects_mutation_copies_included": false,
+  "reviewed_paths": [
+    ".gitattributes",
+    "evidence/strncpy-runtime-26-sites.json",
+    "evidence/strncpy-runtime-26-oracle.json.gz",
+    "evidence/strncpy-runtime-26-negative.json",
+    "reconstruction/strncpy-runtime-26.ts",
+    "reconstruction/check-strncpy-runtime-26.ts",
+    "reports/strncpy-runtime-26.md",
+    "scripts/extract_strncpy_runtime_26.py",
+    "scripts/emulate_strncpy_runtime_26.py",
+    "scripts/check_strncpy_runtime_26_negative.py",
+    "evidence/strncpy-runtime-26-privacy.json"
+  ],
+  "notes": [
+    "Oracle gzip decoded and every source/destination/initial-stack byte verified against authored generators.",
+    "Fixture output/events originate only from these synthetic mappings.",
+    "Public evidence is authored findings/code, hashes, compact address/operand metadata and synthetic numeric output.",
+    "No PE bytes, native assembly export or bulk decompilation is retained.",
+    "Task-specific binary attribute prevents evidence text CRLF normalization; staged oracle blob equals the pinned working fixture byte for byte."
+  ],
+  "staged_oracle_sha256": "fbee331c5b29691dda02c91ab5492d31cb20b4f254ee8d7a1febde457ca29169"
+}

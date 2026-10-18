@@ -16,6 +16,7 @@ const checks=[
  ['reconstruction/check-status-refresh-guard.ts','evidence/status-refresh-24-guard-oracle.json'],
  ['reconstruction/check-date-difference.ts','evidence/date-difference-24-oracle.json'],
  ['reconstruction/check-copy-helper.ts','evidence/copy-helper-25-oracle.json'],
+ ['reconstruction/check-strncpy-runtime-26.ts','evidence/strncpy-runtime-26-oracle.json.gz'],
  ['reconstruction/check-status-lookup-helpers.ts','evidence/status-lookup-25-oracle.json'],
  ['reconstruction/check-slot-effect-severe.ts','evidence/slot-effect-25-oracle.json'],
  ['reconstruction/check-match-dependencies-26.ts','evidence/match-dependencies-26-oracle.json'],
