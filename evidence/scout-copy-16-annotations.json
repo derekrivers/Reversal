@@ -1,0 +1,25 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-15",
+  "status": "Name-only proposal; coordinator alone applies after independent review and exact-old-value recheck",
+  "private_preflight_sha256": "2be810e149b9d5ebe8de028bf9542aab932afd31514e2ec8d737bef8450374bc",
+  "old_annotation_evidence": "Pinned read-only preflight verifies instruction existence and exact old names; no prototype, calling convention, structure or comment changes proposed",
+  "proposals": [
+    {
+      "address": "007b7690",
+      "kind": "function_name",
+      "old": "FUN_007b7690",
+      "new": "cm0102_replace_scout_record_from_source",
+      "evidence": "Destination+0x1ee/+0x170 cleanup precedes688-byte source copy and conditional nested storage replacement; independent allocation/copy counts and failure paths documented",
+      "confidence": "High local replacement contract; no safe self-copy, complete deep-copy or transaction claim"
+    },
+    {
+      "address": "00813140",
+      "kind": "function_name",
+      "old": "FUN_00813140",
+      "new": "cm0102_cleanup_scout_record_copy_object",
+      "evidence": "Trailing+0x361e helper, second10x688 array cleanup, then first10x688 array cleanup; bases match R15 constructor; no local outer-object release",
+      "confidence": "High direct cleanup ordering; callback and exceptional effects unresolved"
+    }
+  ]
+}

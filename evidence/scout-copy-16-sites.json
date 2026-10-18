@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "15eb7357500cf2dfd1838487e2a28e05d4965410",
+  "native_checkpoint": "2026-10-18-investigation-15",
+  "address_kind": "PE virtual addresses unless file_offset is explicit; field offsets in bytes",
+  "method": "Capstone 5.0.7 full local body decode and all-instruction native comparison; static, no execution",
+  "private_export_manifest_sha256": "fc92c27bcc9f2f15bedebb4aadbebba7bf0ed5f8801c787e2f0e262c48a7e960",
+  "private_annotation_preflight_sha256": "2be810e149b9d5ebe8de028bf9542aab932afd31514e2ec8d737bef8450374bc",
+  "verified_old_names": {
+    "007b7690": "FUN_007b7690",
+    "00813140": "FUN_00813140"
+  },
+  "normalization": "Jump aliases, numeric spelling, whitespace, EAX FS DWORD qualifier, scale-one and plus-negative spelling, REP MOVSD/MOVSB rendering; operand widths preserved",
+  "owned_bodies": [
+    {
+      "entry_va": "007b7690",
+      "end_exclusive_va": "007b7835",
+      "file_offset": "003b7690",
+      "length_bytes": 421,
+      "body_sha256": "b911c3237f4938f91439bd29b97703166544aec972357c6d71a49115c56925f5",
+      "instruction_count": 118,
+      "selected_sites": {
+        "007b76ad": "mov ebx, ecx",
+        "007b76b3": "mov eax, dword ptr [ebx + 0x1ee]",
+        "007b76be": "call 0x9452ca",
+        "007b76c6": "mov dword ptr [ebx + 0x1ee], edi",
+        "007b76cc": "mov esi, dword ptr [ebx + 0x170]",
+        "007b76d7": "mov ecx, 0xb74438",
+        "007b76dc": "call 0x68d1f0",
+        "007b76e2": "call 0x944c94",
+        "007b76ea": "mov dword ptr [ebx + 0x170], edi",
+        "007b76f0": "mov ebp, dword ptr [esp + 0x224]",
+        "007b76f7": "mov ecx, 0xac",
+        "007b7700": "rep movsd dword ptr es:[edi], dword ptr [esi]",
+        "007b7702": "mov eax, dword ptr [ebx + 0x1f2]",
+        "007b7710": "lea eax, [eax + eax*4]",
+        "007b7713": "lea eax, [eax + eax*8]",
+        "007b7717": "call 0x944e46",
+        "007b771f": "mov dword ptr [ebx + 0x1ee], eax",
+        "007b7750": "push 0x127f",
+        "007b7780": "mov dword ptr [0xb67a34], 0",
+        "007b7794": "push -1",
+        "007b7796": "call 0x945934",
+        "007b779b": "mov ecx, dword ptr [ebx + 0x1f6]",
+        "007b77a5": "mov esi, dword ptr [ebp + 0x1ee]",
+        "007b77ab": "lea ecx, [ecx + ecx*4]",
+        "007b77ae": "mov edi, eax",
+        "007b77b0": "lea ecx, [ecx + ecx*8]",
+        "007b77b5": "shr ecx, 2",
+        "007b77b8": "rep movsd dword ptr es:[edi], dword ptr [esi]",
+        "007b77bc": "and ecx, 3",
+        "007b77bf": "rep movsb byte ptr es:[edi], byte ptr [esi]",
+        "007b77c1": "mov eax, dword ptr [ebx + 0x170]",
+        "007b77cb": "push 0x51a8",
+        "007b77d0": "call 0x944cf1",
+        "007b77ed": "mov eax, dword ptr [esp + 0x224]",
+        "007b77f4": "mov ecx, 0x146a",
+        "007b77fd": "mov esi, dword ptr [eax + 0x170]",
+        "007b7804": "rep movsd dword ptr es:[edi], dword ptr [esi]",
+        "007b7806": "mov ecx, 0xb74438",
+        "007b780b": "call 0x68d0d0",
+        "007b7814": "mov dword ptr [ebx + 0x170], ebp",
+        "007b7832": "ret 4"
+      },
+      "all_calls": [
+        {
+          "site": "007b76be",
+          "target": "0x9452ca"
+        },
+        {
+          "site": "007b76dc",
+          "target": "0x68d1f0"
+        },
+        {
+          "site": "007b76e2",
+          "target": "0x944c94"
+        },
+        {
+          "site": "007b7717",
+          "target": "0x944e46"
+        },
+        {
+          "site": "007b773d",
+          "target": "0x944cff"
+        },
+        {
+          "site": "007b7757",
+          "target": "0x90d130"
+        },
+        {
+          "site": "007b7767",
+          "target": "0x944c9f"
+        },
+        {
+          "site": "007b7778",
+          "target": "0x5e8290"
+        },
+        {
+          "site": "007b778a",
+          "target": "0x5cc7d0"
+        },
+        {
+          "site": "007b778f",
+          "target": "0x5a8f60"
+        },
+        {
+          "site": "007b7796",
+          "target": "0x945934"
+        },
+        {
+          "site": "007b77d0",
+          "target": "0x944cf1"
+        },
+        {
+          "site": "007b780b",
+          "target": "0x68d0d0"
+        }
+      ],
+      "all_branches": [
+        {
+          "site": "007b76bb",
+          "instruction": "je 0x7b76cc"
+        },
+        {
+          "site": "007b76d4",
+          "instruction": "je 0x7b76f0"
+        },
+        {
+          "site": "007b770a",
+          "instruction": "jle 0x7b77c1"
+        },
+        {
+          "site": "007b7727",
+          "instruction": "jne 0x7b779b"
+        },
+        {
+          "site": "007b77a3",
+          "instruction": "jle 0x7b77c1"
+        },
+        {
+          "site": "007b77c9",
+          "instruction": "je 0x7b781a"
+        },
+        {
+          "site": "007b77eb",
+          "instruction": "je 0x7b7812"
+        },
+        {
+          "site": "007b7810",
+          "instruction": "jmp 0x7b7814"
+        }
+      ],
+      "all_returns": [
+        {
+          "site": "007b7832",
+          "instruction": "ret 4"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "all_local_branch_targets_are_instruction_starts": true,
+        "export_sha256": {
+          "007b7690.asm": "1e112038cd8c68b6fb3060b23f86916b69978836a0393222a7cc28959b7c6da9",
+          "007b7690.c": "acf66ec8675f3385b535652f521b78673b800377ad4bd1b3e56d42bd5a19cb10"
+        }
+      }
+    },
+    {
+      "entry_va": "00813140",
+      "end_exclusive_va": "008131b8",
+      "file_offset": "00413140",
+      "length_bytes": 120,
+      "body_sha256": "bb76f8ecaf00e23fc6defb6fcc371aa230b2e1da95132d29da496ba4e24784b8",
+      "instruction_count": 31,
+      "selected_sites": {
+        "00813157": "mov esi, ecx",
+        "0081315d": "lea ecx, [esi + 0x361e]",
+        "0081316b": "call 0x68d040",
+        "00813170": "push 0x7ae4f0",
+        "00813175": "push 0xa",
+        "00813177": "lea eax, [esi + 0x1b0e]",
+        "0081317d": "push 0x2b0",
+        "00813188": "call 0x9462bb",
+        "0081318d": "push 0x7ae4f0",
+        "00813192": "push 0xa",
+        "00813194": "inc esi",
+        "00813195": "push 0x2b0",
+        "008131a3": "call 0x9462bb",
+        "008131b7": "ret"
+      },
+      "all_calls": [
+        {
+          "site": "0081316b",
+          "target": "0x68d040"
+        },
+        {
+          "site": "00813188",
+          "target": "0x9462bb"
+        },
+        {
+          "site": "008131a3",
+          "target": "0x9462bb"
+        }
+      ],
+      "all_branches": [],
+      "all_returns": [
+        {
+          "site": "008131b7",
+          "instruction": "ret"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "all_local_branch_targets_are_instruction_starts": true,
+        "export_sha256": {
+          "00813140.asm": "c277ea802462a0955b5b54a18f7735102154b10ab13f3a085f458cf20712e8d2",
+          "00813140.c": "dcaf7d972b079d4bcd10793e1c8b1f09ff20445bb343152a0083e0edc386e585"
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Callees and exception handlers remain boundaries; no execution oracle.",
+    "No full scouting persistence, complete nested ownership, overlap/self-copy safety or transaction claim."
+  ]
+}
