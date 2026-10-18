@@ -1,0 +1,278 @@
+{
+  "work_unit": "R25-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "77fb2072a25ff030ab3c0e58c5cd289730a9a8c5345ceaaf56e948e727c1dd0b",
+  "export_manifest_sha256": "9f7e0de5968e38bac77fe8438678596f82ab31abee5e820c7ccb36b2f1ce531c",
+  "annotation_preflight_sha256": "34ca2e277634b5a4bdbde668ffcc7d3b91a65a4c1689844f54c454b644834899",
+  "scope": "three complete local bodies; 0062ed70 transitive callees remain outside this map",
+  "integrity_under_python_optimized_mode": "explicit ValueError gates",
+  "bodies": {
+    "0062ec00": {
+      "entry_va": "0062ec00",
+      "file_offset": "0x22ec00",
+      "body_bytes": 18,
+      "body_sha256": "06fb4b000e61a9e4ae2626878867e975ed0031909adf76af9813988d46c3e61e",
+      "instruction_count": 4,
+      "all_original_and_native_instructions_match": true,
+      "branches": [],
+      "calls": [],
+      "memory_reads": [
+        [
+          "0062ec00",
+          "movsx",
+          1,
+          "eax, byte ptr [esp + 4]"
+        ],
+        [
+          "0062ec08",
+          "mov",
+          1,
+          "al, byte ptr [eax + ecx*4 + 0x9e7ad9]"
+        ]
+      ],
+      "memory_writes": [],
+      "returns": [
+        [
+          "0062ec0f",
+          4
+        ]
+      ],
+      "native_export_hashes": {
+        "asm": "28becd449480b31098bcd4e632cf7015f9d14bf2de675fd7e8d8b9e5f38b5e81",
+        "c": "db39e6d9887227ea5af4584ed1eac91ef75f03f004caebef359f8a92d2d0f322"
+      }
+    },
+    "0062ece0": {
+      "entry_va": "0062ece0",
+      "file_offset": "0x22ece0",
+      "body_bytes": 70,
+      "body_sha256": "78b2038a612f23e96eb5f6a6a813c5242fa40385f82ffbd5a9dd3e9affd99588",
+      "instruction_count": 28,
+      "all_original_and_native_instructions_match": true,
+      "branches": [
+        [
+          "0062ece7",
+          "je",
+          [
+            "0062ed20",
+            "0062ece9"
+          ]
+        ],
+        [
+          "0062ecf3",
+          "jge",
+          [
+            "0062ed20",
+            "0062ecf5"
+          ]
+        ],
+        [
+          "0062ecfa",
+          "je",
+          [
+            "0062ed20",
+            "0062ecfc"
+          ]
+        ],
+        [
+          "0062ed0b",
+          "jle",
+          [
+            "0062ed20",
+            "0062ed0d"
+          ]
+        ],
+        [
+          "0062ed15",
+          "jg",
+          [
+            "0062ed22",
+            "0062ed17"
+          ]
+        ]
+      ],
+      "calls": [],
+      "memory_reads": [
+        [
+          "0062ece0",
+          "mov",
+          4,
+          "edx, dword ptr [esp + 4]"
+        ],
+        [
+          "0062ece9",
+          "mov",
+          4,
+          "eax, dword ptr [edx]"
+        ],
+        [
+          "0062eceb",
+          "mov",
+          4,
+          "esi, dword ptr [0xae2364]"
+        ],
+        [
+          "0062ecf5",
+          "mov",
+          4,
+          "esi, dword ptr [edx + 0x61]"
+        ],
+        [
+          "0062ed03",
+          "mov",
+          4,
+          "eax, dword ptr [ecx]"
+        ],
+        [
+          "0062ed07",
+          "cmp",
+          1,
+          "byte ptr [eax + 0x12], 0xff"
+        ],
+        [
+          "0062ed0d",
+          "mov",
+          1,
+          "al, byte ptr [eax + 0x13]"
+        ]
+      ],
+      "memory_writes": [],
+      "returns": [
+        [
+          "0062ed1d",
+          4
+        ],
+        [
+          "0062ed23",
+          4
+        ]
+      ],
+      "native_export_hashes": {
+        "asm": "6af2be2f6b0f3ef3240fad044edfdb9ea1df33867f853e1aa175bb6c968b2c02",
+        "c": "9b6a2aafa9f4305c5edfe1ea4f6709ab1ee51acc1e5e8b179c9d149f5678d66f"
+      }
+    },
+    "0062ed70": {
+      "entry_va": "0062ed70",
+      "file_offset": "0x22ed70",
+      "body_bytes": 187,
+      "body_sha256": "1d8ecca16d2ad835d32f01edf9ad8e56d93fa99519c37eea523815c7bae5e8e2",
+      "instruction_count": 60,
+      "all_original_and_native_instructions_match": true,
+      "branches": [
+        [
+          "0062ed83",
+          "jne",
+          [
+            "0062edee",
+            "0062ed85"
+          ]
+        ],
+        [
+          "0062edf7",
+          "jge",
+          [
+            "0062ede1",
+            "0062edf9"
+          ]
+        ],
+        [
+          "0062ee13",
+          "je",
+          [
+            "0062ede1",
+            "0062ee15"
+          ]
+        ]
+      ],
+      "calls": [
+        [
+          "0062ed99",
+          "00944cff"
+        ],
+        [
+          "0062edb3",
+          "0090d130"
+        ],
+        [
+          "0062edc3",
+          "00944c9f"
+        ],
+        [
+          "0062edd3",
+          "005e8290"
+        ],
+        [
+          "0062edfc",
+          "0062c680"
+        ]
+      ],
+      "memory_reads": [
+        [
+          "0062ed78",
+          "mov",
+          4,
+          "edi, dword ptr [esp + 0x20c]"
+        ],
+        [
+          "0062edee",
+          "mov",
+          4,
+          "ecx, dword ptr [edi]"
+        ],
+        [
+          "0062edf0",
+          "mov",
+          4,
+          "eax, dword ptr [0xae2364]"
+        ],
+        [
+          "0062ee01",
+          "mov",
+          4,
+          "eax, dword ptr [edi]"
+        ],
+        [
+          "0062ee0a",
+          "mov",
+          4,
+          "eax, dword ptr [esi]"
+        ],
+        [
+          "0062ee0c",
+          "mov",
+          4,
+          "eax, dword ptr [edx + eax + 0xe]"
+        ],
+        [
+          "0062ee15",
+          "mov",
+          4,
+          "ecx, dword ptr [esi + 4]"
+        ]
+      ],
+      "memory_writes": [
+        [
+          "0062eddb",
+          "mov",
+          4,
+          "dword ptr [0xb67a34], edi"
+        ]
+      ],
+      "returns": [
+        [
+          "0062edeb",
+          4
+        ],
+        [
+          "0062ee28",
+          4
+        ]
+      ],
+      "native_export_hashes": {
+        "asm": "9b0bd12347e822108343cd47f26cfd81f47a577075c6463f853bde53cefd476e",
+        "c": "9c35e746dfabdb77f4a2351b8b14ca80045be56cc3e4b88d0886646bf8d5ee4b"
+      }
+    }
+  }
+}

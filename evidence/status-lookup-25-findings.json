@@ -1,0 +1,24 @@
+{
+  "work_unit": "R25-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "77fb2072a25ff030ab3c0e58c5cd289730a9a8c5345ceaaf56e948e727c1dd0b",
+  "export_manifest_sha256": "9f7e0de5968e38bac77fe8438678596f82ab31abee5e820c7ccb36b2f1ce531c",
+  "annotation_preflight_sha256": "34ca2e277634b5a4bdbde668ffcc7d3b91a65a4c1689844f54c454b644834899",
+  "static_sites_sha256": "0fc73d9c1c73c6f7903ee1020a03e49b105f3c45c07fa4f35dd30c00e042f587",
+  "oracle_sha256": "188f069ba861e142c0cc6f204b674b4ca19031cd9842c0e2e13cbb5519db66df",
+  "negative_checks_sha256": "645f8d0fd98ca5e5e55828d49d061543b306f8c2e58627fefc7f79a91ad60a6e",
+  "entry_virtual_addresses": ["0062ec00", "0062ece0", "0062ed70"],
+  "file_offsets": ["0x22ec00", "0x22ece0", "0x22ed70"],
+  "instruction_counts": [4, 28, 60],
+  "local_body_bytes": [18, 70, 187],
+  "execution_cases": {"0062ec00": 256, "0062ece0": 32, "0062ed70_no_callee_guard": 43},
+  "executed_instruction_steps": 2425,
+  "contract_confidence": "high for complete local instruction, operand, CFG and ABI map; selected original-entry execution domains only",
+  "unknowns": [
+    "0062ed70 diagnostic callees and refresh callee effects are outside R25-A execution validation",
+    "0062ed70 has no independent negative-index or record-index bounds check",
+    "0062ec00 indexes the original table with signed low byte and does not guard the table range",
+    "0062ece0 does not validate the derived 31-byte row pointer; upper EAX bits survive some AL-only failure exits",
+    "caller reachability and real game memory invariants remain unmeasured"
+  ]
+}
