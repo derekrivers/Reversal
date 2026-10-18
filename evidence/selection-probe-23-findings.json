@@ -1,0 +1,29 @@
+{
+  "work_unit": "R23-C",
+  "entry_va": "00601070",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "ea4c9888f34fe4282434e41a38e842cabec61ded30d064d0417a166e18f7fcc2",
+  "body_bytes": 399,
+  "instruction_count": 121,
+  "contract_class": "complete local static body, original PE/native instruction verified",
+  "execution_validated_scope": "288 bounded no-callee whole-function synthetic cases, 16200 instruction steps, 66 original instruction starts",
+  "normal_abi": {
+    "receiver_register": "ECX",
+    "entry_stack_slots": ["low signed byte field index", "full optional record pointer"],
+    "callee_cleanup_bytes": 8,
+    "nonvolatile_registers_saved_restored": ["EBX", "ESI"],
+    "other_nonvolatile_registers_untouched": ["EBP", "EDI"],
+    "return_register": "EAX"
+  },
+  "pointer_fallback": "if optional record pointer is zero, read signed word 00b77c7a and then dword[00b74c26+0x300*signed_word]",
+  "slot": "signed32(record[0]-dword[00ae2364]+16), require >=0 and <=signed32(receiver[1]-1)",
+  "record_lookup": "base=dword[receiver]; status=s8(base[slot*0xa6ef+0x9a69]); status 1 becomes 0; identifier=dword[base+slot*0xa6ef+0x1e05+status*0x1ecd+s8(field)*4]",
+  "returns": [
+    {"site_va":"00601163","condition":"identifier != 0xffffffff","eax":"dword[00ae23bc]+identifier*0x6e modulo 2^32"},
+    {"site_va":"006011fc","condition":"identifier == 0xffffffff or diagnostic callees returned","eax":"zero"}
+  ],
+  "diagnostic_codes": {"fallback_missing":"0xbf6","invalid_slot":"0xc02","invalid_field":"0xc09"},
+  "direct_nonframe_write": {"site_va":"006011ec","target":"global dword 00b67a34","value":0,"path":"diagnostic tail after four direct callee sites"},
+  "native_name_proposal": "probe_mode5_record_00601070",
+  "limits": ["Diagnostic callee effects and termination unproved", "No connected mode-5 selector validation", "Invalid pointers, aliases, live storage lifetime and arithmetic extremes untested"]
+}
