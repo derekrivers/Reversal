@@ -1,0 +1,26 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-12",
+  "status": "proposal only; coordinator alone applies canonical annotations after independent review",
+  "scope": "Two function names only. No prototype or comment mutations proposed.",
+  "old_annotation_evidence": "Read-only annotation-preflight-13.json confirms exact old function names and instruction existence; SHA25616672c9ae741b03aa84a343a9a8d9de48c6c7c682e52ff14264d9834236c2087. Native export manifest is pinned by sites evidence; recheck exact old names before application.",
+  "coordinator_private_preflight_receipt_sha256": "16672c9ae741b03aa84a343a9a8d9de48c6c7c682e52ff14264d9834236c2087",
+  "proposals": [
+    {
+      "address":"004d0c60",
+      "kind":"function_name",
+      "old":"FUN_004d0c60",
+      "new":"cm0102_compute_staff_contract_scalar_candidate",
+      "evidence":"R12 caller004c768b storesEAXtosourceDWORD+52. Owned714 instructions map attribute/context/row-dependent scalar stages andRET0x14. Only explicit nonstack store004d0caf publishesprimaryrowcandidate00ae1080; no owned initializer/reserve/row writes. Mode/units remainprovisional.",
+      "confidence":"high static scalar role and call relationship; business units and transitive effects unresolved"
+    },
+    {
+      "address":"004cf5f0",
+      "kind":"function_name",
+      "old":"FUN_004cf5f0",
+      "new":"cm0102_find_staff_contract_context_row_candidate",
+      "evidence":"Owned91 instructions gate primary andsecondary0x50-stride rows throughsourceID0x4f auxiliary mapping; rowDWORD+4 comparedwithtargetDWORD+0; optional00540a50 targetfallback; returnsrowpointeror0 withRET8. No explicit nonstack writes.",
+      "confidence":"high static lookup contract; fallback context meaning and pointer lifetime unresolved"
+    }
+  ]
+}

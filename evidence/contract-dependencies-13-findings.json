@@ -1,0 +1,55 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "87ea0f39d5dcb62fe6969ad6570c3dca8b152673",
+  "scope": "R13-B: whole-body static contracts for 004d0c60 and 004cf5f0; immediate R12 caller context. No game build, behavior port, numerical oracle, negotiation or persistence claim.",
+  "address_space": "VA unless file_offset is explicit; field offsets hexadecimal bytes; pointers raw32",
+  "evidence": "contract-dependencies-13-sites.json; complete 714+91 instruction decode agrees with read-only native exports identified by manifest fa2728212d3189f2a0ec9f4db14b2355b0da8457bc9bff091d5c2b442b38a489",
+  "hypothesis_correction": "004d0c60 computes a scalar; 004cf5f0 selects existing rows. Neither owned body initializes/reserves rows. Prior initializer lead is not supported by assembly. R12's source+52 result write belongs to its caller.",
+  "coverage": [
+    {"entry":"004d0c60","status":"contract-supported","basis":"Whole-body static control/data flow, ABI, exact explicit writes and direct RNG mapped","limitation":"Opaque dependency effects, original table meaning, x87 environment and numerical equivalence unresolved"},
+    {"entry":"004cf5f0","status":"contract-supported","basis":"Whole-body static guarded primary/secondary/context-fallback row lookup and ABI","limitation":"00540a50 effects/ownership and global/row lifecycle unresolved; no runtime-domain validation"}
+  ],
+  "scalar": {
+    "entry": "004d0c60",
+    "abi": "ECX forwarded untouched as manager to004cf5f0; EBP+8 source, +c context, +10 low8 mode, +14 low16 selector, +18 unused raw32; four RET0x14 exits; EBX/ESI/EDI/EBP restored; raw32 EAX result only",
+    "prototype_challenge": "Ghidra lists four stack arguments and hides incoming manager; RET0x14 requires five slots and fifth is never read. Do not install a four-slot prototype.",
+    "direct_writes": [{"site":"004d0caf","target":"00ae1080","bytes":4,"value":"global-manager primary row candidate or zero; not necessarily selected matching row"}],
+    "lookup": "Signed source.ID<global00ae2364, no lower bound; auxiliary[source.ID*0x4f] must be nonnegative; global00ae1050.rows+index*0x50 published00ae1080. Nonzero primary row DWORD+4 selects global00ae23b4+ID*0x245 as derived context. Incoming manager is used separately by004cf5f0; identity not checked.",
+    "null_source": "Null only avoids initial lookup; unconditional004d0cdb source+61 read still faults for null source under ordinary unmapped low memory.",
+    "missing_attributes": "source.DWORD+61==0: derived context nonzero calls008d0780(global00de1f54;source,derived_context,1), returns raw32 EAX; otherwise returns0. Earlier row lookup can already have effects.",
+    "base_selection": [
+      {"first_signed_byte_gate":"A+15>=15","base":13000000,"threshold":28},
+      {"first_signed_byte_gate":"A+14>=15","base":11000000,"threshold":29},
+      {"first_signed_byte_gate":"A+13>=15","base":10000000,"threshold":29},
+      {"first_signed_byte_gate":"A+12>=15","base":9000000,"threshold":29},
+      {"first_signed_byte_gate":"A+f==20","base":6000000,"threshold":33},
+      {"first_signed_byte_gate":"otherwise","base":8000000,"threshold":29}
+    ],
+    "prelude": "004d0daa..004d0f20: signed source+18 threshold difference, piecewise h=d or8-.5*d for d>5; h*abs(ftol(h))*float32(1/3)/12+1; optional signed A+28/+27/+43/+36/+2f factors when A+f<15; factor1.33-(s8(A+2d)^2)*.05*.034; float32 store; bound to[.01,max(1.1,s16(A+9)/3000+.17)]; float32 store. Expressions describe finite arithmetic stages, not exact replacement evaluation.",
+    "context_magnitude": "C null uses signed16 A+b. Else005407e0(source,C+cf,0) AX signextended; selector low16=-1 calls006e86d0(C+cf,source,C,1,signed_AX), other selector loads feed EAX directly. Low16(EAX*50) signed negative->0; add signed helper result; use unsigned min(helper_result,5000), zeroextend32 terms via QWORD locals; float32 factor/float32(1/3), ftol, unsigned clamp[1,12000].",
+    "magnitude_adjustment": "A+d signed16>5000 and original age<T+4: unsigned max with(EAX>>1)+A+d-2500. If A+d>8000 and age<=T: x87 max with2.25*A+d+(EAX>>1)-12500 thenftol. Low32 square is zeroextended64 forFILD.",
+    "age_table": "Nonzero unsigned source+22 and source+1a pointer: signed16 linked+8e product /18, low16 signextension, limited by original threshold difference and0, added to age BYTE with wrap. T-adjusted_age+10 low8 signed clamp[0,19]; signedBYTE table009a7f30; multiply zeroextended squared magnitude*base*1e-8*.01.",
+    "context_scale": "C null uses RNG(3)+1. C+53 null=>1. Else signedBYTE[p53+7e] outside[1,3]=>3; C+57 nonnull changes denominator seed to(seed+1)*.5; C.BYTE+64==2 doubles, ==3 multiplies7.5. Numerator25*v*v+s16(C+80), v=s16[p57+69] or s8[p53+85], signed32 wrapping; divide by denominator*1000.",
+    "common_scale": "004d1238..004d12d6: multiply by clamp(1-(20-k)^2*.2*.02,.1,1.1); above65000*k*k replace with .25*scalar+32500*k*k; floor5000*k.",
+    "nonzero_mode": "C+53 nonnull and its ID equals DWORD009cf434: scalar<6000000 multiply by scalar*(1/6000000)*.6+.3 thenfloor5000, else*.9. Selected row and nonzero00867b50(row) admit cap by signed rowDWORD+21. FILDrow;FLDscalar;FCOMP leavesrow on stack, scalar>=row returnsrow, scalar<row reloadsscalar. ftol returns low32; no general nonnegative return guarantee.",
+    "zero_mode": "No selected row=>scalar0. Else008d0a70(global00de1f54;source) nonzero computes D=(u16(row+2f)-u16(global00ae2c92))*365+s16(row+2d)-s16(global00ae2c90), raw32. Signed D<1=>return0. Context==derived and rowBYTE+3d signedpositive: (rowBYTE+35&3f)==2 adds200+7*byte toD, else halves scalar. D<350 multiplyD/700, else divideclamp(2.5-D/700,1,2).",
+    "identifier_postlude": "Zero scalar or context+53 ID!=DWORD009cf434 routes alternate path: ID==DWORD009cf300=>*.8; ID==DWORD009cf484=>*.25, halve excess over125000 and250000 through separateftol/signedDWORD reloads. Other admitted009cf434 values use nonlinear/0.9 transform. Rowpredicate can finally cap at signed rowDWORD+21, same x87 comparison direction as nonzero mode.",
+    "direct_rng": [{"site":"004d1227","target":"0090cfc0","bound":3,"gate":"Attributes nonnull and supplied context null; before mode branch","count":"At most once in this acyclic owned body; total transitive draw count unknown"}],
+    "x87_limits": "Original float32/64 store sites and FCOM/FNSTSW masks matter. No numerical oracle; no NaN, x87 precision/rounding, exception state or out-of-range ftol behavior claim. Ghidra omits prelude and regional branches."
+  },
+  "lookup": {
+    "entry":"004cf5f0",
+    "abi":"ECX manager; entryESP+4 source pointer, +8 target context pointer; RET8 on five exits; EAX row pointer or0; preservesEBX/EBP/ESI/EDI",
+    "guards":"Source and target nonnull; signed source.ID<globalcount; primary auxiliary index>=0; primary row pointer nonzero. Negative sourceID passes. Missing primary blocks secondary/fallback.",
+    "primary":"manager.rows+primary*0x50; rowDWORD+4==targetDWORD+0 returnsprimary",
+    "secondary":"Only primary mismatch loads auxDWORD+4; negative=>null; otherwise rows+secondary*0x50; nonzero matchingrow+4 returnssecondary",
+    "fallback":"00540a50(target,&original_source_argument_slot,1), cdecl cleanup12. Slot initially source pointer, not zeroed flag. EAXnonnull and slotzero replaces target withEAX. Recompare primary then nonzero secondary against chosen targetDWORD+0.",
+    "direct_nonstack_writes":[],
+    "direct_rng":[],
+    "bounds_limits":"No sourceID>=0, row index<count/capacity, base extent or overflow guard. Return pointer borrowed candidate; ownership/lifetime unassigned.00540a50 can mutate the owned argument slot and have unknown external effects."
+  },
+  "caller": "004c7683 passesmanager;(source,sourceDWORD+39,1,-1,0),004c768b storesEAXtosource+52. Other59/148 exported incoming references inventory full calls but do not establish caller invariants or runtime completeness.",
+  "ownership": "No explicit allocation/free, row writes, source writes or persistence. Global00ae1080 stores only a primary candidate. Transitive helpers can write/allocate/useRNG; full effects remain unresolved.",
+  "unresolved_dependencies": ["00540a50 context fallback and pointed slot output","005407e0 signed16 result","006e86d0 selector-driven signed16-scaled result","00867b50 row predicate and effects","008d0a70 source predicate and effects","008d0780 missing-attributes fallback","00945640 full conversion/environment behavior","009a7f30 original table interpretation and valid lifecycle"],
+  "validation": "805 instructions independently matched, SHA-pinned PE and export files, branch/boundary/ECX/frame-slot/reference checks. npm check underNode24 validates existing unrelated fixtures and checkpointmetadata only. No dynamic equivalence claim."
+}
