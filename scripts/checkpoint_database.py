@@ -5,7 +5,7 @@ Run 'stage' only after the live project has closed. Run the retained Ghidra
 verification command against restore-test, then run 'finalize'.
 """
 from pathlib import Path
-import argparse, hashlib, json, re, shutil, struct, zipfile
+import argparse, hashlib, json, os, re, shutil, stat, struct, zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
 STAGE=ROOT/'database-checkpoint'
@@ -15,6 +15,14 @@ EXPECTED='0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86'
 
 def digest(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 def write_json(p,obj): p.write_text(json.dumps(obj,indent=2)+'\n',encoding='utf-8',newline='\n')
+def clear_readonly_and_retry(func,path,exc):
+    if not isinstance(exc,PermissionError):raise exc
+    os.chmod(path,stat.S_IREAD|stat.S_IWRITE|stat.S_IEXEC)
+    func(path)
+def remove_stage_tree(p):
+    if p not in (STAGE,RESTORED) or p.resolve().parent!=ROOT.resolve():
+        raise ValueError(f'Unsafe checkpoint staging directory: {p}')
+    if p.exists():shutil.rmtree(p,onexc=clear_readonly_and_retry)
 def files(base):
     return {str(p.relative_to(base)): {'bytes':p.stat().st_size,'sha256':digest(p)}
             for p in sorted(base.rglob('*')) if p.is_file()
@@ -29,8 +37,7 @@ def archive():
 def stage():
     data=(ROOT/'downloads/cm0102.exe').read_bytes()
     assert hashlib.sha256(data).hexdigest()==EXPECTED
-    for p in [STAGE,RESTORED]:
-        if p.exists():shutil.rmtree(p)
+    for p in [STAGE,RESTORED]:remove_stage_tree(p)
     STAGE.mkdir(); RESTORED.mkdir()
     project=STAGE/'ghidra-project'
     shutil.copytree(ROOT/'ghidra-project',project,ignore=shutil.ignore_patterns('*.lock','*.lock~','.*','tmp*.ps'))
@@ -41,7 +48,7 @@ def stage():
     names.update({row[0]:row[1] for row in annotations['annotations']})
     types={t['path']:t for t in annotations['partial_data_types']}
     comments_by_address={}
-    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json']:
+    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json']:
       event_receipt=ROOT/'evidence'/receipt_name
       if event_receipt.exists():
         event_annotations=json.loads(event_receipt.read_text())

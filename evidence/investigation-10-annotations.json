@@ -1,0 +1,130 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 10,
+  "scope": "Reviewed static mapping annotations; no new behavior oracle, prototype or data type applied.",
+  "annotations": [
+    [
+      "006cfe10",
+      "cm0102_apply_match_slot_effect_candidate",
+      "Action33 caller007024b4 passes(shooter,6d,null,0,0). Two nestedR102/Rprevious groups run before participant checks.0062ed70 may refresh status rows and consume RNG via0062c680, then conditionalR25. Float4d\u003c4000 selects006d0980(-1,0,shooter,0) and returns. OtherwiseR50000 threshold, optionalR11 kind selection; codes6/7 invoke kind2 then5. Slot/match side effects flow through callees. Static mapping only; other participant/flag paths and live numerical equivalence open."
+    ],
+    [
+      "0062ed70",
+      "cm0102_get_refreshed_status_record_candidate",
+      "ECX object, one player pointer; ret4. Nonnull signed index\u003cglobal00ae2364 calls0062c680 BEFORE reading31-byte row+e record index. Index-1-\u003eEAX0; otherwise return object+4 base+48*index. No explicit negative input guard or independent post-refresh record bound. Not pure accessor: refresh may write state/consume RNG."
+    ],
+    [
+      "0062c680",
+      "cm0102_refresh_player_status_row_candidate",
+      "ECX object, one player pointer; ret4/SEH. Initializes local helper globals, rejects null/out-of-range/null+61, skips when row first two16-bit stamp components equal00ae2c90/+2. Refresh normalizes row+e if\u003eobject+8 or\u003c-1; conditional lifecycle0062e700. No-record branch may loopR(trunc(signed8(player+5b)/3)+2) and increment global79-byte-record+a, then optionalR2. Writes row words+8/+a and stamp. Full arithmetic, lifecycle/calendar dependencies and valid domains unvalidated."
+    ],
+    [
+      "006d0980",
+      "cm0102_apply_slot_condition_effect_candidate",
+      "ECX match, kind/severity signed low bytes,target,other; ret10h. Counter signed16+f639\u003e3 drawsRcounter then conditionalR500; \u003e6 rejects after draws. Kind\u003e\u003d0 invokes0062be00 byte merge. Clears/sets target+55\u003dother; nonnull other word31-\u003d10. Severity\u003e50 subtracts square; otherwise ordered half-square/half-draw RNG, writes float4d/59 and halvesd5. Flags1c/1d, activity2b via007160e0, clamp4d1..10000. Does not clear match8eb5; any existing nonzero latch increments wordf639. Static only; no full outcome oracle."
+    ],
+    [
+      "00896290",
+      "cm0102_accumulate_tactic_result_candidate",
+      "Investigation10 static contract: ECX tactical context; stack match-record pointer; EAX0/1,RET4. Preflight00600a50 club predicates can skip all writes. For both clubs+1c/+20, signed16 plan word at context+601+club.id*91 selects28-byte stats row from context+0. Updates word games/outcome counts/score sums/points then three float64metrics+10/+18/+20. Null side diagnoses and continues; no duplicate guard/rollback/overflow saturation. No new numerical oracle."
+    ],
+    [
+      "00896660",
+      "cm0102_resolve_club_tactic_candidate",
+      "Investigation10 static contract: ECX context; club ptr32 and opaque32 registry option; EAX ptr32,RET8. Bank path signed16 mapping word at context+601+club.id*91 selects18e3-byte record in+5f9 bank split by+5fd count, else+5f1 bank. No local index lower/total bound. Alternate guarded club+cf registry path calls modifying005fbe20 then returns005fbd00. Null club diagnoses/returns0. Lookup is not pure; plan internal layout and registry lifecycle unresolved."
+    ],
+    [
+      "008967d0",
+      "cm0102_set_club_tactic_index_candidate",
+      "Investigation10 static contract: ECX context; club ptr32, signed16 low-word plan ID, opaque32 row option; EAX0/1,RETc. Validates nonnull club and ID0..(+5fd + +5f5 -1), calls008982b0 row resolver, rejects -1, writes16-bit ID to context+601+91*row at00896862. Does not copy plan contents. Diagnostics clear00b67a34; row-domain/bank lifecycle remains external."
+    ],
+    [
+      "00682b30",
+      "cm0102_write_league_peer_bucket_bytes_candidate",
+      "R10-C static: ECX receiver; one borrowed table of 0x3b-byte rows; RET 4. Signed16 receiver +0x3e count. Equal input WORD +0x19 peers select 14-byte nested entries through row +5; byte/word aggregates enter local zeroed scratch. Sort uses 006834f0 dependency, then low8 bucket count/decrements are stored at input row +4; scratch is freed. Comparator depends on global 00b679fc; caller 006471a0 later rewrites row +4. Full ranking/fixture algorithm unresolved."
+    ],
+    [
+      "00682e10",
+      "cm0102_apply_league_weighted_amounts_candidate",
+      "R10-C static: ECX receiver; no stack args or EDX input; plain RET, no return contract. BYTE +0xe1: 2 skips, 3 calls registry vtable +0x6c; others divide signed32 +0x28 by signed low16 triangular sum of signed16 count +0x3e, then credit weighted32 amounts through finance helpers. IDIV precedes positive-count guard: nonpositive count yields divisor 0. No direct receiver latch; dispatch and full lifecycle unresolved."
+    ],
+    [
+      "00682f70",
+      "cm0102_sum_league_weighted_amounts_candidate",
+      "R10-C static: ECX receiver; one raw32 increment argument; RET 4; EAX32 sum. Positive signed16 receiver +0x3e count n sums increment*(1+...+n) modulo 2^32 by original additions. Negative count returns 0; zero diagnoses, then rechecks count (unchanged zero returns 0). No direct receiver/table writes. Static contract only; no new oracle or complete fixture/outcome claim."
+    ]
+  ],
+  "code_comments": [
+    [
+      "0062edfc",
+      "R10-A: refresh0062c680 is called before returning status record. Cached-stamp branch may skip direct RNG; stale no-record branch can consume loop RNG andR2. Do not model0062ed70 as pure getter."
+    ],
+    [
+      "0062ca4f",
+      "R10-A: per-draw RNG argument\u003dtrunc(signed8(player+5b)/3)+2. Loop iteration limit\u003dmin(uint16(first elapsed helper result),elapsed-like quantity), selected at0062c9f9..0062ca19. Before each draw unsigned byte(global00ae2d0c base+79*index+a)\u003e\u003d50 stops; zero draw increments byte. RNG precedes caller006cfee7 R25."
+    ],
+    [
+      "006d00f8",
+      "R10-A action33 early finite float4d\u003c4000: call kind\u003d-1,severity0,target\u003dshooter,other0 then return beforeR50000. Admitted effect still changes slot/match state; two severityR0 calls do not advance RNG."
+    ],
+    [
+      "006d04c5",
+      "R10-A null-other fallbackR11 code6/7 invokes kind2 here, then kind5 at006d055f. First effect can change latch/counter and therefore second effect gate/RNG."
+    ],
+    [
+      "006d0b4d",
+      "R10-A increments match wordf639 when byte8eb5 is nonzero;006d0980 does not clear latch on entry, so this can count an already-set latch. No newly-set-flag inference from increment."
+    ],
+    [
+      "0089641b",
+      "Signed16 selected plan word; stats row stride28. Selection comes from mapping row91*club.id; no local index bound before stats writes."
+    ],
+    [
+      "00896436",
+      "Word games count increments and may wrap; following outcome counts/goal sums/points are also16-bit. Metric inputs are re-read signed and clamped\u003e\u003d1."
+    ],
+    [
+      "00896520",
+      "First of three float64 metric stores (+10/+18/+20). x87 live values and intermediate float64 spills matter; report expressions are real-arithmetic dependencies, not validated replacements."
+    ],
+    [
+      "00896737",
+      "Alternate registry path calls state-changing005fbe20(option,club,club+cf) before005fbd00 pointer lookup. Do not annotate this boundary as a pure getter."
+    ],
+    [
+      "00896769",
+      "Sign extends selection word. Signed compare at00896773 against first-bank count only; no k\u003e\u003d0 or combined-bank-capacity guard here."
+    ],
+    [
+      "00896817",
+      "Plan ID is consumed as signed16 low word; upper argument bits ignored. Counts/limit arithmetic use32-bit registers."
+    ],
+    [
+      "00896862",
+      "Only local normal-path persistent write: selected plan word at mapping+91*008982b0(club,option). Row helper can remap index when option nonzero."
+    ],
+    [
+      "00682d94",
+      "R10-C: store low8 bucket to first input row matching scratch raw32 key. Bucket starts at count and decrements only when adjacent comparator is nonzero."
+    ],
+    [
+      "00682ed6",
+      "R10-C: divisor is signed low16 of triangular sum. IDIV at 00682edf precedes count guard at 00682ee8; nonpositive count reaches division by 0 on weighted path."
+    ],
+    [
+      "00682f1f",
+      "R10-C: amount pushed at 00682f01 survives resolver RET 4; resolver EAX becomes ECX here and remaining amount argument is consumed by 005999a0 (RET 4)."
+    ],
+    [
+      "00682ff3",
+      "R10-C: wrap32 accumulation of increment, 2*increment, ..., n*increment; n is signed16 receiver +0x3e."
+    ]
+  ],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "shot-dependencies-10-annotations.json",
+    "tactics-boundary-10-annotations.json",
+    "league-boundary-10-annotations.json"
+  ]
+}
