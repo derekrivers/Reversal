@@ -1,0 +1,188 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "date": "2026-10-18",
+  "scope": "Static contract of exact entries 0054d5e0 and 0054d740; bounded caller/helper support only; no original data or runtime oracle.",
+  "address_space": "PE virtual addresses unless explicitly labelled file offset",
+  "functions": [
+    {
+      "entry": "0054d5e0",
+      "proposed_name": "cm0102_read_db_c6_records_checked",
+      "body_last_instruction": "0054d6d0",
+      "file_offset": "0014d5e0",
+      "record_bytes": 198,
+      "descriptor_required_raw32": 1,
+      "count_read_site": "0054d5eb",
+      "guard_read_site": "0054d5ee",
+      "custom_read_call": "0054d689",
+      "ordinary_read_call": "0054d6b8",
+      "caller_entry": "00528540",
+      "caller_call_site": "0052b44e",
+      "caller_destination_pointer_holder": "00ae23a4",
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ]
+    },
+    {
+      "entry": "0054d740",
+      "proposed_name": "cm0102_read_db_122_records_checked",
+      "body_last_instruction": "0054d832",
+      "file_offset": "0014d740",
+      "record_bytes": 290,
+      "descriptor_required_raw32": 2,
+      "count_read_site": "0054d74b",
+      "guard_read_site": "0054d74e",
+      "custom_read_call": "0054d7eb",
+      "ordinary_read_call": "0054d81a",
+      "caller_entry": "00528540",
+      "caller_call_site": "0052c070",
+      "caller_destination_pointer_holder": "00ae23a8",
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00932c30",
+        "00944c9f",
+        "00944cff",
+        "00945934",
+        "00945bfe"
+      ]
+    }
+  ],
+  "abi": {
+    "convention": "cdecl candidate established by plain RET and caller ADD ESP,10h; no ECX receiver use",
+    "arguments": [
+      {
+        "entry_stack_offset": 4,
+        "bytes": 4,
+        "role": "ordinary CRT stream pointer if mode=0; custom stream pointer if mode!=0"
+      },
+      {
+        "entry_stack_offset": 8,
+        "bytes": 4,
+        "role": "raw32 mode: zero ordinary read, any nonzero custom read"
+      },
+      {
+        "entry_stack_offset": 12,
+        "bytes": 4,
+        "role": "caller-supplied destination pointer"
+      },
+      {
+        "entry_stack_offset": 16,
+        "bytes": 4,
+        "role": "descriptor pointer"
+      }
+    ],
+    "return": "EAX DWORD exactly 0 or 1 on read-return paths; 1 iff helper returned original count",
+    "callee_saved": "ESI is pushed/popped; EBX/EBP/EDI are not written by these wrappers",
+    "local_stack_bytes": 512
+  },
+  "descriptor_partial": {
+    "count": {
+      "offset": 55,
+      "bytes": 4,
+      "interpretation": "raw32 item count; no wrapper range check"
+    },
+    "required_value": {
+      "offset": 63,
+      "bytes": 4,
+      "interpretation": "raw32 equality guard; semantic meaning unresolved, do not name version/type"
+    }
+  },
+  "ownership": {
+    "destination": "Borrowed from caller; wrappers never allocate, free or replace pointer. Caller passes pointer loaded from listed global holder. Pointee type, allocation owner and lifetime unresolved.",
+    "stream": "Borrowed; no open/close in normal wrapper paths. Helper reads mutate stream state.",
+    "descriptor": "Read only in these two bodies; no field writes.",
+    "failure": "Short reads may already have changed destination/stream; wrapper has no rollback or destination clearing.",
+    "normal_global_writes": "None in these bodies. Mismatch path writes zero DWORD to00b67a34 and uses shared error buffer00ae24d0 before cleanup/termination."
+  },
+  "helper_support": {
+    "00945bfe": "CRT fread-like (dest,size,count,stream), copying bytes into destination at00945c5c/00945cb2 and returning completed items via division at00945ce1; not a write/save routine.",
+    "00932c30": "Custom bounded read with same four stack slots; writes destination byte at00932cc6; internal mode4 branch decodes byte runs; other branch calls00945bfe at00932df7. Only supporting evidence, no proposed rename or full helper contract.",
+    "00945934": "Termination wrapper; pushes caller status and zeros into00945956. Its terminating route calls imported KERNEL32.dll ExitProcess through00967164 at009459e7.",
+    "0090d130": "Returns pointer00ad4394 to version string3.9.68 in inspected body.",
+    "005a8f60": "Single RET in inferred body; no additional semantic claim.",
+    "005cc7d0": "Error-path cleanup candidate; inspected body clears globals after cleanup/free-like calls. No broad ownership claim.",
+    "005e8290": "Error-path routine receives Error title, formatted shared buffer,0; detailed UI contract unresolved.",
+    "00944cff": "Path-splitting candidate receives source path plus local buffers; support only.",
+    "00944c9f": "Formatting candidate receives shared buffer and format v%s %s.%s %d; support only."
+  },
+  "mismatch_path": {
+    "source_path_string": "009b8dc0",
+    "source_path": "E:\\dev\\CM3\\cm3 00-01\\cm3\\code\\Db_files.cpp",
+    "source_path_push_sites": [
+      "0054d605",
+      "0054d767"
+    ],
+    "diagnostic_decimal_constants": [
+      300,
+      355
+    ],
+    "last_calls": [
+      "005cc7d0",
+      "005a8f60",
+      "00945934 with -1"
+    ],
+    "limit": "No claim that diagnostic constants independently prove original source line declarations."
+  },
+  "rng_persistence": "No evidence here. Normal bodies transfer opaque record blocks; no RNG call/state address access or explicit restore operation is established. Opaque destination contents are not a basis for claiming RNG exclusion or persistence across the full loader.",
+  "limitations": [
+    "Static decode only; no game execution, emulation or live I/O test.",
+    "Single inferred caller from retained atlas; does not prove absence of indirect/unrecognized references.",
+    "Record semantic names, fields, signed count domain and guard meaning remain unresolved.",
+    "Caller passes pre-existing destinations; whole caller and allocation lifecycle are not recovered.",
+    "No full file/save schema, adjacent function contract, save behavior or runtime RNG restoration claim."
+  ],
+  "native_corroboration": {
+    "method": "Read-only Ghidra exact-entry exports supplied by coordinator; each full wrapper listing compared locally with pinned-byte Capstone decode after mnemonic/number/whitespace normalization. Exported code remains private.",
+    "functions": [
+      {
+        "entry": "0054d5e0",
+        "instruction_count": 69,
+        "all_instruction_addresses_and_normalized_text_match": true,
+        "native_asm_sha256": "431a5c0fd63d7ae1d4905d5777cfb14c01fe5f47867afdc2930a2e38897d8f17"
+      },
+      {
+        "entry": "0054d740",
+        "instruction_count": 69,
+        "all_instruction_addresses_and_normalized_text_match": true,
+        "native_asm_sha256": "5f04e7f98526535146baaab55bca8b0768357881babdea8cbcc41db5fd19aac8"
+      }
+    ],
+    "selected_contract_sites": [
+      "0054d5e0",
+      "0054d5eb",
+      "0054d5ee",
+      "0054d668",
+      "0054d683",
+      "0054d689",
+      "0054d693",
+      "0054d695",
+      "0054d6b8",
+      "0054d740",
+      "0054d74b",
+      "0054d74e",
+      "0054d7ca",
+      "0054d7e5",
+      "0054d7eb",
+      "0054d7f5",
+      "0054d7f7",
+      "0054d81a"
+    ],
+    "incoming_reference_verified": {
+      "target": "0054d740",
+      "site": "0052c070",
+      "reference_type": "UNCONDITIONAL_CALL"
+    },
+    "limit": "0054d5e0 incoming refs file was absent from supplied directory at cross-check; its single atlas caller and locally decoded 0052b44e remain the evidence for that edge. No helper/caller full native export comparison or runtime validation claimed.",
+    "discrepancies": "None in either exact wrapper assembly; native inferred bool return is retained as exact EAX 0/1 evidence from assembly, without datatype replacement."
+  }
+}

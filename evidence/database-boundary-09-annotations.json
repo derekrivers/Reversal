@@ -1,0 +1,51 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "status": "proposal only; canonical Ghidra database not modified",
+  "annotations": [
+    [
+      "0054d5e0",
+      "cm0102_read_db_c6_records_checked",
+      "Investigation 09 static read wrapper: cdecl(stream,mode32,dest,descriptor). Reads descriptor DWORD +0x37 count and requires DWORD +0x3f==1; guard meaning unresolved. mode 0 calls fread-like 00945bfe, any nonzero calls custom read 00932c30, with item size 198 bytes. Returns EAX 0/1 from itemsRead==count. Destination/stream borrowed; no allocation/open/close/rollback. Mismatch uses Db_files.cpp diagnostic then cleanup and exit(-1). No complete file schema, adjacent function or RNG restoration claim."
+    ],
+    [
+      "0054d740",
+      "cm0102_read_db_122_records_checked",
+      "Investigation 09 static read wrapper: cdecl(stream,mode32,dest,descriptor). Reads descriptor DWORD +0x37 count and requires DWORD +0x3f==2; guard meaning unresolved. mode 0 calls fread-like 00945bfe, any nonzero calls custom read 00932c30, with item size 290 bytes. Returns EAX 0/1 from itemsRead==count. Destination/stream borrowed; no allocation/open/close/rollback. Mismatch uses Db_files.cpp diagnostic then cleanup and exit(-1). No complete file schema, adjacent function or RNG restoration claim."
+    ]
+  ],
+  "code_comments": [
+    [
+      "0054d5eb",
+      "Read raw DWORD item count at descriptor +0x37; unaligned field; no wrapper count/range validation."
+    ],
+    [
+      "0054d5ee",
+      "DWORD +0x3f must equal 1 for c6-byte reader; meaning of guard field unresolved."
+    ],
+    [
+      "0054d668",
+      "Mode is full DWORD at entry ESP+0x8: zero=>ordinary fread-like 00945bfe; nonzero=>custom 00932c30. Both receive(dest,c6,count,stream)."
+    ],
+    [
+      "0054d693",
+      "Compare returned items with original raw32 count; SETE then zero-extension yields EAX 0/1. Failure does not roll back helper side effects."
+    ],
+    [
+      "0054d74b",
+      "Read raw DWORD item count at descriptor +0x37; unaligned field; no wrapper count/range validation."
+    ],
+    [
+      "0054d74e",
+      "DWORD +0x3f must equal 2 for 0x122-byte reader; meaning of guard field unresolved."
+    ],
+    [
+      "0054d7ca",
+      "Mode is full DWORD at entry ESP+0x8: zero=>ordinary fread-like 00945bfe; nonzero=>custom 00932c30. Both receive(dest,122,count,stream)."
+    ],
+    [
+      "0054d7f5",
+      "Compare returned items with original raw32 count; SETE then zero-extension yields EAX 0/1. Failure does not roll back helper side effects."
+    ]
+  ],
+  "prototype_policy": "No proposed datatype replacement: descriptor is partial, stream types depend on mode, and raw count signedness is not established. Preserve existing unknown pointer/argument types until coordinator reviews assembly."
+}
