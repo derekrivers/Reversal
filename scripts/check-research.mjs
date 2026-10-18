@@ -8,6 +8,7 @@ import { createHash } from 'node:crypto';
 const root=fileURLToPath(new URL('../',import.meta.url));
 process.chdir(root);mkdirSync('results',{recursive:true});
 const checks=[
+ ['reconstruction/check-descriptor-handle.ts','evidence/descriptor-handle-validation/oracle.json','results/descriptor-handle.json'],
  ['reconstruction/check-random.ts','evidence/random-validation/x86-oracle.json','evidence/random-validation/random-table.bin','results/random.json'],
  ['reconstruction/check-clock.ts','evidence/clock-validation/clock-oracle.json','evidence/clock-validation/clock-oracle.bin','results/clock.json'],
  ['reconstruction/check-event-rules.ts','evidence/event-rule-validation','results/event-rules.json'],

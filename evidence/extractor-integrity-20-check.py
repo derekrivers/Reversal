@@ -17,6 +17,7 @@ import tempfile
 
 SHA = "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86"
 REFUSAL = "Integrity checks require assertions; rerun without Python optimization (-O/-OO)."
+ALIAS_REFUSAL = "receipt must not alias a private input or reside in the private export directory"
 EXCLUDED = "extract_cleanup_family_18.py"  # R20-V1 owns this repair.
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -55,6 +56,46 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def validate_receipt_path(args):
+    """Protect private files through path, symlink and hard-link aliases."""
+    output = args.receipt.resolve()
+    exports = args.exports.resolve(strict=True)
+    require(not output.is_relative_to(exports), ALIAS_REFUSAL)
+    inputs = [args.binary, args.preflight]
+    visited = set()
+    for directory, children, files in os.walk(exports, followlinks=True):
+        folder = Path(directory)
+        metadata = folder.stat()
+        identity = (metadata.st_dev, metadata.st_ino)
+        if identity in visited:
+            children.clear()
+            continue
+        visited.add(identity)
+        require(not output.is_relative_to(folder.resolve()), ALIAS_REFUSAL)
+        inputs.extend(folder / name for name in files)
+    for private in inputs:
+        require(output != private.resolve(strict=True), ALIAS_REFUSAL)
+        if args.receipt.exists():
+            require(not args.receipt.samefile(private), ALIAS_REFUSAL)
+
+
+def write_receipt(args, receipt):
+    validate_receipt_path(args)
+    # Replace the directory entry rather than opening an existing target for
+    # truncation. A link introduced after validation cannot truncate its target.
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", newline="\n",
+                                         dir=args.receipt.parent, delete=False) as stream:
+            temporary = Path(stream.name)
+            stream.write(json.dumps(receipt, indent=2) + "\n")
+        validate_receipt_path(args)
+        os.replace(temporary, args.receipt)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
+
 def arguments(path, binary, output):
     """Recover this bounded inventory's Path arguments without importing tools."""
     tree = ast.parse(path.read_text(encoding="utf-8"))
@@ -82,6 +123,7 @@ def arguments(path, binary, output):
 
 
 def run(args):
+    validate_receipt_path(args)
     require(digest(args.binary) == SHA, "check requires pinned specimen")
     env = dict(os.environ)
     env.pop("PYTHONOPTIMIZE", None)
@@ -159,5 +201,5 @@ if __name__ == "__main__":
     parser.add_argument("--receipt", required=True, type=Path)
     options = parser.parse_args()
     receipt = run(options)
-    options.receipt.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8", newline="\n")
+    write_receipt(options, receipt)
     print("20 extractors: normal wrong-specimen rejection and three optimized refusal modes passed; R17 output unchanged")

@@ -1,0 +1,385 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "0ab803b3adb19eb9ecdb70d4a31d759127376b78",
+  "native_checkpoint": "2026-10-18-investigation-18",
+  "address_kind": "PE virtual addresses unless file_offset is explicit; field offsets in bytes",
+  "method": "Capstone 5.0.7 complete included-range decode and all-instruction native comparison; static, no execution",
+  "private_export_manifest_sha256": "3c5da196118b891f3dcd84f8126355d3c36888c3c7b72ca1f6d89772d8a22935",
+  "private_annotation_preflight_sha256": "a8b6f47a04ac2dcc2d6fb13537a55b223db5630d50e857ceb014f40f7069cf78",
+  "verified_old_names": {
+    "0094633b": "FUN_0094633b",
+    "009452ca": "FUN_009452ca",
+    "00948b90": "FUN_00948b90",
+    "009498eb": "FUN_009498eb",
+    "00949942": "FUN_00949942"
+  },
+  "preflight_comment_values": {
+    "0094633b": null,
+    "009452ca": null,
+    "00948b90": null,
+    "009498eb": null,
+    "00949942": null
+  },
+  "normalization": "Jump aliases, numeric and whitespace spelling, plus-negative displacements, scale one, implicit accumulator-MOV dword width; all other operand widths retained",
+  "owned_bodies": [
+    {
+      "entry_va": "0094633b",
+      "ranges": [
+        {
+          "start_va": "0094633b",
+          "end_exclusive_va": "00946377",
+          "file_offset": "0054633b",
+          "length_bytes": 60,
+          "sha256": "2a12c853be6c256f68ed045fe965428a052ece95d9122ca4c8c78192db22eca8"
+        },
+        {
+          "start_va": "00946384",
+          "end_exclusive_va": "00946399",
+          "file_offset": "00546384",
+          "length_bytes": 21,
+          "sha256": "eaa5cd4f489e9ae70110334479a318a046d8f24509f82adf4f5396f2d317fff1"
+        }
+      ],
+      "length_bytes": 81,
+      "ordered_range_concatenation_sha256": "9de0cfdf01ba109c78b7094dc4a82a7a393d81ea639be98974baa65868a91d2d",
+      "instruction_count": 30,
+      "selected_sites": {
+        "00946351": "mov dword ptr fs:[0], esp",
+        "00946360": "and dword ptr [ebp - 4], 0",
+        "00946364": "dec dword ptr [ebp + 0x10]",
+        "0094636c": "sub ecx, dword ptr [ebp + 0xc]",
+        "0094636f": "mov dword ptr [ebp + 8], ecx",
+        "00946372": "call dword ptr [ebp + 0x14]",
+        "0094638b": "mov dword ptr fs:[0], ecx",
+        "00946396": "ret 0x10"
+      },
+      "all_calls": [
+        {
+          "site": "00946372",
+          "target": "dword ptr [ebp + 0x14]"
+        }
+      ],
+      "all_branches": [
+        {
+          "site": "00946367",
+          "instruction": "js 0x946384"
+        },
+        {
+          "site": "00946375",
+          "instruction": "jmp 0x946364"
+        }
+      ],
+      "all_returns": [
+        {
+          "site": "00946396",
+          "instruction": "ret 0x10"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "all_branch_targets_are_owned_instruction_starts": true,
+        "export_sha256": {
+          "0094633b.asm": "695594537daf0d92cd303f08bfe891c4deab7f12814e204d0916ce1158427206",
+          "0094633b.c": "1058a92cc87cec61f369e6d0c3a252c8b66d71eb5f0e4efad8be9d97676daa07"
+        }
+      }
+    },
+    {
+      "entry_va": "009452ca",
+      "ranges": [
+        {
+          "start_va": "009452ca",
+          "end_exclusive_va": "00945333",
+          "file_offset": "005452ca",
+          "length_bytes": 105,
+          "sha256": "9a2dcc1df676f5f373684fef9a16ec24bd66aadabbbdaa259e4eb6e577593edc"
+        }
+      ],
+      "length_bytes": 105,
+      "ordered_range_concatenation_sha256": "9a2dcc1df676f5f373684fef9a16ec24bd66aadabbbdaa259e4eb6e577593edc",
+      "instruction_count": 45,
+      "selected_sites": {
+        "009452d2": "test esi, esi",
+        "009452d6": "mov eax, dword ptr [0xde4404]",
+        "009452e1": "call 0x948b90",
+        "009452ed": "call 0x948bbb",
+        "00945304": "call 0x9498eb",
+        "00945317": "call 0x949942",
+        "00945324": "push dword ptr [0xde4400]",
+        "0094532a": "call dword ptr [0x96715c]"
+      },
+      "all_calls": [
+        {
+          "site": "009452e1",
+          "target": "0x948b90"
+        },
+        {
+          "site": "009452ed",
+          "target": "0x948bbb"
+        },
+        {
+          "site": "00945304",
+          "target": "0x9498eb"
+        },
+        {
+          "site": "00945317",
+          "target": "0x949942"
+        },
+        {
+          "site": "0094532a",
+          "target": "dword ptr [0x96715c]"
+        }
+      ],
+      "all_branches": [
+        {
+          "site": "009452d4",
+          "instruction": "je 0x945330"
+        },
+        {
+          "site": "009452de",
+          "instruction": "jne 0x9452f6"
+        },
+        {
+          "site": "009452ea",
+          "instruction": "je 0x945322"
+        },
+        {
+          "site": "009452f4",
+          "instruction": "jmp 0x945330"
+        },
+        {
+          "site": "009452f9",
+          "instruction": "jne 0x945321"
+        },
+        {
+          "site": "0094530e",
+          "instruction": "je 0x945321"
+        },
+        {
+          "site": "0094531f",
+          "instruction": "jmp 0x945330"
+        }
+      ],
+      "all_returns": [
+        {
+          "site": "00945332",
+          "instruction": "ret"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "all_branch_targets_are_owned_instruction_starts": true,
+        "export_sha256": {
+          "009452ca.asm": "f8032ff972e8826dfab785ab69936cd5d77a001ce3e4bd1817e5f5ff59dad98b",
+          "009452ca.c": "f7babfb41537d95b09bb6900d1666ee733b486240168e70c5df1fd6e7be37b49"
+        }
+      }
+    },
+    {
+      "entry_va": "00948b90",
+      "ranges": [
+        {
+          "start_va": "00948b90",
+          "end_exclusive_va": "00948bbb",
+          "file_offset": "00548b90",
+          "length_bytes": 43,
+          "sha256": "5d14a5ed5cd30682b1dd6ab69cb373bf67be894e8b7d88e7a4b0cbe2dd7175eb"
+        }
+      ],
+      "length_bytes": 43,
+      "ordered_range_concatenation_sha256": "5d14a5ed5cd30682b1dd6ab69cb373bf67be894e8b7d88e7a4b0cbe2dd7175eb",
+      "instruction_count": 14,
+      "selected_sites": {
+        "00948b95": "lea ecx, [eax + eax*4]",
+        "00948b9d": "lea ecx, [eax + ecx*4]",
+        "00948ba8": "sub edx, dword ptr [eax + 0xc]",
+        "00948bab": "cmp edx, 0x100000",
+        "00948bb3": "add eax, 0x14"
+      },
+      "all_calls": [],
+      "all_branches": [
+        {
+          "site": "00948ba2",
+          "instruction": "jae 0x948bb8"
+        },
+        {
+          "site": "00948bb1",
+          "instruction": "jb 0x948bba"
+        },
+        {
+          "site": "00948bb6",
+          "instruction": "jmp 0x948ba0"
+        }
+      ],
+      "all_returns": [
+        {
+          "site": "00948bba",
+          "instruction": "ret"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "all_branch_targets_are_owned_instruction_starts": true,
+        "export_sha256": {
+          "00948b90.asm": "be1f25be74fbaab1cf6af57b8a3dfe3cde678d700bda99d1a85335fb7be8ddd4",
+          "00948b90.c": "770ad1c0df69fcc37b4f4cf16e1b4e694b8c4c189477bc24311d3cbcf2b4f53d"
+        }
+      }
+    },
+    {
+      "entry_va": "009498eb",
+      "ranges": [
+        {
+          "start_va": "009498eb",
+          "end_exclusive_va": "00949942",
+          "file_offset": "005498eb",
+          "length_bytes": 87,
+          "sha256": "a61d62271c100898a63a8585e107e54f7a8b78d57132c4ff65eb58d4b8c7725e"
+        }
+      ],
+      "length_bytes": 87,
+      "ordered_range_concatenation_sha256": "a61d62271c100898a63a8585e107e54f7a8b78d57132c4ff65eb58d4b8c7725e",
+      "instruction_count": 34,
+      "selected_sites": {
+        "009498f7": "cmp eax, dword ptr [ecx + 0x10]",
+        "009498fc": "cmp eax, dword ptr [ecx + 0x14]",
+        "00949909": "test al, 0xf",
+        "00949914": "and esi, 0xfff",
+        "00949922": "mov dword ptr [esi], ecx",
+        "0094992a": "and cx, 0xf000",
+        "00949931": "mov dword ptr [esi], ecx",
+        "00949939": "lea eax, [eax + ecx + 8]"
+      },
+      "all_calls": [],
+      "all_branches": [
+        {
+          "site": "009498fa",
+          "instruction": "jbe 0x949901"
+        },
+        {
+          "site": "009498ff",
+          "instruction": "jb 0x949909"
+        },
+        {
+          "site": "00949905",
+          "instruction": "je 0x94993e"
+        },
+        {
+          "site": "00949907",
+          "instruction": "jmp 0x9498f7"
+        },
+        {
+          "site": "0094990b",
+          "instruction": "jne 0x94993e"
+        },
+        {
+          "site": "0094991c",
+          "instruction": "jb 0x94993e"
+        }
+      ],
+      "all_returns": [
+        {
+          "site": "0094993d",
+          "instruction": "ret"
+        },
+        {
+          "site": "00949941",
+          "instruction": "ret"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "all_branch_targets_are_owned_instruction_starts": true,
+        "export_sha256": {
+          "009498eb.asm": "2ae253e52158596785093695fb60efd388cd38bc2abdd67ffc14cd01644dc35c",
+          "009498eb.c": "b84f558178805d9bd7166564c1ddff0d13af0629b063f1b57923f6684d1eb42d"
+        }
+      }
+    },
+    {
+      "entry_va": "00949942",
+      "ranges": [
+        {
+          "start_va": "00949942",
+          "end_exclusive_va": "00949987",
+          "file_offset": "00549942",
+          "length_bytes": 69,
+          "sha256": "10e173dc511b5330034feaa56372359699e5cc3846688321a1eaea8ca464dcf6"
+        }
+      ],
+      "length_bytes": 69,
+      "ordered_range_concatenation_sha256": "10e173dc511b5330034feaa56372359699e5cc3846688321a1eaea8ca464dcf6",
+      "instruction_count": 19,
+      "selected_sites": {
+        "0094994a": "sub ecx, dword ptr [eax + 0x10]",
+        "0094994d": "sar ecx, 0xc",
+        "00949950": "lea eax, [eax + ecx*8 + 0x18]",
+        "00949958": "movzx edx, byte ptr [ecx]",
+        "0094995b": "add dword ptr [eax], edx",
+        "0094995d": "and byte ptr [ecx], 0",
+        "00949960": "cmp dword ptr [eax], 0xf0",
+        "00949966": "mov dword ptr [eax + 4], 0xf1",
+        "0094996f": "inc dword ptr [0xde3010]",
+        "00949975": "cmp dword ptr [0xde3010], 0x20",
+        "00949980": "call 0x949829"
+      },
+      "all_calls": [
+        {
+          "site": "00949980",
+          "target": "0x949829"
+        }
+      ],
+      "all_branches": [
+        {
+          "site": "0094996d",
+          "instruction": "jne 0x949986"
+        },
+        {
+          "site": "0094997c",
+          "instruction": "jne 0x949986"
+        }
+      ],
+      "all_returns": [
+        {
+          "site": "00949986",
+          "instruction": "ret"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "all_branch_targets_are_owned_instruction_starts": true,
+        "export_sha256": {
+          "00949942.asm": "449a483533dd7cc5e2ea26f72db02c361ed618527b316908de946796ba6fca02",
+          "00949942.c": "0f232a2ef83c9e2707ef85fa1380615f718748fd7e77625a2672ad4515a4a719"
+        }
+      }
+    }
+  ],
+  "excluded_hole": {
+    "start_va": "00946377",
+    "end_exclusive_va": "00946384",
+    "length_bytes": 13,
+    "reason": "Outside native body; scope-table targets 00946377 and 00946381 are transitive exception boundaries"
+  },
+  "scope_metadata_only": {
+    "va": "009713e0",
+    "dwords": [
+      "ffffffff",
+      "00946377",
+      "00946381"
+    ]
+  },
+  "import_metadata_only": [
+    {
+      "iat_va": "0096715c",
+      "dll": "KERNEL32.dll",
+      "symbol": "HeapFree"
+    }
+  ],
+  "limitations": [
+    "No execution oracle or complete exception-handler contract.",
+    "Larger callees, imported API implementation and callback behavior remain boundaries.",
+    "No complete allocator/lifetime, valid-alias, reentrancy or thread-safety guarantee."
+  ]
+}
