@@ -1,0 +1,34 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "private_preflight_sha256": "02f34af94bb8e6243450b8120d604491ad9208a716525fbdc8485b3a4e636167",
+  "status": "optional exact-old name-only proposals; no canonical edit",
+  "annotations": [
+    {
+      "address": "006f0970",
+      "old_name": "FUN_006f0970",
+      "new_name": "MatchSlot_ResetMatchAndReceiverFields",
+      "old_comment": null,
+      "new_comment": null,
+      "confidence": "complete local instructions and bounded execution; field meaning remains partial",
+      "evidence": "evidence/match-microhelpers-21-findings.json"
+    },
+    {
+      "address": "007160d0",
+      "old_name": "FUN_007160d0",
+      "new_name": "MatchSlot_AddByte2b",
+      "old_comment": null,
+      "new_comment": null,
+      "confidence": "complete local instructions and bounded execution; field meaning remains partial",
+      "evidence": "evidence/match-microhelpers-21-findings.json"
+    },
+    {
+      "address": "007160e0",
+      "old_name": "FUN_007160e0",
+      "new_name": "MatchSlot_SetByte2b",
+      "old_comment": null,
+      "new_comment": null,
+      "confidence": "complete local instructions and bounded execution; field meaning remains partial",
+      "evidence": "evidence/match-microhelpers-21-findings.json"
+    }
+  ]
+}

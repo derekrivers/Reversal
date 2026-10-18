@@ -1,0 +1,31 @@
+{
+  "status": "proposed after independent review",
+  "target": "evidence/code-atlas/validation-coverage.json",
+  "operation": "append three entries",
+  "entries": [
+    {
+      "function": "006f0970",
+      "scope": "whole-function-bounded-memory-contract",
+      "behavior": "Reset four match fields and two receiver words with four ordered match pointer reloads",
+      "module": "reconstruction/match-microhelpers.ts",
+      "evidence": "evidence/match-microhelpers-validation/oracle.json",
+      "boundary": "36 stable disjoint synthetic receiver/match/stack cases; native ABI checked; invalid pointers, aliases, caller reachability and connected match excluded; XOR AF only Unicorn2.1.4 observation"
+    },
+    {
+      "function": "007160d0",
+      "scope": "whole-function-bounded-memory-contract",
+      "behavior": "Add low argument byte to receiver byte +0x2b modulo256",
+      "module": "reconstruction/match-microhelpers.ts",
+      "evidence": "evidence/match-microhelpers-validation/oracle.json",
+      "boundary": "65542 stable disjoint synthetic receiver/match/stack cases; native ABI checked; invalid pointers, aliases, caller reachability and connected match excluded; XOR AF only Unicorn2.1.4 observation"
+    },
+    {
+      "function": "007160e0",
+      "scope": "whole-function-bounded-memory-contract",
+      "behavior": "Replace receiver byte +0x2b with low argument byte",
+      "module": "reconstruction/match-microhelpers.ts",
+      "evidence": "evidence/match-microhelpers-validation/oracle.json",
+      "boundary": "262 stable disjoint synthetic receiver/match/stack cases; native ABI checked; invalid pointers, aliases, caller reachability and connected match excluded; XOR AF only Unicorn2.1.4 observation"
+    }
+  ]
+}

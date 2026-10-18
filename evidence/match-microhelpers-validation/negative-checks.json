@@ -1,0 +1,115 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "case": "wrong-specimen",
+      "program": "extract_match_microhelpers_21.py",
+      "optimized": false,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "changed-manifest",
+      "program": "extract_match_microhelpers_21.py",
+      "optimized": false,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "wrong-specimen",
+      "program": "emulate_match_microhelpers_21.py",
+      "optimized": false,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "changed-manifest",
+      "program": "emulate_match_microhelpers_21.py",
+      "optimized": false,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "operand-only-with-test-manifest-resealed",
+      "optimized": false,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "wrong-specimen",
+      "program": "extract_match_microhelpers_21.py",
+      "optimized": true,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "changed-manifest",
+      "program": "extract_match_microhelpers_21.py",
+      "optimized": true,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "wrong-specimen",
+      "program": "emulate_match_microhelpers_21.py",
+      "optimized": true,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "changed-manifest",
+      "program": "emulate_match_microhelpers_21.py",
+      "optimized": true,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "operand-only-with-test-manifest-resealed",
+      "optimized": true,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "upper-eax-cleared",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "edx-preserved-on-add",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "flags-preserved-on-add",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "no-byte-wrap",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "wrong-byte-offset",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "wrong-write-width",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "reset-write-order",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "cached-reset-pointer",
+      "rejected": true,
+      "output_written": false
+    }
+  ],
+  "optimized_valid_extraction_identical": true,
+  "scope": "synthetic mutations; changed private inputs are temporary; no native bytes retained"
+}

@@ -1,0 +1,75 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "native_manifest_sha256": "53a57fa6d04b97a8803e5660e146407e865c87d60cb67e23ff801cd0d33921e8",
+  "private_preflight_sha256": "02f34af94bb8e6243450b8120d604491ad9208a716525fbdc8485b3a4e636167",
+  "address_space": "VA unless explicitly file offset",
+  "method": "Capstone 5.0.7 full original-PE decode/native instruction membership and operand comparison; complete branch/fallthrough graph; static only",
+  "functions": [
+    {
+      "entry_va": "006f0970",
+      "native_name": "FUN_006f0970",
+      "entry_file_offset": "002f0970",
+      "end_exclusive_va": "006f09af",
+      "body_bytes": 63,
+      "instruction_count": 12,
+      "matched_native_instructions": 12,
+      "owned_instruction_bytes_sha256": "adbe5fd2f3559a20183ffb97cd70af65da2540df03f0657693de8773a5147cd1",
+      "native_file_sha256": {
+        "asm": "55309def06dcf958fd50abfef35c56988137a50272ec7ed8647de0514b5ffd99",
+        "c": "db459ecdc8956892ec0ac90d0fa35d7d0ae90896fcb1568213ecd2d7108a2706"
+      },
+      "native_instruction_membership": "Exactly matches complete contiguous PE decode; no omitted native starts or decoded bytes",
+      "structurally_reached_instruction_count": 12,
+      "branches": [],
+      "calls": [],
+      "return_sites_va": [
+        "006f09ae"
+      ],
+      "selected_instructions": {}
+    },
+    {
+      "entry_va": "007160d0",
+      "native_name": "FUN_007160d0",
+      "entry_file_offset": "003160d0",
+      "end_exclusive_va": "007160df",
+      "body_bytes": 15,
+      "instruction_count": 5,
+      "matched_native_instructions": 5,
+      "owned_instruction_bytes_sha256": "28d5816b40e6156bcebb1d83e2512a35bd01cd47a59af308602a59696875cb67",
+      "native_file_sha256": {
+        "asm": "7460932f43339bf6ee0e1f674afac3059297824063645a2c1e9aec246574a9e5",
+        "c": "093faaf2c18ff9c7a115c5c91cf35429b164a1d7c3fb608955164b39911ce34d"
+      },
+      "native_instruction_membership": "Exactly matches complete contiguous PE decode; no omitted native starts or decoded bytes",
+      "structurally_reached_instruction_count": 5,
+      "branches": [],
+      "calls": [],
+      "return_sites_va": [
+        "007160dc"
+      ],
+      "selected_instructions": {}
+    },
+    {
+      "entry_va": "007160e0",
+      "native_name": "FUN_007160e0",
+      "entry_file_offset": "003160e0",
+      "end_exclusive_va": "007160ea",
+      "body_bytes": 10,
+      "instruction_count": 3,
+      "matched_native_instructions": 3,
+      "owned_instruction_bytes_sha256": "ede9ac5bec46cc5d92e52b3b7bb07da791843430b46b3abb076fca9ffdad02da",
+      "native_file_sha256": {
+        "asm": "0e91b68d3fd35e85ad628c7e711abd284dda6b950c3bf6eae80bbbc743816706",
+        "c": "6d5e17a182fc55620ced5348b6b8992c4644a0cb36d8e574a1ac226c192e5834"
+      },
+      "native_instruction_membership": "Exactly matches complete contiguous PE decode; no omitted native starts or decoded bytes",
+      "structurally_reached_instruction_count": 3,
+      "branches": [],
+      "calls": [],
+      "return_sites_va": [
+        "007160e7"
+      ],
+      "selected_instructions": {}
+    }
+  ]
+}

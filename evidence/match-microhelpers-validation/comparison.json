@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "node": "v24.19.0",
+  "cases": 65840,
+  "counts": [
+    36,
+    65542,
+    262
+  ],
+  "invalid_js_inputs_rejected_before_effects": 15,
+  "original_instructions_reached": [
+    12,
+    5,
+    3
+  ],
+  "oracle_sha256": "b05f7aa13e0d62f0f384ed131799ab9c1108ae2e8d9453ab56546090227b974d",
+  "comparisons": "EAX/EDX/EFLAGS, ordered reads/writes with widths, all mapped synthetic memory; native ECX/callee-saved/ESP/EIP observations",
+  "limitations": "Stable nonaliasing mapped receiver/match/stack only; no invalid pointer, aliasing, concurrent state, caller reachability or connected match equivalence"
+}
