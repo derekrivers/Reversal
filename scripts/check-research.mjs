@@ -74,6 +74,22 @@ for(const row of semantic.functions){
 for(const source of Object.values(semantic.sources)){
   readFileSync(source.report);readFileSync(source.evidence);
 }
+const cleanupSummary=JSON.parse(readFileSync('evidence/cleanup-family-18-summary.json','utf8'));
+const cleanupRows=readFileSync('evidence/cleanup-family-18-rows.jsonl','utf8').trim().split('\n').map(JSON.parse);
+assert.equal(cleanupSummary.specimen_sha256,expected.sha256);
+assert.equal(cleanupSummary.total,143);assert.equal(cleanupRows.length,cleanupSummary.total);
+const cleanupAddresses=new Set();
+for(const row of cleanupRows){
+  assert.ok(inventoryAddresses.has(row.entry) && !cleanupAddresses.has(row.entry),row.entry);
+  assert.equal(functions.find(f=>f.entry===row.entry).body_bytes,row.body_bytes);
+  assert.equal(cleanupSummary.templates[row.template].body_bytes,row.body_bytes);
+  cleanupAddresses.add(row.entry);
+}
+for(const [kind,template] of Object.entries(cleanupSummary.templates))
+  assert.equal(cleanupRows.filter(row=>row.template===kind).length,template.members);
+const unwindAddresses=new Set(readFileSync('evidence/unwind-family-15-rows.jsonl','utf8').trim().split('\n').map(line=>JSON.parse(line).entry));
+const wrapperAddresses=new Set(readFileSync('evidence/delete-wrapper-family-17-rows.jsonl','utf8').trim().split('\n').map(line=>JSON.parse(line).entry));
+for(const address of cleanupAddresses)assert.ok(!mappedAddresses.has(address)&&!unwindAddresses.has(address)&&!wrapperAddresses.has(address),address);
 const overlayReceipts=['09','10','11','12','13','14','15','16'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
 for(const receipt of overlayReceipts)assert.equal(receipt.sha256,expected.sha256);
 const overlayRows=overlayReceipts.flatMap(receipt=>receipt.annotations.map(row=>[row[0],receipt.investigation>=12?row[2]:row[1]]));
