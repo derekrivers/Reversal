@@ -129,6 +129,14 @@
       "module": "reconstruction/match-microhelpers.ts",
       "evidence": "evidence/match-microhelpers-validation/oracle.json",
       "boundary": "262 stable disjoint synthetic receiver/match/stack cases; native ABI checked; invalid pointers, aliases, caller reachability and connected match excluded"
+    },
+    {
+      "function": "0062c3d0",
+      "scope": "whole-function-bounded-memory-contract",
+      "behavior": "Signed index/count gate and sign-extended indexed WORD at table + index*31 + 12",
+      "module": "reconstruction/match-scalar.ts",
+      "evidence": "evidence/match-scalar-22-oracle.json",
+      "boundary": "274 original-instruction synthetic mapped-memory cases and 2,312 instruction steps; EAX, EDX and ordered reads compared. Stable mapped memory only; EFLAGS, invalid pointers, alias mutation and connected caller behavior excluded"
     }
   ]
 }

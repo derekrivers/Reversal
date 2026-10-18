@@ -146,6 +146,18 @@
     "R21-B": {
       "report": "reports/match-state-21.md",
       "evidence": "evidence/match-state-21-sites.json"
+    },
+    "R22-A": {
+      "report": "reports/match-scalar-22.md",
+      "evidence": "evidence/match-scalar-22-sites.json"
+    },
+    "R22-B": {
+      "report": "reports/match-selection-22.md",
+      "evidence": "evidence/match-selection-22-sites.json"
+    },
+    "R22-D": {
+      "report": "reports/match-runtime-22.md",
+      "evidence": "evidence/match-runtime-22-sites.json"
     }
   },
   "functions": [
@@ -713,6 +725,41 @@
       "address": "006c50d0",
       "state": "contract-supported",
       "source": "R21-B"
+    },
+    {
+      "address": "0062c3d0",
+      "state": "contract-supported",
+      "source": "R22-A"
+    },
+    {
+      "address": "0062c590",
+      "state": "contract-supported",
+      "source": "R22-A"
+    },
+    {
+      "address": "006ceb90",
+      "state": "contract-supported",
+      "source": "R22-B"
+    },
+    {
+      "address": "005a8f60",
+      "state": "contract-supported",
+      "source": "R22-D"
+    },
+    {
+      "address": "0090d130",
+      "state": "contract-supported",
+      "source": "R22-D"
+    },
+    {
+      "address": "00945640",
+      "state": "contract-supported",
+      "source": "R22-D"
+    },
+    {
+      "address": "00945934",
+      "state": "contract-supported",
+      "source": "R22-D"
     }
   ]
 }
