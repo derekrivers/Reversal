@@ -146,7 +146,7 @@ def stage():
               'partial_data_types':list(types.values()),'code_signatures':signatures,'code_comments':comments}
     assert len(functions)>=14 and len(labels)>=5
     write_json(STAGE/'expected-database.json',expected)
-    write_json(STAGE/'DB-MANIFEST.json',{'date_utc':'2026-10-19','ghidra':'12.1.4','jdk':'21',
+    write_json(STAGE/'DB-MANIFEST.json',{'date_utc':'2026-10-18','ghidra':'12.1.4','jdk':'21',
         'input_sha256':EXPECTED,'project_files':files(project),
         'scope':'Native Ghidra project, function comments/names, RNG/event labels and recovered structures. Original executable bytes were not patched.',
         'expected_counts':{'functions':len(functions),'global_labels':len(labels),'structures':len(types),'fields':sum(len(t['fields']) for t in types.values()),'code_samples':len(signatures),'code_comments':len(comments),'function_body_sites':len(body_sites)},
