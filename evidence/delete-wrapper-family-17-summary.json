@@ -1,0 +1,26 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "scope": "Complete local wrapper shape for 192 inferred functions; callee effects, parent object types and runtime invocation unresolved.",
+  "atlas_sha256": "f877b8bdc086d6a3e77608d537c30dfb94c49fbeada934b7784906b86e8ae26d",
+  "counts": {
+    "atlas_internal_functions": 9241,
+    "non_unwind_30_byte_candidates": 197,
+    "verified_conditional_release_wrappers": 192,
+    "other_30_byte_functions": 5,
+    "distinct_first_callees": 192,
+    "native_sample_exports": 3
+  },
+  "other_30_byte_entries": [
+    "00453c30",
+    "005afde0",
+    "00669340",
+    "006826d0",
+    "00946a04"
+  ],
+  "native_sample_addresses": [
+    "00401200",
+    "00639de0",
+    "0092ff60"
+  ],
+  "registry_sha256": "ae3e3b14cb4e114b0c411f612b3ea61970bf99cb47711df5e773e61d268b2849"
+}
