@@ -1,0 +1,13 @@
+{
+  "status": "proposed; original-instruction comparison passed locally; independent review pending",
+  "target": "evidence/code-atlas/validation-coverage.json",
+  "operation": "append entry after independent review",
+  "entry": {
+    "function": "0094fded",
+    "scope": "whole-function-bounded-memory-contract",
+    "behavior": "Descriptor-to-handle DWORD lookup and local error9 writes",
+    "module": "reconstruction/descriptor-handle.ts",
+    "evidence": "evidence/descriptor-handle-validation/oracle.json",
+    "boundary": "344 synthetic stable-memory cases; unsigned descriptor/bound, signed page index and address wrapping; valid stack/table/pages/error storage with no alias between runtime objects; two unmapped-read probes; no OS, descriptor lifecycle, seek wrapper or save-format behavior"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "status": "locally passed; independent review pending",
+  "specimen": {
+    "filename": "cm0102.exe",
+    "bytes": 7192576,
+    "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86"
+  },
+  "private_inputs": {
+    "native_export": "0094fded.asm from read-only checkpoint-18 export used by R19",
+    "native_asm_sha256": "f5b8380d00d50539877ec35f2042aeb3cc0b93576608db635218395cbc85d533",
+    "bulk_input_retained": "outside Git; no original runtime data loaded"
+  },
+  "toolchain": {
+    "python": "3.13.7",
+    "unicorn": "2.1.4",
+    "node": "v24.19.0",
+    "platform": "Windows x86_64"
+  },
+  "sources_sha256": {
+    "scripts/emulate_descriptor_handle_20.py": "0584706af339a31fca74bea4fe3843fd34d04a834be7c970c5ad416dcdb607bd",
+    "scripts/check_descriptor_handle_negative_20.py": "540dfed17e5d7af7f21032a94544c87ab2e39bc376d30d008c5c2d251fbe7e2d",
+    "reconstruction/descriptor-handle.ts": "4ccd12cbf07eadce6a44a1c6cd0771bcfe0be8595b765a783383dabb341838b8",
+    "reconstruction/check-descriptor-handle.ts": "9de16752ae568ac241b4fcfd5e81a4672e13a3a8fcab96f16acbc4214be2b4c0"
+  },
+  "oracle_sha256": "9556f7e440fdfcec50e66ee5331ec7898b51319c3867660de1436414f4f392e3",
+  "repeat": {
+    "normal_and_optimized_python": "byte-identical",
+    "oracle_sha256": "9556f7e440fdfcec50e66ee5331ec7898b51319c3867660de1436414f4f392e3"
+  },
+  "typescript_check": {
+    "status": "passed",
+    "node": "v24.19.0",
+    "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+    "oracle_sha256": "9556f7e440fdfcec50e66ee5331ec7898b51319c3867660de1436414f4f392e3",
+    "cases": 344,
+    "error9": 159,
+    "stored_minus_one_successes": 9,
+    "read_faults": 2,
+    "original_instructions_reached": 16,
+    "comparisons": "EAX, both errors, ordered reads/writes and all mapped synthetic memory; original ABI observations",
+    "limitations": [
+      "Stable nonaliasing synthetic runtime memory only; no concurrent mutation",
+      "Invalid readable storage can fault; no Windows SEH/OS behavior claimed",
+      "No descriptor lifecycle, seek wrapper, save format, or full-game equivalence"
+    ]
+  },
+  "negative_checks": {
+    "receipt": "evidence/descriptor-handle-validation/negative-checks.json",
+    "sha256": "4e3f870879aa8102052f132e14d37078d3fa2123e3d33b31942c52e4d7adce26",
+    "rejected": 11
+  },
+  "research_check": {
+    "command": "node scripts/check-research.mjs",
+    "node": "v24.19.0",
+    "status": "passed"
+  },
+  "scope": "Local whole-body comparison within explicitly supported synthetic memory domain; coverage proposal only until independent review"
+}

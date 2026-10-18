@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "node": "v24.19.0",
+  "python": "3.13.7",
+  "oracle_sha256": "9556f7e440fdfcec50e66ee5331ec7898b51319c3867660de1436414f4f392e3",
+  "checks": [
+    {
+      "case": "wrong-specimen",
+      "python_optimized": false,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "changed-native",
+      "python_optimized": false,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "wrong-specimen",
+      "python_optimized": true,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "changed-native",
+      "python_optimized": true,
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "bound-equality-accepted",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "any-flag-bit-open",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "logical-page-shift",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "wrong-entry-stride",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "stored-minus-one-fails",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "failure-keeps-doserrno",
+      "rejected": true,
+      "output_written": false
+    },
+    {
+      "case": "failure-write-order",
+      "rejected": true,
+      "output_written": false
+    }
+  ],
+  "scope": "synthetic negative inputs/mutants; no original data retained"
+}
