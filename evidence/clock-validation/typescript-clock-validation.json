@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "cases": 196608,
+  "modes": [
+    0,
+    1,
+    255
+  ],
+  "oracle": "original x86 basic-block emulation",
+  "slice": [
+    "0x6d70c4",
+    "0x6d70f0"
+  ],
+  "node": "v24.19.0",
+  "limitations": [
+    "Synthetic context; no full-game run",
+    "Executes only timestamp conversion, not surrounding event creation",
+    "All signed16 clock bit patterns tested; nonzero modes1 and255 tested, not all 255 nonzero byte values"
+  ]
+}

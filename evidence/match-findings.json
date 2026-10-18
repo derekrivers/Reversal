@@ -1,0 +1,273 @@
+{
+  "date": "2026-10-18",
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "scope": "006b7f20, exact-entry caller references, direct callees, 13 source-path seed functions and focused RNG helpers",
+  "counts": {
+    "selected_graph_functions": 51,
+    "successful_graph_decompilations": 40,
+    "entry_call_sites": 74,
+    "distinct_entry_callees": 33,
+    "observed_entry_callers": [
+      "006b4360",
+      "006b5a70",
+      "0084be20",
+      "006b5260",
+      "006b6970"
+    ],
+    "rng_entry_reference_call_sites": 3772,
+    "rng_containing_caller_functions": 359
+  },
+  "functions": [
+    {
+      "entry": "006b7f20",
+      "working_name": "prepare_match_candidate",
+      "observed_role": "Binds fixture, resets context, builds both rosters, prepares side/player state.",
+      "confidence_boundary": "High-confidence lifecycle interpretation"
+    },
+    {
+      "entry": "006b98c0",
+      "working_name": "advance_match_candidate",
+      "observed_role": "Callers repeat until returned state 2 or 8; mode byte selects a different path.",
+      "confidence_boundary": "Observed call order; exact state meanings unresolved"
+    },
+    {
+      "entry": "006db500",
+      "working_name": "build_side_descriptor_candidate",
+      "observed_role": "ECX is a per-side descriptor; populates side links and roster, returns player count.",
+      "confidence_boundary": "Assembly-checked receiver and data links"
+    },
+    {
+      "entry": "006bbb60",
+      "working_name": "prepare_side_candidate",
+      "observed_role": "Two passes over 20 slots; updates a per-side aggregate and prepares valid slots.",
+      "confidence_boundary": "Aggregate meaning unresolved"
+    },
+    {
+      "entry": "006bbf60",
+      "working_name": "assign_opponent_slots_candidate",
+      "observed_role": "Filters role-like masks and obtains an opposite-side slot.",
+      "confidence_boundary": "Opponent/marking interpretation provisional"
+    },
+    {
+      "entry": "00897590",
+      "working_name": "find_designated_staff_slot",
+      "observed_role": "Scans 20 staff indices in a 0x91-byte selection record and matches designated ID at +0x52.",
+      "confidence_boundary": "Captain label unconfirmed"
+    },
+    {
+      "entry": "0090cfc0",
+      "working_name": "random_bounded",
+      "observed_role": "Advances fixed-table cursor, applies offset, uses signed remainder for small bounds.",
+      "confidence_boundary": "Small branch reconstructed and checked"
+    },
+    {
+      "entry": "0090d0a0",
+      "working_name": "seed_random",
+      "observed_role": "Installs cursor/end/offset derived from two CRT draws; zero seed calls time-related helper.",
+      "confidence_boundary": "Static initialization; time source unverified"
+    },
+    {
+      "entry": "00946a04",
+      "working_name": "crt_rand",
+      "observed_role": "32-bit LCG followed by a 15-bit output extraction.",
+      "confidence_boundary": "Instruction-emulation validation"
+    },
+    {
+      "entry": "009469fa",
+      "working_name": "crt_srand",
+      "observed_role": "Stores supplied 32-bit generator state.",
+      "confidence_boundary": "Direct assembly observation"
+    }
+  ],
+  "layout": [
+    {
+      "owner": "Match context",
+      "offset": "allocation",
+      "width": "0xf63b bytes",
+      "interpretation": "Observed allocation in callers; do not infer original class name",
+      "evidence": "006b4360:006b4a48"
+    },
+    {
+      "owner": "Match context",
+      "offset": "+0x4792",
+      "width": "4-byte pointer",
+      "interpretation": "Fixture/match-record pointer",
+      "evidence": "006b7f20; initial fixture binding"
+    },
+    {
+      "owner": "Match context",
+      "offset": "+0x4796 / +0x6a6e",
+      "width": "20 slots per side",
+      "interpretation": "Home/away roster blocks; slot stride 0x1be, side stride 0x22d8",
+      "evidence": "006b8866 / 006b89b9; slot loops"
+    },
+    {
+      "owner": "Roster slot",
+      "offset": "+0x19",
+      "width": "signed byte",
+      "interpretation": "Nonnegative values enter valid-slot preparation paths; exact enum unresolved",
+      "evidence": "006bbb60 / 006bbf60"
+    },
+    {
+      "owner": "Roster slot",
+      "offset": "+0x69",
+      "width": "4-byte pointer",
+      "interpretation": "Staff/person-like record pointer",
+      "evidence": "006b7f20 / 006bbb60; community staff layout corroboration"
+    },
+    {
+      "owner": "Roster slot",
+      "offset": "+0x6d",
+      "width": "4-byte pointer",
+      "interpretation": "Player-data-like record pointer; exact structure incomplete",
+      "evidence": "006b7f20 / 006bbb60"
+    },
+    {
+      "owner": "Match context",
+      "offset": "+0x9032 / +0x9102",
+      "width": "side descriptors, stride 0xd0",
+      "interpretation": "Hidden receivers for the two side setup calls",
+      "evidence": "006b8860 / 006b89b3"
+    },
+    {
+      "owner": "Side descriptor",
+      "offset": "+0x12",
+      "width": "4-byte pointer",
+      "interpretation": "Owning match-context pointer",
+      "evidence": "006db500"
+    },
+    {
+      "owner": "Side descriptor",
+      "offset": "+0x18 / +0x19",
+      "width": "bytes",
+      "interpretation": "Side index / fixture-derived team-kind or control selector",
+      "evidence": "006db500"
+    },
+    {
+      "owner": "Side descriptor",
+      "offset": "+0x1b / +0x1f",
+      "width": "4-byte pointers",
+      "interpretation": "Manager/staff and related nonplayer record; semantic names community-corroborated",
+      "evidence": "006db500; team +0xcf and staff +0x69"
+    },
+    {
+      "owner": "Side descriptor",
+      "offset": "+0x23 / +0x27",
+      "width": "4-byte pointers",
+      "interpretation": "Match roster block / club squad array",
+      "evidence": "006db500"
+    },
+    {
+      "owner": "Side descriptor",
+      "offset": "+0x2b",
+      "width": "4-byte pointer",
+      "interpretation": "Side buffer at match+0x91e2+side*0x18e3",
+      "evidence": "006db500"
+    },
+    {
+      "owner": "Side descriptor",
+      "offset": "+0x2f / +0x33 / +0x37",
+      "width": "4-byte pointers",
+      "interpretation": "Team / opponent / fixture",
+      "evidence": "006db500"
+    },
+    {
+      "owner": "Match context",
+      "offset": "+0x91e2 -> +0xc3a8",
+      "width": "0x31c6-byte copy",
+      "interpretation": "Snapshot/copy of two 0x18e3-byte side buffers; precise buffer semantics unresolved",
+      "evidence": "006b7f20 copy; 006db500 one-side buffer copy"
+    },
+    {
+      "owner": "Match context",
+      "offset": "+0x8f7a / +0x8e9d",
+      "width": "pointer / byte",
+      "interpretation": "Optional companion object / locally-allocated flag",
+      "evidence": "006b7f20; ownership meaning provisional"
+    },
+    {
+      "owner": "Match context",
+      "offset": "+0x1ce + side*2",
+      "width": "16-bit signed value",
+      "interpretation": "Per-side aggregate; exact gameplay meaning unresolved",
+      "evidence": "006bbb60"
+    },
+    {
+      "owner": "Fixture",
+      "offset": "+0x1c / +0x20",
+      "width": "4-byte pointers",
+      "interpretation": "Home / away team",
+      "evidence": "Setup calls and home/away diagnostics"
+    },
+    {
+      "owner": "Tactics service",
+      "offset": "+0x601",
+      "width": "4-byte pointer",
+      "interpretation": "Selection-record collection; receiver is global [0x00de1d08], not team",
+      "evidence": "006b8bf7 / 006b8bff; 00897590"
+    },
+    {
+      "owner": "Selection record",
+      "offset": "stride 0x91; +2; +0x52",
+      "width": "20 x 4-byte indices; 4-byte ID",
+      "interpretation": "Roster staff indices and designated staff ID; captain hypothesis remains provisional",
+      "evidence": "00897590; prior 00897880 record write"
+    }
+  ],
+  "rng": {
+    "table": {
+      "va": "0xaa2454",
+      "last_va": "0xad4130",
+      "words": 51000,
+      "bytes": 204000,
+      "min": 0,
+      "max": 65334,
+      "sha256": "e5e9bb21dfc27395f936a62d5dc2f3977b83f764a4d399fd8bbe0c8547a9e7c0"
+    },
+    "cursor": "0x00de1f60",
+    "offset": "0x00de1f5c",
+    "last_pointer": "0x00de2798",
+    "crt_state": "0x00ad6c30",
+    "crt_multiplier": 214013,
+    "crt_increment": 2531011,
+    "crt_output": "(state >>> 16) & 0x7fff",
+    "zero_bound": "returns zero without consuming state",
+    "small_branch": "advance cursor by one word; wrap to first word and refresh offset if past last; signed remainder of 32-bit offset+word by bound; negate result when bound is negative",
+    "validation": {
+      "status": "passed",
+      "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+      "oracle": "original x86 instruction emulation",
+      "node": "v24.19.0",
+      "crtSteps": 1024,
+      "boundedCalls": 2570,
+      "comparisons": "return values and all exposed RNG state",
+      "limitations": [
+        "Synthetic state; no original full-game run or match equivalence test",
+        "Large-argument x87 branch is deliberately excluded",
+        "No test of operating-system-time seeding or saved-game RNG restoration",
+        "No claim that a game run uses only these random sources"
+      ]
+    }
+  },
+  "critical_corrections": [
+    "006db500 hidden receiver is match+9032 or match+9102, not the match base",
+    "00897590 hidden receiver is global tactics service [DE1D08], not the team",
+    "006b7f20 return zero is not a universal failure code; a caller uses it for a simulation branch",
+    "Decompiler prototypes and float expressions are not authoritative; important claims were checked in assembly"
+  ],
+  "limitations": [
+    "No full original-game run or full-match equivalence test",
+    "RNG test uses original instruction emulation with synthetic input state",
+    "Large-bound RNG x87 branch is excluded from reconstruction",
+    "Operating-system-time seeding and saved-game restoration not tested",
+    "Original class/function names remain unknown; labels are working annotations",
+    "Direct-call edges omit unresolved indirect calls and some tail transfers",
+    "Player/team field names partly rely on community layout corroboration; saved-file IDs and runtime pointers differ"
+  ],
+  "next_targets": [
+    "Map 006b98c0 return states and the progression calls it dispatches",
+    "Trace roster-slot construction through 006db500 to recover named attributes",
+    "Recover large-bound RNG branch and determine save/load state handling",
+    "Build a full-game observation harness before claiming match equivalence"
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "date": "2026-10-18",
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "event_graph": {
+    "selected_functions": 64,
+    "decompiled": 50
+  },
+  "configuration_counts": {
+    "events": 677,
+    "variants": 4754
+  },
+  "configuration_source": {
+    "repository": "https://github.com/nckstwrt/CM0102-Starter-Kit",
+    "commit": "69cdaedd611450f33fb73fa2f41f14f5039f3918",
+    "path": "external/events_eng.cfg",
+    "bytes": 559509,
+    "sha256": "f8ed6307e3e295ae388bbaf49c5f4cf67337061a4353e5e1c9c4f3875e85fe88",
+    "trust_boundary": "Community configuration; header explicitly describes modified delays. Not authenticated as pristine SI 3.9.68 text/timing."
+  },
+  "event_links": [
+    {
+      "config_id": 146,
+      "engine_code_hex": "1fd2",
+      "config_label": "EVENT_GOLDEN_GOAL",
+      "source_line": 5555,
+      "variants": 4,
+      "first_game_text": "<t> win on the golden goal rule!"
+    },
+    {
+      "config_id": 192,
+      "engine_code_hex": "2000",
+      "config_label": "EVENT_SHOOTOUT_SCORED",
+      "source_line": 7095,
+      "variants": 2,
+      "first_game_text": "GOAL FOR <tc>!"
+    },
+    {
+      "config_id": 193,
+      "engine_code_hex": "2001",
+      "config_label": "EVENT_FINAL_WHISTLE",
+      "source_line": 7104,
+      "variants": 10,
+      "first_game_text": "Final whistle"
+    },
+    {
+      "config_id": 194,
+      "engine_code_hex": "2002",
+      "config_label": "EVENT_ANNOUNCE_PENALTIES",
+      "source_line": 7137,
+      "variants": 6,
+      "first_game_text": "The match goes to penalties!"
+    },
+    {
+      "config_id": 195,
+      "engine_code_hex": "2003",
+      "config_label": "EVENT_ANNOUNCE_SHOOTOUT",
+      "source_line": 7158,
+      "variants": 4,
+      "first_game_text": "The match goes to a 35-yard shootout!"
+    },
+    {
+      "config_id": 196,
+      "engine_code_hex": "2004",
+      "config_label": "EVENT_WIN_THE_SHOOTOUT",
+      "source_line": 7173,
+      "variants": 3,
+      "first_game_text": "<t> win the shootout!"
+    },
+    {
+      "config_id": 197,
+      "engine_code_hex": "2005",
+      "config_label": "EVENT_NEEDS_TO_SCORE",
+      "source_line": 7185,
+      "variants": 10,
+      "first_game_text": "<p1> must score to keep <t> in the game!"
+    },
+    {
+      "config_id": 198,
+      "engine_code_hex": "2006",
+      "config_label": "EVENT_SCORE_TO_WIN",
+      "source_line": 7218,
+      "variants": 9,
+      "first_game_text": "<t> win if <p1> scores..."
+    },
+    {
+      "config_id": 433,
+      "engine_code_hex": "20f1",
+      "config_label": "EVENT_HALF_TIME_WHISTLE",
+      "source_line": 11970,
+      "variants": 4,
+      "first_game_text": "Half time"
+    },
+    {
+      "config_id": 434,
+      "engine_code_hex": "20f2",
+      "config_label": "EVENT_END_OF_NINETY_MINUTES",
+      "source_line": 11985,
+      "variants": 2,
+      "first_game_text": "End of 90 minutes"
+    },
+    {
+      "config_id": 435,
+      "engine_code_hex": "20f3",
+      "config_label": "EVENT_HALF_TIME_EXTRA_TIME",
+      "source_line": 11994,
+      "variants": 1,
+      "first_game_text": "Half time in extra time"
+    },
+    {
+      "config_id": 571,
+      "engine_code_hex": "217b",
+      "config_label": "EVENT_MATCH_ABANDONED_PITCH_CONDITION",
+      "source_line": 14443,
+      "variants": 2,
+      "first_game_text": "The pitch condition has deteriorated too much!|<Rf> has declared the match abandoned!"
+    }
+  ],
+  "rules": {
+    "phases_1_2_3": "35-yard shootout: phase1 emits engine event0x2003 (config195)",
+    "phases_4_5_6": "Penalty shootout: other nonzero entry phase emits0x2002 (config194)",
+    "fixture_flags_bit_0x20": "Selects35-yard triplet in inspected period-end paths, subject to tie conditions",
+    "fixture_flags_bit_0x01": "Selects penalty triplet in inspected period-end paths, subject to tie conditions",
+    "fixture_flags_bit_0x80": "Post-goal stop rule when target !=495 and !=990; observed callers set+0x1a8 and emit config146 golden-goal event",
+    "context_0xf638": "Pitch-condition abandonment minute threshold; -1 disables inspected check"
+  },
+  "validation": {
+    "status": "passed",
+    "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+    "priority_cases": 131072,
+    "post_goal_cases": 262144,
+    "oracle": "original x86 function emulation",
+    "node": "v24.19.0",
+    "limitations": [
+      "Synthetic priorities and fixture state; no configuration parser or commentary formatter emulated.",
+      "Post-goal predicate verified for every 16-bit target and four flag bytes; only bit 0x80 is inspected by the original instructions.",
+      "Does not validate complete goal handling, golden-goal match outcome or shootout simulation."
+    ]
+  },
+  "database_restore": {
+    "status": "passed",
+    "mode": "restored archive opened read-only; no reanalysis",
+    "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+    "named_functions_and_comments": 21,
+    "global_labels": 8,
+    "partial_structures": 7,
+    "structure_fields": 78,
+    "original_code_signatures": 26,
+    "code_comments": 4,
+    "total_function_symbols": 9384,
+    "project_file_hashes_verified": 9
+  },
+  "key_evidence": {
+    "loader": "event-map/assembly/006d9e50.asm",
+    "priority": "event-map/assembly/006d5cd0.asm",
+    "announcement": "progression-map/assembly/006b98c0.asm:006ba9a5..006baa0b",
+    "golden_predicate": "rule-map/assembly/006d4250.asm",
+    "golden_write": "progression-map/assembly/00702050.asm:00706e9a..00706eaf",
+    "golden_event": "progression-map/assembly/00702050.asm:0070848e..007084aa",
+    "source_config": "../source-data/community-events-eng.cfg"
+  },
+  "next_targets": [
+    "Recover one complete penalty-attempt decision path, separating probability, player-state updates and presentation events.",
+    "Trace event token substitution only as needed for a small browser-facing match log.",
+    "Build controlled original-state fixtures for a larger routine before claiming match-level equivalence."
+  ],
+  "limitations": [
+    "Labels and text establish a semantic bridge for this pinned community config; variants and timings may differ in other files.",
+    "The configuration parser and inverse-divisor weight calculation are based on static loader analysis, not full-loader emulation.",
+    "No complete shootout, goal routine or match outcome has been reproduced.",
+    "Synthetic priorities and fixture state; no configuration parser or commentary formatter emulated.",
+    "Post-goal predicate verified for every 16-bit target and four flag bytes; only bit 0x80 is inspected by the original instructions.",
+    "Does not validate complete goal handling, golden-goal match outcome or shootout simulation."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "source": "retained archived SI 3.9.68 updater update.dat",
+  "entry_index_zero_based": 12,
+  "entry_absolute_offset": 34316100,
+  "entry_bytes": 204672142,
+  "resource_sha256": "7f6fcec87709fc0072e05a44fa7f781978f2abd247630e1d977f74ecac449b59",
+  "record_stride_hypothesis": 20870,
+  "records": 9807,
+  "header_bytes": 52,
+  "checked_labels": [
+    {
+      "index": 354,
+      "relative_offset": "0x70bb80",
+      "english_label": "35 Yard Shootout"
+    },
+    {
+      "index": 4894,
+      "relative_offset": "0x6167fe8",
+      "english_label": "First Half Extra Time"
+    },
+    {
+      "index": 5153,
+      "relative_offset": "0x668fa7a",
+      "english_label": "Golden Goal"
+    },
+    {
+      "index": 5268,
+      "relative_offset": "0x68d99ac",
+      "english_label": "Half Time"
+    },
+    {
+      "index": 5269,
+      "relative_offset": "0x68deb32",
+      "english_label": "Half Time Extra Time"
+    },
+    {
+      "index": 6343,
+      "relative_offset": "0x7e3ef5e",
+      "english_label": "Penalty Shoot-out"
+    }
+  ],
+  "boundary": "English text locations verified; full multilingual format and event-code-to-text bridge unresolved. Direct eventcode, code-1 and code-0x8000 indexing do not map boundary events to expected labels."
+}

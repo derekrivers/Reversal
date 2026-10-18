@@ -1,0 +1,24 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "oracle": "original x86 basic-block emulation",
+  "emulator": "unicorn 2.1.4",
+  "slice_start": "0x6d70c4",
+  "slice_end_exclusive": "0x6d70f0",
+  "result": "DL low byte at slice exit",
+  "modes": [
+    0,
+    1,
+    255
+  ],
+  "clock_raw_values_per_mode": 65536,
+  "cases": 196608,
+  "executed_instructions": 1507328,
+  "oracle_sha256": "d82b377ec5c93ff36991330232887047f8c1d06d6e9b8dee4a91c1492d657d37",
+  "layout": "for each listed mode, output bytes indexed by raw uint16 clock (0..65535)",
+  "supported_rule": "mode0: uint8(trunc(signed16(clock)/11)); nonzero mode: clock low byte",
+  "limitations": [
+    "Synthetic context; no full-game run",
+    "Executes only timestamp conversion, not surrounding event creation",
+    "All signed16 clock bit patterns tested; nonzero modes1 and255 tested, not all 255 nonzero byte values"
+  ]
+}

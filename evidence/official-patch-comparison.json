@@ -1,0 +1,384 @@
+{
+  "comparison_date": "2026-10-18",
+  "source": {
+    "repository": "https://github.com/cm0102-linux/cm0102-linux",
+    "commit": "befe35e79ccedeafc17dbf56054afcae9143ab27",
+    "url": "https://raw.githubusercontent.com/cm0102-linux/cm0102-linux/befe35e79ccedeafc17dbf56054afcae9143ab27/patches/official-3.9.68.exe",
+    "source_kind": "community mirror of official updater; publisher-hosted copy unavailable"
+  },
+  "installer": {
+    "bytes": 23458816,
+    "sha256": "b3f2b7d2ace6e86d0974e5ad68ae7a87a1e8fc3494c90d00cc3758392dcf24f1",
+    "zip_members": [
+      {
+        "name": "update.dat",
+        "bytes": 306794850,
+        "crc32": "0a2c220b"
+      },
+      {
+        "name": "arial_14.fnt",
+        "bytes": 26961,
+        "crc32": "14ff3f28"
+      },
+      {
+        "name": "arial_16.fnt",
+        "bytes": 32964,
+        "crc32": "72582508"
+      },
+      {
+        "name": "arial_18.fnt",
+        "bytes": 40605,
+        "crc32": "a7d47054"
+      },
+      {
+        "name": "arial_narrow_10.fnt",
+        "bytes": 13728,
+        "crc32": "45ee0562"
+      },
+      {
+        "name": "arial_narrow_11.fnt",
+        "bytes": 17070,
+        "crc32": "894d2c92"
+      },
+      {
+        "name": "readme_dut.txt",
+        "bytes": 12041,
+        "crc32": "a5dca1e3"
+      },
+      {
+        "name": "readme_eng.txt",
+        "bytes": 10554,
+        "crc32": "fad3bcb0"
+      },
+      {
+        "name": "readme_esp.txt",
+        "bytes": 10636,
+        "crc32": "b4b58bf2"
+      },
+      {
+        "name": "readme_fra.txt",
+        "bytes": 10637,
+        "crc32": "1c482087"
+      },
+      {
+        "name": "readme_ger.txt",
+        "bytes": 11349,
+        "crc32": "fc7b7467"
+      },
+      {
+        "name": "readme_ita.txt",
+        "bytes": 11194,
+        "crc32": "3cb45a48"
+      },
+      {
+        "name": "readme_nor.txt",
+        "bytes": 9868,
+        "crc32": "5ce7c12f"
+      },
+      {
+        "name": "readme_por.txt",
+        "bytes": 10500,
+        "crc32": "5ba16432"
+      },
+      {
+        "name": "readme_sve.txt",
+        "bytes": 9751,
+        "crc32": "0666da88"
+      },
+      {
+        "name": "setup.exe",
+        "bytes": 221184,
+        "crc32": "7d67767c"
+      },
+      {
+        "name": "small.t2k",
+        "bytes": 22416,
+        "crc32": "edb79bb5"
+      },
+      {
+        "name": "symbol.ttf",
+        "bytes": 4044,
+        "crc32": "11d9c6b1"
+      },
+      {
+        "name": "trade_cond_24_bold.fnt",
+        "bytes": 60645,
+        "crc32": "dd64461b"
+      },
+      {
+        "name": "trade_cond_28_bold.fnt",
+        "bytes": 78558,
+        "crc32": "c53f7b82"
+      }
+    ]
+  },
+  "update_payload": {
+    "bytes": 306794850,
+    "sha256": "1f8141d5baf0f8a99d7e1a3373ba2feeb9e0ddbdf4863b1ad29da2cada7fc918",
+    "zip_crc_verified": true,
+    "length_table_offset": 0,
+    "length_table_bytes": 184,
+    "full_partition_verified": true,
+    "entries": [
+      {
+        "index": 0,
+        "offset": 184,
+        "bytes": 7192576
+      },
+      {
+        "index": 1,
+        "offset": 7192760,
+        "bytes": 7188480
+      },
+      {
+        "index": 2,
+        "offset": 14381240,
+        "bytes": 1993486
+      },
+      {
+        "index": 3,
+        "offset": 16374726,
+        "bytes": 1993486
+      },
+      {
+        "index": 4,
+        "offset": 18368212,
+        "bytes": 1993486
+      },
+      {
+        "index": 5,
+        "offset": 20361698,
+        "bytes": 1993486
+      },
+      {
+        "index": 6,
+        "offset": 22355184,
+        "bytes": 1993486
+      },
+      {
+        "index": 7,
+        "offset": 24348670,
+        "bytes": 1993486
+      },
+      {
+        "index": 8,
+        "offset": 26342156,
+        "bytes": 1993486
+      },
+      {
+        "index": 9,
+        "offset": 28335642,
+        "bytes": 1993486
+      },
+      {
+        "index": 10,
+        "offset": 30329128,
+        "bytes": 1993486
+      },
+      {
+        "index": 11,
+        "offset": 32322614,
+        "bytes": 1993486
+      },
+      {
+        "index": 12,
+        "offset": 34316100,
+        "bytes": 204672142
+      },
+      {
+        "index": 13,
+        "offset": 238988242,
+        "bytes": 21151
+      },
+      {
+        "index": 14,
+        "offset": 239009393,
+        "bytes": 26671
+      },
+      {
+        "index": 15,
+        "offset": 239036064,
+        "bytes": 4374
+      },
+      {
+        "index": 16,
+        "offset": 239040438,
+        "bytes": 374192
+      },
+      {
+        "index": 17,
+        "offset": 239414630,
+        "bytes": 7677334
+      },
+      {
+        "index": 18,
+        "offset": 247091964,
+        "bytes": 46331
+      },
+      {
+        "index": 19,
+        "offset": 247138295,
+        "bytes": 279916
+      },
+      {
+        "index": 20,
+        "offset": 247418211,
+        "bytes": 1972
+      },
+      {
+        "index": 21,
+        "offset": 247420183,
+        "bytes": 795360
+      },
+      {
+        "index": 22,
+        "offset": 248215543,
+        "bytes": 1188
+      },
+      {
+        "index": 23,
+        "offset": 248216731,
+        "bytes": 2656860
+      },
+      {
+        "index": 24,
+        "offset": 250873591,
+        "bytes": 1482
+      },
+      {
+        "index": 25,
+        "offset": 250875073,
+        "bytes": 247506
+      },
+      {
+        "index": 26,
+        "offset": 251122579,
+        "bytes": 61770
+      },
+      {
+        "index": 27,
+        "offset": 251184349,
+        "bytes": 2033
+      },
+      {
+        "index": 28,
+        "offset": 251186382,
+        "bytes": 7098
+      },
+      {
+        "index": 29,
+        "offset": 251193480,
+        "bytes": 196381
+      },
+      {
+        "index": 30,
+        "offset": 251389861,
+        "bytes": 6263700
+      },
+      {
+        "index": 31,
+        "offset": 257653561,
+        "bytes": 695526
+      },
+      {
+        "index": 32,
+        "offset": 258349087,
+        "bytes": 38469344
+      },
+      {
+        "index": 33,
+        "offset": 296818431,
+        "bytes": 54843
+      },
+      {
+        "index": 34,
+        "offset": 296873274,
+        "bytes": 151322
+      },
+      {
+        "index": 35,
+        "offset": 297024596,
+        "bytes": 6559382
+      },
+      {
+        "index": 36,
+        "offset": 303583978,
+        "bytes": 336009
+      },
+      {
+        "index": 37,
+        "offset": 303919987,
+        "bytes": 1167
+      },
+      {
+        "index": 38,
+        "offset": 303921154,
+        "bytes": 2598912
+      },
+      {
+        "index": 39,
+        "offset": 306520066,
+        "bytes": 627
+      },
+      {
+        "index": 40,
+        "offset": 306520693,
+        "bytes": 10850
+      },
+      {
+        "index": 41,
+        "offset": 306531543,
+        "bytes": 72688
+      },
+      {
+        "index": 42,
+        "offset": 306604231,
+        "bytes": 5662
+      },
+      {
+        "index": 43,
+        "offset": 306609893,
+        "bytes": 12413
+      },
+      {
+        "index": 44,
+        "offset": 306622306,
+        "bytes": 132096
+      },
+      {
+        "index": 45,
+        "offset": 306754402,
+        "bytes": 40448
+      }
+    ]
+  },
+  "patch_executable": {
+    "name": "cm0102.exe",
+    "payload_offset": 184,
+    "bytes": 7192576,
+    "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86"
+  },
+  "gdi_executable": {
+    "name": "cm0102_GDI.exe",
+    "payload_offset": 7192760,
+    "bytes": 7188480,
+    "sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b"
+  },
+  "current_specimen": {
+    "bytes": 7192576,
+    "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86"
+  },
+  "byte_identical": true,
+  "differing_bytes_including_unpaired_bytes": 0,
+  "executed_any_target_code": false,
+  "limitations": [
+    "No publisher-hosted artifact or publisher-issued cryptographic digest was available to authenticate the historical mirror",
+    "Equality proves equivalence to the executable in this archived updater, not independent publisher authentication",
+    "This is an on-disk comparison; loader and other runtime patches were not applied or tested"
+  ],
+  "gdi_variant_additional_comparison": {
+    "byte_identical": true,
+    "source_archive": "Starter Kit external/Exes.zip",
+    "bytes": 7188480
+  }
+}

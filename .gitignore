@@ -1,0 +1,34 @@
+# Local input specimens and native analysis projects.
+/downloads/
+/official-patch/
+/vendor/
+/source-data/
+/ghidra-project/
+/database-checkpoint/
+/restore-test/
+/deliverable/
+/results/
+/evidence/*-map/
+/evidence/pseudocode/
+*.exe
+*.dll
+*.gpr
+*.rep/
+*.gbf
+*.ps
+*.zip
+*.7z
+*.iso
+*.lock~
+
+# Runtime and tooling output.
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.*
+library-helper-*/
+
+# The checked-in bin fixtures are synthetic input or numerical oracle output.
+# Do not add raw game memory dumps alongside them.

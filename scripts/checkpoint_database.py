@@ -1,0 +1,133 @@
+#!/usr/bin/env python3
+"""Create an independent Ghidra checkpoint and verify its restored file hashes.
+
+Run 'stage' only after the live project has closed. Run the retained Ghidra
+verification command against restore-test, then run 'finalize'.
+"""
+from pathlib import Path
+import argparse, hashlib, json, re, shutil, struct, zipfile
+
+ROOT=Path(__file__).resolve().parents[1]
+STAGE=ROOT/'database-checkpoint'
+RESTORED=ROOT/'restore-test'
+ARCHIVE=ROOT/'cm0102-ghidra-database.zip'
+EXPECTED='0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86'
+
+def digest(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def write_json(p,obj): p.write_text(json.dumps(obj,indent=2)+'\n')
+def files(base):
+    return {str(p.relative_to(base)): {'bytes':p.stat().st_size,'sha256':digest(p)}
+            for p in sorted(base.rglob('*')) if p.is_file()
+            and not any(part.startswith('.') for part in p.relative_to(base).parts)
+            and not (p.name.startswith('tmp') and p.name.endswith('.ps'))}
+def archive():
+    with zipfile.ZipFile(ARCHIVE,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
+        for p in sorted(STAGE.rglob('*')):
+            if p.is_file() and not any(part.startswith('.') for part in p.relative_to(STAGE).parts):
+                z.write(p,'cm0102-ghidra-database/'+str(p.relative_to(STAGE)))
+
+def stage():
+    data=(ROOT/'downloads/cm0102.exe').read_bytes()
+    assert hashlib.sha256(data).hexdigest()==EXPECTED
+    for p in [STAGE,RESTORED]:
+        if p.exists():shutil.rmtree(p)
+    STAGE.mkdir(); RESTORED.mkdir()
+    project=STAGE/'ghidra-project'
+    shutil.copytree(ROOT/'ghidra-project',project,ignore=shutil.ignore_patterns('*.lock','*.lock~','.*','tmp*.ps'))
+    annotations=json.loads((ROOT/'evidence/progression-annotations.json').read_text())
+    source=(ROOT/'scripts/CM0102AnnotateMatch.java').read_text()
+    rows=re.findall(r'\{"([0-9a-f]{8})","(cm0102_[^"]+)"',source)
+    names=dict(rows[:10]);labels=dict(rows[10:])
+    names.update({row[0]:row[1] for row in annotations['annotations']})
+    types={t['path']:t for t in annotations['partial_data_types']}
+    comments=[]
+    event_receipt=ROOT/'evidence/event-annotations.json'
+    if event_receipt.exists():
+        event_annotations=json.loads(event_receipt.read_text())
+        names.update({row[0]:row[1] for row in event_annotations['annotations']})
+        labels.update(dict(event_annotations['global_labels']))
+        types.update({t['path']:t for t in event_annotations['partial_data_types']})
+        comments=[{'address':a,'text':note} for a,note in event_annotations['code_comments']]
+    functions=[{'address':a,'name':n,**({'return_bytes':1} if a in ['006b98c0','006bd930'] else {})}
+               for a,n in sorted(names.items())]
+    pe=struct.unpack_from('<I',data,0x3c)[0];optional=pe+24
+    base=struct.unpack_from('<I',data,optional+28)[0]
+    count=struct.unpack_from('<H',data,pe+6)[0];size=struct.unpack_from('<H',data,pe+20)[0]
+    sections=[struct.unpack_from('<IIII',data,optional+size+40*i+8) for i in range(count)]
+    signatures=[]
+    for a in list(names)+['006d70c4']+[c['address'] for c in comments]:
+        rva=int(a,16)-base
+        for virtual,start,length,raw in sections:
+            if start<=rva<start+length:
+                signatures.append({'address':a,'hex':data[raw+rva-start:raw+rva-start+16].hex()});break
+        else:raise ValueError(a)
+    expected={'sha256':EXPECTED,'functions':functions,
+              'labels':[{'address':a,'name':n} for a,n in sorted(labels.items())],
+              'partial_data_types':list(types.values()),'code_signatures':signatures,'code_comments':comments}
+    assert len(functions)>=14 and len(labels)>=5
+    write_json(STAGE/'expected-database.json',expected)
+    write_json(STAGE/'DB-MANIFEST.json',{'date_utc':'2026-10-18','ghidra':'12.1.4','jdk':'21',
+        'input_sha256':EXPECTED,'project_files':files(project),
+        'scope':'Native Ghidra project, function comments/names, RNG/event labels and recovered structures. Original executable bytes were not patched.',
+        'expected_counts':{'functions':len(functions),'global_labels':len(labels),'structures':len(types),'fields':sum(len(t['fields']) for t in types.values()),'code_samples':len(signatures),'code_comments':len(comments)},
+        'limitations':'Research types are partial; no full game or match reproduction.'})
+    (STAGE/'RESTORE.txt').write_text('''CM 01/02 3.9.68 — Ghidra database checkpoint
+
+Unzip the complete archive to a writable directory. Keep cm0102.gpr and
+cm0102.rep together inside ghidra-project. Open cm0102.gpr in Ghidra 12.1.4
+(JDK 21), then open cm0102.exe in the project. Do not reimport the executable
+or create a new project: the database already contains the imported image.
+
+The original SHA-256 is recorded in DB-MANIFEST.json. Every saved project
+file has a SHA-256 and byte count. expected-database.json specifies the
+working function names, global labels, recovered structures and code samples.
+The structure names and candidate fields are research annotations, not
+recovered original C++ declarations. Types are saved in /CM0102/Recovered.
+
+The final archive includes RESTORE-VERIFICATION.json from reopening an
+independent extracted copy read-only without reanalysis. The complete
+archive retains scripts/CM0102VerifyCheckpoint.java for repeating that test:
+
+Set JAVA_HOME to JDK 21. Use Ghidra's support/analyzeHeadless executable:
+  analyzeHeadless /absolute/unzipped/ghidra-project cm0102 \\
+    -process cm0102.exe -noanalysis -readOnly \\
+    -scriptPath /absolute/unzipped/scripts \\
+    -postScript CM0102VerifyCheckpoint.java \\
+    /absolute/unzipped/expected-database.json /new/verification.json
+
+The complete research bundle additionally retains checkpoint_database.py.
+''')
+    (STAGE/'scripts').mkdir()
+    shutil.copyfile(ROOT/'scripts/CM0102VerifyCheckpoint.java',STAGE/'scripts/CM0102VerifyCheckpoint.java')
+    archive()
+    with zipfile.ZipFile(ARCHIVE) as z:z.extractall(RESTORED)
+    restored=RESTORED/'cm0102-ghidra-database'
+    assert files(restored/'ghidra-project')==files(project)
+    print(json.dumps({'archive':str(ARCHIVE),'restore_directory':str(restored),'project_files':len(files(project))}))
+
+def finalize():
+    receipt=json.loads((ROOT/'evidence/database-restore-verification.json').read_text())
+    manifest=json.loads((STAGE/'DB-MANIFEST.json').read_text())
+    counts=manifest['expected_counts']
+    assert receipt['status']=='passed' and receipt['partial_structures']==counts['structures'] and receipt['named_functions_and_comments']==counts['functions']
+    assert receipt['global_labels']==counts['global_labels'] and receipt['structure_fields']==counts['fields']
+    assert receipt['original_code_signatures']==counts['code_samples'] and receipt['code_comments']==counts['code_comments']
+    assert files(STAGE/'ghidra-project')==manifest['project_files']
+    restored=RESTORED/'cm0102-ghidra-database/ghidra-project'
+    actual={k:v for k,v in files(restored).items() if not k.endswith(('.lock','.lock~'))}
+    assert actual==manifest['project_files'],'Restored project file content changed'
+    receipt['project_file_hashes_verified']=len(actual)
+    write_json(STAGE/'RESTORE-VERIFICATION.json',receipt)
+    write_json(ROOT/'evidence/database-restore-verification.json',receipt)
+    archive()
+    with zipfile.ZipFile(ARCHIVE) as z:
+        assert z.testzip() is None
+        for name,spec in manifest['project_files'].items():
+            b=z.read('cm0102-ghidra-database/ghidra-project/'+name)
+            assert len(b)==spec['bytes'] and hashlib.sha256(b).hexdigest()==spec['sha256']
+    print(json.dumps({'status':'passed','archive':str(ARCHIVE),'bytes':ARCHIVE.stat().st_size,'sha256':digest(ARCHIVE),
+                      'restored_checks':receipt},indent=2))
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('action',choices=['stage','finalize'])
+    {'stage':stage,'finalize':finalize}[p.parse_args().action]()
