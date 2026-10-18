@@ -1,0 +1,40 @@
+{
+  "work_unit": "R11-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "status": "proposal only; coordinator applies to a new preserved checkpoint",
+  "evidence": ["reports/shot-helper-11.md", "evidence/shot-helper-11-sites.json"],
+  "scope": "Comments only. No function rename, structure or prototype claim; large callees remain immediate boundaries.",
+  "comments": [
+    {
+      "address": "007103e0",
+      "old": null,
+      "old_note": "Existing comment not exported; merge with existing canonical text rather than overwrite blindly.",
+      "proposed": "R11-A static map: ECX=other slot, no explicit stack args, plain RET. May draw RNG, write slot state, iterate candidate pointers, call 007109f0/00713fc0/00714d40 and retry after 007109f0. No dynamic equivalence or complete shot outcome validated.",
+      "confidence": "high for static ABI/sites; semantics provisional"
+    },
+    {
+      "address": "00710449",
+      "old": null,
+      "proposed": "For nonowner/tactical-low-bit-clear path: ordered slot4d_snapshot/128 + R(10) <= prior R(65), or unordered FCOMP, selects candidate loop then word slot+198=67h and return. RNG order is R(65), R(10).",
+      "confidence": "high static instruction mapping"
+    },
+    {
+      "address": "00710654",
+      "old": null,
+      "proposed": "Immediate dependency boundary only: ECX=current slot; pushed dword 0; callee 007109f0 normal RET4. Caller ignores return value, clears match+1a7, rereads owner/action/flags, then may draw two bounds and retry entry. Full callee body remains open.",
+      "confidence": "high static call/return and caller data flow"
+    },
+    {
+      "address": "007109d1",
+      "old": null,
+      "proposed": "Immediate dependency boundary: ECX=current slot; pushed dword 1; 00713fc0 exported normal returns RET4. Caller ignores result and returns. Full callee RNG/writes not certified.",
+      "confidence": "high static call/return mapping"
+    },
+    {
+      "address": "00703e8c",
+      "old": null,
+      "proposed": "R11-A caller dependency: conditional scan after signed quantized distance > 25+R(15). Two arrays of 20 slots, stride 1beh; signed slot+19 in 0..10, slot+2b=0, exclude shooter. ECX=other slot to 007103e0. match+8ea9 temporarily5 then restored; other effects persist. No live action33 reachability proof.",
+      "confidence": "high static instruction mapping; runtime reachability open"
+    }
+  ]
+}
