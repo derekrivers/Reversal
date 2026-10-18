@@ -1,0 +1,16 @@
+{
+  "work_unit": "R17-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "method": "Static Capstone5.0.7 PE32 instruction decode and native export comparison; no original function execution",
+  "sites_sha256": "c6bf10b88d03d14b3152020d715199965cf474004f4d10faccc6e56805c4f1a1",
+  "deterministic_regeneration": "Two runs byte-identical to retained sites",
+  "negative_check": "Wrong specimen rejected before decoding with specimen SHA-256 mismatch",
+  "native_inputs": "Manifest digest and every file size/digest checked; exact-old function names checked from pinned preflight",
+  "instruction_check": "All5343 admitted instructions:5337 native-export instructions match original decode;6 bounded PE-only switch-closure instructions asserted separately",
+  "coverage": "970 branches,257 direct calls,98 RNG sites,115 nonframe stores,7 switch tables and17 supplied R16 incoming calls",
+  "normal_stack": "All local instruction joins balance and10 return sites restore entry ESP under explicit inferred normal callee cleanup; saved-register epilogues inspected",
+  "public_consistency": "JSON parses, call/RNG/branch/store/return inventories and findings counts agree; corrected findings switch cases match generated original-PE table targets and decoded event tokens; corrected006f27b8 bound30*x+50 guarded by explicit MOVSX/LEA/PUSH/CALL assertions; no original code bytes or bulk exports staged",
+  "research_checks": {"command":"npm run check","node":"v24.19.0","status":"passed","scope":"Earlier retained numerical fixtures and native-checkpoint/atlas metadata; does not execute R17-A bodies"},
+  "diff_check": "git diff --check passed",
+  "limitations": ["Callee effects, abnormal exits, aliases, live input domains and runtime floating-point state remain unproved", "RNG maxima are conservative static bounds with signed-byte loop induction; not runtime totals", "Canonical native database and shared semantic registry unchanged"]
+}
