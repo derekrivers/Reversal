@@ -1,0 +1,201 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "native_manifest_sha256": "fc4f2070cb0efa89c9473ebe507d0e2d3f01e1f5f66338177be5f34848ee7151",
+  "private_preflight_sha256": "8749c47798c3758dc7509d0b3b71b7147f169ee0390066f01ef023baf670bcbb",
+  "address_space": "VA unless explicitly file offset",
+  "method": "Capstone 5.0.7 full contiguous original-PE decode/native comparison, complete branch/fallthrough graph and import bindings; static only",
+  "error_table": {
+    "start_va": "00ad8dc0",
+    "end_exclusive_va": "00ad8f28",
+    "row_count": 45,
+    "row_bytes": 8,
+    "private_original_table_sha256": "dc5aaf854d47b0fa4deddacb6ff02e9a7d99cb1ac06c16e03e587d4599067fbe",
+    "contents": "Not redistributed; DWORD key followed by DWORD mapped value; first exact key wins"
+  },
+  "functions": [
+    {
+      "entry_va": "0094b2a0",
+      "entry_file_offset": "0054b2a0",
+      "end_exclusive_va": "0094b307",
+      "body_bytes": 103,
+      "instruction_count": 26,
+      "matched_native_instructions": 26,
+      "owned_instruction_bytes_sha256": "e51edd2a4e37245614fcbf2a18839ac2dce4bf4139a84f6eefb0dc759b580b84",
+      "native_file_sha256": {
+        "asm": "6f610acab46a461544b286403148a9d94d35b2a4ed5e9bdb90d4080b5f18f94c",
+        "c": "1bd924a80f16157a4047014f12ac0abba69f3da021eb030979104a0ec47a96e5"
+      },
+      "structurally_reached_instruction_count": 26,
+      "branches": [
+        {
+          "site_va": "0094b2b3",
+          "target_va": "0094b2d5"
+        },
+        {
+          "site_va": "0094b2be",
+          "target_va": "0094b2b1"
+        },
+        {
+          "site_va": "0094b2c3",
+          "target_va": "0094b2e2"
+        },
+        {
+          "site_va": "0094b2c8",
+          "target_va": "0094b2e2"
+        },
+        {
+          "site_va": "0094b2e8",
+          "target_va": "0094b2fc"
+        },
+        {
+          "site_va": "0094b2fa",
+          "target_va": "0094b306"
+        }
+      ],
+      "calls": [],
+      "return_sites_va": [
+        "0094b2d4",
+        "0094b2e1",
+        "0094b306"
+      ],
+      "selected_instructions": {
+        "0094b2a6": "mov dword ptr [0xde2f90], ecx",
+        "0094b2b1": "cmp ecx, dword ptr [eax]",
+        "0094b2be": "jl 0x94b2b1",
+        "0094b2ca": "mov dword ptr [0xde2f8c], 0xd",
+        "0094b2d5": "mov eax, dword ptr [edx*8 + 0xad8dc4]",
+        "0094b2dc": "mov dword ptr [0xde2f8c], eax",
+        "0094b2f0": "mov dword ptr [0xde2f8c], 8",
+        "0094b2fc": "mov dword ptr [0xde2f8c], 0x16"
+      }
+    },
+    {
+      "entry_va": "0094c552",
+      "entry_file_offset": "0054c552",
+      "end_exclusive_va": "0094c5ec",
+      "body_bytes": 154,
+      "instruction_count": 51,
+      "matched_native_instructions": 51,
+      "owned_instruction_bytes_sha256": "7ffd479604699b21a68b459bff638ea11d6141c9fec70ae8d674b82f97a0d47a",
+      "native_file_sha256": {
+        "asm": "b8967caab927a7484ac0631589644c4ac232b06fc20d67be4441fb92b810b939",
+        "c": "965f6b011d72a02c00b56d3eb7955684afb0787aac03425862c9a1f7f05b62a2"
+      },
+      "structurally_reached_instruction_count": 51,
+      "branches": [
+        {
+          "site_va": "0094c55f",
+          "target_va": "0094c5d4"
+        },
+        {
+          "site_va": "0094c57c",
+          "target_va": "0094c5d4"
+        },
+        {
+          "site_va": "0094c588",
+          "target_va": "0094c596"
+        },
+        {
+          "site_va": "0094c594",
+          "target_va": "0094c5e5"
+        },
+        {
+          "site_va": "0094c5ac",
+          "target_va": "0094c5b6"
+        },
+        {
+          "site_va": "0094c5b4",
+          "target_va": "0094c5b8"
+        },
+        {
+          "site_va": "0094c5ba",
+          "target_va": "0094c5c5"
+        },
+        {
+          "site_va": "0094c5c3",
+          "target_va": "0094c5e5"
+        },
+        {
+          "site_va": "0094c5d2",
+          "target_va": "0094c5e8"
+        }
+      ],
+      "calls": [
+        {
+          "site_va": "0094c57f",
+          "target_va": "0094fded"
+        },
+        {
+          "site_va": "0094c5a1",
+          "iat_slot_va": "009670a0",
+          "import": "KERNEL32.dll!SetFilePointer"
+        },
+        {
+          "site_va": "0094c5ae",
+          "iat_slot_va": "009670e8",
+          "import": "KERNEL32.dll!GetLastError"
+        },
+        {
+          "site_va": "0094c5bd",
+          "target_va": "0094b2a0"
+        }
+      ],
+      "return_sites_va": [
+        "0094c5eb"
+      ],
+      "selected_instructions": {
+        "0094c557": "cmp eax, dword ptr [0xde43e0]",
+        "0094c577": "test byte ptr [ecx + esi + 4], 1",
+        "0094c58a": "mov dword ptr [0xde2f8c], 9",
+        "0094c596": "push dword ptr [esp + 0x18]",
+        "0094c59a": "push 0",
+        "0094c59c": "push dword ptr [esp + 0x1c]",
+        "0094c5c7": "and byte ptr [eax + esi + 4], 0xfd",
+        "0094c5d4": "and dword ptr [0xde2f90], 0"
+      }
+    },
+    {
+      "entry_va": "0094ec37",
+      "entry_file_offset": "0054ec37",
+      "end_exclusive_va": "0094ec7b",
+      "body_bytes": 68,
+      "instruction_count": 19,
+      "matched_native_instructions": 19,
+      "owned_instruction_bytes_sha256": "8556dbea58deff018bb0265120900464696c981ff4ac22418e614d58a470ebd3",
+      "native_file_sha256": {
+        "asm": "c3896035dda3525708fadbcce1b1f2821a4f5fb1703bfc4d004a09026b71b3d5",
+        "c": "be0928e346d21a378fd46929ce8c288a82c6eb8b0875f923f9e51dba88cab95c"
+      },
+      "structurally_reached_instruction_count": 19,
+      "branches": [
+        {
+          "site_va": "0094ec51",
+          "target_va": "0094ec60"
+        },
+        {
+          "site_va": "0094ec5e",
+          "target_va": "0094ec71"
+        }
+      ],
+      "calls": [
+        {
+          "site_va": "0094ec42",
+          "target_va": "00944e46"
+        }
+      ],
+      "return_sites_va": [
+        "0094ec7a"
+      ],
+      "selected_instructions": {
+        "0094ec37": "inc dword ptr [0xde3144]",
+        "0094ec4e": "mov dword ptr [ecx + 8], eax",
+        "0094ec53": "or dword ptr [ecx + 0xc], 8",
+        "0094ec57": "mov dword ptr [ecx + 0x18], 0x1000",
+        "0094ec60": "or dword ptr [ecx + 0xc], 4",
+        "0094ec64": "lea eax, [ecx + 0x14]",
+        "0094ec6a": "mov dword ptr [ecx + 0x18], 2",
+        "0094ec74": "and dword ptr [ecx + 4], 0"
+      }
+    }
+  ]
+}

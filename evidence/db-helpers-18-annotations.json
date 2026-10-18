@@ -1,0 +1,33 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-17",
+  "status": "Name-only proposals; coordinator applies after independent review and fresh exact-old check",
+  "private_preflight_sha256": "8749c47798c3758dc7509d0b3b71b7147f169ee0390066f01ef023baf670bcbb",
+  "old_annotation_evidence": "Hash-pinned native headers and preflight agree on FUN_* names and blank comments; no comment, prototype, convention or structure change proposed",
+  "proposals": [
+    {
+      "address": "0094b2a0",
+      "kind": "function_name",
+      "old": "FUN_0094b2a0",
+      "new": "cm0102_record_map_os_error",
+      "evidence": "All 26 instructions/103 bytes verified; records raw DWORD, first-match 45-row error table then unsigned fallback mapping",
+      "confidence": "high for complete local contract; fixed-global API/thread identity remains open"
+    },
+    {
+      "address": "0094c552",
+      "kind": "function_name",
+      "old": "FUN_0094c552",
+      "new": "cm0102_seek_descriptor_clear_text_eof",
+      "evidence": "All 51 instructions/154 bytes verified; descriptor validation, original SetFilePointer/GetLastError imports, accepted-result bit 0x02 clear and mapped errors",
+      "confidence": "high for complete local contract; handle helper and OS outcomes remain boundaries"
+    },
+    {
+      "address": "0094ec37",
+      "kind": "function_name",
+      "old": "FUN_0094ec37",
+      "new": "cm0102_init_stream_buffer_or_inline",
+      "evidence": "All 19 instructions/68 bytes verified; allocation(4096) or inline+14/size 2 fallback, flag OR and cursor/count reset",
+      "confidence": "high for complete local contract; allocation and eventual release remain boundaries"
+    }
+  ]
+}
