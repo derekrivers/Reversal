@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "unit": "R26-C",
+  "optimized_python_safe": true,
+  "node_version": "v24.19.0",
+  "instruction_byte_mutation": "pinned specimen mismatch",
+  "switch_table_byte_mutation": "pinned specimen mismatch",
+  "native_width_mutation": "native export mismatch: 006834f0.asm",
+  "exact_old_name_mutation": "native manifest/preflight SHA-256 mismatch",
+  "oracle_metadata_mutation": "oracle SHA-256 mismatch",
+  "return_mutation": "original-instruction mismatch at case 0",
+  "ordered_read_mutation": "original-instruction mismatch at case 1"
+}
