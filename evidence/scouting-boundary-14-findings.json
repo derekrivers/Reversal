@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "3d81fa3c056c7d28c3c2a6d99e93d96464f43834",
+  "scope": "R14-C five whole-body static contracts; selected context only; no execution or full scouting workflow",
+  "address_space": "PE virtual addresses; hexadecimal field offsets in bytes",
+  "evidence": {
+    "sites": "evidence/scouting-boundary-14-sites.json",
+    "extractor": "scripts/extract_scouting_boundary_14.py",
+    "report": "reports/scouting-boundary-14.md",
+    "native_checkpoint": "2026-10-18-investigation-13",
+    "private_export_manifest_sha256": "233ec2078dc3eacf0d1b83a3d093028caf57c634329bacce4af4ea2efb5c7f86",
+    "method": "Pinned PE Capstone 5.0.7 complete-owned-body decode and comparison to hash-verified read-only native exports; every native incoming ref verified as direct PE call"
+  },
+  "shared_lookup": {
+    "receiver": "ECX; not validated",
+    "key": "Use supplied four-byte pointer; if zero use read32(00b74c26+0x300*signed16(read16(00b77c7a))); fallback index unchecked; null resolved pointer diagnoses",
+    "i8": "u8(read8(key)-read8(00ae2364)+16); signed checks admit bit patterns 0..15",
+    "i32": "u32(read32(key)-read32(00ae2364)+16); signed checks on byte table accessors admit 0..15",
+    "width_difference": "Byte arithmetic may accept low-byte aliases rejected by dword arithmetic; do not collapse the formulas",
+    "diagnostics": "00944cff -> 0090d130 -> 00944c9f -> 005e8290; shared buffer 00ae24d0; then write32(00b67a34,0) if calls return"
+  },
+  "functions": [
+    {
+      "entry_va": "007f6af0", "body_bytes": 240,
+      "coverage_status": "contract-supported", "coverage_basis": "whole-body static",
+      "role": "Store dword in inline slot selected by byte relative key",
+      "abi": "ECX receiver; stack slots (value32,key); RET 8; EAX boolean 1/0",
+      "success": "write32(receiver+0xc+4*i8,value32); no calls or ownership transfer",
+      "sites": ["007f6af0","007f6b44","007f6b46","007f6b4c","007f6b4e","007f6b56","007f6b59","007f6b60","007f6b64","007f6b6f"],
+      "failure": {"null_key_diagnostic":"0xb8","invalid_index_diagnostic":"0xc2","return":"EAX=0 after diagnostics"},
+      "confidence": "high direct static contract; meaning of stored dword open"
+    },
+    {
+      "entry_va": "007f6be0", "body_bytes": 229,
+      "coverage_status": "contract-supported", "coverage_basis": "whole-body static",
+      "role": "Read dword from same inline slot table",
+      "abi": "ECX receiver; stack slot key; RET 4; EAX dword or zero",
+      "success": "EAX=read32(receiver+0xc+4*i8); no calls or direct stores",
+      "sites": ["007f6be0","007f6c35","007f6c37","007f6c3d","007f6c3f","007f6c47","007f6c4a","007f6c54"],
+      "failure": {"null_key_diagnostic":"0xde","invalid_index_diagnostic":"0xe8","return":"EAX=0 after diagnostics; zero may also be a valid slot"},
+      "confidence": "high direct static contract"
+    },
+    {
+      "entry_va": "007f6cd0", "body_bytes": 338,
+      "coverage_status": "contract-supported", "coverage_basis": "whole-body static",
+      "role": "Return 688-byte record alias selected by full relative key and selector",
+      "abi": "ECX receiver; four-byte stack slots (selector,key), only signed low selector byte consumed; RET 8; EAX alias or zero",
+      "guard_order": ["signed8(selector) in 0..9 before key lookup", "resolve nonnull key", "n=u32(10*i32+selector); signed32(n)>=0 and signed32(n)<=signed32(u32(read32(receiver+8)-1))"],
+      "success": "EAX=u32(read32(receiver)+688*n); no base-null, extent or multiplication-overflow check; no direct write/call",
+      "sites": ["007f6cd0","007f6cda","007f6ce2","007f6ceb","007f6d3f","007f6d42","007f6d48","007f6d4b","007f6d4e","007f6d54","007f6d5b","007f6d5e","007f6d5f","007f6d63","007f6d6f","007f6d74","007f6d77","007f6d7f"],
+      "failure": {"invalid_selector_diagnostic":"0xff","null_key_diagnostic":"0x109","invalid_index_diagnostic":"0x113","return":"EAX=0 after diagnostics"},
+      "limitation": "No separate i32<=15 test. All arithmetic wraps; ordinary 160-count initialization supports 16 groups of ten only within the corresponding nonwrapping domain. Alias lifetime depends on receiver-held allocation.",
+      "confidence": "high direct static formula and guards; record contents and full lifetime open"
+    },
+    {
+      "entry_va": "007f6e30", "body_bytes": 228,
+      "coverage_status": "contract-supported", "coverage_basis": "whole-body static",
+      "role": "Read byte slot selected by full relative key",
+      "abi": "ECX receiver; stack slot key; RET 4; AL byte contract",
+      "success": "AL=read8(receiver+0x4c+i32); upper EAX bits zero on success due to prior 0..15 index; no direct write/call",
+      "sites": ["007f6e30","007f6e85","007f6e87","007f6e8d","007f6e8f","007f6e92","007f6e94","007f6e99","007f6ea3"],
+      "failure": {"null_key_diagnostic":"0x12c","invalid_index_diagnostic":"0x136","return":"AL=0xff after diagnostics; upper EAX unspecified; 0xff can also be valid stored byte"},
+      "confidence": "high direct static contract"
+    },
+    {
+      "entry_va": "007f6f20", "body_bytes": 240,
+      "coverage_status": "contract-supported", "coverage_basis": "whole-body static",
+      "role": "Store low input byte in same byte slot table",
+      "abi": "ECX receiver; four-byte stack slots (value,key), consumes low value byte; RET 8; EAX boolean 1/0",
+      "success": "write8(receiver+0x4c+i32,low8(value)); no value restriction, calls or pointee ownership",
+      "sites": ["007f6f20","007f6f75","007f6f77","007f6f7d","007f6f7f","007f6f82","007f6f84","007f6f89","007f6f90","007f6f94","007f6f9f"],
+      "failure": {"null_key_diagnostic":"0x150","invalid_index_diagnostic":"0x15a","return":"EAX=0 after diagnostics"},
+      "confidence": "high direct static contract"
+    }
+  ],
+  "storage_context": {
+    "dword_slots": "16 dwords at receiver+0xc..+0x4b; selected constructor context zeros them",
+    "byte_slots": "16 bytes at receiver+0x4c..+0x5b; ordinary default path sets to 1",
+    "record_base": "receiver+0; ordinary constructor publishes allocation+4, leading allocation dword count=160",
+    "record_count": "receiver+8; ordinary constructor sets 160 and invokes element helper with stride688/count160; successful load boundary can bypass defaulting",
+    "constructor_sites": ["007f6881","007f688b","007f68ac","007f68b3","007f68b9","007f68be","007f68ef","007f68f7","007f68fd","007f6903","007f691d","007f6992","007f6a4f"],
+    "cleanup": "007f6aa0 uses base-4 count and stride688 in element cleanup helper, calls release-family 00944c94 on base-4, clears receiver+0; selected sites only",
+    "cleanup_sites": ["007f6aa3","007f6aa9","007f6ab6","007f6abc","007f6ac2","007f6aca"],
+    "receiver_global": "Selected callers use read32(00b74448); singleton/exclusive ownership not established",
+    "pointer_slot_traffic": "008085bc stores constructed object pointer with key0; 00813204 clears slot after observed cleanup/free calls",
+    "byte_record_traffic": "00804248 reads byte then 00804268 locates record; 00804460 writes byte then 0080447a returns alias used as receiver of 007b7690"
+  },
+  "unresolved": [
+    "Key/global identities and producers, and why dword slots intentionally use only low bytes",
+    "Full constructor/load/element initialization and cleanup semantics; no complete lifecycle recovery",
+    "Record fields, meaning of selectors/byte values, and whether all dword slot values are pointers",
+    "Diagnostic helper effects and termination; no transitive RNG-purity claim",
+    "Runtime reachability, synchronization, persistence, full scout assignment or report workflow"
+  ]
+}
