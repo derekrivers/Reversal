@@ -1,0 +1,14 @@
+{
+  "work_unit": "R23-C",
+  "normal_and_optimized_equal": true,
+  "wrong_specimen_rejected": {
+    "normal": true,
+    "optimized": true
+  },
+  "changed_native_operand_rejected": {
+    "normal": true,
+    "optimized": true
+  },
+  "operand_normalizer_rejects_offset_change": true,
+  "site_evidence_sha256": "b473f04b90288afe0da3cfdd0c07893b23d1ec87120b20997e2e227f6e8996cc"
+}

@@ -1,0 +1,14 @@
+{
+  "work_unit": "R23-C",
+  "entry_va": "00601070",
+  "validation_class": "bounded no-callee whole-function original-instruction execution on synthetic mapped memory",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "cases": 288,
+  "executed_instruction_steps": 16200,
+  "instruction_starts_seen": 66,
+  "body_instruction_count": 121,
+  "compared": ["EAX", "ECX", "EDX", "ordered nonstack reads", "taken conditional branches", "zero nonstack native writes", "RET8", "nonvolatile registers"],
+  "not_compared": ["diagnostic paths/callees", "EFLAGS", "invalid/unmapped pointers", "alias/concurrent mutation", "connected caller behavior"],
+  "oracle_sha256": "df379919c89eb91a66fd300cc76219fb22dfe16c26b159d3f08909838bb6c7ac",
+  "integration_status": "proposal only; coordinator owns shared registry/check runner"
+}

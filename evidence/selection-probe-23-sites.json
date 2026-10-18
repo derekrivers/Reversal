@@ -1,0 +1,213 @@
+{
+  "work_unit": "R23-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "ea4c9888f34fe4282434e41a38e842cabec61ded30d064d0417a166e18f7fcc2",
+  "export_manifest_sha256": "b8d302c629ba6fbb98cb45315ee5df6f238b5b9a8e02a1c8220db3e2f384844d",
+  "annotation_preflight_sha256": "c7128da6c29d92931c1e096fc17112f28b73a4cd0276f7869e80a6800aee9e3a",
+  "entry_va": "00601070",
+  "file_offset": "0x201070",
+  "body_bytes": 399,
+  "body_sha256": "b355a540ab9162d662b4dfd5198d2f9dca594f0ff1a01b886fba26d64a5ffa2f",
+  "instruction_count": 121,
+  "all_pe_instructions_match_native_operands": true,
+  "branches": [
+    [
+      "00601080",
+      "jne",
+      [
+        "006010cc",
+        "00601082"
+      ]
+    ],
+    [
+      "00601097",
+      "jne",
+      [
+        "006010cc",
+        "00601099"
+      ]
+    ],
+    [
+      "006010c7",
+      "jmp",
+      [
+        "006011c4"
+      ]
+    ],
+    [
+      "006010d9",
+      "js",
+      [
+        "00601196",
+        "006010df"
+      ]
+    ],
+    [
+      "006010e5",
+      "jg",
+      [
+        "00601196",
+        "006010eb"
+      ]
+    ],
+    [
+      "006010f4",
+      "jl",
+      [
+        "00601166",
+        "006010f6"
+      ]
+    ],
+    [
+      "006010f9",
+      "jge",
+      [
+        "00601166",
+        "006010fb"
+      ]
+    ],
+    [
+      "0060111b",
+      "jne",
+      [
+        "0060111f",
+        "0060111d"
+      ]
+    ],
+    [
+      "00601143",
+      "je",
+      [
+        "006011f2",
+        "00601149"
+      ]
+    ],
+    [
+      "00601194",
+      "jmp",
+      [
+        "006011c4"
+      ]
+    ]
+  ],
+  "direct_calls": [
+    {
+      "target": "005e8290",
+      "sites": [
+        "006011e4"
+      ]
+    },
+    {
+      "target": "0090d130",
+      "sites": [
+        "006011c4"
+      ]
+    },
+    {
+      "target": "00944c9f",
+      "sites": [
+        "006011d4"
+      ]
+    },
+    {
+      "target": "00944cff",
+      "sites": [
+        "006010ad",
+        "0060117a",
+        "006011aa"
+      ]
+    }
+  ],
+  "memory_reads": [
+    [
+      "00601070",
+      "mov",
+      4,
+      "eax, dword ptr [esp + 8]"
+    ],
+    [
+      "00601082",
+      "movsx",
+      2,
+      "eax, word ptr [0xb77c7a]"
+    ],
+    [
+      "0060108f",
+      "mov",
+      4,
+      "eax, dword ptr [eax + 0xb74c26]"
+    ],
+    [
+      "006010cc",
+      "mov",
+      4,
+      "edx, dword ptr [eax]"
+    ],
+    [
+      "006010ce",
+      "mov",
+      4,
+      "ebx, dword ptr [0xae2364]"
+    ],
+    [
+      "006010df",
+      "mov",
+      4,
+      "eax, dword ptr [ecx + 4]"
+    ],
+    [
+      "006010eb",
+      "mov",
+      1,
+      "bl, byte ptr [esp + 0x20c]"
+    ],
+    [
+      "006010fe",
+      "mov",
+      4,
+      "esi, dword ptr [ecx]"
+    ],
+    [
+      "00601112",
+      "mov",
+      1,
+      "al, byte ptr [esi + edx + 0x9a69]"
+    ],
+    [
+      "0060113d",
+      "mov",
+      4,
+      "eax, dword ptr [eax + ecx*4]"
+    ],
+    [
+      "00601149",
+      "mov",
+      4,
+      "ecx, dword ptr [0xae23bc]"
+    ]
+  ],
+  "memory_writes": [
+    [
+      "006011ec",
+      "mov",
+      4,
+      "dword ptr [0xb67a34], esi"
+    ]
+  ],
+  "returns": [
+    [
+      "00601163",
+      8
+    ],
+    [
+      "006011fc",
+      8
+    ]
+  ],
+  "native_export_hashes": {
+    "asm": "ef14def03c6b177843c822a790c093be72644eaf2610fd7c7a8b46fa375a24b1",
+    "c": "c7cb24278170d03d58bc62dcc09522ce569ed9340bf9a43bc75ffeab00833a3c"
+  },
+  "scope": "complete local static body; callee effects unresolved",
+  "integrity_under_python_optimized_mode": "explicit ValueError gates"
+}
