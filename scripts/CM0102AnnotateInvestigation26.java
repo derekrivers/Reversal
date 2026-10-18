@@ -97,19 +97,21 @@ public class CM0102AnnotateInvestigation26 extends GhidraScript {
   Path output=Paths.get(args[0]).toAbsolutePath();require(!Files.exists(output),"output must not already exist");
   Path temporary=Files.createTempFile(output.getParent(),"investigation-26-",".json.tmp");
   Files.writeString(temporary,new GsonBuilder().setPrettyPrinting().create().toJson(receipt)+"\n");
-  boolean committed=false;
+  boolean published=false;
   try {
    int tx=currentProgram.startTransaction("Investigation 26 reviewed names");boolean apply=false;
    try {
     for(JsonElement item:rows){JsonArray r=item.getAsJsonArray();
      function(r.get(0).getAsString()).setName(r.get(2).getAsString(),SourceType.USER_DEFINED);}
+    for(JsonElement item:rows){JsonArray r=item.getAsJsonArray();
+     require(r.get(2).getAsString().equals(function(r.get(0).getAsString()).getName()),"transaction name "+r.get(0).getAsString());}
+    Files.move(temporary,output);published=true;
     apply=true;
    } finally {currentProgram.endTransaction(tx,apply);}
-   committed=true;
-   for(JsonElement item:rows){JsonArray r=item.getAsJsonArray();
-    require(r.get(2).getAsString().equals(function(r.get(0).getAsString()).getName()),"post-transaction name "+r.get(0).getAsString());}
-   Files.move(temporary,output);
-  } finally {if(!committed)Files.deleteIfExists(temporary);}
+  } catch(Exception failure) {
+   if(published)Files.deleteIfExists(output);
+   throw failure;
+  } finally {Files.deleteIfExists(temporary);}
   println("Applied investigation 26 in memory; native save and independent reopen still required");
  }
 }
