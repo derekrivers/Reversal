@@ -49,11 +49,11 @@ def stage():
     names.update({row[0]:row[1] for row in annotations['annotations']})
     types={t['path']:t for t in annotations['partial_data_types']}
     comments_by_address={}
-    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json']:
+    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json','investigation-19-annotations.json']:
       event_receipt=ROOT/'evidence'/receipt_name
       if event_receipt.exists():
         event_annotations=json.loads(event_receipt.read_text())
-        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json') else row[1])
+        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json','investigation-19-annotations.json') else row[1])
                       for row in event_annotations['annotations']})
         labels.update(dict(event_annotations['global_labels']))
         types.update({t['path']:t for t in event_annotations['partial_data_types']})
@@ -80,6 +80,9 @@ def stage():
     r18=json.loads((ROOT/'evidence/investigation-18-annotations.json').read_text())
     r18_names={row[0] for row in r18['annotations']}
     r18_notes={row[0]:'CM0102 investigation18 (2026-10-18): '+row[1] for row in r18['function_comments']}
+    r19=json.loads((ROOT/'evidence/investigation-19-annotations.json').read_text())
+    r19_names={row[0] for row in r19['annotations']}
+    r19_notes={row[0]:'CM0102 investigation19 (2026-10-18): '+row[1] for row in r19['function_comments']}
     functions=[]
     for a,n in sorted(names.items()):
       row={'address':a,'name':n}
@@ -92,6 +95,7 @@ def stage():
       if a in r16_names:row['comment']=r16_notes.get(a)
       if a in r17_names:row['comment']=r17_notes.get(a)
       if a in r18_names:row['comment']=r18_notes.get(a)
+      if a in r19_names:row['comment']=r19_notes.get(a)
       functions.append(row)
     pe=struct.unpack_from('<I',data,0x3c)[0];optional=pe+24
     base=struct.unpack_from('<I',data,optional+28)[0]

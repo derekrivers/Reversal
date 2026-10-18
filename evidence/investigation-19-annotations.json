@@ -1,0 +1,56 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 19,
+  "scope": "Eight reviewed static working names only; no behavior oracle, prototype, comment or data type applied.",
+  "annotations": [
+    [
+      "006cd770",
+      "FUN_006cd770",
+      "match_emit_perturbed_coordinate_state_006cd770"
+    ],
+    [
+      "006cd490",
+      "FUN_006cd490",
+      "match_classify_coordinate_boundary_event_006cd490"
+    ],
+    [
+      "0094fded",
+      "FUN_0094fded",
+      "cm0102_descriptor_to_handle_or_error9"
+    ],
+    [
+      "0094633b",
+      "FUN_0094633b",
+      "cm0102_reverse_stride_callback_seh"
+    ],
+    [
+      "009452ca",
+      "FUN_009452ca",
+      "cm0102_release_pointer_by_runtime_mode"
+    ],
+    [
+      "00948b90",
+      "FUN_00948b90",
+      "cm0102_find_pointer_1m_window_entry"
+    ],
+    [
+      "009498eb",
+      "FUN_009498eb",
+      "cm0102_lookup_aligned_page_descriptor"
+    ],
+    [
+      "00949942",
+      "FUN_00949942",
+      "cm0102_accumulate_clear_page_descriptor"
+    ]
+  ],
+  "function_comments": [],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "match-action-19-annotations.json",
+    "db-runtime-19-annotations.json",
+    "cleanup-runtime-19-annotations.json"
+  ]
+}
