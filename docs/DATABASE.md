@@ -2,11 +2,11 @@
 
 The native database is the ongoing working checkpoint. Keep `cm0102.gpr` beside the complete `cm0102.rep` directory. Open the existing `cm0102.exe` program in that project; importing the executable into a new project does not recover the annotations.
 
-The [current checkpoint](../checkpoints/2026-10-18-investigation-17/) records:
+The [current checkpoint](../checkpoints/2026-10-18-investigation-18/) records:
 
-- 111 named functions, including sixty names with verified blank function comments; 16 global labels.
+- 121 named functions, including seventy names with verified blank function comments; 16 global labels.
 - 9 recovered structures with 93 named fields under `/CM0102/Recovered`.
-- 188 original code samples and 76 code comments.
+- 198 original code samples and 76 code comments.
 - 10 canonical project files, each with SHA-256 and byte length.
 
 `checkpoints/latest.json` identifies the current dated checkpoint. Investigations 04–09 metadata remain historical. This checkpoint records the canonical files retained by Ghidra after saving the current project; older separately saved checkpoint versions remain historical.
@@ -41,6 +41,7 @@ Use a **new isolated output directory**, the hash-pinned executable and Ghidra 1
 15. `CM0102AnnotateInvestigation16.java /new/investigation-16-annotations.json /path/match-core-16-findings.json /path/db-stream-16-annotations.json /path/scout-copy-16-annotations.json /path/unwind-targets-16-annotations.json`
 16. `CM0102CorrectMatchBody17.java /new/match-dispatch-17-body-correction.json` to include the original 21-byte switch arm in function `006f09f0`.
 17. `CM0102AnnotateInvestigation17.java /new/investigation-17-annotations.json /path/match-dispatch-17-annotations.json /path/db-lower-17-annotations.json /path/scout-cleanup-17-annotations.json`
+18. `CM0102AnnotateInvestigation18.java /new/investigation-18-annotations.json /path/match-helpers-18-annotations.json /path/db-helpers-18-annotations.json /path/cleanup-helpers-18-annotations.json`
 
 Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original project. Then reopen the rebuilt project read-only and execute:
 
@@ -49,7 +50,7 @@ Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original p
   -process cm0102.exe -noanalysis -readOnly \
   -scriptPath /absolute/path/to/Reversal/scripts \
   -postScript CM0102VerifyCheckpoint.java \
-  /absolute/path/to/Reversal/checkpoints/2026-10-18-investigation-17/expected-database.json \
+  /absolute/path/to/Reversal/checkpoints/2026-10-18-investigation-18/expected-database.json \
   /new/rebuilt-verification.json
 ```
 

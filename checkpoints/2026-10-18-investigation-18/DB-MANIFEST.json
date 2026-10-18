@@ -1,0 +1,59 @@
+{
+  "date_utc": "2026-10-18",
+  "ghidra": "12.1.4",
+  "jdk": "21",
+  "input_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "project_files": {
+    "cm0102.gpr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cm0102.rep\\idata\\00\\00000000.prp": {
+      "bytes": 487,
+      "sha256": "2610d327ab8b4ac9573742ecb6c58c4acbb4a243343060f94bd9ffa7ecdaf3c4"
+    },
+    "cm0102.rep\\idata\\00\\~00000000.db\\db.22.gbf": {
+      "bytes": 115015680,
+      "sha256": "6a833f8c2c09e56f8f8f1d67c849a0cfa44253dee7215f9c2b9b6f3047428990"
+    },
+    "cm0102.rep\\idata\\00\\~00000000.db\\db.23.gbf": {
+      "bytes": 115015680,
+      "sha256": "70c13c704648f907451c29951ccd6dd5b996d141868b4b276d82b152ed9b2ea7"
+    },
+    "cm0102.rep\\idata\\~index.bak": {
+      "bytes": 112,
+      "sha256": "117e7eb2457fb98b706ab2aa51e0c5ef28affd514b75582a820ad8d57bcc5f77"
+    },
+    "cm0102.rep\\idata\\~index.dat": {
+      "bytes": 112,
+      "sha256": "117e7eb2457fb98b706ab2aa51e0c5ef28affd514b75582a820ad8d57bcc5f77"
+    },
+    "cm0102.rep\\project.prp": {
+      "bytes": 164,
+      "sha256": "44ebea390a41351408ff5de0d51f386e6b16f2965533c6dba6866044367431b3"
+    },
+    "cm0102.rep\\user\\~index.dat": {
+      "bytes": 59,
+      "sha256": "0a5034997e47499d758115fa580ad21d96557d2a32c89f2263bcfd3fa8a9a6e5"
+    },
+    "cm0102.rep\\versioned\\~index.bak": {
+      "bytes": 63,
+      "sha256": "afed071b228a87fbbb18d8bf39667792d6912c1d1ad2ea2f4f41dac320db8b2f"
+    },
+    "cm0102.rep\\versioned\\~index.dat": {
+      "bytes": 63,
+      "sha256": "afed071b228a87fbbb18d8bf39667792d6912c1d1ad2ea2f4f41dac320db8b2f"
+    }
+  },
+  "scope": "Native Ghidra project, function comments/names, RNG/event labels and recovered structures. Original executable bytes were not patched.",
+  "expected_counts": {
+    "functions": 121,
+    "global_labels": 16,
+    "structures": 9,
+    "fields": 93,
+    "code_samples": 198,
+    "code_comments": 76,
+    "function_body_sites": 6
+  },
+  "limitations": "Research types are partial; no full game or match reproduction."
+}
