@@ -73,6 +73,14 @@
       "module": "reconstruction/penalty-resolution.ts",
       "evidence": "evidence/penalty-resolution-validation/oracle.json",
       "boundary": "Independent00703b25..00703be7 and00706cba..00706d26 slices; adjusted quality/keeper terms supplied; no score, save or commentary execution"
+    },
+    {
+      "function": "00700420",
+      "scope": "connected-action33-body-and-postlude",
+      "behavior": "Penalty keeper base+common adjustment response under explicit53/64-bit precision",
+      "module": "reconstruction/keeper-response.ts",
+      "evidence": "evidence/keeper-response-validation/oracle.json",
+      "boundary": "Synthetic prelude frame; float input bounds enforced; validity/grid lookup and other actions excluded; match-entry precision unobserved; no complete penalty outcome"
     }
   ]
 }

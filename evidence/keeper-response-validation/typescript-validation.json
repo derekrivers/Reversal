@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "cases": 8192,
+  "paths": {
+    "53:postlude:retained": 1106,
+    "53:postlude:weighted": 444,
+    "53:postlude:redrawn": 498,
+    "53:penalty-body:retained": 1094,
+    "53:penalty-body:weighted": 456,
+    "53:penalty-body:redrawn": 498,
+    "64:postlude:retained": 1106,
+    "64:postlude:weighted": 444,
+    "64:postlude:redrawn": 498,
+    "64:penalty-body:retained": 1094,
+    "64:penalty-body:weighted": 456,
+    "64:penalty-body:redrawn": 498
+  },
+  "comparisons": "response, fallback flag, branch, ordered postlude RNG bounds and final RNG state",
+  "control_words": {
+    "53": "0x027f",
+    "64": "0x037f"
+  },
+  "limitations": [
+    "Entry validity/position checks and grid table acquisition skipped. Other action branches and caller do not execute.",
+    "Selected rating, slot+d1, counter+f, fallback rating+3b and match+8eaa semantics remain partial.",
+    "Connected penalty-body fixtures start after the action33 prelude; not whole-function or complete penalty-attempt equivalence.",
+    "Both53/64-bit precision modes tested; static CRT setter requests53, but no runtime trace proves match-entry control state.",
+    "No goal/save, score update, commentary or full-match execution."
+  ]
+}

@@ -1,0 +1,672 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "annotations": [
+    [
+      "00700420",
+      "cm0102_compute_keeper_response_candidate",
+      "Investigation07 supersedes earlier base-only gap: common700a4f..700b87 postlude and connected penalty base+postlude checked in8192 fixtures under explicit53/64-bit x87 precision. Two initial postlude draws select retained vs fallback; fallback uses rating+3b and random285, then raw base redraw or represented-double0.7/0.3 weighted redraw. Final trunc(trunc(selectedRating/6)+sign16(value)*represented-double4/7+20), with x87 rounding after each operation. Prelude validity/grid lookup and other actions remain outside reconstructed scope; no full goal/save outcome."
+    ],
+    [
+      "0094a698",
+      "cm0102_crt_request_precision53_candidate",
+      "Pushes mask30000h and value10000h into0094f5b0 -\u003e0094f57b -\u003e0094f658, mapping to x87 precision bits0200h (53-bit). Static request observed; no runtime trace establishes match-entry control word or complete startup path."
+    ]
+  ],
+  "global_labels": [
+    [
+      "00968e40",
+      "cm0102_keeper_redraw_weight_double"
+    ],
+    [
+      "00968e80",
+      "cm0102_keeper_base_weight_double"
+    ],
+    [
+      "0096d698",
+      "cm0102_keeper_response_scale_double"
+    ]
+  ],
+  "code_comments": [
+    [
+      "00700a4f",
+      "Verified keeper postlude: first bound\u003dtrunc(2*float(slot+d1)+uint8(slot+f)+10); second\u003dtrunc((2-float(distance))*signed8(match+8eaa)*10). Compare draws; first\u003c\u003dsecond selects fallback. Both53/64-bit x87 modes tested; no full function/caller equivalence."
+    ],
+    [
+      "00700ab2",
+      "first\u003c\u003dsecond sets output flag1; fallback compares random(signed16(slot+3b)) \u003e random285 to choose weighted vs raw base redraw."
+    ],
+    [
+      "00700b12",
+      "Bound trunc(sign16(base)*binary64(0.7)); x87 precision matters. Then random(bound)+sign16(base)*binary64(0.3), truncated before signed16 cast."
+    ],
+    [
+      "00700b75",
+      "Final response: trunc(trunc(selected signed16 rating/6)+sign16(value)*binary64(4/7)+20). Do not round this whole expression with JavaScript Number under assumed64-bit x87 precision."
+    ],
+    [
+      "0094a698",
+      "Static CRT precision request: value10000h under mask30000h maps to x87 precision53 via0094f5b0/0094f57b/0094f658; runtime match-entry state remains unobserved."
+    ]
+  ],
+  "partial_data_types": [
+    {
+      "path": "/CM0102/Recovered/MatchRosterSlotPartial",
+      "bytes": 446,
+      "fields": [
+        {
+          "offset": 15,
+          "name": "keeper_counter_raw",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Unsigned counter used in postlude bound; semantic label unresolved"
+        },
+        {
+          "offset": 25,
+          "name": "status_raw",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Nonnegative values enter inspected valid-slot paths; enum unresolved"
+        },
+        {
+          "offset": 39,
+          "name": "side_index",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Observed0/1 side selector"
+        },
+        {
+          "offset": 59,
+          "name": "keeper_fallback_rating_raw",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Signed16 fallback draw bound; source formula unresolved"
+        },
+        {
+          "offset": 105,
+          "name": "staff_record",
+          "bytes": 4,
+          "type": "pointer32",
+          "comment": "Runtime pointer, not saved-file ID"
+        },
+        {
+          "offset": 109,
+          "name": "player_record_candidate",
+          "bytes": 4,
+          "type": "pointer32",
+          "comment": "Pointee layout incomplete"
+        },
+        {
+          "offset": 209,
+          "name": "keeper_adjustment_float_raw",
+          "bytes": 4,
+          "type": "float",
+          "comment": "Finite float input to first postlude bound; source formula unresolved"
+        },
+        {
+          "offset": 360,
+          "name": "keeper_rating_variant0_raw",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Selected when variant byte\u003d0; source/stat formula unresolved"
+        },
+        {
+          "offset": 362,
+          "name": "keeper_rating_variant1_raw",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Selected when variant byte!\u003d0; source/stat formula unresolved"
+        },
+        {
+          "offset": 384,
+          "name": "shot_rating_raw",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Meaning unresolved; signed16*5 supplies penalty base-quality random bound"
+        },
+        {
+          "offset": 408,
+          "name": "action_code_candidate",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Observed action comparisons; enum incomplete"
+        },
+        {
+          "offset": 412,
+          "name": "shot_quality_raw",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Used in action state; 35-yard sequence clamps one write to[-200,200]"
+        },
+        {
+          "offset": 414,
+          "name": "match_context",
+          "bytes": 4,
+          "type": "pointer32",
+          "comment": "Corrects earlier activity-word-unknown label; dereferenced as match receiver by006f0630 and multiple action routines"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/MatchSideDescriptorPartial",
+      "bytes": 208,
+      "fields": [
+        {
+          "offset": 18,
+          "name": "match_context",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 23,
+          "name": "substitute_limit_candidate",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Exact meaning unresolved"
+        },
+        {
+          "offset": 24,
+          "name": "side_index",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 25,
+          "name": "team_kind_selector",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 27,
+          "name": "manager_staff",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 31,
+          "name": "manager_nonplayer",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 35,
+          "name": "match_roster",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 39,
+          "name": "club_squad",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 43,
+          "name": "side_state_buffer",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 47,
+          "name": "team",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 51,
+          "name": "opponent",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 55,
+          "name": "fixture",
+          "bytes": 4,
+          "type": "pointer32"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/CommentaryEvent14",
+      "bytes": 14,
+      "fields": [
+        {
+          "offset": 0,
+          "name": "event_code",
+          "bytes": 2,
+          "type": "word"
+        },
+        {
+          "offset": 2,
+          "name": "text_variant_index",
+          "bytes": 2,
+          "type": "word"
+        },
+        {
+          "offset": 4,
+          "name": "minute_byte",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Detailed mode converts signed clock/11 then truncates to byte"
+        },
+        {
+          "offset": 5,
+          "name": "player_argument",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 6,
+          "name": "side_argument",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 7,
+          "name": "argument_6",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 8,
+          "name": "argument_7",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 9,
+          "name": "argument_8",
+          "bytes": 4,
+          "type": "dword"
+        },
+        {
+          "offset": 13,
+          "name": "segment_index",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Initialized-1; pipe-separated game text advances this signed cursor; code bit8000 marks continuation"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/CommentaryBufferPartial",
+      "bytes": 11697,
+      "fields": [
+        {
+          "offset": 5,
+          "name": "display_pending_flag",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Zero makes006d78b0 return null"
+        },
+        {
+          "offset": 6,
+          "name": "history_count",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Capped at700 in inspected append path"
+        },
+        {
+          "offset": 8,
+          "name": "ring_write_index",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Wraps after11"
+        },
+        {
+          "offset": 12,
+          "name": "ring_display_index",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Used by006d78b0;0..11"
+        },
+        {
+          "offset": 14,
+          "name": "history_cursor_index",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Used by enqueue history-copy path"
+        },
+        {
+          "offset": 48,
+          "name": "ring_events",
+          "bytes": 168,
+          "type": "CommentaryEvent14[12]"
+        },
+        {
+          "offset": 216,
+          "name": "formatted_slot_area_unknown",
+          "bytes": 1608,
+          "type": "byte[1608]",
+          "comment": "Observed stride0x86; internal layout unknown"
+        },
+        {
+          "offset": 1824,
+          "name": "history_events",
+          "bytes": 9800,
+          "type": "CommentaryEvent14[700]"
+        },
+        {
+          "offset": 11624,
+          "name": "cached_period_target",
+          "bytes": 4,
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/MatchContextPartial",
+      "bytes": 63035,
+      "fields": [
+        {
+          "offset": 0,
+          "name": "simulation_mode",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 424,
+          "name": "golden_goal_stop_latch",
+          "bytes": 1,
+          "type": "byte",
+          "comment": "Set by inspected goal paths after predicate006d4250; emitted event1fd2 identifies golden-goal semantics"
+        },
+        {
+          "offset": 458,
+          "name": "initial_event_latch",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 18322,
+          "name": "fixture",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 18326,
+          "name": "home_roster",
+          "bytes": 8920,
+          "type": "MatchRosterSlotPartial[20]"
+        },
+        {
+          "offset": 27246,
+          "name": "away_roster",
+          "bytes": 8920,
+          "type": "MatchRosterSlotPartial[20]"
+        },
+        {
+          "offset": 36519,
+          "name": "coordinate_a_candidate",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36520,
+          "name": "coordinate_b_candidate",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36522,
+          "name": "keeper_adjustment_state_raw",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Signed8 factor of second postlude bound; enum/source unresolved"
+        },
+        {
+          "offset": 36526,
+          "name": "current_side",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36530,
+          "name": "play_event_state",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36531,
+          "name": "tiebreak_phase",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36532,
+          "name": "auxiliary_event_state",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36534,
+          "name": "next_restart_side",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 36535,
+          "name": "added_time_units",
+          "bytes": 1,
+          "type": "sbyte"
+        },
+        {
+          "offset": 36536,
+          "name": "active_list_count",
+          "bytes": 1,
+          "type": "sbyte"
+        },
+        {
+          "offset": 36560,
+          "name": "clock_units",
+          "bytes": 2,
+          "type": "short",
+          "comment": "11 units per event minute in detailed mode; not uniform wall-clock ticks"
+        },
+        {
+          "offset": 36562,
+          "name": "step_accumulator",
+          "bytes": 2,
+          "type": "short"
+        },
+        {
+          "offset": 36564,
+          "name": "period_end_units",
+          "bytes": 2,
+          "type": "short",
+          "comment": "495/990/1155/1320 or terminal sentinel0/1"
+        },
+        {
+          "offset": 36730,
+          "name": "commentary_companion",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 36734,
+          "name": "active_list_first_entry",
+          "bytes": 4,
+          "type": "pointer32",
+          "comment": "Total capacity not established"
+        },
+        {
+          "offset": 36914,
+          "name": "side_descriptors",
+          "bytes": 416,
+          "type": "MatchSideDescriptorPartial[2]"
+        },
+        {
+          "offset": 62908,
+          "name": "home_tiebreak_score",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 62909,
+          "name": "home_match_score",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 62962,
+          "name": "away_tiebreak_score",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 62963,
+          "name": "away_match_score",
+          "bytes": 1,
+          "type": "byte"
+        },
+        {
+          "offset": 63032,
+          "name": "pitch_abandonment_minute_threshold",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "-1disables; threshold*11 compared with signed clock in path emitting217b/config571"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/CommentaryEventDefinition18",
+      "bytes": 18,
+      "fields": [
+        {
+          "offset": 0,
+          "name": "priority",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 1,
+          "name": "silent_flag",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 2,
+          "name": "follow_on_flag",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 3,
+          "name": "flashing_flag",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 4,
+          "name": "report_count",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Loader clamps to0..11"
+        },
+        {
+          "offset": 5,
+          "name": "sound_centre",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 6,
+          "name": "wait_on_sound",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 7,
+          "name": "no_rollback",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Config header field"
+        },
+        {
+          "offset": 8,
+          "name": "variants",
+          "bytes": 4,
+          "type": "pointer32",
+          "comment": "Array of0x110-byte records"
+        },
+        {
+          "offset": 12,
+          "name": "variant_count",
+          "bytes": 2,
+          "type": "short"
+        },
+        {
+          "offset": 14,
+          "name": "weight_total",
+          "bytes": 4,
+          "type": "int",
+          "comment": "After EOF normalization; maxDivisor*10/divisor weights are summed"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/CommentaryVariant272",
+      "bytes": 272,
+      "fields": [
+        {
+          "offset": 0,
+          "name": "weight",
+          "bytes": 2,
+          "type": "short",
+          "comment": "Config divisor replaced by normalized inverse weight at EOF"
+        },
+        {
+          "offset": 2,
+          "name": "delay_milliseconds",
+          "bytes": 2,
+          "type": "short"
+        },
+        {
+          "offset": 4,
+          "name": "sound_filename_buffer",
+          "bytes": 260,
+          "type": "byte[260]",
+          "comment": "Storage up to game-text pointer; original declared buffer type unknown"
+        },
+        {
+          "offset": 264,
+          "name": "game_text",
+          "bytes": 4,
+          "type": "pointer32"
+        },
+        {
+          "offset": 268,
+          "name": "report_text",
+          "bytes": 4,
+          "type": "pointer32"
+        }
+      ]
+    },
+    {
+      "path": "/CM0102/Recovered/PlayerAttributesPrefixPartial",
+      "bytes": 57,
+      "fields": [
+        {
+          "offset": 53,
+          "name": "one_on_ones_candidate",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Read by shootout budget; label corroborated by pinned community TPlayer layout"
+        },
+        {
+          "offset": 56,
+          "name": "penalties_candidate",
+          "bytes": 1,
+          "type": "sbyte",
+          "comment": "Community TPlayer label; this offset is not read by the verified budget slice"
+        }
+      ]
+    }
+  ],
+  "type_application": "Four measured postlude fields; no guessed complete prototype or full record layout applied"
+}

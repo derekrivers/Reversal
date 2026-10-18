@@ -2,14 +2,14 @@
 
 The native database is the ongoing working checkpoint. Keep `cm0102.gpr` beside the complete `cm0102.rep` directory. Open the existing `cm0102.exe` program in that project; importing the executable into a new project does not recover the annotations.
 
-The [current checkpoint](../checkpoints/2026-10-18-investigation-06/) records:
+The [current checkpoint](../checkpoints/2026-10-18-investigation-07/) records:
 
-- 25 named functions and comments; 12 global labels.
-- 8 recovered structures with 84 named fields under `/CM0102/Recovered`.
-- 41 original code samples and 15 code comments.
-- 11 canonical project files, each with SHA-256 and byte length.
+- 26 named functions and comments; 15 global labels.
+- 8 recovered structures with 88 named fields under `/CM0102/Recovered`.
+- 46 original code samples and 19 code comments.
+- 9 canonical project files, each with SHA-256 and byte length.
 
-`checkpoints/latest.json` identifies the current dated checkpoint. Investigations 04 and 05 metadata remain historical. The investigation 06 archive retains the database's previous canonical versions alongside the latest version; all are hashed.
+`checkpoints/latest.json` identifies the current dated checkpoint. Investigations 04–06 metadata remain historical. This checkpoint records the canonical files retained by Ghidra after saving the current project; older separately saved checkpoint versions remain historical.
 
 ## Restore the saved archive
 
@@ -29,6 +29,7 @@ Use a **new isolated output directory**, the hash-pinned executable and Ghidra 1
 3. `CM0102AnnotateEvents.java /new/event-annotations.json`
 4. `CM0102AnnotatePenalty.java /new/penalty-annotations.json`
 5. `CM0102AnnotateShotResolution.java /new/shot-resolution-annotations.json`
+6. `CM0102AnnotateKeeperResponse.java /new/keeper-response-annotations.json`
 
 Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original project. Then reopen the rebuilt project read-only and execute:
 
@@ -37,7 +38,7 @@ Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original p
   -process cm0102.exe -noanalysis -readOnly \
   -scriptPath /absolute/path/to/Reversal/scripts \
   -postScript CM0102VerifyCheckpoint.java \
-  /absolute/path/to/Reversal/checkpoints/2026-10-18-investigation-06/expected-database.json \
+  /absolute/path/to/Reversal/checkpoints/2026-10-18-investigation-07/expected-database.json \
   /new/rebuilt-verification.json
 ```
 
@@ -48,3 +49,5 @@ This checks the expected semantic annotations and code bytes. It does not promis
 Close the live project before copying. With a local project at `ghidra-project/` and the pinned specimen at `downloads/cm0102.exe`, `scripts/checkpoint_database.py stage` creates an archive plus an independent `restore-test/` extraction. Run the bundled Java verifier against that extracted project and write `evidence/database-restore-verification.json`; then run `scripts/checkpoint_database.py finalize`.
 
 The script excludes locks, presave files and temporary files while retaining canonical project files. It verifies the restored annotations and hashes before finalizing. Preserve the resulting native archive separately, and commit the new manifest, receipt and annotation scripts together. Existing checkpoint metadata belongs to its dated checkpoint; do not silently overwrite it with another database.
+
+When later annotation receipts replace a comment at the same address, the checkpoint builder retains the latest text for verification. Earlier dated receipts are historical, not simultaneous comments in the current listing.

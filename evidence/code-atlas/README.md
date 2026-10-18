@@ -8,7 +8,7 @@ This inventories the pinned 3.9.68 executable's Ghidra-inferred functions. It is
 | External function symbols | 143 |
 | Embedded original source-path strings | 396 |
 | Functions directly referencing a source path | 1,892 |
-| Functions carrying working research names | 25 |
+| Functions carrying working research names | 26 |
 | Call instructions | 93,349 |
 | Call instructions without a static target | 851 |
 | Executable memory bytes | 5,660,672 |

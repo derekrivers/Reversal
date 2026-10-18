@@ -45,3 +45,7 @@ The penalty-preparation oracle sets the original sudden-death flag to suppress a
 6. Add UI once a stable behavioral boundary exists.
 
 Keep recovered facts, working interpretations and proposed architecture distinct. The inventory covers native code locations; it does not establish that all source, UI screens or competition rules have been rebuilt.
+
+## Floating-point state
+
+The verified keeper body requires an explicit 53/64-bit x87 significand choice. Static CRT code requests 53-bit precision, but match-entry state is not runtime-confirmed. Keep this state in the simulation contract; do not let UI/browser arithmetic silently choose it. The bounded `x87-finite.ts` helper models only finite ADD/MUL and truncation required by the checked keeper slice. It is not a whole-game numerical compatibility layer.

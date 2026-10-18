@@ -1,0 +1,333 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "sites": [
+    {
+      "address": "00945646",
+      "mnemonic": "FSTCW",
+      "function": "00945640",
+      "incoming_call_count": 1952,
+      "first_incoming_calls": [
+        "005cd55f",
+        "005cd6ff",
+        "004198d8",
+        "0041990d",
+        "00419945",
+        "004c7d8a",
+        "004cdc65",
+        "004cdc79",
+        "004cdcc5",
+        "004cdcec",
+        "004cdd13",
+        "004cdeb1",
+        "004cded8",
+        "004cdf31",
+        "004cdf6d",
+        "004cdf94"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[-0x6]"
+        }
+      ]
+    },
+    {
+      "address": "00945656",
+      "mnemonic": "FLDCW",
+      "function": "00945640",
+      "incoming_call_count": 1952,
+      "first_incoming_calls": [
+        "005cd55f",
+        "005cd6ff",
+        "004198d8",
+        "0041990d",
+        "00419945",
+        "004c7d8a",
+        "004cdc65",
+        "004cdc79",
+        "004cdcc5",
+        "004cdcec",
+        "004cdd13",
+        "004cdeb1",
+        "004cded8",
+        "004cdf31",
+        "004cdf6d",
+        "004cdf94"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[-0x8]"
+        }
+      ]
+    },
+    {
+      "address": "0094565c",
+      "mnemonic": "FLDCW",
+      "function": "00945640",
+      "incoming_call_count": 1952,
+      "first_incoming_calls": [
+        "005cd55f",
+        "005cd6ff",
+        "004198d8",
+        "0041990d",
+        "00419945",
+        "004c7d8a",
+        "004cdc65",
+        "004cdc79",
+        "004cdcc5",
+        "004cdcec",
+        "004cdd13",
+        "004cdeb1",
+        "004cded8",
+        "004cdf31",
+        "004cdf6d",
+        "004cdf94"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[-0x6]"
+        }
+      ]
+    },
+    {
+      "address": "00946015",
+      "mnemonic": "FSTCW",
+      "function": "00946012",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "00946000"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[-0x4]"
+        }
+      ]
+    },
+    {
+      "address": "0094bbbe",
+      "mnemonic": "FLDCW",
+      "function": "0094bb87",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "0094bcf7"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x4]"
+        }
+      ]
+    },
+    {
+      "address": "0094bbf7",
+      "mnemonic": "FLDCW",
+      "function": "0094bbe5",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "00946021"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x6]"
+        }
+      ]
+    },
+    {
+      "address": "0094bc76",
+      "mnemonic": "FLDCW",
+      "function": "0094bc6e",
+      "incoming_call_count": 3,
+      "first_incoming_calls": [
+        "009461a0",
+        "009461b4",
+        "009461bb"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x0]"
+        }
+      ]
+    },
+    {
+      "address": "0094bd05",
+      "mnemonic": "FLDCW",
+      "function": "0094bcb9",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "00946085"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x0]"
+        }
+      ]
+    },
+    {
+      "address": "0094f580",
+      "mnemonic": "FSTCW",
+      "function": "0094f57b",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "0094f5be"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[-0x8]"
+        }
+      ]
+    },
+    {
+      "address": "0094f5a8",
+      "mnemonic": "FLDCW",
+      "function": "0094f57b",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "0094f5be"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x8]"
+        }
+      ]
+    },
+    {
+      "address": "00950184",
+      "mnemonic": "FNSTCW",
+      "function": "00950140",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "0095093c"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x1c]"
+        }
+      ]
+    },
+    {
+      "address": "0095019a",
+      "mnemonic": "FLDCW",
+      "function": "00950140",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "0095093c"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x20]"
+        }
+      ]
+    },
+    {
+      "address": "009501bc",
+      "mnemonic": "FLDCW",
+      "function": "00950140",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "0095093c"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x1c]"
+        }
+      ]
+    },
+    {
+      "address": "009501d3",
+      "mnemonic": "FLDCW",
+      "function": "00950140",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "0095093c"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x1c]"
+        }
+      ]
+    },
+    {
+      "address": "009501f2",
+      "mnemonic": "FNSTCW",
+      "function": "00950140",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "0095093c"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x1c]"
+        }
+      ]
+    },
+    {
+      "address": "00950208",
+      "mnemonic": "FLDCW",
+      "function": "00950140",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "0095093c"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x20]"
+        }
+      ]
+    },
+    {
+      "address": "00950247",
+      "mnemonic": "FLDCW",
+      "function": "00950140",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "0095093c"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x1c]"
+        }
+      ]
+    },
+    {
+      "address": "00950250",
+      "mnemonic": "FLDCW",
+      "function": "00950140",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "0095093c"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x1c]"
+        }
+      ]
+    },
+    {
+      "address": "00952ee6",
+      "mnemonic": "FSTCW",
+      "function": "00952ee2",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "00950f6e"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[-0x8]"
+        }
+      ]
+    },
+    {
+      "address": "00952efc",
+      "mnemonic": "FLDCW",
+      "function": "00952ee2",
+      "incoming_call_count": 1,
+      "first_incoming_calls": [
+        "00950f6e"
+      ],
+      "data_refs": [
+        {
+          "address": "Stack[0x8]"
+        }
+      ]
+    }
+  ],
+  "limitations": "Inferred instruction inventory; entry-state/runtime control word is not established by this list."
+}

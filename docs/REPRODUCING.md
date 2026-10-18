@@ -57,6 +57,17 @@ The 131,072 classification cases share one synthetic initial RNG state (at table
 
 `CM0102ExportSelected.java OUTPUT_DIRECTORY HEX_ADDRESS[,HEX_ADDRESS...]` exports assembly and inferred pseudocode locally without modifying the native database. Keep its generated bulk output in an ignored `evidence/*-map/` directory.
 
+Regenerate the keeper postlude and connected penalty response body:
+
+```sh
+python3 scripts/emulate_keeper_response.py downloads/cm0102.exe \
+  evidence/random-validation/random-table.bin results/new-keeper-response
+node reconstruction/check-keeper-response.ts results/new-keeper-response/oracle.json \
+  evidence/random-validation/random-table.bin results/new-keeper-response-validation.json
+```
+
+This uses 2,048 inputs per entry mode repeated under control words 027fh/037fh (8,192 cases total). The same inputs/RNG states are paired across53/64-bit precision. Only the body/postlude, original RNG and original `__ftol` run; prelude state is synthetic and supplied. `CM0102FloatControlSites.java OUTPUT_JSON` records control-word instructions and bounded incoming-reference samples from the inferred listing; it is not a runtime precision trace.
+
 ## Native analysis
 
 Install Ghidra 12.1.4 and JDK 21, set `GHIDRA_INSTALL_DIR` and `JAVA_HOME`, then:
