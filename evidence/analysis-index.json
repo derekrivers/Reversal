@@ -1,0 +1,3123 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "functions": [
+    {
+      "entry": "006b7f20",
+      "export_names": [
+        "FUN_006b7f20",
+        "cm0102_prepare_match_candidate"
+      ],
+      "direct_callees": [
+        "004cf5f0",
+        "0053b900",
+        "00547810",
+        "00547d60",
+        "005481a0",
+        "00549ef0",
+        "0054ae10",
+        "0054cdb0",
+        "005c6710",
+        "005e8290",
+        "0068d020",
+        "0068d0d0",
+        "006bbb60",
+        "006bbf60",
+        "006d47e0",
+        "006d5bf0",
+        "006db500",
+        "006e9470",
+        "00717400",
+        "00717450",
+        "007c1e30",
+        "0085cba0",
+        "008676f0",
+        "00897590",
+        "0090cfc0",
+        "0090d130",
+        "00923010",
+        "00923630",
+        "00923970",
+        "00944c9f",
+        "00944cf1",
+        "00944cff",
+        "00945640"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "00923010",
+      "export_names": [
+        "FUN_00923010"
+      ],
+      "direct_callees": [
+        "009232c0"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "00923970",
+      "export_names": [
+        "FUN_00923970"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "00923630",
+      "export_names": [
+        "FUN_00923630"
+      ],
+      "direct_callees": [
+        "005986b0",
+        "005a0590",
+        "00669360",
+        "0090cfc0",
+        "00923010"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "0090cfc0",
+      "export_names": [
+        "FUN_0090cfc0",
+        "cm0102_random_bounded"
+      ],
+      "direct_callees": [
+        "0090cfc0",
+        "00945640",
+        "00946a04"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "00945640",
+      "export_names": [
+        "__ftol"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006d47e0",
+      "export_names": [
+        "FUN_006d47e0"
+      ],
+      "direct_callees": [
+        "0048ce70",
+        "0048ce90",
+        "00540490",
+        "005e8290",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006e9470",
+      "export_names": [
+        "FUN_006e9470"
+      ],
+      "direct_callees": [
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "0085cba0",
+      "export_names": [
+        "FUN_0085cba0"
+      ],
+      "direct_callees": [
+        "004a4850",
+        "005c6710",
+        "007e6f20",
+        "0085d8a0",
+        "0090cfc0",
+        "00945640"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "006db500",
+      "export_names": [
+        "FUN_006db500"
+      ],
+      "direct_callees": [
+        "0053b3d0",
+        "0053b900",
+        "0053ca90",
+        "005409b0",
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "005fbd00",
+        "005fbe20",
+        "005fd480",
+        "005fd6b0",
+        "00600a50",
+        "00600e90",
+        "006dbb80",
+        "006dbc50",
+        "008983f0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945934"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "00549ef0",
+      "export_names": [
+        "FUN_00549ef0"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "0054ae10",
+      "export_names": [
+        "FUN_0054ae10"
+      ],
+      "direct_callees": [
+        "0054d210",
+        "005e8290",
+        "0066f4e0",
+        "0090c310",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "00944c9f",
+      "export_names": [
+        "FUN_00944c9f"
+      ],
+      "direct_callees": [
+        "00947b52",
+        "00947c67"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00944cff",
+      "export_names": [
+        "FUN_00944cff"
+      ],
+      "direct_callees": [
+        "00948851",
+        "009488e0"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "0090d130",
+      "export_names": [
+        "FUN_0090d130"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "005e8290",
+      "export_names": [
+        "FUN_005e8290"
+      ],
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e2eb0",
+        "005e3dd0",
+        "005e3fd0",
+        "005e5ad0",
+        "005e5df0",
+        "005e6d80",
+        "0066f4e0",
+        "0068d520",
+        "009452ca",
+        "00945934",
+        "EXTERNAL:0000005d",
+        "EXTERNAL:0000005e",
+        "EXTERNAL:00000063"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00944cf1",
+      "export_names": [
+        "operator_new"
+      ],
+      "direct_callees": [
+        "00944e58"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "006d5bf0",
+      "export_names": [
+        "FUN_006d5bf0"
+      ],
+      "direct_callees": [
+        "006d9e50",
+        "008025e0",
+        "0090bde0"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "006bbb60",
+      "export_names": [
+        "FUN_006bbb60",
+        "cm0102_prepare_side_candidate"
+      ],
+      "direct_callees": [
+        "004cf5a0",
+        "004cf5f0",
+        "005b5a60",
+        "006ebd70",
+        "006eecb0",
+        "00717410",
+        "00897590",
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "match-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006bbf60",
+      "export_names": [
+        "FUN_006bbf60",
+        "cm0102_assign_opponent_slots_candidate"
+      ],
+      "direct_callees": [
+        "005b57c0",
+        "005b5910",
+        "006d4330"
+      ],
+      "source_exports": [
+        "match-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00897590",
+      "export_names": [
+        "FUN_00897590"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "008982b0",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "0068d020",
+      "export_names": [
+        "FUN_0068d020"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "0053b900",
+      "export_names": [
+        "FUN_0053b900"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "match-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "005c6710",
+      "export_names": [
+        "FUN_005c6710"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "004cf5f0",
+      "export_names": [
+        "FUN_004cf5f0"
+      ],
+      "direct_callees": [
+        "00540a50"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "005481a0",
+      "export_names": [
+        "FUN_005481a0"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "00717400",
+      "export_names": [
+        "FUN_00717400"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "00717450",
+      "export_names": [
+        "FUN_00717450"
+      ],
+      "direct_callees": [
+        "006c38f0"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "008676f0",
+      "export_names": [
+        "FUN_008676f0"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "00547d60",
+      "export_names": [
+        "FUN_00547d60"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "00547810",
+      "export_names": [
+        "FUN_00547810"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "0068d0d0",
+      "export_names": [
+        "FUN_0068d0d0"
+      ],
+      "direct_callees": [
+        "0068cfc0",
+        "00944cf1"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "007c1e30",
+      "export_names": [
+        "FUN_007c1e30"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "007c2150",
+        "007c3920",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "0054cdb0",
+      "export_names": [
+        "FUN_0054cdb0"
+      ],
+      "direct_callees": [
+        "00417c10",
+        "0094627a"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "006b4360",
+      "export_names": [
+        "FUN_006b4360"
+      ],
+      "direct_callees": [
+        "004542f0",
+        "0053ca90",
+        "0054ba20",
+        "005b5960",
+        "005e8160",
+        "005e8170",
+        "005e8290",
+        "005fbd00",
+        "005fbe20",
+        "005fcff0",
+        "005fd100",
+        "005fd210",
+        "005fd2f0",
+        "005fe290",
+        "00600a50",
+        "0066f4e0",
+        "0068d520",
+        "006b5a70",
+        "006b5ce0",
+        "006b5f00",
+        "006b66a0",
+        "006b7e50",
+        "006b7f20",
+        "006b97a0",
+        "006b98c0",
+        "0071b1b0",
+        "00727f00",
+        "007293f0",
+        "00765480",
+        "00788010",
+        "007fc7e0",
+        "007fffa0",
+        "00802f80",
+        "0090d130",
+        "0090d2f0",
+        "0090d6b0",
+        "00944c94",
+        "00944c9f",
+        "00944cf1",
+        "00944cff",
+        "009462bb",
+        "009463af"
+      ],
+      "source_exports": [
+        "match-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006b5a70",
+      "export_names": [
+        "FUN_006b5a70"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "00600a50",
+        "006b66a0",
+        "006b7e50",
+        "006b7f20",
+        "0090d130",
+        "0090d2f0",
+        "00944c9f",
+        "00944cf1",
+        "00944cff"
+      ],
+      "source_exports": [
+        "match-map"
+      ]
+    },
+    {
+      "entry": "0084be20",
+      "export_names": [
+        "FUN_0084be20"
+      ],
+      "direct_callees": [
+        "004134c0",
+        "004ca6d0",
+        "0054c5b0",
+        "0054c8e0",
+        "0054cfb0",
+        "005acbe0",
+        "005e8290",
+        "0062c080",
+        "0062c400",
+        "006b7e50",
+        "006b7f20",
+        "006b97a0",
+        "006b98c0",
+        "00729ff0",
+        "007757d0",
+        "007c0d70",
+        "008c39f0",
+        "0090cfc0",
+        "0090d130",
+        "0090d2f0",
+        "0090d6b0",
+        "00944c94",
+        "00944c9f",
+        "00944cf1",
+        "00944cff",
+        "0094627a",
+        "009463af"
+      ],
+      "source_exports": [
+        "match-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006b5260",
+      "export_names": [
+        "FUN_006b5260"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "006b7e50",
+        "006b7f20",
+        "006b97a0",
+        "006b98c0",
+        "007293f0",
+        "00729ff0",
+        "0090d130",
+        "0090d6b0",
+        "00944c94",
+        "00944c9f",
+        "00944cf1",
+        "00944cff",
+        "009463af"
+      ],
+      "source_exports": [
+        "match-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006b6970",
+      "export_names": [
+        "FUN_006b6970"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "006b7e50",
+        "006b7f20",
+        "006b97a0",
+        "006b98c0",
+        "007293f0",
+        "00765480",
+        "007fffa0",
+        "0090d130",
+        "0090d6b0",
+        "00944c94",
+        "00944c9f",
+        "00944cf1",
+        "00944cff",
+        "009463af"
+      ],
+      "source_exports": [
+        "match-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006b98c0",
+      "export_names": [
+        "FUN_006b98c0",
+        "cm0102_advance_match_candidate"
+      ],
+      "direct_callees": [
+        "005a8f60",
+        "005b57c0",
+        "005cc7d0",
+        "005e8290",
+        "005fd480",
+        "00600a50",
+        "006bac40",
+        "006bba10",
+        "006bbe40",
+        "006bc030",
+        "006bd6b0",
+        "006bd760",
+        "006bd930",
+        "006be710",
+        "006beeb0",
+        "006c3010",
+        "006c30e0",
+        "006c3aa0",
+        "006c54a0",
+        "006c9cd0",
+        "006cd660",
+        "006ce110",
+        "006ce460",
+        "006ceb90",
+        "006cf750",
+        "006d0b60",
+        "006d0f80",
+        "006d1210",
+        "006d1cc0",
+        "006d4a20",
+        "006d6f70",
+        "006f0630",
+        "006f46b0",
+        "006f4920",
+        "006f4aa0",
+        "006f55c0",
+        "006f6c00",
+        "007103e0",
+        "00713fc0",
+        "00714d00",
+        "007160f0",
+        "007164b0",
+        "00717410",
+        "00896290",
+        "00896fe0",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945640",
+        "00945934"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006c0c60",
+      "export_names": [
+        "FUN_006c0c60"
+      ],
+      "direct_callees": [
+        "005c6710",
+        "005e8290",
+        "006f56c0",
+        "007165b0",
+        "00717410",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945640"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006c4290",
+      "export_names": [
+        "FUN_006c4290"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "006ceb90",
+        "006f0630",
+        "006f46b0",
+        "007160e0",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006c4470",
+      "export_names": [
+        "FUN_006c4470"
+      ],
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "006ceb90",
+        "006f0630",
+        "006f46b0",
+        "007160e0",
+        "00716270",
+        "00716310",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945934"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006c4820",
+      "export_names": [
+        "FUN_006c4820"
+      ],
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "006c3aa0",
+        "006ceb90",
+        "006f0630",
+        "006f0970",
+        "006f46b0",
+        "006f4920",
+        "006f5b80",
+        "00714d30",
+        "007160e0",
+        "00716270",
+        "00716310",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945934"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006c4ec0",
+      "export_names": [
+        "FUN_006c4ec0"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "006c3aa0",
+        "006f0630",
+        "006f0970",
+        "006f46b0",
+        "006f5b80",
+        "00714d30",
+        "007160e0",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006c54a0",
+      "export_names": [
+        "FUN_006c54a0"
+      ],
+      "direct_callees": [
+        "0053b900",
+        "005a8f60",
+        "005b50d0",
+        "005b5290",
+        "005cc7d0",
+        "005e8290",
+        "005fd210",
+        "005fd480",
+        "0069eb50",
+        "006bbb60",
+        "006bbf60",
+        "006c4290",
+        "006c4470",
+        "006c4820",
+        "006c4ec0",
+        "006c50d0",
+        "006c51e0",
+        "006ce310",
+        "006d10a0",
+        "006d6f70",
+        "006df460",
+        "006e1090",
+        "00714d30",
+        "00716450",
+        "0084b8b0",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945934"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006c87e0",
+      "export_names": [
+        "FUN_006c87e0"
+      ],
+      "direct_callees": [
+        "005407e0",
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "006cb780",
+        "006f56c0",
+        "006f5b20",
+        "0070d690",
+        "0070def0",
+        "0070df20",
+        "0070df40",
+        "00714d30",
+        "007163c0",
+        "007165b0",
+        "00717410",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945640",
+        "00945934",
+        "00945ff0"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006cdd50",
+      "export_names": [
+        "FUN_006cdd50"
+      ],
+      "direct_callees": [
+        "0053b900",
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "005fd210",
+        "005fd480",
+        "00714c60",
+        "00714ca0",
+        "00717410",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945934"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006ceb90",
+      "export_names": [
+        "FUN_006ceb90"
+      ],
+      "direct_callees": [
+        "0053b900",
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "005fd210",
+        "005fd480",
+        "00601070",
+        "006f09b0",
+        "00897990",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945640",
+        "00945934"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006d1770",
+      "export_names": [
+        "FUN_006d1770"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "00717410",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "00946a04",
+      "export_names": [
+        "FUN_00946a04",
+        "cm0102_crt_rand"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map",
+        "match-map",
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006beeb0",
+      "export_names": [
+        "FUN_006beeb0"
+      ],
+      "direct_callees": [
+        "005c6710",
+        "006c06b0",
+        "006c07a0",
+        "006c0890",
+        "006c0980",
+        "006c0a70",
+        "006c0b70",
+        "006c0c60",
+        "006c2050",
+        "006c2310",
+        "006c23f0",
+        "006c2750",
+        "006c2880",
+        "006cda20",
+        "006d0980",
+        "006d6f70",
+        "00717410",
+        "0090cfc0",
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006d0f80",
+      "export_names": [
+        "FUN_006d0f80"
+      ],
+      "direct_callees": [
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006d1cc0",
+      "export_names": [
+        "FUN_006d1cc0"
+      ],
+      "direct_callees": [
+        "004cf5f0",
+        "0053b900",
+        "00544410",
+        "00547790",
+        "005477d0",
+        "00547d30",
+        "00547d60",
+        "005c6710",
+        "0068d0d0",
+        "0068d1b0",
+        "006d26b0",
+        "006d3610",
+        "006d3de0",
+        "0090cfc0",
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00600a50",
+      "export_names": [
+        "FUN_00600a50"
+      ],
+      "direct_callees": [
+        "0053b3d0",
+        "0053b900",
+        "005409b0",
+        "005e8290",
+        "005fd480",
+        "005fd6b0",
+        "005fe040",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "005fd480",
+      "export_names": [
+        "FUN_005fd480"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00896fe0",
+      "export_names": [
+        "FUN_00896fe0"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "008982b0",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006d1210",
+      "export_names": [
+        "FUN_006d1210"
+      ],
+      "direct_callees": [
+        "0053b900",
+        "005fd210",
+        "005fd480",
+        "006bbb60",
+        "006bbf60",
+        "006cda20",
+        "006ce110",
+        "006d6f70",
+        "006e1090",
+        "006e1a40",
+        "006e1aa0",
+        "006ea4e0",
+        "00716450",
+        "00716630",
+        "00716e10",
+        "00717410",
+        "00897760",
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006be710",
+      "export_names": [
+        "FUN_006be710",
+        "cm0102_advance_tiebreak_sequence"
+      ],
+      "direct_callees": [
+        "006be520",
+        "006ce110",
+        "006d6f70",
+        "006f0630",
+        "006f46b0",
+        "00700bd0",
+        "00702050",
+        "007109f0",
+        "00714d40",
+        "007160d0",
+        "007160e0",
+        "0090cfc0",
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006d6f70",
+      "export_names": [
+        "FUN_006d6f70",
+        "cm0102_enqueue_commentary_event"
+      ],
+      "direct_callees": [
+        "006c2fe0",
+        "006d1770",
+        "006d5d00",
+        "006d5d80",
+        "006d60b0",
+        "006d6f70",
+        "00717470",
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "007164b0",
+      "export_names": [
+        "FUN_007164b0"
+      ],
+      "direct_callees": [
+        "0090cfc0",
+        "00945640",
+        "00945ff0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006bba10",
+      "export_names": [
+        "FUN_006bba10"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006bac40",
+      "export_names": [
+        "FUN_006bac40"
+      ],
+      "direct_callees": [
+        "006cda20",
+        "006d6f70",
+        "006e9630",
+        "006ea4e0",
+        "00716450",
+        "00716e10",
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006f46b0",
+      "export_names": [
+        "FUN_006f46b0"
+      ],
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945934"
+      ],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006f0630",
+      "export_names": [
+        "FUN_006f0630"
+      ],
+      "direct_callees": [
+        "006c38c0"
+      ],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006f4920",
+      "export_names": [
+        "FUN_006f4920"
+      ],
+      "direct_callees": [
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006ce460",
+      "export_names": [
+        "FUN_006ce460"
+      ],
+      "direct_callees": [
+        "006ce9c0",
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006bd930",
+      "export_names": [
+        "FUN_006bd930"
+      ],
+      "direct_callees": [
+        "006be120",
+        "006ce460",
+        "006d6f70",
+        "006f0970",
+        "006f5810",
+        "00944c9f"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006f55c0",
+      "export_names": [
+        "FUN_006f55c0"
+      ],
+      "direct_callees": [
+        "006f44a0",
+        "0090cfc0",
+        "00945ff0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006bbe40",
+      "export_names": [
+        "FUN_006bbe40"
+      ],
+      "direct_callees": [
+        "006cd490",
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006cf750",
+      "export_names": [
+        "FUN_006cf750"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006f4aa0",
+      "export_names": [
+        "FUN_006f4aa0"
+      ],
+      "direct_callees": [
+        "006c38c0",
+        "0090cfc0",
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006c3aa0",
+      "export_names": [
+        "FUN_006c3aa0"
+      ],
+      "direct_callees": [
+        "00717410"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006cd660",
+      "export_names": [
+        "FUN_006cd660"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006bd760",
+      "export_names": [
+        "FUN_006bd760"
+      ],
+      "direct_callees": [
+        "0090cfc0",
+        "00945333"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006c30e0",
+      "export_names": [
+        "FUN_006c30e0"
+      ],
+      "direct_callees": [
+        "006f09b0",
+        "00717410"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006ce110",
+      "export_names": [
+        "FUN_006ce110"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "006c3010",
+      "export_names": [
+        "FUN_006c3010"
+      ],
+      "direct_callees": [
+        "006f09b0",
+        "00714d30",
+        "00717410"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006bd6b0",
+      "export_names": [
+        "FUN_006bd6b0"
+      ],
+      "direct_callees": [
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "005b57c0",
+      "export_names": [
+        "FUN_005b57c0"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "007160f0",
+      "export_names": [
+        "FUN_007160f0"
+      ],
+      "direct_callees": [
+        "005b57c0",
+        "005b58e0",
+        "006c38c0",
+        "006c38f0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00717410",
+      "export_names": [
+        "FUN_00717410"
+      ],
+      "direct_callees": [
+        "006c38c0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006bc030",
+      "export_names": [
+        "FUN_006bc030"
+      ],
+      "direct_callees": [
+        "005b57c0",
+        "006c2be0",
+        "006cb780",
+        "006f09b0",
+        "0070dfa0",
+        "007103c0",
+        "00715f30",
+        "007160f0",
+        "007163f0",
+        "00717410",
+        "0090cfc0",
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00714d00",
+      "export_names": [
+        "FUN_00714d00"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "007103e0",
+      "export_names": [
+        "FUN_007103e0"
+      ],
+      "direct_callees": [
+        "006bce20",
+        "006c38c0",
+        "006cb960",
+        "006f09b0",
+        "007109f0",
+        "00713fc0",
+        "00714d40",
+        "0090cfc0",
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006c9cd0",
+      "export_names": [
+        "FUN_006c9cd0"
+      ],
+      "direct_callees": [
+        "006bd5b0",
+        "006c87e0",
+        "006cd490",
+        "006cda20",
+        "006cfe10",
+        "006d6f70",
+        "006e9540",
+        "006e9630",
+        "006e9820",
+        "006ea4e0",
+        "006f0630",
+        "006f4920",
+        "006f4a30",
+        "006f5b20",
+        "006fa1e0",
+        "0070d430",
+        "0070d630",
+        "007103e0",
+        "00714d30",
+        "007160d0",
+        "00716450",
+        "00716e10",
+        "00717410",
+        "0090cfc0",
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00713fc0",
+      "export_names": [
+        "FUN_00713fc0"
+      ],
+      "direct_callees": [
+        "005b5270",
+        "005b57c0",
+        "005e8290",
+        "006bce80",
+        "006c2a40",
+        "006c2be0",
+        "006c38c0",
+        "006c4130",
+        "006c4180",
+        "006cb700",
+        "006cb930",
+        "006cd5f0",
+        "006cfda0",
+        "006f09f0",
+        "006f46b0",
+        "006f5b80",
+        "00715f50",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006f6c00",
+      "export_names": [
+        "FUN_006f6c00"
+      ],
+      "direct_callees": [
+        "006bb8d0",
+        "006bb9a0",
+        "006bd5b0",
+        "006c38c0",
+        "006c41b0",
+        "006c87e0",
+        "006cb650",
+        "006cd5f0",
+        "006cd770",
+        "006cda20",
+        "006ceb90",
+        "006cfc60",
+        "006cfca0",
+        "006cfcd0",
+        "006cfd10",
+        "006cfe10",
+        "006d6f70",
+        "006eecb0",
+        "006f0630",
+        "006f09b0",
+        "006f4920",
+        "006f56c0",
+        "006f9f90",
+        "0070d430",
+        "007103e0",
+        "00716c90",
+        "00716e10",
+        "007172d0",
+        "0090cfc0",
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006d0b60",
+      "export_names": [
+        "FUN_006d0b60"
+      ],
+      "direct_callees": [
+        "0053b900",
+        "005fd210",
+        "005fd480",
+        "006bbb60",
+        "006bbf60",
+        "006cdd50",
+        "006ce110",
+        "006d6f70",
+        "006e1090",
+        "006e1a40",
+        "006e1aa0",
+        "00714d30",
+        "00897590",
+        "00897760",
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006d4a20",
+      "export_names": [
+        "FUN_006d4a20"
+      ],
+      "direct_callees": [
+        "005c6710",
+        "0079ce10",
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00896290",
+      "export_names": [
+        "FUN_00896290"
+      ],
+      "direct_callees": [
+        "0054a110",
+        "005e8290",
+        "00600a50",
+        "007e4750",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "005cc7d0",
+      "export_names": [
+        "FUN_005cc7d0"
+      ],
+      "direct_callees": [
+        "005cc830",
+        "005d7b70",
+        "0082ff40",
+        "00944c94"
+      ],
+      "source_exports": [
+        "event-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "005a8f60",
+      "export_names": [
+        "FUN_005a8f60"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00945934",
+      "export_names": [
+        "FUN_00945934"
+      ],
+      "direct_callees": [
+        "00945956"
+      ],
+      "source_exports": [
+        "event-map",
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006b5ce0",
+      "export_names": [
+        "FUN_006b5ce0"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "006b97a0",
+        "006b98c0",
+        "007293f0",
+        "0090d130",
+        "0090d6b0",
+        "00944c94",
+        "00944c9f",
+        "00944cf1",
+        "00944cff",
+        "009463af"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006b55c0",
+      "export_names": [
+        "FUN_006b55c0"
+      ],
+      "direct_callees": [
+        "006b5a70",
+        "006b5ce0",
+        "006b6570",
+        "006b98c0",
+        "006d5cd0",
+        "006d78b0",
+        "006d8c70",
+        "00729ff0",
+        "0090c510"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006f5810",
+      "export_names": [
+        "FUN_006f5810"
+      ],
+      "direct_callees": [
+        "0062c3d0",
+        "0062c590",
+        "006c38c0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006f0970",
+      "export_names": [
+        "FUN_006f0970"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006be120",
+      "export_names": [
+        "FUN_006be120"
+      ],
+      "direct_callees": [
+        "004b0700",
+        "006854a0",
+        "006ce310",
+        "006d6f70"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006be520",
+      "export_names": [
+        "FUN_006be520"
+      ],
+      "direct_callees": [
+        "0053b900",
+        "005fd210",
+        "005fd480",
+        "006ceb90",
+        "00898040"
+      ],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "007160e0",
+      "export_names": [
+        "FUN_007160e0"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "00700bd0",
+      "export_names": [
+        "FUN_00700bd0"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "006c38c0",
+        "006ce110",
+        "006f9f90",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945640",
+        "00945ff0"
+      ],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "00714d40",
+      "export_names": [
+        "FUN_00714d40"
+      ],
+      "direct_callees": [
+        "005a8f60",
+        "005b5270",
+        "005b57c0",
+        "005cc7d0",
+        "005e8290",
+        "006c2a40",
+        "006c2be0",
+        "006c38c0",
+        "006c3950",
+        "006c4130",
+        "006c4180",
+        "006cb930",
+        "006cb960",
+        "006cc4e0",
+        "006cd5f0",
+        "006ce110",
+        "006cfda0",
+        "006d6f70",
+        "006f0630",
+        "006f09f0",
+        "006f46b0",
+        "006f4920",
+        "006f5b80",
+        "00715f50",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945640",
+        "00945934"
+      ],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "007109f0",
+      "export_names": [
+        "FUN_007109f0"
+      ],
+      "direct_callees": [
+        "005a8f60",
+        "005b5270",
+        "005cc7d0",
+        "005e8290",
+        "0068d020",
+        "0068d040",
+        "006bba80",
+        "006bcbd0",
+        "006bce80",
+        "006bd5b0",
+        "006c2be0",
+        "006c38c0",
+        "006c38f0",
+        "006c3950",
+        "006c3a00",
+        "006c4180",
+        "006c6a30",
+        "006cb700",
+        "006cb780",
+        "006cb910",
+        "006cb930",
+        "006cb9b0",
+        "006cc070",
+        "006ce110",
+        "006ce310",
+        "006d42a0",
+        "006d6f70",
+        "006f09b0",
+        "006f09f0",
+        "006f4920",
+        "006f9f90",
+        "006fa250",
+        "006fa490",
+        "00700bd0",
+        "00702050",
+        "0070ec80",
+        "00713d90",
+        "00713e90",
+        "00715f50",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945640",
+        "00945934",
+        "00945ff0"
+      ],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "007160d0",
+      "export_names": [
+        "FUN_007160d0"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "00702050",
+      "export_names": [
+        "FUN_00702050"
+      ],
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0068d1b0",
+        "006bac40",
+        "006bb8d0",
+        "006bb950",
+        "006bb9a0",
+        "006bba10",
+        "006bba50",
+        "006c38c0",
+        "006c87e0",
+        "006cb650",
+        "006cb910",
+        "006cbbb0",
+        "006cc540",
+        "006cd490",
+        "006cd770",
+        "006cda20",
+        "006ce110",
+        "006ce310",
+        "006ceb90",
+        "006cf710",
+        "006cfc60",
+        "006cfcd0",
+        "006cfd70",
+        "006cfe10",
+        "006d4250",
+        "006d4b70",
+        "006d5950",
+        "006d59b0",
+        "006d5a10",
+        "006d5a70",
+        "006d6f70",
+        "006eecb0",
+        "006f0630",
+        "006f09b0",
+        "006f46b0",
+        "006f4920",
+        "006f4a40",
+        "006f4a70",
+        "006f5b20",
+        "007002f0",
+        "00700420",
+        "00700bd0",
+        "00702050",
+        "0070a860",
+        "0070a890",
+        "0070a8c0",
+        "0070d430",
+        "0070df70",
+        "007103e0",
+        "00713e90",
+        "00716c90",
+        "00716e10",
+        "007172d0",
+        "00717470",
+        "00717c70",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945640",
+        "00945934"
+      ],
+      "source_exports": [
+        "progression-map",
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "00716630",
+      "export_names": [
+        "FUN_00716630"
+      ],
+      "direct_callees": [
+        "006bb950",
+        "006cfc60",
+        "006d6f70",
+        "006f46b0",
+        "007164b0",
+        "00716630",
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006ea4e0",
+      "export_names": [
+        "FUN_006ea4e0"
+      ],
+      "direct_callees": [
+        "006f5b20",
+        "00714d30",
+        "0090cfc0",
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00716450",
+      "export_names": [
+        "FUN_00716450"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00716e10",
+      "export_names": [
+        "FUN_00716e10"
+      ],
+      "direct_callees": [
+        "006bb8d0",
+        "006cb960",
+        "006cda20",
+        "006cfd40",
+        "006d6f70",
+        "007164b0",
+        "0090cfc0",
+        "00945640"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006cda20",
+      "export_names": [
+        "FUN_006cda20"
+      ],
+      "direct_callees": [
+        "0053b900",
+        "005fd210",
+        "005fd480",
+        "006bbb60",
+        "006bbf60",
+        "006cdd50",
+        "006ce110",
+        "006e1090",
+        "006e1a40",
+        "006e1aa0",
+        "00717410",
+        "00897590",
+        "00897760"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "005fd210",
+      "export_names": [
+        "FUN_005fd210"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006e1090",
+      "export_names": [
+        "FUN_006e1090"
+      ],
+      "direct_callees": [
+        "0048f150",
+        "0053b900",
+        "005b5270",
+        "005b57c0",
+        "005e8290",
+        "005fd210",
+        "005fea50",
+        "00600a50",
+        "006cdd00",
+        "006cdd50",
+        "006ce0f0",
+        "006ce110",
+        "006d6f70",
+        "006e1aa0",
+        "006e1cf0",
+        "006e2000",
+        "00714d30",
+        "00717410",
+        "00717430",
+        "00717450",
+        "00897760",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945333"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006e1aa0",
+      "export_names": [
+        "FUN_006e1aa0"
+      ],
+      "direct_callees": [
+        "005b5270",
+        "005b57c0",
+        "005fd210",
+        "005fea50",
+        "00600a50",
+        "006d6f70",
+        "006e0230",
+        "006e2000",
+        "006eecb0",
+        "00717410",
+        "00717450"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006e1a40",
+      "export_names": [
+        "FUN_006e1a40"
+      ],
+      "direct_callees": [
+        "006e1cf0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00897760",
+      "export_names": [
+        "FUN_00897760"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "008982b0",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006d60b0",
+      "export_names": [
+        "FUN_006d60b0"
+      ],
+      "direct_callees": [
+        "006cb960",
+        "006d58f0",
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006d5d00",
+      "export_names": [
+        "FUN_006d5d00"
+      ],
+      "direct_callees": [
+        "006d6f70"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006d5d80",
+      "export_names": [
+        "FUN_006d5d80"
+      ],
+      "direct_callees": [
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006c2fe0",
+      "export_names": [
+        "FUN_006c2fe0"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "00717470",
+      "export_names": [
+        "FUN_00717470"
+      ],
+      "direct_callees": [
+        "0054c8e0"
+      ],
+      "source_exports": [
+        "progression-map"
+      ]
+    },
+    {
+      "entry": "006d8d10",
+      "export_names": [
+        "FUN_006d8d10"
+      ],
+      "direct_callees": [
+        "004bfa30",
+        "004bff70",
+        "0053eab0",
+        "005e8290",
+        "0066f4d0",
+        "0066f4e0",
+        "006701f0",
+        "006db2d0",
+        "0090c2d0",
+        "0090c310",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945610"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00945610",
+      "export_names": [
+        "FUN_00945610"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "006db2d0",
+      "export_names": [
+        "FUN_006db2d0"
+      ],
+      "direct_callees": [
+        "0053e140",
+        "00541f90",
+        "0090c1d0",
+        "0090cfc0"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "006701f0",
+      "export_names": [
+        "FUN_006701f0"
+      ],
+      "direct_callees": [
+        "006820a0",
+        "00682150",
+        "00944c9f",
+        "00945610",
+        "00945a60",
+        "009465fc",
+        "009471cd"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "0090c2d0",
+      "export_names": [
+        "FUN_0090c2d0"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "0090c310",
+      "export_names": [
+        "FUN_0090c310"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "0066f4d0",
+        "0066f4e0",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "0066f4d0",
+      "export_names": [
+        "FUN_0066f4d0"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "0053eab0",
+      "export_names": [
+        "FUN_0053eab0"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "0066f4e0",
+      "export_names": [
+        "FUN_0066f4e0"
+      ],
+      "direct_callees": [
+        "0066fbb0",
+        "006701f0",
+        "00944c94",
+        "00945a60",
+        "009470ce"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "004bfa30",
+      "export_names": [
+        "FUN_004bfa30"
+      ],
+      "direct_callees": [
+        "004b4850",
+        "004ba8f0",
+        "005e8290",
+        "0066f4d0",
+        "0066f4e0",
+        "006701f0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "009465fc"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "004bff70",
+      "export_names": [
+        "FUN_004bff70"
+      ],
+      "direct_callees": [
+        "004ba8f0"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00721000",
+      "export_names": [
+        "FUN_00721000"
+      ],
+      "direct_callees": [
+        "0055fba0",
+        "005a8f60",
+        "005e4800",
+        "005e5cd0",
+        "005e8290",
+        "005ed070",
+        "0066f4d0",
+        "0066f4e0",
+        "006d5bf0",
+        "006d8d10",
+        "006d9c40",
+        "007ff010",
+        "007ff270",
+        "00804100",
+        "0090c310",
+        "0090d130",
+        "00944c94",
+        "00944c9f",
+        "00944cf1",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "006d5b50",
+      "export_names": [
+        "FUN_006d5b50"
+      ],
+      "direct_callees": [
+        "009452ca"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "009452ca",
+      "export_names": [
+        "FUN_009452ca"
+      ],
+      "direct_callees": [
+        "00948b90",
+        "00948bbb",
+        "009498eb",
+        "00949942",
+        "EXTERNAL:00000046"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "006d5cd0",
+      "export_names": [
+        "FUN_006d5cd0"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "006d78b0",
+      "export_names": [
+        "FUN_006d78b0"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "006d7b00",
+      "export_names": [
+        "FUN_006d7b00"
+      ],
+      "direct_callees": [
+        "004bfa30",
+        "004bff70",
+        "0053b640",
+        "0053eab0",
+        "005e5ad0",
+        "005e8290",
+        "0066f4d0",
+        "0066f4e0",
+        "006701f0",
+        "006db2d0",
+        "00800580",
+        "00800d30",
+        "00801040",
+        "00801660",
+        "00801960",
+        "00801c70",
+        "008025e0",
+        "008029f0",
+        "00802a50",
+        "0090bde0",
+        "0090c2d0",
+        "0090c310",
+        "0090c510",
+        "0090cb20",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945610"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "008029f0",
+      "export_names": [
+        "FUN_008029f0"
+      ],
+      "direct_callees": [
+        "0084cc80"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00802a50",
+      "export_names": [
+        "FUN_00802a50"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "0077ac30",
+        "0084cb10",
+        "0084cb70",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "0090bde0",
+      "export_names": [
+        "FUN_0090bde0"
+      ],
+      "direct_callees": [
+        "0090bc50",
+        "0090cf20"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "008025e0",
+      "export_names": [
+        "FUN_008025e0"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "0077ac30",
+        "0084cbc0",
+        "0084ccc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "0053b640",
+      "export_names": [
+        "FUN_0053b640"
+      ],
+      "direct_callees": [
+        "005e4800",
+        "005e8290",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "005e5ad0",
+      "export_names": [
+        "FUN_005e5ad0"
+      ],
+      "direct_callees": [
+        "005b18a0",
+        "005e5060",
+        "005e5d60",
+        "00945610"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "0090cb20",
+      "export_names": [
+        "FUN_0090cb20"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00801040",
+      "export_names": [
+        "FUN_00801040"
+      ],
+      "direct_callees": [
+        "00564080",
+        "005e8290",
+        "0077ac30",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00801660",
+      "export_names": [
+        "FUN_00801660"
+      ],
+      "direct_callees": [
+        "00564080",
+        "005e8290",
+        "0077ac30",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00801960",
+      "export_names": [
+        "FUN_00801960"
+      ],
+      "direct_callees": [
+        "00564080",
+        "005e8290",
+        "0077ac30",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00801c70",
+      "export_names": [
+        "FUN_00801c70"
+      ],
+      "direct_callees": [
+        "00564080",
+        "005e8290",
+        "0077ac30",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00800d30",
+      "export_names": [
+        "FUN_00800d30"
+      ],
+      "direct_callees": [
+        "00564080",
+        "005e8290",
+        "0077ac30",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00800580",
+      "export_names": [
+        "FUN_00800580"
+      ],
+      "direct_callees": [
+        "00564080",
+        "005e8290",
+        "0077ac30",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "0090c510",
+      "export_names": [
+        "thunk_FUN_00947299"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "006d9e50",
+      "export_names": [
+        "FUN_006d9e50"
+      ],
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "0066f4d0",
+        "0066f4e0",
+        "006d5b50",
+        "0090bde0",
+        "0090c120",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00944e46",
+        "00945667",
+        "00945934",
+        "00945a09",
+        "00945a60",
+        "00945b00",
+        "009469e0",
+        "00947311",
+        "0094739c"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00945b00",
+      "export_names": [
+        "FUN_00945b00"
+      ],
+      "direct_callees": [
+        "00945ae0"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "009469e0",
+      "export_names": [
+        "FUN_009469e0"
+      ],
+      "direct_callees": [
+        "0094b307"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00947311",
+      "export_names": [
+        "FUN_00947311"
+      ],
+      "direct_callees": [
+        "0094c322"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "0094739c",
+      "export_names": [
+        "FUN_0094739c"
+      ],
+      "direct_callees": [
+        "00947311"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00945667",
+      "export_names": [
+        "FUN_00945667"
+      ],
+      "direct_callees": [
+        "00944e46",
+        "009452ca",
+        "0094895b",
+        "00948b90",
+        "00948bbb",
+        "00948ee4",
+        "00949399",
+        "009498eb",
+        "00949942",
+        "00949987",
+        "00949cb3",
+        "0094ab50",
+        "EXTERNAL:00000044",
+        "EXTERNAL:00000047"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00945a60",
+      "export_names": [
+        "FUN_00945a60"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "0090c120",
+      "export_names": [
+        "FUN_0090c120"
+      ],
+      "direct_callees": [
+        "009478d8"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00944e46",
+      "export_names": [
+        "_malloc"
+      ],
+      "direct_callees": [
+        "00944e58"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "00945a09",
+      "export_names": [
+        "FUN_00945a09"
+      ],
+      "direct_callees": [
+        "009452ca",
+        "0094ae85",
+        "0094af38",
+        "0094af9e"
+      ],
+      "source_exports": [
+        "event-map"
+      ]
+    },
+    {
+      "entry": "006d4250",
+      "export_names": [
+        "FUN_006d4250"
+      ],
+      "direct_callees": [],
+      "source_exports": [
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "0070a910",
+      "export_names": [
+        "FUN_0070a910"
+      ],
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "006bac40",
+        "006bb8d0",
+        "006bb950",
+        "006bba50",
+        "006c38c0",
+        "006cbbb0",
+        "006cd770",
+        "006ce110",
+        "006ce310",
+        "006d4250",
+        "006d6f70",
+        "006eecb0",
+        "006f0630",
+        "00700420",
+        "00716e10",
+        "007172d0",
+        "00717470",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945640",
+        "00945934"
+      ],
+      "source_exports": [
+        "rule-map"
+      ]
+    },
+    {
+      "entry": "0070c040",
+      "export_names": [
+        "FUN_0070c040"
+      ],
+      "direct_callees": [
+        "005a8f60",
+        "005cc7d0",
+        "005e8290",
+        "006bac40",
+        "006bb8d0",
+        "006bb950",
+        "006bba50",
+        "006c38c0",
+        "006cbbb0",
+        "006cd770",
+        "006ce110",
+        "006ce310",
+        "006d4250",
+        "006d6f70",
+        "006eecb0",
+        "006f0630",
+        "00700420",
+        "00716e10",
+        "007172d0",
+        "00717470",
+        "0090cfc0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "00945640",
+        "00945934"
+      ],
+      "source_exports": [
+        "rule-map"
+      ]
+    }
+  ],
+  "counts": {
+    "functions": 165,
+    "direct_edges": 1245
+  },
+  "limitations": "Static direct calls only; not complete engine coverage; export names may precede annotations."
+}

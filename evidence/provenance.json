@@ -1,0 +1,86 @@
+{
+  "investigation_date": "2026-10-18",
+  "target": {
+    "filename": "cm0102.exe",
+    "bytes": 7192576,
+    "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+    "embedded_version_marker": "3.9.68",
+    "version_marker_file_offset": "0x6d4394",
+    "patch_state": "byte-identical to the cm0102.exe payload in the archived official SI 3.9.68 updater mirror; historical publisher authentication unavailable",
+    "initial_patch_state": "unverified; community Starter Kit specimen, not independently matched against the pristine SI patch"
+  },
+  "source": {
+    "repository": "https://github.com/nckstwrt/CM0102-Starter-Kit",
+    "commit": "69cdaedd611450f33fb73fa2f41f14f5039f3918",
+    "archive_member": "external/Exes.zip:cm0102.exe"
+  },
+  "tools": {
+    "rea": "6.7.0",
+    "ghidra": "12.1.4",
+    "jdk": "Eclipse Temurin 21.0.12.1+1"
+  },
+  "community_reference": {
+    "repository": "https://github.com/nckstwrt/CM0102Patcher",
+    "commit": "5481361dd32dad23d0e1d2ecddeeeaa0baaecf83",
+    "use": "Version-marker corroboration and future data-layout leads; community source is not original game source"
+  },
+  "rea_native_status": "failed process-ownership prerequisite: ps child fatal library error, lookup self",
+  "rea_resource_status": "succeeded",
+  "target_executed": true,
+  "ghidra_native_status": "completed; auto-analysis and post-export succeeded",
+  "ghidra_internal_functions": 9241,
+  "ghidra_external_symbols": 143,
+  "official_patch_verification": {
+    "comparison": "official-patch-comparison.json",
+    "byte_identical": true,
+    "differing_bytes": 0,
+    "mirror_source": {
+      "repository": "https://github.com/cm0102-linux/cm0102-linux",
+      "commit": "befe35e79ccedeafc17dbf56054afcae9143ab27",
+      "url": "https://raw.githubusercontent.com/cm0102-linux/cm0102-linux/befe35e79ccedeafc17dbf56054afcae9143ab27/patches/official-3.9.68.exe",
+      "source_kind": "community mirror of official updater; publisher-hosted copy unavailable"
+    },
+    "installer_sha256": "b3f2b7d2ace6e86d0974e5ad68ae7a87a1e8fc3494c90d00cc3758392dcf24f1",
+    "ghidra_checkpoint_same_binary": true,
+    "gdi_variant_also_identical": true,
+    "runtime_patches_assessed": false
+  },
+  "first_pass_target_executed": false,
+  "target_execution": {
+    "full_game_launched": false,
+    "native_game_process_launched": false,
+    "isolated_x86_emulation": true,
+    "emulated_functions": [
+      "0x0090cfc0 small-argument branch",
+      "0x00946a04 CRT generator",
+      "0x006d5cd0 event priority",
+      "0x006d4250 post-goal stop predicate"
+    ],
+    "instruction_count": 71043,
+    "input_state": "synthetic; original fixed table loaded from pinned image",
+    "emulated_instruction_slices": [
+      "0x006d70c4..0x006d70ef commentary timestamp conversion"
+    ],
+    "clock_instruction_count": 1507328,
+    "instruction_count_scope": "RNG-only count; clock slice count recorded separately",
+    "event_rule_instruction_count": 3742472
+  },
+  "match_investigation": {
+    "findings": "match-findings.json",
+    "report": "cm0102-match-engine-investigation.html",
+    "annotated_functions": 21,
+    "annotated_globals": 8,
+    "input_bytes_unchanged": true,
+    "partial_data_types": 7,
+    "latest_findings": "event-findings.json",
+    "database_restore_verified": true
+  },
+  "commentary_config": {
+    "repository": "https://github.com/nckstwrt/CM0102-Starter-Kit",
+    "commit": "69cdaedd611450f33fb73fa2f41f14f5039f3918",
+    "path": "external/events_eng.cfg",
+    "bytes": 559509,
+    "sha256": "f8ed6307e3e295ae388bbaf49c5f4cf67337061a4353e5e1c9c4f3875e85fe88",
+    "trust_boundary": "Community configuration; header explicitly describes modified delays. Not authenticated as pristine SI 3.9.68 text/timing."
+  }
+}

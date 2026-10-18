@@ -1,0 +1,11 @@
+{
+  "name": "reversal-cm0102-research",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Evidence-led CM 01/02 3.9.68 reverse-engineering research",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "check": "node scripts/check-research.mjs"
+  }
+}

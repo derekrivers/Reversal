@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-18",
+  "input_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "artifacts": [
+    {
+      "filename": "cm0102-ghidra-database.zip",
+      "bytes": 34857604,
+      "sha256": "ba217ad85c34042e5fe8c6dc763f538c4dab2e20090b938e6aeff5da1050bb7c",
+      "git_tracked": false
+    },
+    {
+      "filename": "cm0102-reverse-engineering-first-pass.zip",
+      "bytes": 61263811,
+      "sha256": "73a80c5568de17e75b6ae5daea421f1ba93fd60debab2b9e3652dab43b8b0aa2",
+      "git_tracked": false
+    }
+  ],
+  "retention": "Preserved separately as private research artifacts; executable bytes and native database are not redistributed in this repository."
+}

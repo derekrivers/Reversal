@@ -1,0 +1,42 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "emulator": "unicorn 2.1.4",
+  "oracle": "original x86 function emulation",
+  "priority": {
+    "address": "006d5cd0",
+    "code_range": [
+      "006d5cd0",
+      "006d5cfe"
+    ],
+    "profiles": 2,
+    "table_entries": 677,
+    "event_codes_per_profile": 65536,
+    "cases": 131072,
+    "table_sha256": "4153e05d2161a5b9d0239f882648823113ebf2f1bb47af4c67bfa5f0c0a20b4e",
+    "oracle_sha256": "e05a093512464e9cdb15a1c7f6068826239476de401c8d0047f7836a595a7d43",
+    "output_layout": "each profile in order, indexed by raw uint16 event code; signed return represented as int8 byte"
+  },
+  "post_goal": {
+    "address": "006d4250",
+    "code_range": [
+      "006d4250",
+      "006d4278"
+    ],
+    "fixture_flag_bytes": [
+      0,
+      128,
+      127,
+      255
+    ],
+    "period_targets_per_flag": 65536,
+    "cases": 262144,
+    "oracle_sha256": "913176bb04cdc8f344d73f936eb9523c7b5601bebcf2ac266276006dacd56950",
+    "output_layout": "each listed flag in order, indexed by raw uint16 period target; normalized 0/1 return"
+  },
+  "executed_instructions": 3742472,
+  "limitations": [
+    "Synthetic priorities and fixture state; no configuration parser or commentary formatter emulated.",
+    "Post-goal predicate verified for every 16-bit target and four flag bytes; only bit 0x80 is inspected by the original instructions.",
+    "Does not validate complete goal handling, golden-goal match outcome or shootout simulation."
+  ]
+}

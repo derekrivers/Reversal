@@ -1,0 +1,11 @@
+Analysis database annotations; all names are working research labels.
+006b7f20 cm0102_prepare_match_candidate
+006b98c0 cm0102_advance_match_candidate
+006db500 cm0102_build_side_descriptor_candidate
+006bbb60 cm0102_prepare_side_candidate
+006bbf60 cm0102_assign_opponent_slots_candidate
+00897590 cm0102_find_designated_staff_slot
+0090cfc0 cm0102_random_bounded
+0090d0a0 cm0102_seed_random
+00946a04 cm0102_crt_rand
+009469fa cm0102_crt_srand
