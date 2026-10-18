@@ -1,0 +1,60 @@
+{
+  "work_unit": "R26-A",
+  "normal_optimized_sites_identical": true,
+  "normal_optimized_oracle_identical": true,
+  "sites_sha256": "3abefabbb4dd4890685788c2f0b5c5b149b8a3903867691040d11c49d7923eb7",
+  "oracle_sha256": "e56df17f43b5a91847b6141eb97007e0ef68f0a75b8a631159c15fc5eace6f98",
+  "negative_checks": {
+    "altered_specimen_normal": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_specimen_optimized": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_native_operand_normal": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_native_operand_optimized": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "resealed_native_operand_normal": {
+      "rejected": true,
+      "reason": "operand mismatch"
+    },
+    "resealed_native_operand_optimized": {
+      "rejected": true,
+      "reason": "operand mismatch"
+    },
+    "emulator_altered_specimen_normal": {
+      "rejected_before_output": true
+    },
+    "emulator_altered_specimen_optimized": {
+      "rejected_before_output": true
+    },
+    "resealed_native_width_normal": {
+      "rejected": true,
+      "reason": "operand width mismatch"
+    },
+    "resealed_native_width_optimized": {
+      "rejected": true,
+      "reason": "operand width mismatch"
+    },
+    "mutate-result": {
+      "rejected": true,
+      "reason": "register/path mismatch"
+    },
+    "mutate-effect": {
+      "rejected": true,
+      "reason": "ordered memory effect mismatch"
+    },
+    "tampered_oracle": {
+      "rejected": true,
+      "reason": "oracle SHA mismatch"
+    }
+  },
+  "scope": "synthetic call-free original entry-to-return cases; all callee paths and the complete merge body remain static"
+}

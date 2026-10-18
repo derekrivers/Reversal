@@ -48,13 +48,14 @@
     "inherited_npm_run_check_node24": "passed",
     "negative_mutations_rejected": 7,
     "git_diff_cached_check": "passed",
-    "shared_ci_runner_updated": false,
-    "task_checker_invoked_separately": true,
+    "shared_ci_runner_updated": true,
+    "task_checker_invoked_separately_on_worker_branch": true,
+    "shared_research_suite_node24": "passed",
     "staged_gzip_blob_sha256_matches_pin": true,
     "model_and_case_schedule_unchanged": true
   },
   "privacy": {
-    "unit_files_inspected": 12,
+    "unit_files_inspected": 13,
     "allowed_artifact_types": "authored UTF-8 text plus one deterministic gzip of the reviewed synthetic JSON",
     "private_artifact_paths": 0,
     "oracle_payload_identical_to_reviewed_json": true,
@@ -87,8 +88,8 @@
       "sha256": "572c95dc9f66236c0ca59535c4520136f21d12260908e37bf41fa0d4ffba5426"
     },
     "reports/league-comparator-26.md": {
-      "bytes": 12565,
-      "sha256": "75de690a3a5e0856718bccec3349974e7de58904afe4a09657521db53c6f1b33"
+      "bytes": 12571,
+      "sha256": "fa71cb58d754bfcc2e2b6be648b83da466642378be2471c83f28eb45eefd55fb"
     },
     "scripts/check_league_comparator_26_negative.py": {
       "bytes": 4274,
@@ -103,8 +104,12 @@
       "sha256": "daa350679059cca264fc7bd6fe68fc65faed99b7fa46f5d6eefdf6b766a8e492"
     },
     ".gitattributes": {
-      "bytes": 237,
-      "sha256": "04b6da2ef4d8fe65cd4ec6519e0faf422bd68f1126b1c5beda8b6197a53e3025"
+      "bytes": 287,
+      "sha256": "b0d0ce1717dd4aed7259b0d00c9d8c816cee2b3633cc9c9ad952023ab2dd6a72"
+    },
+    "scripts/check-research.mjs": {
+      "bytes": 11916,
+      "sha256": "409fb7dd11c276bbcfd0f852eb78788a303226eb835e7495e068275a7edc28fb"
     }
   },
   "oracle_encoding": {
