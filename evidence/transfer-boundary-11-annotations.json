@@ -1,0 +1,15 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "status": "proposal only; canonical Ghidra unchanged",
+  "annotations": [
+    ["008bba30", "cm0102_construct_transfer_manager_candidate", "R11-B static: ECX writable 0x94a-byte receiver, one optional raw32 load context, RET 4; EAX returns receiver on every normal exit including allocation diagnostics. Initializes 150 packed 14-byte headers at +18, embedded headers and scalar state; retains allocations at DWORD+86e/+91c. Nonzero context calls 008bc020; nonzero result skips fresh path. Zero result falls back without explicit rollback to 0xe0 object construction through 00839a80 stored at DWORD+856, then 008c6e60. Opaque callees/unwind/lifecycle remain open; no full transfer or money behavior claim."]
+  ],
+  "code_comments": [
+    ["008bbc7b", "R11-B: DWORD+86e retains 00945501(global32[00ae2364],8). Null diagnoses but returns receiver if diagnostic helpers return; no receiver null return here."],
+    ["008bbccd", "R11-B: DWORD+91c retains 00945501(global32[00ae235c],16). Null diagnoses; no explicit free of prior +86e allocation in owned body."],
+    ["008bbd2c", "R11-B: nonzero load result skips fresh dependent construction. Zero falls through; constructor performs no explicit rollback/reset after possible load-side writes before +856 is replaced."],
+    ["008bbe05", "R11-B: normal EAX return is receiver, including allocation-error paths. Observed caller pointer test cannot prove internal initialization succeeded."]
+  ],
+  "evidence": "transfer-boundary-11-sites.json and transfer-boundary-11-findings.json; owned 257-instruction PE/native agreement; high static confidence for widths/control, unresolved transitive semantics",
+  "datatype_policy": "No prototype or structure replacement proposed. Packed offsets are byte offsets; do not promote to aligned DWORD indexing or assign money semantics."
+}

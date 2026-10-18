@@ -1,0 +1,69 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "2c6bb83f13c92a3f9d2309e71e5e77aac7715383",
+  "scope": "R11-B: complete static control/width map of 008bba30; immediate 008bc020 call/return boundary and selected supporting dependency/caller sites only. No runtime validation or full transfer/money contract.",
+  "address_space": "virtual addresses unless explicitly labelled file offset; receiver and frame offsets are hexadecimal bytes; unprefixed row widths/counts 14/150 are decimal",
+  "entry": "008bba30",
+  "proposed_name": "cm0102_construct_transfer_manager_candidate",
+  "confidence": {
+    "abi_direct_widths_control": "high static; all 257 owned instructions independently decoded and matched to native export",
+    "constructor_role": "high static; two caller allocations, receiver return and embedded constructor diagnostic",
+    "collection_and_state_field_business_meaning": "unresolved",
+    "runtime_success_full_transfer_money_semantics": "unvalidated"
+  },
+  "abi": {
+    "receiver": "ECX, retained in ESI at 008bba4f; no null/extent check",
+    "stack_argument": "one raw32 optional load context at entry ESP+4; read at adjusted ESP+518 at 008bbd0d",
+    "return": "EAX32 = original receiver at 008bbe05 on every normal exit; RET 4 at 008bbe18",
+    "preserved_registers": "EBX/EBP/ESI/EDI pushed/restored; FS:[0] exception registration restored on normal exit",
+    "exception_boundary": "SEH registration/stages present; unwind/finalizer bodies not audited"
+  },
+  "preconditions": [
+    "Writable fresh receiver spans at least 0x94a bytes in observed callers; caller allocation is checked before entry.",
+    "Host import slots, allocation globals 00ae2364/00ae235c and opaque setup dependencies must be initialized. Owned body does not validate count magnitude or multiplication overflow.",
+    "The routine can loop on host drive/CD checks before clearing the main scalar state. GetLogicalDriveStringsA uses capacity 200, but owned code only checks nonzero return/first byte and advances a signed8 offset by 4, rather than validating returned required length or walking arbitrary string lengths.",
+    "Nonzero load context must satisfy unresolved 008bc020/009326e0 requirements; no argument type stronger than optional raw32 context is proposed."
+  ],
+  "initialization": [
+    "008bba6a invokes 009463af(receiver+18,14,150,0068d020,0068d040). Supporting loop calls constructor with ECX at each 14-byte row; 0068d020 zeros WORD+0 and DWORD+2/+6/+a. Covers [18,84c). Destructor callback is registered but its body/unwind use remains outside scope.",
+    "0054a110 at receiver+84d writes WORD+0=0x28, WORD+2=0x7b4, DWORD+4=1; 0068d020 zeros 14-byte embedded headers at +872 and +92c.",
+    "After a drive type 5 candidate and zero result from 004c0aa0, explicit DWORD stores clear +0/+4/+8/+c/+10/+14, +862/+866/+86a, +880/+884/+888/+88c/+890/+894/+898/+89c/+8a0, +920/+924/+928, +93a/+93e/+942/+946. BYTE+84c and later BYTE+855 are cleared.",
+    "Calls 00549ef0(0,0), then 00417c10 with ECX=receiver+84d and two stack values including the temporary/result; then calls 008d26b0 with ECX=receiver. Transitive writes and allocations remain unresolved.",
+    "00945501(global32[00ae2364],8) is stored to DWORD+86e at 008bbc7b. Null routes to diagnostic line 163 and normal receiver return, without second allocation.",
+    "00945501(global32[00ae235c],16) is stored to DWORD+91c at 008bbccd. Null routes to diagnostic line 171 and normal receiver return, without freeing the first allocation in this body.",
+    "After both allocations, DWORD+85e=-1. Nonzero optional context invokes 008bc020(receiver,context); nonzero EAX bypasses fresh initialization and goes directly to receiver return.",
+    "Absent context or zero load result allocates 0xe0 through operator_new. On nonnull allocation invokes 00839a80 with ECX=allocation and stack argument 0; result is stored to DWORD+856. Null allocation/constructor result routes to diagnostic line 192. Nonzero result invokes 008c6e60(receiver) before return."
+  ],
+  "ownership_and_failure": [
+    "Receiver storage belongs to observed caller allocation; helper does not allocate/free receiver. Both callers publish return into DWORD00de1f54.",
+    "+86e/+91c retain allocation results, and +856 retains constructed dependent object. Destructor ownership, lifetime and cleanup are not proved by this constructor.",
+    "No free call appears in owned body; allocation/load failure does not trigger an explicit rollback/reset of receiver. A failed load may already have written receiver and allocated objects before fallback overwrites +856.",
+    "Allocation diagnostics format shared buffers 00ae24d0/00ae28bc/00ae26c4 through opaque helpers and call 005e8290. If helpers return normally, constructor returns receiver. UI termination/nonreturn behavior remains unresolved."
+  ],
+  "load_boundary": {
+    "entry": "008bc020",
+    "owned": false,
+    "contract": "ECX receiver, one stack raw32 argument, RET 4. Zero argument has zero return path. Entry opens transfer.dat through 009326e0(context,name,0,0x16,4); missing handle returns zero. Observed terminal path closes handle and sets EAX=1; common error path closes handle and zeros EAX. Constructor only consumes zero/nonzero.",
+    "partial_effect_evidence": "008bc116..008bc11e passes receiver+4 to a 4-byte single-item read; failure at 008bc1c0 returns zero after that attempt. 008bc7a1..008bc7d8 can allocate/construct and store DWORD+856 before terminal return. Full state changes, all failures, validation and cleanup are unresolved."
+  },
+  "caller_boundaries": [
+    {"entry":"00828110","site":"008298b8","effect":"Requests 0x94a bytes, passes allocation in ECX and EBP=0 as sole stack argument; later stores constructor return to DWORD00de1f54 and tests pointer against zero. EBP is zeroed at 0082876e and not written again before call."},
+    {"entry":"0082a9c0","site":"0082c854","effect":"Requests 0x94a bytes, passes allocation in ECX and EDI as sole stack argument; EDI loaded from current frame ESP+1674 at 0082bb10 or 0082bb21, with no later write before call. Publishes constructor return to DWORD00de1f54 and tests pointer against zero. Full caller/load-context semantics outside scope."}
+  ],
+  "unresolved_calls": [
+    "00417c10 date-like assignment/temporary boundary; 00549ef0 temporary producer",
+    "004c0aa0/004c0c10 host file-check/close candidates; exact contract not audited",
+    "008d26b0 receiver setup (2276-byte dependency); no full-body claim",
+    "00839a80 dependent constructor (shortlist_manager.cpp anchor); full body not audited",
+    "008c6e60 fresh-path followup (518-byte dependency); no full-body claim",
+    "008bc020 load_from_disk diagnostic boundary (5262 bytes); full body unassigned",
+    "0068d040 destructor callback and SEH handler/unwind bodies",
+    "00945501 allocator internals beyond product/zeroing/HeapAlloc observations, operator_new failure/exception policy, format/diagnostic/UI helpers"
+  ],
+  "indirect_calls": [
+    {"site":"008bbac4","resolution":"PE IAT009670f8=KERNEL32.GetLogicalDriveStringsA"},
+    {"site":"008bbaed","resolution":"EBP loaded from IAT00967100=KERNEL32.GetDriveTypeA at 008bbaa9"},
+    {"site":"009463ea","resolution":"supporting array helper receives fixed callback0068d020 from owned entry; remaining exception behavior open"}
+  ],
+  "validation": "Independent original PE decode, native full-owned and selected-callee agreement, native manifest hashes, incoming call checks, width/extent invariants; static only. Existing npm checks are repository regression checks and do not execute this constructor."
+}
