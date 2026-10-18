@@ -1,0 +1,15 @@
+{
+  "work_unit": "R24-B",
+  "python": "3.13.7",
+  "sites_sha256": "c21d2c5b0c56ad893eafdccd0a5dca5cb038bf2a004320eeb25eba94baf07ac3",
+  "oracle_sha256": "a62a75ec46f27ec20de69032e4189e787690917f2fc90a88280ad4609abbb0b9",
+  "checks": [
+    "extract_date_difference_24.py: normal and -O byte identical to retained evidence",
+    "emulate_date_difference_24.py: normal and -O byte identical to retained evidence",
+    "changed PE rejected before output in normal and -O",
+    "changed native export rejected by hash in normal and -O",
+    "resealed native operand rejected by independent PE comparison in normal and -O",
+    "resealed native DWORD-to-WORD operand rejected by exact width comparison in normal and -O",
+    "TypeScript result, read-before-write implementation mutation, and oracle mutations rejected"
+  ]
+}

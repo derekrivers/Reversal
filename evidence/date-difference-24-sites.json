@@ -1,0 +1,346 @@
+{
+  "work_unit": "R24-B",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "9cb03ce3740e5529a2f6155aa20b1a61ea4ba321c6d3520e1c91525782703f52",
+  "export_manifest_sha256": "c3770d9a3b8b99d80454413ea5ec85114aa0f3baa9ec0c661567c30d7bf40e70",
+  "annotation_preflight_sha256": "1df62ffab8859fa6d1b86e486a26f10f82c82827eb08356caae3ce916694a193",
+  "entry_va": "0054cc30",
+  "file_offset": "0x14cc30",
+  "body_bytes": 358,
+  "body_sha256": "d73e8cd4f09bf3b5859ea806051e0f5c0e86d0521573729594358ddc32e82143",
+  "instruction_count": 111,
+  "all_original_and_native_instructions_match": true,
+  "branches": [
+    [
+      "0054cc5d",
+      "jne",
+      [
+        "0054cc93",
+        "0054cc5f"
+      ]
+    ],
+    [
+      "0054cc9f",
+      "ja",
+      [
+        "0054ccb3",
+        "0054cca1"
+      ]
+    ],
+    [
+      "0054cca5",
+      "jb",
+      [
+        "0054cccf",
+        "0054cca7"
+      ]
+    ],
+    [
+      "0054ccb1",
+      "je",
+      [
+        "0054cccf",
+        "0054ccb3"
+      ]
+    ],
+    [
+      "0054ccca",
+      "jmp",
+      [
+        "0054cd81"
+      ]
+    ],
+    [
+      "0054ccda",
+      "js",
+      [
+        "0054ccee",
+        "0054ccdc"
+      ]
+    ],
+    [
+      "0054ccec",
+      "jmp",
+      [
+        "0054cd65"
+      ]
+    ],
+    [
+      "0054ccfb",
+      "jns",
+      [
+        "0054cd02",
+        "0054ccfd"
+      ]
+    ],
+    [
+      "0054cd05",
+      "je",
+      [
+        "0054cd4e",
+        "0054cd07"
+      ]
+    ],
+    [
+      "0054cd0e",
+      "jns",
+      [
+        "0054cd15",
+        "0054cd10"
+      ]
+    ],
+    [
+      "0054cd15",
+      "jne",
+      [
+        "0054cd4e",
+        "0054cd17"
+      ]
+    ],
+    [
+      "0054cd23",
+      "jne",
+      [
+        "0054cd33",
+        "0054cd25"
+      ]
+    ],
+    [
+      "0054cd31",
+      "jne",
+      [
+        "0054cd49",
+        "0054cd33"
+      ]
+    ],
+    [
+      "0054cd47",
+      "jmp",
+      [
+        "0054cd5d"
+      ]
+    ]
+  ],
+  "direct_calls": [
+    {
+      "target": "0054cc30",
+      "sites": [
+        "0054ccc3"
+      ]
+    },
+    {
+      "target": "0094627a",
+      "sites": [
+        "0054cc8b"
+      ]
+    }
+  ],
+  "memory_reads": [
+    [
+      "0054cc37",
+      "mov",
+      4,
+      "eax, dword ptr fs:[0]"
+    ],
+    [
+      "0054cc52",
+      "mov",
+      1,
+      "al, byte ptr [0xae249d]"
+    ],
+    [
+      "0054cc93",
+      "mov",
+      2,
+      "di, word ptr [esi + 2]"
+    ],
+    [
+      "0054cc97",
+      "mov",
+      2,
+      "dx, word ptr [esp + 0x2a]"
+    ],
+    [
+      "0054cca1",
+      "mov",
+      4,
+      "ebx, dword ptr [esp + 0x28]"
+    ],
+    [
+      "0054cca9",
+      "cmp",
+      2,
+      "bx, word ptr [esi]"
+    ],
+    [
+      "0054ccb3",
+      "mov",
+      4,
+      "eax, dword ptr [esi + 4]"
+    ],
+    [
+      "0054ccb6",
+      "mov",
+      4,
+      "ecx, dword ptr [esi]"
+    ],
+    [
+      "0054ccb8",
+      "mov",
+      4,
+      "esi, dword ptr [esp + 0x24]"
+    ],
+    [
+      "0054cccf",
+      "mov",
+      2,
+      "cx, word ptr [esi]"
+    ],
+    [
+      "0054cce5",
+      "mov",
+      2,
+      "cx, word ptr [esi + 2]"
+    ],
+    [
+      "0054cd33",
+      "mov",
+      2,
+      "dx, word ptr [esp + 0x2a]"
+    ],
+    [
+      "0054cd49",
+      "mov",
+      2,
+      "dx, word ptr [esp + 0x2a]"
+    ],
+    [
+      "0054cd5d",
+      "mov",
+      2,
+      "cx, word ptr [esi + 2]"
+    ],
+    [
+      "0054cd65",
+      "mov",
+      4,
+      "eax, dword ptr [esp + 0x24]"
+    ],
+    [
+      "0054cd70",
+      "mov",
+      4,
+      "edx, dword ptr [0xae2428]"
+    ],
+    [
+      "0054cd78",
+      "mov",
+      4,
+      "ecx, dword ptr [0xae242c]"
+    ],
+    [
+      "0054cd81",
+      "mov",
+      4,
+      "ecx, dword ptr [esp + 0x14]"
+    ]
+  ],
+  "memory_writes": [
+    [
+      "0054cc3e",
+      "mov",
+      4,
+      "dword ptr fs:[0], esp"
+    ],
+    [
+      "0054cc4e",
+      "mov",
+      4,
+      "dword ptr [esp + 0x10], ebp"
+    ],
+    [
+      "0054cc57",
+      "mov",
+      4,
+      "dword ptr [esp + 0x1c], ebp"
+    ],
+    [
+      "0054cc69",
+      "mov",
+      2,
+      "word ptr [0xae2428], 0x28"
+    ],
+    [
+      "0054cc72",
+      "mov",
+      1,
+      "byte ptr [0xae249d], dl"
+    ],
+    [
+      "0054cc78",
+      "mov",
+      2,
+      "word ptr [0xae242a], 0x7b4"
+    ],
+    [
+      "0054cc81",
+      "mov",
+      4,
+      "dword ptr [0xae242c], 1"
+    ],
+    [
+      "0054ccde",
+      "mov",
+      2,
+      "word ptr [0xae2428], cx"
+    ],
+    [
+      "0054cd40",
+      "mov",
+      2,
+      "word ptr [0xae2428], cx"
+    ],
+    [
+      "0054cd56",
+      "mov",
+      2,
+      "word ptr [0xae2428], cx"
+    ],
+    [
+      "0054cd69",
+      "mov",
+      2,
+      "word ptr [0xae242a], cx"
+    ],
+    [
+      "0054cd76",
+      "mov",
+      4,
+      "dword ptr [eax], edx"
+    ],
+    [
+      "0054cd7e",
+      "mov",
+      4,
+      "dword ptr [eax + 4], ecx"
+    ],
+    [
+      "0054cd89",
+      "mov",
+      4,
+      "dword ptr fs:[0], ecx"
+    ]
+  ],
+  "returns": [
+    [
+      "0054cd93",
+      12
+    ]
+  ],
+  "native_export_hashes": {
+    "asm": "5f23635d14ec2a15fd0dd9da7f07a79a4b5b42db701b418bd3461e6769497df1",
+    "c": "ae2a499ec66213ffa8291b9de3f3518ed0102d242d5440789171d96c03eb64c9"
+  },
+  "scope": "complete local body; transitive callee effects unresolved",
+  "integrity_under_python_optimized_mode": "explicit ValueError gates"
+}
