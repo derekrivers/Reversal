@@ -97,6 +97,14 @@
       "module": "reconstruction/penalty-keeper-entry.ts",
       "evidence": "evidence/penalty-keeper-entry-validation/oracle.json",
       "boundary": "Low16 return; side0/1 and supplied11-word tables; original helper called by entry oracle across all256 index bytes; upper EAX not a contract"
+    },
+    {
+      "function": "0094fded",
+      "scope": "whole-function-bounded-memory-contract",
+      "behavior": "Descriptor-to-handle DWORD lookup and local error9 writes",
+      "module": "reconstruction/descriptor-handle.ts",
+      "evidence": "evidence/descriptor-handle-validation/oracle.json",
+      "boundary": "344 synthetic stable nonaliasing memory cases; unsigned descriptor/bound, signed page index and address wrapping; valid stack/table/pages/error storage; two unmapped-read probes; no OS, descriptor lifecycle, seek wrapper or save-format behavior"
     }
   ]
 }

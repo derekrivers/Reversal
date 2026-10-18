@@ -55,6 +55,7 @@ There are no npm dependencies for these checks. They compare TypeScript outputs 
 | Penalty resolution boundaries | 131,072 categories, 4,096 keeper base cases and 4,056 ratio gates |
 | Keeper response adjustment/body | 8,192 cases with RNG-bound/state comparisons at 53/64-bit precision |
 | Penalty keeper entry | 9,056 public entry-to-return cases; another 9,056 local original-grid cases |
+| Descriptor-to-handle helper | 344 synthetic memory cases, 4,329 original x86 instruction steps and 11 negative checks |
 
 The public RNG table is **synthetic**, generated deterministically and supplied to the original instructions during emulation. The earlier fixed-game-table experiment remains documented in the private checkpoint. Clock and event-rule fixtures also use synthetic state. Passing these checks establishes only the tested primitives' behavior, not full-match equivalence.
 
