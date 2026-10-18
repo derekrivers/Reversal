@@ -1,0 +1,34 @@
+{
+  "work_unit": "R22-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline": "checkpoint 21, archive bf4e1739d0c1ab1780fca5f95ec9bf0f9447d7cbe28520366a79aa36b6cc5971",
+  "static_bodies": [
+    {
+      "entry_va": "0062c3d0",
+      "body_bytes": 36,
+      "instructions": 12,
+      "branches": 1,
+      "direct_calls": 0,
+      "direct_state_writes": 0,
+      "abi": "ECX receiver, signed 32-bit index at entry ESP+4, RET4; signed WORD sign-extended to EAX on admitted indexed path",
+      "contract": "Read signed runtime count at 00ae2364. If signed index >= count, return zero without reading receiver/table. Otherwise form index*31 modulo 2^32, freshly read receiver first DWORD, then read and sign-extend WORD at table+index*31+12. Negative index is not rejected locally.",
+      "execution_validated_cases": 274
+    },
+    {
+      "entry_va": "0062c590",
+      "body_bytes": 198,
+      "instructions": 70,
+      "branches": 9,
+      "direct_calls": 2,
+      "direct_state_writes": 0,
+      "abi": "ECX receiver, pointer at entry ESP+4, full DWORD flag at entry ESP+8, RET8; ESI/EDI saved; null pointer path clears AX but preserves incoming high EAX half",
+      "contract": "Null pointer returns with AX zero. Signed *pointer >= runtime count returns 10000 for zero flag, 100 otherwise. Indexed path calls 0062c400, multiplies signed WORDs at table+index*31+10 and +8, forms a signed quotient through the original magic-multiply/shift sequence, applies a signed-DX floor and conditional 9000 cap, then for nonzero flag converts signed AX through x87 (float32 0.01, float64 0.5) and calls 00945640 before a signed-AX upper cap at 100.",
+      "execution_validated_cases": 0,
+      "transitive_boundaries": ["0062c400", "00945640"],
+      "limits": ["callee behavior and x87 control word unvalidated", "signed-DX branch tests can differ from full EDX magnitude", "pointer/alias/fault behavior not established"]
+    }
+  ],
+  "new_static_body_count": 2,
+  "new_execution_validated_body_count": 1,
+  "scope_limit": "Local contracts only; no connected slot or match equivalence"
+}

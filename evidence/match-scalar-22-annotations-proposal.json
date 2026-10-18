@@ -1,0 +1,22 @@
+{
+  "work_unit": "R22-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "native_baseline": "checkpoint 21",
+  "proposals": [
+    {
+      "address": "0062c3d0",
+      "old_name": "FUN_0062c3d0",
+      "new_name": "MatchReadIndexedSignedWord31",
+      "confidence": "high for local body, not source identity",
+      "evidence": "12 original PE instructions match native operands; 274 complete-body synthetic original-instruction cases"
+    },
+    {
+      "address": "0062c590",
+      "old_name": "FUN_0062c590",
+      "new_name": "MatchComputeIndexedScaledWordPair",
+      "confidence": "medium for local body, not transitive outcome",
+      "evidence": "70 original PE instructions match native operands; direct callees and x87 conversion remain explicit boundaries"
+    }
+  ],
+  "applied_to_native_project": false
+}

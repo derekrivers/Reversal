@@ -1,0 +1,65 @@
+{
+  "work_unit": "R22-A",
+  "negative_checks": [
+    {
+      "mode": "normal",
+      "checks": [
+        {
+          "case": "one-byte specimen mutation",
+          "rejected": true,
+          "reason": "specimen SHA-256 mismatch"
+        },
+        {
+          "case": "manifest mutation",
+          "rejected": true,
+          "reason": "native manifest SHA-256 mismatch"
+        },
+        {
+          "case": "resealed operand mutation",
+          "rejected": true,
+          "reason": "native operand mismatch at 0062c3e3"
+        }
+      ]
+    },
+    {
+      "mode": "optimized",
+      "checks": [
+        {
+          "case": "one-byte specimen mutation",
+          "rejected": true,
+          "reason": "specimen SHA-256 mismatch"
+        },
+        {
+          "case": "manifest mutation",
+          "rejected": true,
+          "reason": "native manifest SHA-256 mismatch"
+        },
+        {
+          "case": "resealed operand mutation",
+          "rejected": true,
+          "reason": "native operand mismatch at 0062c3e3"
+        }
+      ]
+    },
+    {
+      "mode": "Node24",
+      "checks": [
+        {
+          "case": "changed WORD read",
+          "rejected": true,
+          "reason": "register mismatch"
+        },
+        {
+          "case": "truncated oracle",
+          "rejected": true,
+          "reason": "oracle SHA-256 mismatch"
+        },
+        {
+          "case": "tampered register",
+          "rejected": true,
+          "reason": "oracle SHA-256 mismatch"
+        }
+      ]
+    }
+  ]
+}
