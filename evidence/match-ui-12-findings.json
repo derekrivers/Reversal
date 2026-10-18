@@ -53,14 +53,14 @@
       "entry": "007fe4a0",
       "role": "Mutable manager traversal invoked by00727f00",
       "sites": ["007fe4af", "007fe4b6", "007fe4cb", "007fe4e4", "007fe504", "007fe560", "007fe580", "007fe5c9", "007fe5d0", "007fe5e4", "007fe5ed", "007fe5f4"],
-      "contract_fragment": "Saves WORD receiver+382a, sets it0, scans sixteen groups, restores saved word. Group count WORD+380a+2*g gates processing; nonzero key filters DWORD+7d6+300*g. Matching records delegate five remaining arguments to007fe600. Traversal also copies30-byte records through0090ba90. Normal EAX=1 even if no matching records; not a screen construction success predicate.",
+      "contract_fragment": "Saves WORD receiver+382a, sets it0, scans sixteen groups, restores saved word. Group count WORD+380a+2*g gates processing; nonzero key filters DWORD+7d6+300*g. Matching records delegate five remaining arguments to007fe600. Traversal also copies 0x30 (48)-byte records through0090ba90. Normal EAX=1 even if no matching records; not a screen construction success predicate.",
       "scope_limit": "Dependency can mutate lists and allocate through007fe600. Complete copy semantics, group invariants, exception cleanup and callbacks unresolved. Fields are manager storage, not inferred match-simulation fields."
     },
     {
       "entry": "007fe600,00727fa0,00727fb0 and006b4360",
       "role": "Ownership/lifecycle counterevidence and callback leads",
       "sites": ["007fe635", "007fe667", "007fe86b", "007fe872", "007fe89c", "007fe8b2", "00727fa2", "00727fcf", "007280a0", "007280b8", "006b466f", "006b467b", "006b4685"],
-      "contract_fragment": "Selected manager path allocates300 bytes and stores effective argument1 at node+0 and effective argument2 at node+8; defaults may replace passed arguments first when group roots are zero and receiver+37d4 is nonzero. An existing node+4 code pointer may be invoked at007fe86b. First passed callback calls0041c0d0(0); second reads a separate object's DWORD+e2, can call00718aa0, writesDWORD00b77c4a on one branch and returns control codes -4/-6/-11. Incoming006b4685 is preceded by writes of ESI and0 into retrieved object DWORD+e2/+e6.",
+      "contract_fragment": "Selected manager path allocates 0x300 (768) bytes and stores effective argument1 at node+0 and effective argument2 at node+8; defaults may replace passed arguments first when group roots are zero and receiver+37d4 is nonzero. An existing node+4 code pointer may be invoked at007fe86b. First passed callback calls0041c0d0(0); second reads a separate object's DWORD+e2, can call00718aa0, writesDWORD00b77c4a on one branch and returns control codes -4/-6/-11. Incoming006b4685 is preceded by writes of ESI and0 into retrieved object DWORD+e2/+e6.",
       "scope_limit": "Selected sites do not establish callback scheduling, full callback contract, allocation success, destruction ownership, or simulation/RNG separation. No owned-body pointer lifetime proof."
     }
   ],
