@@ -2,14 +2,14 @@
 
 The native database is the ongoing working checkpoint. Keep `cm0102.gpr` beside the complete `cm0102.rep` directory. Open the existing `cm0102.exe` program in that project; importing the executable into a new project does not recover the annotations.
 
-The [current checkpoint](../checkpoints/2026-10-18-investigation-19/) records:
+The [current checkpoint](../checkpoints/2026-10-18-investigation-21/) records:
 
-- 129 named functions, including seventy-eight names with verified blank function comments; 16 global labels.
+- 134 named functions; 16 global labels.
 - 9 recovered structures with 93 named fields under `/CM0102/Recovered`.
-- 206 original code samples and 76 code comments.
+- 211 original code samples and 76 code comments.
 - 10 canonical project files, each with SHA-256 and byte length.
 
-`checkpoints/latest.json` identifies the current dated checkpoint. Investigations 04–09 metadata remain historical. This checkpoint records the canonical files retained by Ghidra after saving the current project; older separately saved checkpoint versions remain historical.
+`checkpoints/latest.json` identifies the current dated checkpoint. Earlier dated metadata and separately saved archives remain historical. This checkpoint records the canonical files retained by Ghidra after saving the current project.
 
 ## Restore the saved archive
 
@@ -43,6 +43,7 @@ Use a **new isolated output directory**, the hash-pinned executable and Ghidra 1
 17. `CM0102AnnotateInvestigation17.java /new/investigation-17-annotations.json /path/match-dispatch-17-annotations.json /path/db-lower-17-annotations.json /path/scout-cleanup-17-annotations.json`
 18. `CM0102AnnotateInvestigation18.java /new/investigation-18-annotations.json /path/match-helpers-18-annotations.json /path/db-helpers-18-annotations.json /path/cleanup-helpers-18-annotations.json`
 19. `CM0102AnnotateInvestigation19.java /new/investigation-19-annotations.json /path/match-action-19-annotations.json /path/db-runtime-19-annotations.json /path/cleanup-runtime-19-annotations.json`
+20. `CM0102AnnotateInvestigation21.java /new/investigation-21-annotations.json /path/match-microhelpers-21-annotations-proposal.json /path/match-state-21-annotations.json`
 
 Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original project. Then reopen the rebuilt project read-only and execute:
 
@@ -51,7 +52,7 @@ Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original p
   -process cm0102.exe -noanalysis -readOnly \
   -scriptPath /absolute/path/to/Reversal/scripts \
   -postScript CM0102VerifyCheckpoint.java \
-  /absolute/path/to/Reversal/checkpoints/2026-10-18-investigation-19/expected-database.json \
+  /absolute/path/to/Reversal/checkpoints/2026-10-18-investigation-21/expected-database.json \
   /new/rebuilt-verification.json
 ```
 
