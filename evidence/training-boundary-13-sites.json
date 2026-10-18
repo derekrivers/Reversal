@@ -1,0 +1,531 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "87ea0f39d5dcb62fe6969ad6570c3dca8b152673",
+  "address_kind": "PE virtual addresses unless file_offset is explicit; field offsets in bytes",
+  "method": "Capstone 5.0.7 static PE decode; optional whole-owned-body native comparison; no execution",
+  "source_anchor": {
+    "va": "00a8ccd0",
+    "basename": "training_manager.cpp",
+    "limit": "navigation evidence only"
+  },
+  "private_export_manifest_sha256": "fa2728212d3189f2a0ec9f4db14b2355b0da8457bc9bff091d5c2b442b38a489",
+  "native_normalization": "jump aliases, numeric spelling, whitespace, redundant absolute EAX DWORD qualifier and implicit string operands; all other widths preserved",
+  "owned_bodies": [
+    {
+      "entry_va": "008b23b0",
+      "end_exclusive_va": "008b2466",
+      "file_offset": "004b23b0",
+      "length_bytes": 182,
+      "body_sha256": "b006909c1c40488fe9c1dba50777268203bf27124141d2e45cf3fca190a009e9",
+      "instruction_count": 56,
+      "selected_sites": {
+        "008b23b8": "mov ebp, dword ptr [esp + 0x20c]",
+        "008b23bf": "mov ebx, ecx",
+        "008b23c1": "push ebp",
+        "008b23c2": "call 0x8b4cd0",
+        "008b23c7": "test eax, eax",
+        "008b23c9": "jne 0x8b2439",
+        "008b23f4": "push 0x31a",
+        "008b2424": "mov dword ptr [0xb67a34], 0",
+        "008b2436": "ret 8",
+        "008b243a": "mov esi, dword ptr [esp + 0x214]",
+        "008b2442": "mov ecx, 0xd",
+        "008b2447": "mov edi, eax",
+        "008b2449": "push ebp",
+        "008b244a": "rep movsd dword ptr es:[edi], dword ptr [esi]",
+        "008b244c": "movsw word ptr es:[edi], word ptr [esi]",
+        "008b244e": "mov ecx, dword ptr [ebp + 0x39]",
+        "008b2451": "push ecx",
+        "008b2452": "mov ecx, ebx",
+        "008b2454": "call 0x8b2880",
+        "008b2463": "ret 8"
+      },
+      "all_direct_calls": [
+        {
+          "site": "008b23c2",
+          "target": "0x8b4cd0"
+        },
+        {
+          "site": "008b23e1",
+          "target": "0x944cff"
+        },
+        {
+          "site": "008b23fb",
+          "target": "0x90d130"
+        },
+        {
+          "site": "008b240b",
+          "target": "0x944c9f"
+        },
+        {
+          "site": "008b241c",
+          "target": "0x5e8290"
+        },
+        {
+          "site": "008b2454",
+          "target": "0x8b2880"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "incoming_call_sites": [
+          "008b0bda"
+        ],
+        "export_sha256": {
+          "008b23b0.asm": "7e958df4cb3ecc4e58f4913ba2a2baef4e5d41d4fa24fbc7a64aa5ff385d3ea6",
+          "008b23b0.c": "32fe93b600f25c21519e9936026878a734052d4856af7ccb71b519200b358059",
+          "008b23b0.refs": "1ccd421cf9b2d4616f1d32847f3f1fc76a2075661a92ed089d1e5ac0c16b03c1"
+        }
+      }
+    },
+    {
+      "entry_va": "008b35a0",
+      "end_exclusive_va": "008b363d",
+      "file_offset": "004b35a0",
+      "length_bytes": 157,
+      "body_sha256": "5a0db0f22399ff7ceff5a2d33d3d574e4d3c03eb2550f0d4eaf8ff14d1c3ddb8",
+      "instruction_count": 44,
+      "selected_sites": {
+        "008b35a0": "mov eax, dword ptr [esp + 4]",
+        "008b35aa": "push eax",
+        "008b35ab": "call 0x8b4cd0",
+        "008b35b0": "test eax, eax",
+        "008b35b2": "jne 0x8b361e",
+        "008b360b": "mov dword ptr [0xb67a34], 0",
+        "008b35db": "push 0x604",
+        "008b361b": "ret 8",
+        "008b3620": "mov edi, dword ptr [esp + 0x210]",
+        "008b3627": "mov ecx, 0xd",
+        "008b362c": "mov esi, eax",
+        "008b362e": "rep movsd dword ptr es:[edi], dword ptr [esi]",
+        "008b3630": "movsw word ptr es:[edi], word ptr [esi]",
+        "008b363a": "ret 8"
+      },
+      "all_direct_calls": [
+        {
+          "site": "008b35ab",
+          "target": "0x8b4cd0"
+        },
+        {
+          "site": "008b35c8",
+          "target": "0x944cff"
+        },
+        {
+          "site": "008b35e2",
+          "target": "0x90d130"
+        },
+        {
+          "site": "008b35f2",
+          "target": "0x944c9f"
+        },
+        {
+          "site": "008b3603",
+          "target": "0x5e8290"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "incoming_call_sites": [
+          "008b0af3"
+        ],
+        "export_sha256": {
+          "008b35a0.asm": "d858a18dacff179578561f2f1a7e2fd17af5257f91baa640976f8508fb4f8733",
+          "008b35a0.c": "2300c1d38c5c66901bc93308b489fa5ce423dc45878c5aaaf2ddde2294da0672",
+          "008b35a0.refs": "d84a192b0f98ba19b35b935c71c9286ed65cb22a2715d18992b798e8774c19a5"
+        }
+      }
+    },
+    {
+      "entry_va": "008b3930",
+      "end_exclusive_va": "008b39ec",
+      "file_offset": "004b3930",
+      "length_bytes": 188,
+      "body_sha256": "22b1ff0f1ceaaefc3b1895f6981464870143a6444fd22ee2e720e16c06f7bbf6",
+      "instruction_count": 55,
+      "selected_sites": {
+        "008b3930": "mov edx, dword ptr [esp + 4]",
+        "008b3934": "mov eax, dword ptr [0xae2364]",
+        "008b3940": "mov esi, dword ptr [edx]",
+        "008b3942": "sub eax, esi",
+        "008b3945": "dec eax",
+        "008b3946": "js 0x8b397e",
+        "008b3948": "cmp eax, 0x10",
+        "008b394b": "jge 0x8b397e",
+        "008b394d": "mov dl, byte ptr [esp + 0x208]",
+        "008b3954": "test dl, dl",
+        "008b3956": "jl 0x8b395d",
+        "008b3958": "cmp dl, 0xa",
+        "008b395b": "jl 0x8b395f",
+        "008b395d": "mov dl, 1",
+        "008b395f": "movsx edx, dl",
+        "008b3962": "lea eax, [eax + eax*4]",
+        "008b3965": "lea edx, [edx + eax*2 + 7]",
+        "008b396b": "shl eax, 5",
+        "008b396e": "sub eax, edx",
+        "008b3970": "lea ecx, [ecx + eax*4]",
+        "008b3973": "add eax, ecx",
+        "008b397b": "ret 8",
+        "008b39a7": "push 0x68f",
+        "008b39d7": "mov dword ptr [0xb67a34], 0",
+        "008b39e1": "xor eax, eax",
+        "008b39e9": "ret 8"
+      },
+      "all_direct_calls": [
+        {
+          "site": "008b3994",
+          "target": "0x944cff"
+        },
+        {
+          "site": "008b39ae",
+          "target": "0x90d130"
+        },
+        {
+          "site": "008b39be",
+          "target": "0x944c9f"
+        },
+        {
+          "site": "008b39cf",
+          "target": "0x5e8290"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "incoming_call_sites": [
+          "008b0a9a",
+          "008b4150",
+          "008b4165",
+          "008b4182",
+          "008b0b75"
+        ],
+        "export_sha256": {
+          "008b3930.asm": "1d2b13176a5a0caf2bbdf827c4911bd4013061fb27cb2dd526bc1f3dee5726c7",
+          "008b3930.c": "28e83e18766776fb760861621c57d47e3b5865a24bb695fad78f4582c820839d",
+          "008b3930.refs": "5f610aa758f95d99471d7eae56a6fa260a7534f519a31ccfc459fb4bced4dbff"
+        }
+      }
+    },
+    {
+      "entry_va": "008b3c50",
+      "end_exclusive_va": "008b3d36",
+      "file_offset": "004b3c50",
+      "length_bytes": 230,
+      "body_sha256": "9c336cddda7f169ae6fdd18fbea249662a447a3fc5f8b1b8556cc08c11b8d07a",
+      "instruction_count": 68,
+      "selected_sites": {
+        "008b3c50": "mov eax, dword ptr [0xae236c]",
+        "008b3c5c": "push 6",
+        "008b3c5e": "mov esi, ecx",
+        "008b3c60": "push eax",
+        "008b3c61": "call 0x945501",
+        "008b3c69": "mov dword ptr [esi + 0x651d], eax",
+        "008b3c6f": "test eax, eax",
+        "008b3c71": "jne 0x8b3cdc",
+        "008b3c9a": "push 0x6e3",
+        "008b3cca": "mov dword ptr [0xb67a34], 0",
+        "008b3cdc": "mov ecx, dword ptr [0xae236c]",
+        "008b3ce2": "mov eax, dword ptr [0xae23c4]",
+        "008b3ce7": "xor edx, edx",
+        "008b3ce9": "test ecx, ecx",
+        "008b3ceb": "jle 0x8b3d2e",
+        "008b3cee": "mov ecx, dword ptr [eax]",
+        "008b3cf6": "lea ecx, [ecx + ecx*2]",
+        "008b3cf9": "and byte ptr [edi + ecx*2 + 5], 0xdf",
+        "008b3d02": "mov cl, byte ptr [eax + 0xf]",
+        "008b3d0b": "cmp cl, 0xf",
+        "008b3d0e": "mov ecx, dword ptr [eax]",
+        "008b3d13": "jl 0x8b3d1b",
+        "008b3d15": "mov byte ptr [edi + ecx*2], 6",
+        "008b3d1b": "mov byte ptr [edi + ecx*2], 1",
+        "008b3d1f": "mov ecx, dword ptr [0xae236c]",
+        "008b3d25": "inc edx",
+        "008b3d26": "add eax, 0x46",
+        "008b3d29": "cmp edx, ecx",
+        "008b3d2b": "jl 0x8b3cee",
+        "008b3d35": "ret"
+      },
+      "all_direct_calls": [
+        {
+          "site": "008b3c61",
+          "target": "0x945501"
+        },
+        {
+          "site": "008b3c87",
+          "target": "0x944cff"
+        },
+        {
+          "site": "008b3ca1",
+          "target": "0x90d130"
+        },
+        {
+          "site": "008b3cb1",
+          "target": "0x944c9f"
+        },
+        {
+          "site": "008b3cc2",
+          "target": "0x5e8290"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "incoming_call_sites": [
+          "008b1011"
+        ],
+        "export_sha256": {
+          "008b3c50.asm": "53c3934f3e67af87dec544cba90304f4dff57c84111de73a3efd879bc290f95a",
+          "008b3c50.c": "54d7902cc7bc6840791361a4d66c347be7ad91223618b4f577692e5a7703bb93",
+          "008b3c50.refs": "89bed82e1dc71dfecb7f386e4447d7594f5bbb80f08594867b6af4c384cd6b03"
+        }
+      }
+    },
+    {
+      "entry_va": "008b4cd0",
+      "end_exclusive_va": "008b4da4",
+      "file_offset": "004b4cd0",
+      "length_bytes": 212,
+      "body_sha256": "d7f65715ce87f539c5092ba08903cd3e7e012566b82967856da72cfaf6be7ba0",
+      "instruction_count": 60,
+      "selected_sites": {
+        "008b4cd0": "mov edx, dword ptr [esp + 4]",
+        "008b4cda": "test edx, edx",
+        "008b4cdc": "jne 0x8b4d0d",
+        "008b4d05": "push 0xa20",
+        "008b4d0d": "mov eax, dword ptr [0xae2364]",
+        "008b4d13": "mov edi, dword ptr [edx]",
+        "008b4d15": "sub eax, edi",
+        "008b4d18": "dec eax",
+        "008b4d19": "js 0x8b4d36",
+        "008b4d1b": "cmp eax, 0x10",
+        "008b4d1e": "jge 0x8b4d36",
+        "008b4d20": "lea eax, [eax + eax*2]",
+        "008b4d23": "lea edx, [eax + eax*8]",
+        "008b4d26": "lea eax, [ecx + edx*2 + 0x652d]",
+        "008b4d33": "ret 4",
+        "008b4d5f": "push 0xa2a",
+        "008b4d8f": "mov dword ptr [0xb67a34], 0",
+        "008b4d99": "xor eax, eax",
+        "008b4da1": "ret 4"
+      },
+      "all_direct_calls": [
+        {
+          "site": "008b4cf2",
+          "target": "0x944cff"
+        },
+        {
+          "site": "008b4d4c",
+          "target": "0x944cff"
+        },
+        {
+          "site": "008b4d66",
+          "target": "0x90d130"
+        },
+        {
+          "site": "008b4d76",
+          "target": "0x944c9f"
+        },
+        {
+          "site": "008b4d87",
+          "target": "0x5e8290"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "incoming_call_sites": [
+          "008b28f4",
+          "008b423d",
+          "008b35ab",
+          "008b23c2"
+        ],
+        "export_sha256": {
+          "008b4cd0.asm": "8a7321a5855982ab08af18119f2d2cc01a0ff6b3c115a3ee02e6913d50d4ffe0",
+          "008b4cd0.c": "21a84bf1a4cdc391d205ebc8b498a40f5b65d499a7ae2fb385f4e2b5f1507172",
+          "008b4cd0.refs": "8d9a4a181f39b601b5cc7ada965470a193a5470919a01d378627617b4f9bfae2"
+        }
+      }
+    }
+  ],
+  "selected_context_spans": [
+    {
+      "decoded_start_va": "008b0a00",
+      "decoded_end_exclusive_va": "008b0b20",
+      "span_sha256": "defb03d51e18859af8d3c6debf56dff44049711deceb54f2dc87abc98b807817",
+      "selected_sites": {
+        "008b0a8d": "mov ecx, dword ptr [0xde1f44]",
+        "008b0a93": "mov eax, dword ptr [edx + 0xcf]",
+        "008b0a9a": "call 0x8b3930",
+        "008b0aa3": "mov ecx, 0x26",
+        "008b0aae": "rep movsd dword ptr es:[edi], dword ptr [esi]",
+        "008b0ab6": "movsw word ptr es:[edi], word ptr [esi]",
+        "008b0ab8": "movsb byte ptr es:[edi], byte ptr [esi]",
+        "008b0abf": "add edx, 0x9b",
+        "008b0ac8": "cmp bl, 0xa",
+        "008b0ad7": "jl 0x8b0a82",
+        "008b0adf": "lea ecx, [ebp + 0x7a3]",
+        "008b0ae6": "mov ecx, dword ptr [0xde1f44]",
+        "008b0aec": "mov eax, dword ptr [edx + 0xcf]",
+        "008b0af2": "push eax",
+        "008b0af3": "call 0x8b35a0"
+      }
+    },
+    {
+      "decoded_start_va": "008b0b40",
+      "decoded_end_exclusive_va": "008b0bec",
+      "span_sha256": "084a786cbbd4b49205a368cc692e28eea86b44aaf988d3c8d797cb372bb66a8d",
+      "selected_sites": {
+        "008b0b68": "mov edx, dword ptr [ecx + 0xcf]",
+        "008b0b6e": "mov ecx, dword ptr [0xde1f44]",
+        "008b0b75": "call 0x8b3930",
+        "008b0b7a": "mov ecx, 0x26",
+        "008b0b85": "rep movsd dword ptr es:[edi], dword ptr [esi]",
+        "008b0b87": "movsw word ptr es:[edi], word ptr [esi]",
+        "008b0b92": "movsb byte ptr es:[edi], byte ptr [esi]",
+        "008b0b97": "jl 0x8b0b59",
+        "008b0bc6": "lea edx, [ebx + 0x7a3]",
+        "008b0bcc": "push edx",
+        "008b0bcd": "mov ecx, dword ptr [eax + 0xcf]",
+        "008b0bd3": "push ecx",
+        "008b0bd4": "mov ecx, dword ptr [0xde1f44]",
+        "008b0bda": "call 0x8b23b0"
+      }
+    },
+    {
+      "decoded_start_va": "008b0ec0",
+      "decoded_end_exclusive_va": "008b1061",
+      "span_sha256": "28b32f8389ce9702fdcf3c5e3eb4e4154956ee875805600eeaf40648084f521c",
+      "selected_sites": {
+        "008b0ee9": "push 0xa7",
+        "008b0eee": "push 0x9b",
+        "008b0ef3": "push ecx",
+        "008b0ef8": "call 0x9463af",
+        "008b0fef": "mov dword ptr [ebp + 0x6521], edi",
+        "008b0ff5": "mov dword ptr [ebp + 0x6525], edi",
+        "008b0ffb": "mov dword ptr [ebp + 0x6529], edi",
+        "008b1001": "je 0x8b100f",
+        "008b1006": "call 0x8b10d0",
+        "008b100b": "test eax, eax",
+        "008b100d": "jne 0x8b1044",
+        "008b100f": "mov ecx, ebp",
+        "008b1011": "call 0x8b3c50",
+        "008b1016": "lea eax, [ebp + 0x6531]",
+        "008b101c": "mov ecx, 0x60",
+        "008b1021": "or esi, 0xffffffff",
+        "008b1028": "mov dword ptr [eax - 4], esi",
+        "008b102b": "add eax, 9",
+        "008b102e": "mov dword ptr [ebx], edx",
+        "008b1031": "mov byte ptr [ebx + 4], dl",
+        "008b1034": "jne 0x8b1024",
+        "008b1038": "call 0x8b3d40",
+        "008b103d": "mov word ptr [ebp + 0x688d], di",
+        "008b104c": "mov eax, ebp"
+      }
+    },
+    {
+      "decoded_start_va": "008b1070",
+      "decoded_end_exclusive_va": "008b10c4",
+      "span_sha256": "26e1d0670f702edf8b22983628380f7284b97207ccb89e0803fb50702e56bbe0",
+      "selected_sites": {
+        "008b1071": "mov esi, ecx",
+        "008b1073": "mov eax, dword ptr [esi + 0x651d]",
+        "008b1079": "test eax, eax",
+        "008b107b": "je 0x8b1090",
+        "008b107d": "push eax",
+        "008b107e": "call 0x9452ca",
+        "008b1086": "mov dword ptr [esi + 0x651d], 0",
+        "008b1090": "mov eax, dword ptr [esi + 0x6521]",
+        "008b109b": "call 0x9452ca",
+        "008b10a3": "mov dword ptr [esi + 0x6521], 0",
+        "008b10bd": "call 0x9462bb",
+        "008b10c3": "ret"
+      }
+    },
+    {
+      "decoded_start_va": "008b2880",
+      "decoded_end_exclusive_va": "008b2bbd",
+      "span_sha256": "b655537910604a068eecf75f979dc784a7d503d53623cce1b6db6e310aad442e",
+      "selected_sites": {
+        "008b2885": "mov esi, dword ptr [esp + 0x40]",
+        "008b288a": "mov edi, dword ptr [esp + 0x48]",
+        "008b288e": "mov ebx, ecx",
+        "008b28f1": "push edi",
+        "008b28f2": "mov ecx, ebx",
+        "008b28f4": "call 0x8b4cd0",
+        "008b28fa": "mov ebp, eax",
+        "008b2913": "mov edi, ebp",
+        "008b2915": "mov ebx, 6",
+        "008b293d": "mov dword ptr [edi], 0xffffffff",
+        "008b2943": "mov dword ptr [eax], edx",
+        "008b2945": "mov byte ptr [eax + 4], dl",
+        "008b298d": "add edi, 9",
+        "008b2991": "jne 0x8b291a",
+        "008b2b89": "mov byte ptr [ebp], al",
+        "008b2bba": "ret 8"
+      }
+    },
+    {
+      "decoded_start_va": "00945501",
+      "decoded_end_exclusive_va": "009455b2",
+      "span_sha256": "bf2976ecc4493f4f920fb9d0e8576c6df7353a602918525be263776de4d9360b",
+      "selected_sites": {
+        "00945505": "mov esi, dword ptr [ebp + 8]",
+        "00945508": "imul esi, dword ptr [ebp + 0xc]",
+        "00945513": "ja 0x945522",
+        "00945519": "push 1",
+        "0094551c": "add esi, 0xf",
+        "0094551f": "and esi, 0xfffffff0",
+        "0094553f": "call 0x948ee4",
+        "00945560": "call 0x949987",
+        "0094556c": "push esi",
+        "0094556d": "push 8",
+        "0094556f": "push dword ptr [0xde4400]",
+        "00945575": "call dword ptr [0x967154]",
+        "00945597": "push dword ptr [ebp + 8]",
+        "0094559a": "push 0",
+        "0094559c": "push edi",
+        "0094559d": "call 0x94a640",
+        "009455a5": "mov eax, edi",
+        "009455ab": "push esi",
+        "009455ac": "jmp 0x94559a"
+      }
+    },
+    {
+      "decoded_start_va": "009452ca",
+      "decoded_end_exclusive_va": "00945333",
+      "span_sha256": "9a2dcc1df676f5f373684fef9a16ec24bd66aadabbbdaa259e4eb6e577593edc",
+      "selected_sites": {
+        "009452cf": "mov esi, dword ptr [ebp + 8]",
+        "009452d2": "test esi, esi",
+        "00945321": "push esi",
+        "00945322": "push 0",
+        "00945324": "push dword ptr [0xde4400]",
+        "0094532a": "call dword ptr [0x96715c]"
+      }
+    },
+    {
+      "decoded_start_va": "0094a640",
+      "decoded_end_exclusive_va": "0094a698",
+      "span_sha256": "2af9ec6db955aa74b3de79ebe2752b3fa148e02935ac40304eb9ffc13ccf0d2c",
+      "selected_sites": {
+        "0094a640": "mov edx, dword ptr [esp + 0xc]",
+        "0094a644": "mov ecx, dword ptr [esp + 4]",
+        "0094a64e": "mov al, byte ptr [esp + 8]",
+        "0094a663": "mov byte ptr [edi], al",
+        "0094a681": "rep stosd dword ptr es:[edi], eax",
+        "0094a687": "mov byte ptr [edi], al"
+      }
+    }
+  ],
+  "selected_imports": {
+    "00967154": {
+      "dll": "KERNEL32.dll",
+      "name": "HeapAlloc"
+    },
+    "0096715c": {
+      "dll": "KERNEL32.dll",
+      "name": "HeapFree"
+    }
+  },
+  "limitations": [
+    "Context spans are dependency alignment/evidence only, not fully reversed functions.",
+    "No runtime lifecycle, RNG-state, allocation-failure or original-instruction behavior oracle."
+  ]
+}
