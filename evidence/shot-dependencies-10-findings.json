@@ -1,0 +1,195 @@
+{
+  "investigation": 10,
+  "work_unit": "R10-A",
+  "baseline_commit": "944954fd19b73a133f4505afc5b28a486479b45e",
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses; not file offsets",
+  "evidence_class": "static instruction mapping; no new dynamic oracle",
+  "scope": "Action33 caller006cfe10(context,shooter,6d,null,0,0); refresh lookup0062ed70/0062c680 and effect006d0980. Other paired participants/final flags are inventory only.",
+  "method": "Read-only pinned PE section decoding with Capstone5.0.7, corroborated with coordinator read-only native exports-09 and exports-10; every owned instruction address and direct-call site/target matches. Manual operands/widths/branches checked. Bulk evidence stays private.",
+  "source_ranges": [
+    {
+      "function": "006cfe10",
+      "instructions": 887,
+      "direct_calls": 54,
+      "end_exclusive": "006d0850",
+      "code_range_sha256": "562464687ad2ae7dcbcdf546432f290a70f7d6fe3431861f5c9c5c1fe67871fa",
+      "native_export_sha256": "91c571aa3902a311fac6ea69f36836dde6cb2d2427c9a9d9ce687e82e3e91cf9"
+    },
+    {
+      "function": "0062ed70",
+      "instructions": 60,
+      "direct_calls": 5,
+      "end_exclusive": "0062ee2b",
+      "code_range_sha256": "1d8ecca16d2ad835d32f01edf9ad8e56d93fa99519c37eea523815c7bae5e8e2",
+      "native_export_sha256": "9b0bd12347e822108343cd47f26cfd81f47a577075c6463f853bde53cefd476e"
+    },
+    {
+      "function": "0062c680",
+      "instructions": 562,
+      "direct_calls": 27,
+      "end_exclusive": "0062cdf5",
+      "code_range_sha256": "10271964e0119f7a886c34ba8741174957ec555c822f8affa7f56acb3dab2fe6",
+      "native_export_sha256": "d4deb12fbedb1229c64240b313b0d57fcd426bf4ad99f2619000ed494a2c5905"
+    },
+    {
+      "function": "006d0980",
+      "instructions": 141,
+      "direct_calls": 9,
+      "end_exclusive": "006d0b59",
+      "code_range_sha256": "8a618f5a01c2e2a0796c5a564d642b7ff40618d07fa814ba9be4934353d2f74b",
+      "native_export_sha256": "bdbc5f548d56b6bdd14456e2c2bce140364e9815024d005bb99296c28e316fcc"
+    }
+  ],
+  "confidence": {
+    "instruction_sites_widths": "high",
+    "specialized_control_flow": "high static confidence, valid storage preconditions required",
+    "status_condition_stamp_labels": "provisional semantic labels",
+    "runtime_reachability_and_numerical_equivalence": "unvalidated"
+  },
+  "abi": {
+    "006cfe10": {
+      "this": "context pointer ECX",
+      "stack": [
+        "participant1 pointer",
+        "metadata1 low16",
+        "participant2 pointer",
+        "metadata2 low16",
+        "special flag low8"
+      ],
+      "ret_cleanup": 20,
+      "return": "no meaningful value established"
+    },
+    "0062ed70": {
+      "this": "lookup object pointer ECX",
+      "stack": [
+        "player pointer"
+      ],
+      "ret_cleanup": 4,
+      "return": "EAX pointer or0"
+    },
+    "0062c680": {
+      "this": "lookup object pointer ECX",
+      "stack": [
+        "player pointer"
+      ],
+      "ret_cleanup": 4,
+      "return": "no meaningful value established; SEH frame"
+    },
+    "006d0980": {
+      "this": "match pointer ECX",
+      "stack": [
+        "kind signed8",
+        "severity signed8",
+        "target pointer",
+        "other pointer"
+      ],
+      "ret_cleanup": 16,
+      "return": "no meaningful value established"
+    }
+  },
+  "lookup": {
+    "function": "0062ed70",
+    "refresh_call": "0062edfc",
+    "row": "object[0]+31*signed32(player[0])",
+    "record_index": "signed32(row+e)",
+    "null_record_index": -1,
+    "return": "object[4]+48*recordIndex",
+    "no_negative_input_index_guard": true,
+    "standalone_record_bounds_after_refresh": false,
+    "unknowns": [
+      "valid pointer/index/storage domain",
+      "row and record semantic type",
+      "0062c680 selected transitive side effects"
+    ]
+  },
+  "refresh": {
+    "function": "0062c680",
+    "current_stamp_guard": "row16+0 == global00ae2c90 low16 AND row16+2 == global00ae2c92; exits0062c790",
+    "row_mapping_normalization": "if signed32(row+e)>signed32(object+8) OR <-1: row+e=-1 at0062c7d8; upper comparison is strict greater",
+    "direct_rng": [
+      "0062ca4f",
+      "0062cb18"
+    ],
+    "loop_rng_argument": "trunc(signed8(player+5b)/3)+2 at0062ca4f; argument to each RNG call, separate from iteration count",
+    "loop_iteration_limit": "min(uint16(first elapsed helper result),elapsed-like quantity) at0062c9f9..0062ca19; before each draw unsigned byte(global00ae2d0c base+79*index+a)>=50 exits early",
+    "lifecycle_calls": [
+      "0062c895",
+      "0062c8ac"
+    ],
+    "selected_writes": [
+      "static initialization byte00b63d10",
+      "cache globals00b63d2c/00b63d30 and stamp00b63d08 via helper",
+      "row+e signed32",
+      "byte global00ae2d0c base+79*playerIndex+a",
+      "row+8/+a 16-bit at0062cdd3/cdd7",
+      "row stamp via00417c10 at0062cddb"
+    ],
+    "calculation_body": "0062cb35..0062cdc7 mapped as branch/write boundary, no numerical-equivalence claim"
+  },
+  "action33_effect_selection": {
+    "early_low_float": {
+      "guard": "float32(shooter+4d)<4000; ordered finite inputs",
+      "call": "006d00f8",
+      "arguments": [
+        "kind=-1",
+        "severity=0",
+        "target=shooter",
+        "other=0"
+      ],
+      "return_before_rng50000": true
+    },
+    "threshold_rng": "R50000 at006d0394; effect when draw<trunc(localFloatFactor*10)",
+    "direct_mapper_codes": "1..5 select effect kind1..5 respectively",
+    "fallback_rng": "R11 at006d0474",
+    "fallback_kinds": {
+      "0/9/10": [
+        1
+      ],
+      "1/2/3": [
+        3
+      ],
+      "4/5": [
+        4
+      ],
+      "6/7": [
+        2,
+        5
+      ],
+      "8": [
+        5
+      ]
+    },
+    "double_effect_sites": [
+      "006d04c5",
+      "006d055f"
+    ],
+    "numeric_kinds_have_semantic_names": false
+  },
+  "effect": {
+    "function": "006d0980",
+    "counter": "signed16 match+f639",
+    "gate": "if n>3: Rn; if nonzero R500; if both nonzero return; then if n>6 return",
+    "gate_rng": [
+      "006d099d",
+      "006d09ae"
+    ],
+    "kind_nonnegative_dependency": "0062be00 at006d09ed may rewrite both kind and severity bytes",
+    "other_write": "target+55 pointer overwritten; nonnull other+31 word-=10",
+    "severity_after_merge": "signed8",
+    "large_severity": "s>50: target+1c=1; target float4d loses s*s; no severity RNG",
+    "small_severity": "s<=50: R(trunc(s*s*0.5)), subtract first float draw from target4d; R(trunc(firstDrawFloat*0.5)) to target59; halve targetd5",
+    "flag_logic": "float4d<5000 sets match8eb5 and target1c/1d; else threshold7100+25*signed8(*(target+6d)+2d) selects activity5 vs3; further local-draw/target1c test controls latch",
+    "clamp": "target float4d clamped1..10000",
+    "counter_increment": "006d0b4d iff match8eb5 is already/nonzero; latch is not cleared on entry",
+    "activity_setter": "007160e0 dependency writes target+2b; no direct RNG"
+  },
+  "not_proven": [
+    "Connected action33 outcome or return-state equivalence",
+    "Exact floating-point behavior across x87 modes and nonfinite inputs",
+    "Real input producers, stamp/cache initialization and valid storage/index domains",
+    "Transitive state/RNG effects of0062e700, calendar/schedule helpers, initialization, allocation/list helpers",
+    "Physical semantic types for status rows, effect kinds and fields"
+  ],
+  "public_report": "reports/shot-dependencies-10.md"
+}

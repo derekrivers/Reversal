@@ -1,0 +1,66 @@
+{
+  "investigation": 10,
+  "work_unit": "R10-A",
+  "baseline_commit": "944954fd19b73a133f4505afc5b28a486479b45e",
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses; not file offsets",
+  "evidence_class": "static instruction mapping; no new dynamic oracle",
+  "status": "proposal only; coordinator is sole native writer",
+  "functions": [
+    {
+      "address": "006cfe10",
+      "old_name": "FUN_006cfe10",
+      "proposed_name": "cm0102_apply_match_slot_effect_candidate",
+      "confidence": "working semantic name; high static specialized-path confidence",
+      "comment": "Action33 caller007024b4 passes(shooter,6d,null,0,0). Two nestedR102/Rprevious groups run before participant checks.0062ed70 may refresh status rows and consume RNG via0062c680, then conditionalR25. Float4d<4000 selects006d0980(-1,0,shooter,0) and returns. OtherwiseR50000 threshold, optionalR11 kind selection; codes6/7 invoke kind2 then5. Slot/match side effects flow through callees. Static mapping only; other participant/flag paths and live numerical equivalence open."
+    },
+    {
+      "address": "0062ed70",
+      "old_name": "FUN_0062ed70",
+      "proposed_name": "cm0102_get_refreshed_status_record_candidate",
+      "confidence": "working semantic name; high for pointer widths/order",
+      "comment": "ECX object, one player pointer; ret4. Nonnull signed index<global00ae2364 calls0062c680 BEFORE reading31-byte row+e record index. Index-1->EAX0; otherwise return object+4 base+48*index. No explicit negative input guard or independent post-refresh record bound. Not pure accessor: refresh may write state/consume RNG."
+    },
+    {
+      "address": "0062c680",
+      "old_name": "FUN_0062c680",
+      "proposed_name": "cm0102_refresh_player_status_row_candidate",
+      "confidence": "working semantic name; high static guards/sites; arithmetic unvalidated",
+      "comment": "ECX object, one player pointer; ret4/SEH. Initializes local helper globals, rejects null/out-of-range/null+61, skips when row first two16-bit stamp components equal00ae2c90/+2. Refresh normalizes row+e if>object+8 or<-1; conditional lifecycle0062e700. No-record branch may loopR(trunc(signed8(player+5b)/3)+2) and increment global79-byte-record+a, then optionalR2. Writes row words+8/+a and stamp. Full arithmetic, lifecycle/calendar dependencies and valid domains unvalidated."
+    },
+    {
+      "address": "006d0980",
+      "old_name": "FUN_006d0980",
+      "proposed_name": "cm0102_apply_slot_condition_effect_candidate",
+      "confidence": "working semantic name; high for widths/static paths",
+      "comment": "ECX match, kind/severity signed low bytes,target,other; ret10h. Counter signed16+f639>3 drawsRcounter then conditionalR500; >6 rejects after draws. Kind>=0 invokes0062be00 byte merge. Clears/sets target+55=other; nonnull other word31-=10. Severity>50 subtracts square; otherwise ordered half-square/half-draw RNG, writes float4d/59 and halvesd5. Flags1c/1d, activity2b via007160e0, clamp4d1..10000. Does not clear match8eb5; any existing nonzero latch increments wordf639. Static only; no full outcome oracle."
+    }
+  ],
+  "code_comments": [
+    {
+      "address": "0062edfc",
+      "comment": "R10-A: refresh0062c680 is called before returning status record. Cached-stamp branch may skip direct RNG; stale no-record branch can consume loop RNG andR2. Do not model0062ed70 as pure getter.",
+      "confidence": "high static"
+    },
+    {
+      "address": "0062ca4f",
+      "comment": "R10-A: per-draw RNG argument=trunc(signed8(player+5b)/3)+2. Loop iteration limit=min(uint16(first elapsed helper result),elapsed-like quantity), selected at0062c9f9..0062ca19. Before each draw unsigned byte(global00ae2d0c base+79*index+a)>=50 stops; zero draw increments byte. RNG precedes caller006cfee7 R25.",
+      "confidence": "high static"
+    },
+    {
+      "address": "006d00f8",
+      "comment": "R10-A action33 early finite float4d<4000: call kind=-1,severity0,target=shooter,other0 then return beforeR50000. Admitted effect still changes slot/match state; two severityR0 calls do not advance RNG.",
+      "confidence": "high static specialized path"
+    },
+    {
+      "address": "006d04c5",
+      "comment": "R10-A null-other fallbackR11 code6/7 invokes kind2 here, then kind5 at006d055f. First effect can change latch/counter and therefore second effect gate/RNG.",
+      "confidence": "high static switch mapping"
+    },
+    {
+      "address": "006d0b4d",
+      "comment": "R10-A increments match wordf639 when byte8eb5 is nonzero;006d0980 does not clear latch on entry, so this can count an already-set latch. No newly-set-flag inference from increment.",
+      "confidence": "high static"
+    }
+  ]
+}
