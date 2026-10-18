@@ -1,0 +1,33 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-16",
+  "status": "Name-only proposals; coordinator applies after independent review and fresh exact-old check",
+  "private_preflight_sha256": "0d084f0348af44eeb24a73d8cec0fc866525099b14180bd87bd9c6246beda10f",
+  "old_annotation_evidence": "Hash-pinned native headers and preflight agree on FUN_* names; no comment, prototype, calling convention or structure change proposed",
+  "proposals": [
+    {
+      "address": "0094ab50",
+      "kind": "function_name",
+      "old": "FUN_0094ab50",
+      "new": "cm0102_copy_bytes_overlap_aware",
+      "evidence": "All 231 instructions/664 owned bytes and inline table targets verified; unsigned overlap direction, byte/DWORD copy and original-destination return",
+      "confidence": "high for complete local contract under valid nonwrapping memory and DF-clear entry"
+    },
+    {
+      "address": "0094b3e0",
+      "kind": "function_name",
+      "old": "FUN_0094b3e0",
+      "new": "cm0102_read_descriptor_translate_text",
+      "evidence": "All 174 instructions/502 bytes and original ReadFile/GetLastError imports verified; descriptor guards/cache, main errors, optional CRLF/0x1a translation and lookahead",
+      "confidence": "high for complete local contract; error mapper, position helper and runtime API outcomes remain boundaries"
+    },
+    {
+      "address": "0094b307",
+      "kind": "function_name",
+      "old": "FUN_0094b307",
+      "new": "cm0102_refill_stream_get_byte",
+      "evidence": "All 78 instructions/217 bytes verified; refill/flag/count/cursor transitions and MOVZX-byte or -1 result",
+      "confidence": "high for complete local contract; buffer preparation/allocation/capacity remains transitive"
+    }
+  ]
+}

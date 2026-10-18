@@ -1,0 +1,74 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "scope": "Three complete local static contracts; no runtime oracle, complete transitive effects or disk compatibility claim",
+  "baseline": "edc2a3cafe3695346e706733100eeff59be5b9f4 / checkpoint 16",
+  "abi": {
+    "convention": "cdecl supported by plain RET and observed caller cleanup",
+    "argument_width": "DWORD stack slots at entry ESP+4, +8, +c as applicable",
+    "return": "EAX",
+    "preserved": ["EBX", "EBP", "ESI", "EDI"],
+    "assumptions": "Valid sufficiently sized memory, normal flat DS/ES, DF clear for copy; no pointer/count overflow for ordinary-range descriptions"
+  },
+  "functions": [
+    {
+      "entry_va": "0094ab50",
+      "state": "contract-supported",
+      "arguments": ["destination", "source", "byte_count_raw32"],
+      "owned_bytes": 664,
+      "instructions": 231,
+      "owned_instruction_ranges": 21,
+      "extent_bytes": 821,
+      "direction": "Backward iff D>unsigned S and D<unsigned low32(S+N); forward otherwise",
+      "body": "Destination alignment by 1..3 bytes; REP MOVSD for >=8 DWORDs; unrolled 0..7 DWORD table and 0..3 byte tail; backward REP guarded by STD then CLD",
+      "return": "Original destination; zero count avoids source/destination memory access",
+      "effects": "Exactly N destination bytes for valid nonwrapping ranges with DF clear; source/destination may overlap; no calls/global writes/error return",
+      "dispatch": "16 indirect jump sites; seven table-base/index-domain combinations, including negative indices and aliasing cells",
+      "limits": "Not a safety guarantee for wrapped addresses, invalid capacity/pointers, DF set or interrupted/faulting copies"
+    },
+    {
+      "entry_va": "0094b3e0",
+      "state": "contract-supported",
+      "arguments": ["descriptor_raw32", "destination", "requested_bytes_raw32"],
+      "owned_bytes": 502,
+      "instructions": 174,
+      "descriptor": "F<unsigned DWORD[de43e0], entry=DWORD[de42e0+4*(signed(F)>>5)]+8*(F&31); BYTE entry+4 flag 0x01 required",
+      "fields": {"+0": "DWORD OS handle read", "+4": "BYTE flags read/write", "+5": "BYTE cached lookahead read/write"},
+      "early_zero": "After descriptor validation: count zero or descriptor flag 0x02",
+      "invalid_descriptor": "DWORD[de2f90]=0, DWORD[de2f8c]=9; EAX=-1",
+      "prefix": "When flags intersect 0x48 and cache!=LF, emit cached byte, decrement request, advance OS destination, set prefix_count=1, cache=LF; still issue main call for remaining zero",
+      "main_read": "ReadFile(handle,dest_after_prefix,remaining_request,&stack_count,NULL)",
+      "main_failure": {"error5": "DWORD[de2f8c]=9; DWORD[de2f90]=5; return -1", "error0x6d": "return 0", "other_including_zero": "0094b2a0(error); return -1"},
+      "binary_return": "low32(prefix_count+OS_count) when descriptor bit0x80 clear",
+      "text_flag4": "Set BYTE descriptor flag 0x04 iff main_OS_count!=0 and original_destination[0]==LF; clear otherwise",
+      "text_translation": "In-place CRLF=>LF, standalone CR retained, 0x1a terminates output and sets flag 0x02 unless flag 0x40; bytes after0x1a can already be physically consumed",
+      "trailing_CR": "One-byte ReadFile lookahead: failure with nonzero last-error or count 0 emits CR; failure with last-error0 still consults count/byte outputs, not preinitialized here",
+      "lookahead_flag48": "With flags 0x48: LF emits LF; non-LF emits CR and caches lookahead",
+      "lookahead_other": "If output empty and lookaheadLF emitLF; otherwise call 0094c552(F,-1,1), ignore result, emitCR only for non-LF",
+      "text_return": "Compacted output byte count, unsigned pointer-end scan; no output terminator",
+      "mutation_failure_limit": "Destination/cache may already change before main failure returns0/-1; no rollback. Lookahead failure can return prior output rather than-1. Short successful reads are not filled locally"
+    },
+    {
+      "entry_va": "0094b307",
+      "state": "contract-supported",
+      "arguments": ["stream"],
+      "owned_bytes": 217,
+      "instructions": 78,
+      "fields": {"+0": "DWORD cursor read/write", "+4": "DWORD count write", "+8": "DWORD buffer base read", "+c": "DWORD flags read/write; BYTE/WORD masks", "+10": "DWORD descriptor read", "+18": "DWORD refill size read/write"},
+      "gates": "LowBYTE flags missing all0x83 or containing0x40 =>-1 unchanged locally; else bit0x02 =>OR DWORD flags 0x20 and-1",
+      "prepare": "OR flags 0x01; if WORD flags intersects 0x10c reset cursor=buffer base, otherwise 0094ec37(stream), ignoring return",
+      "read": "0094b3e0(descriptor,buffer_base,refill_size); store EAX as count",
+      "failure": "0 =>OR flags 0x10; -1=>OR flags 0x20; both set count 0 and return -1",
+      "successful_flag": "If stream flags lack0x82, read descriptor flags through table or fallback ad91f0 for F=-1; descriptor(flags&0x82)==0x82 =>OR stream flags 0x2000",
+      "size_change": "After read, refill_size==0x200 and stream flag 0x08 set and0x400 clear =>refill_size=0x1000",
+      "consume": "Every result except0/-1: count=low32(result-1); return MOVZX BYTE[*cursor], cursor++; no positive-result/capacity check",
+      "limits": "Does not first consume existing count. No independent descriptor bounds check after successful read; buffer preparation/capacity/failure remains transitive"
+    }
+  ],
+  "original_PE_imports": {"009670e4": "KERNEL32.dll!ReadFile", "009670e8": "KERNEL32.dll!GetLastError"},
+  "unresolved_dependencies": [
+    {"entry_va": "0094ec37", "caller_site_va": "0094b339", "boundary": "Buffer preparation; stream mutation/allocation/failure unresolved"},
+    {"entry_va": "0094b2a0", "caller_site_va": "0094b49d", "boundary": "OS error argument; global/thread error mapping unresolved"},
+    {"entry_va": "0094c552", "caller_site_va": "0094b582", "boundary": "(descriptor,-1,1); seek-shaped arguments, actual position/failure effects unresolved; return ignored"}
+  ],
+  "remaining_limits": ["No stream/descriptor initialization or lifetime/concurrency proof", "No valid file corpus or runtime host API trace", "No equivalence of output, cached cursor, logical position and physical handle advancement", "No malformed-input or fault-recovery guarantee", "No connected game/subsystem or complete database/save compatibility"]
+}
