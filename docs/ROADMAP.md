@@ -2,7 +2,7 @@
 
 ## Completed baseline
 
-Investigations 01–04 established a pinned specimen, verified it against an archived updater, built the Ghidra project, traced match progression, recovered commentary layouts and connected event IDs to configuration labels. Investigation 05 adds an executable-wide code atlas, a penalty-preparation reconstruction and explicit TypeScript/React boundaries. Investigation 06 verifies independent goalkeeper base-draw, shot-category and scoring-gate slices. Investigation 07 connects the penalty keeper base branch to its common adjustment stage under explicit 53/64-bit precision. Investigation 08 checks the action33 path from original entry to return, including tactical lookup and grid selection.
+Investigations 01–04 established a pinned specimen, verified it against an archived updater, built the Ghidra project, traced match progression, recovered commentary layouts and connected event IDs to configuration labels. Investigation 05 adds an executable-wide code atlas, a penalty-preparation reconstruction and explicit TypeScript/React boundaries. Investigation 06 verifies independent goalkeeper base-draw, shot-category and scoring-gate slices. Investigation 07 connects the penalty keeper base branch to its common adjustment stage under explicit 53/64-bit precision. Investigation 08 checks the action33 path from original entry to return, including tactical lookup and grid selection. Investigation 09 maps additional shot-resolution RNG consumers, keeper field producers, two database read wrappers and the normal CRT precision request, with a restored native checkpoint. These are static findings, not a connected shot outcome.
 
 The TypeScript modules now cover the small-bound random helper/CRT generator, event-minute conversion, event-priority lookup, the post-goal stop predicate, penalty preparation and three shot-resolution boundaries. Their supported scope and limits are recorded with the oracles and [validation coverage registry](../evidence/code-atlas/validation-coverage.json).
 
@@ -14,9 +14,9 @@ For each workstream, recover state ownership and a behavioral contract, record d
 
 ## Next: trace runtime state producers and connect the shared shot caller
 
-1. Trace the sources of keeper ratings at slot`+168/+16a`, float`+d1`, counter`+f`, fallback rating`+3b` and match state`+8eaa`. The action33 routine now runs from entry to return with supplied tactical/grid/state inputs; their real match-state producers remain open.
-2. Follow keeper output and quality through `00702050`. Account for intervening changes and every RNG consumer before following scoring/non-scoring branches to score/state writes and commentary.
-3. Establish the x87 control word at match entry. Static CRT code requests 53-bit precision; both 53/64-bit modes are checked, but actual entry state has not been runtime-observed.
+1. Resolve the remaining keeper producer call contexts and indexed `+168/+16a` adjustment in a real match frame. The mapped producers still need entry-state and lifecycle validation.
+2. Continue `00702050` past the mapped unconditional and conditional RNG consumers to a bounded outcome oracle, including scoring and non-scoring state changes.
+3. Measure the full x87 control word and thread at match/keeper entry. Normal CRT startup requests 53-bit precision before application entry, but later callbacks and match execution remain untraced.
 4. Preserve the original rounded distance lookup as data. Exact hypot matches only 24/108 entries; do not silently replace it. Public fixtures use a labelled synthetic grid; an additional local original-grid comparison passes.
 5. Build a connected shot/penalty attempt and shootout only after state producers, caller preconditions and side effects are established. Continue bounded PRs, self-review and CI-gated merges; preserve and restore-test each native checkpoint.
 

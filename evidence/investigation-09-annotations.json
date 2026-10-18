@@ -1,0 +1,137 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 9,
+  "scope": "Reviewed static mapping annotations; no new behavior oracle, prototype or data type applied.",
+  "annotations": [
+    [
+      "006ec010",
+      "cm0102_recompute_roster_attributes_candidate",
+      "Investigation09 static producer map: writes signed16 derived rating slot+3b (final rescale006eca80), float32 adjustment+d1 at006ed98d with negative-to-zero clamp006ed9a0, and other float attributes. Staff pointer+69/player candidate+6d; ECX slot, RET0. Full producer behavior and semantic source-stat labels unvalidated."
+    ],
+    [
+      "006eecb0",
+      "cm0102_refresh_roster_ratings_candidate",
+      "Investigation09 static producer map: calls006ec010 at entry; computes equal initial+168/+16a words006f0255/025c; then63-word dispatch loop from+11a. Indices39/40 both select006f0472, yielding low16(ftol(0.775*s16(initial)+7*(s16(slot+37)+30))). Calls RNG-consuming006f44a0 afterward. ECX slot, RET4; no whole-producer oracle."
+    ],
+    [
+      "006ce110",
+      "cm0102_select_goalkeeper_slot_candidate",
+      "Investigation09 static refinement: mutates both caches match+f59e/+f5a2;20 slots/side at+4796/+6a6e stride1be. Invalidates cached negative tactical index; first0..10 tactical-word1 slot otherwise; active-slot fallback may modify+19/+1a. No activity+2b guard here. Input ECX match and side stack byte; selector1 returns+f5a2 otherwise+f59e, pointer EAX, RET4; may return null."
+    ],
+    [
+      "0054d5e0",
+      "cm0102_read_db_c6_records_checked",
+      "Investigation 09 static read wrapper: cdecl(stream,mode32,dest,descriptor). Reads descriptor DWORD +0x37 count and requires DWORD +0x3f\u003d\u003d1; guard meaning unresolved. mode 0 calls fread-like 00945bfe, any nonzero calls custom read 00932c30, with item size 198 bytes. Returns EAX 0/1 from itemsRead\u003d\u003dcount. Destination/stream borrowed; no allocation/open/close/rollback. Mismatch uses Db_files.cpp diagnostic then cleanup and exit(-1). No complete file schema, adjacent function or RNG restoration claim."
+    ],
+    [
+      "0054d740",
+      "cm0102_read_db_122_records_checked",
+      "Investigation 09 static read wrapper: cdecl(stream,mode32,dest,descriptor). Reads descriptor DWORD +0x37 count and requires DWORD +0x3f\u003d\u003d2; guard meaning unresolved. mode 0 calls fread-like 00945bfe, any nonzero calls custom read 00932c30, with item size 290 bytes. Returns EAX 0/1 from itemsRead\u003d\u003dcount. Destination/stream borrowed; no allocation/open/close/rollback. Mismatch uses Db_files.cpp diagnostic then cleanup and exit(-1). No complete file schema, adjacent function or RNG restoration claim."
+    ]
+  ],
+  "code_comments": [
+    [
+      "007023e3",
+      "Investigation09 static action33 switch: default variant R(2) before keeper entry. This draw is part of caller stream; keep before00702416."
+    ],
+    [
+      "007024b4",
+      "Investigation09: action33 still calls006cfe10(shooter,6d,null,0,0). Its entry runs two nested R(102)/R(previous) groups plus conditional R(3)/R(76)/R(previous), before null-participant checks. Additional conditional R25/R50000/R11 and006d0980 effects remain unvalidated. Do not join independent keeper/category oracles by skipping this call."
+    ],
+    [
+      "00703e24",
+      "Investigation09: unconditional R(15) after classification. Quantized distance\u003e25+draw enables007103e0 work over eligible other slots; temporary match+8ea9\u003d5 is restored. Transitive RNG/state must be admitted before connected-attempt claims."
+    ],
+    [
+      "00703fb7",
+      "Investigation09: selected keeper\u003d\u003dmatch+f5ae forces saved response0. Subsequent00703ffb and00704004 sign extend keeper/quality words for gate; action33 first output flag+20 stays0, while fallback output+14 can be1."
+    ],
+    [
+      "00707dd6",
+      "Investigation09 static mode3/4 successful path: increments tiebreak-score BYTE match+f5bc+54*signed8(slot+27). Event2000 follows; mode3 additionally212e. Post-score R3, presentation and state helpers still execute; this is not a complete return/outcome oracle."
+    ],
+    [
+      "006f0255",
+      "Equal initial keeper rating words are subsequently adjusted by indexed loop006f0428..006f05b1; do not use these stores alone as final producer formula."
+    ],
+    [
+      "006f0472",
+      "Selected for rating indices39/40 in63-word loop; float64 constant0096a6e8 is0.775. Word store006f04a2 narrows ftol result."
+    ],
+    [
+      "006ed98d",
+      "FST float32 slot+d1 leaves x87 value for comparison against0 before optional dword-zero write006ed9a0. Depends on signed16+3b, age-candidate-scaled signed player+3a, and local float adjustment."
+    ],
+    [
+      "006eca80",
+      "Final observed+3b store in this routine: low16(ftol(0.5*s16(previous)+80)); earlier tactical lower/upper clamps operate before this rescale."
+    ],
+    [
+      "0070701b",
+      "Byte counter+f increments modulo256 behind tactical-position1 guard. Parallel caller sites0070ae8f/0070c518. Initialization/reset and goals-conceded semantics remain open."
+    ],
+    [
+      "006cd88f",
+      "Match+8eaa byte producer following coordinate perturbation: third stack argument byte0 -\u003e0; otherwise low8(1+RNG(signed8(arg)+1)). Reachable input domain unresolved."
+    ],
+    [
+      "006bbec3",
+      "Match+8eaa countdown decrement; +f582/+f57a nonnull suppress update; +8eb2 nonzero clears state instead. Movement/flight timer remains a candidate label."
+    ],
+    [
+      "00700394",
+      "Direct byte setter for match+8eaa; caller006ffc7c supplies1+RNG(3)."
+    ],
+    [
+      "006cd462",
+      "Candidate pointer stored to match+f5ae when0070dfd0 returnsAL2; AL1 path increments candidate+12 and stores at006cd47e. Contact/block semantics unresolved."
+    ],
+    [
+      "0054d5eb",
+      "Read raw DWORD item count at descriptor +0x37; unaligned field; no wrapper count/range validation."
+    ],
+    [
+      "0054d5ee",
+      "DWORD +0x3f must equal 1 for c6-byte reader; meaning of guard field unresolved."
+    ],
+    [
+      "0054d668",
+      "Mode is full DWORD at entry ESP+0x8: zero\u003d\u003eordinary fread-like 00945bfe; nonzero\u003d\u003ecustom 00932c30. Both receive(dest,c6,count,stream)."
+    ],
+    [
+      "0054d693",
+      "Compare returned items with original raw32 count; SETE then zero-extension yields EAX 0/1. Failure does not roll back helper side effects."
+    ],
+    [
+      "0054d74b",
+      "Read raw DWORD item count at descriptor +0x37; unaligned field; no wrapper count/range validation."
+    ],
+    [
+      "0054d74e",
+      "DWORD +0x3f must equal 2 for 0x122-byte reader; meaning of guard field unresolved."
+    ],
+    [
+      "0054d7ca",
+      "Mode is full DWORD at entry ESP+0x8: zero\u003d\u003eordinary fread-like 00945bfe; nonzero\u003d\u003ecustom 00932c30. Both receive(dest,122,count,stream)."
+    ],
+    [
+      "0054d7f5",
+      "Compare returned items with original raw32 count; SETE then zero-extension yields EAX 0/1. Failure does not roll back helper side effects."
+    ],
+    [
+      "00945910",
+      "PE entry00947a13 calls00945907 before application0068d370. Original pointer00ad6c14\u003d009455b2; this computed call takes the normal startup precision request. Later initializer callbacks and match-entry CW remain unobserved."
+    ],
+    [
+      "009455c1",
+      "Normal startup calls0094a698 here; mask30000h/value10000h sets x87 precision-control bits0200h (53-bit) but does not by itself prove full CW027fh or match-entry precision. FNCLEX009455c6 clears exceptions."
+    ]
+  ],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "shot-resolver-09-annotations.json",
+    "keeper-producers-09-annotations.json",
+    "database-boundary-09-annotations.json"
+  ]
+}
