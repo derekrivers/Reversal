@@ -1,0 +1,417 @@
+{
+  "investigation": 10,
+  "work_unit": "R10-A",
+  "baseline_commit": "944954fd19b73a133f4505afc5b28a486479b45e",
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses; not file offsets",
+  "evidence_class": "static instruction mapping; no new dynamic oracle",
+  "direct_calls_by_target": {
+    "006cfe10": {
+      "0090cfc0": [
+        "006cfe35",
+        "006cfe3b",
+        "006cfe50",
+        "006cfe5e",
+        "006cfe64",
+        "006cfe74",
+        "006cfe7a",
+        "006cfe8c",
+        "006cfe9a",
+        "006cfea0",
+        "006cfee7",
+        "006cfff9",
+        "006d0120",
+        "006d0155",
+        "006d0394",
+        "006d03e0",
+        "006d0474",
+        "006d04e8"
+      ],
+      "0062ed70": [
+        "006cfec2",
+        "006cffd4"
+      ],
+      "0062ec00": [
+        "006cfedc",
+        "006cffee"
+      ],
+      "0062ece0": [
+        "006cff72",
+        "006cff85",
+        "006d008f",
+        "006d00a2"
+      ],
+      "006d0980": [
+        "006d00f8",
+        "006d0181",
+        "006d019c",
+        "006d01b7",
+        "006d01d2",
+        "006d01ed",
+        "006d04c5",
+        "006d055f",
+        "006d0595",
+        "006d05b9",
+        "006d05dd",
+        "006d0601",
+        "006d0625",
+        "006d0649",
+        "006d066d",
+        "006d0691",
+        "006d06c1",
+        "006d06f1",
+        "006d0721",
+        "006d0751",
+        "006d0781",
+        "006d07b1",
+        "006d07e1",
+        "006d0811",
+        "006d0841"
+      ],
+      "00945640": [
+        "006d0134",
+        "006d0307",
+        "006d03a8"
+      ]
+    },
+    "0062ed70": {
+      "00944cff": [
+        "0062ed99"
+      ],
+      "0090d130": [
+        "0062edb3"
+      ],
+      "00944c9f": [
+        "0062edc3"
+      ],
+      "005e8290": [
+        "0062edd3"
+      ],
+      "0062c680": [
+        "0062edfc"
+      ]
+    },
+    "0062c680": {
+      "0054a110": [
+        "0062c6c8",
+        "0062c6f3",
+        "0062c720"
+      ],
+      "0094627a": [
+        "0062c6d2",
+        "0062c6fd",
+        "0062c72a"
+      ],
+      "0054cc30": [
+        "0062c7a7",
+        "0062c809"
+      ],
+      "00417c10": [
+        "0062c818",
+        "0062c99f",
+        "0062cddb"
+      ],
+      "0062e700": [
+        "0062c895",
+        "0062c8ac"
+      ],
+      "0076d780": [
+        "0062c8d5"
+      ],
+      "0076e040": [
+        "0062c8f0"
+      ],
+      "00669bd0": [
+        "0062c976"
+      ],
+      "0054cdb0": [
+        "0062c9cb",
+        "0062c9e5"
+      ],
+      "0090cfc0": [
+        "0062ca4f",
+        "0062cb18"
+      ],
+      "00945640": [
+        "0062cc12",
+        "0062cc39",
+        "0062cc7b",
+        "0062cca5",
+        "0062cccf",
+        "0062cd8c",
+        "0062cdac"
+      ]
+    },
+    "006d0980": {
+      "0090cfc0": [
+        "006d099d",
+        "006d09ae",
+        "006d0a41",
+        "006d0a6c"
+      ],
+      "0062be00": [
+        "006d09ed"
+      ],
+      "00945640": [
+        "006d0a3b",
+        "006d0a66"
+      ],
+      "007160e0": [
+        "006d0ada",
+        "006d0ae5"
+      ]
+    }
+  },
+  "rng_sites": [
+    {
+      "function": "006cfe10",
+      "sites": [
+        "006cfe35",
+        "006cfe3b",
+        "006cfe50",
+        "006cfe5e",
+        "006cfe64"
+      ],
+      "order": "first nested group",
+      "operation": "R102, Rprevious, optionalR3 and optionalR76/Rprevious",
+      "action33": "included"
+    },
+    {
+      "function": "006cfe10",
+      "sites": [
+        "006cfe74",
+        "006cfe7a",
+        "006cfe8c",
+        "006cfe9a",
+        "006cfea0"
+      ],
+      "order": "second nested group",
+      "operation": "same pattern before null-participant tests",
+      "action33": "included"
+    },
+    {
+      "function": "0062c680",
+      "sites": [
+        "0062ca4f"
+      ],
+      "order": "within0062ed70 refresh before callerR25",
+      "operation": "loop R(trunc(signed8(player+5b)/3)+2), conditional byte increment; see report for gates",
+      "action33": "conditional cache/update path"
+    },
+    {
+      "function": "0062c680",
+      "sites": [
+        "0062cb18"
+      ],
+      "order": "after loop draws if that loop ran",
+      "operation": "R2 when second elapsed-helper result>=15 and signed16(row+a)*signed16(row+8)/10000<8000 on no-record bucket path",
+      "action33": "conditional cache/update path"
+    },
+    {
+      "function": "006cfe10",
+      "sites": [
+        "006cfee7"
+      ],
+      "order": "after record refresh returns nonnull",
+      "operation": "R25; nonzero doubles local severity byte",
+      "action33": "conditional"
+    },
+    {
+      "function": "006cfe10",
+      "sites": [
+        "006cfff9"
+      ],
+      "operation": "R25 on second participant lookup",
+      "action33": "excluded: null participant2"
+    },
+    {
+      "function": "006cfe10",
+      "sites": [
+        "006d0120",
+        "006d0155"
+      ],
+      "operation": "R50000/R11 on special-final-flag path",
+      "action33": "excluded: final flag0"
+    },
+    {
+      "function": "006cfe10",
+      "sites": [
+        "006d0394",
+        "006d0474"
+      ],
+      "order": "after lookups/low-float check",
+      "operation": "R50000 threshold; optionalR11 kind choice",
+      "action33": "conditional; absent on early low-float return"
+    },
+    {
+      "function": "006cfe10",
+      "sites": [
+        "006d03e0",
+        "006d04e8"
+      ],
+      "operation": "metadata5 R5 or paired-participant R9",
+      "action33": "excluded by metadata109 and null participant2"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d099d",
+        "006d09ae"
+      ],
+      "order": "before effect writes",
+      "operation": "conditionalR(signed16(match+f639)), conditionalR500",
+      "action33": "each selected effect invocation"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d0a41",
+        "006d0a6c"
+      ],
+      "order": "after possible0062be00 byte merge",
+      "operation": "for severity<=50: R(trunc(s*s*0.5)), R(trunc(firstDrawFloat*0.5))",
+      "action33": "each admitted low-severity effect; R0 identity on early kind-1/severity0 call"
+    }
+  ],
+  "write_sites": [
+    {
+      "function": "0062c680",
+      "sites": [
+        "0062c6c2",
+        "0062c6ed",
+        "0062c71a"
+      ],
+      "width": 1,
+      "target": "static initialization global00b63d10 bits1/2/4"
+    },
+    {
+      "function": "0062c680",
+      "sites": [
+        "0062c7d8"
+      ],
+      "width": 4,
+      "target": "31-byte status row+e=-1"
+    },
+    {
+      "function": "0062c680",
+      "sites": [
+        "0062c98d",
+        "0062c99a"
+      ],
+      "width": 4,
+      "target": "global00b63d30/00b63d2c cache"
+    },
+    {
+      "function": "0062c680",
+      "sites": [
+        "0062ca76"
+      ],
+      "width": 1,
+      "target": "global00ae2d0c base+79*playerIndex+a increment"
+    },
+    {
+      "function": "0062c680",
+      "sites": [
+        "0062cdd3",
+        "0062cdd7"
+      ],
+      "width": 2,
+      "target": "31-byte status row+8/+a"
+    },
+    {
+      "function": "0062c680",
+      "sites": [
+        "0062cddb"
+      ],
+      "width": 8,
+      "target": "row stamp via00417c10 dependency; helper not newly owned"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d09f8"
+      ],
+      "width": 4,
+      "target": "target+55=other pointer"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d09fd"
+      ],
+      "width": 2,
+      "target": "nonnull other+31 -=10"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d0a12",
+        "006d0aaa"
+      ],
+      "width": 1,
+      "target": "target+1c=1"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d0a23",
+        "006d0a59",
+        "006d0b3f"
+      ],
+      "width": 4,
+      "target": "target float+4d"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d0a7c"
+      ],
+      "width": 4,
+      "target": "target float+59=second severity draw"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d0a8b"
+      ],
+      "width": 4,
+      "target": "target float+d5 halved"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d0aa1",
+        "006d0b02"
+      ],
+      "width": 1,
+      "target": "match+8eb5=1; not cleared on entry"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d0aa7",
+        "006d0b08"
+      ],
+      "width": 1,
+      "target": "target+1d=1"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d0ada",
+        "006d0ae5"
+      ],
+      "width": 1,
+      "target": "target+2b=5/3 via007160e0"
+    },
+    {
+      "function": "006d0980",
+      "sites": [
+        "006d0b4d"
+      ],
+      "width": 2,
+      "target": "match+f639 increment when latch8eb5 nonzero"
+    }
+  ],
+  "confidence": "high for static sites/widths; dependency writes are explicitly marked; not numerical validation"
+}
