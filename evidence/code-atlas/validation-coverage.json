@@ -81,6 +81,22 @@
       "module": "reconstruction/keeper-response.ts",
       "evidence": "evidence/keeper-response-validation/oracle.json",
       "boundary": "Synthetic prelude frame; float input bounds enforced; validity/grid lookup and other actions excluded; match-entry precision unobserved; no complete penalty outcome"
+    },
+    {
+      "function": "00700420",
+      "scope": "action33-entry-to-return",
+      "behavior": "Penalty keeper entry checks, variant/grid/tactical inputs and response",
+      "module": "reconstruction/penalty-keeper-entry.ts",
+      "evidence": "evidence/penalty-keeper-entry-validation/oracle.json",
+      "boundary": "Action33 only; bounded coordinates and valid mapped context; synthetic public grid/tactical data; original grid separately checked locally; actual state producers and shot outcomes remain open"
+    },
+    {
+      "function": "006c38c0",
+      "scope": "whole-function-low-word-contract",
+      "behavior": "Tactical position word lookup",
+      "module": "reconstruction/penalty-keeper-entry.ts",
+      "evidence": "evidence/penalty-keeper-entry-validation/oracle.json",
+      "boundary": "Low16 return; side0/1 and supplied11-word tables; original helper called by entry oracle across all256 index bytes; upper EAX not a contract"
     }
   ]
 }

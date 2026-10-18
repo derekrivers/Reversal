@@ -13,7 +13,8 @@ const checks=[
  ['reconstruction/check-event-rules.ts','evidence/event-rule-validation','results/event-rules.json'],
  ['reconstruction/check-penalty-preparation.ts','evidence/penalty-preparation-validation/x86-penalty-preparation.json','evidence/random-validation/random-table.bin','results/penalty-preparation.json'],
  ['reconstruction/check-penalty-resolution.ts','evidence/penalty-resolution-validation','evidence/random-validation/random-table.bin','results/penalty-resolution.json'],
- ['reconstruction/check-keeper-response.ts','evidence/keeper-response-validation/oracle.json','evidence/random-validation/random-table.bin','results/keeper-response.json']
+ ['reconstruction/check-keeper-response.ts','evidence/keeper-response-validation/oracle.json','evidence/random-validation/random-table.bin','results/keeper-response.json'],
+ ['reconstruction/check-penalty-keeper-entry.ts','evidence/penalty-keeper-entry-validation/oracle.json','evidence/random-validation/random-table.bin','results/penalty-keeper-entry.json']
 ];
 for(const args of checks){const r=spawnSync(process.execPath,args,{stdio:'inherit'});if(r.status!==0)process.exit(r.status??1);}
 const checkpoint=JSON.parse(readFileSync('checkpoints/latest.json','utf8')).path;
@@ -38,6 +39,12 @@ assert.equal(config.events.reduce((n,e)=>n+e.variant_count,0),4754);
 for(const e of config.events){assert.equal(e.engine_code,e.config_id+8000);assert.equal(e.variant_metadata.length,e.variant_count);}
 const random=JSON.parse(readFileSync('evidence/random-validation/x86-oracle.json','utf8'));
 assert.ok(random.table.origin.startsWith('synthetic fixture:'),'Public RNG input must be synthetic');
+const keeperEntry=JSON.parse(readFileSync('evidence/penalty-keeper-entry-validation/oracle.json','utf8'));
+assert.ok(keeperEntry.grid.origin.startsWith('synthetic '),'Original grid input must stay in ignored private fixtures');
+const originalGridReceipt=JSON.parse(readFileSync('evidence/penalty-keeper-entry-validation/original-grid-validation-receipt.json','utf8'));
+assert.equal(originalGridReceipt.status,'passed');assert.equal(originalGridReceipt.sha256,expected.sha256);
+assert.equal(originalGridReceipt.cases,keeperEntry.coverage.cases);
+assert.equal(originalGridReceipt.grid_window.sha256,keeperEntry.original_grid_window.sha256);
 const lines=readFileSync('evidence/SHA256SUMS','utf8').trim().split('\n');
 for(const line of lines){const match=/^([a-f0-9]{64})  (.+)$/.exec(line);assert.ok(match,line);
   assert.equal(createHash('sha256').update(readFileSync(match[2])).digest('hex'),match[1],match[2]);}

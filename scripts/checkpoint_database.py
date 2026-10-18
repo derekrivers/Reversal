@@ -41,7 +41,7 @@ def stage():
     names.update({row[0]:row[1] for row in annotations['annotations']})
     types={t['path']:t for t in annotations['partial_data_types']}
     comments_by_address={}
-    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json']:
+    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json']:
       event_receipt=ROOT/'evidence'/receipt_name
       if event_receipt.exists():
         event_annotations=json.loads(event_receipt.read_text())
@@ -50,7 +50,7 @@ def stage():
         types.update({t['path']:t for t in event_annotations['partial_data_types']})
         comments_by_address.update({a:{'address':a,'text':note} for a,note in event_annotations['code_comments']})
     comments=list(comments_by_address.values())
-    functions=[{'address':a,'name':n,**({'return_bytes':1} if a in ['006b98c0','006bd930'] else {})}
+    functions=[{'address':a,'name':n,**({'return_bytes':1} if a in ['006b98c0','006bd930'] else {'return_bytes':2} if a=='006c38c0' else {})}
                for a,n in sorted(names.items())]
     pe=struct.unpack_from('<I',data,0x3c)[0];optional=pe+24
     base=struct.unpack_from('<I',data,optional+28)[0]
