@@ -1,0 +1,25 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-15",
+  "status": "Name-only proposals; coordinator applies after independent review and fresh exact-old check",
+  "private_preflight_sha256": "2be810e149b9d5ebe8de028bf9542aab932afd31514e2ec8d737bef8450374bc",
+  "old_annotation_evidence": "Hash-pinned preflight and native decompiler headers agree; no comments, signatures, conventions or structures proposed",
+  "proposals": [
+    {
+      "address": "00945bfe",
+      "kind": "function_name",
+      "old": "FUN_00945bfe",
+      "new": "cm0102_read_items_buffered",
+      "evidence": "All 92 instructions / 232 bytes match pinned native assembly; buffered byte/copy/lower-read paths return complete item count",
+      "confidence": "high for complete local buffered read contract; lower I/O/copy/refill and physical position unresolved"
+    },
+    {
+      "address": "00932c30",
+      "kind": "function_name",
+      "old": "FUN_00932c30",
+      "new": "cm0102_read_items_bounded_or_byterun4",
+      "evidence": "All 169 instructions / 468 bytes match pinned native assembly; signed indexed bound, internal DWORD +19 mode 4 byte-run path, other-mode whole-item delegation",
+      "confidence": "high for complete local branch/state contract; initialization, lower I/O and malformed/truncated input behavior unresolved"
+    }
+  ]
+}
