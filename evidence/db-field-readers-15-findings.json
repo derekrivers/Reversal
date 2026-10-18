@@ -1,0 +1,126 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-14",
+  "scope": "Four complete local bodies; static contracts only; no execution oracle or complete schema",
+  "abi": {
+    "convention": "cdecl supported by stack arguments, plain RET and caller cleanup",
+    "entry_stack_arguments": [
+      "stream at ESP+4",
+      "mode_raw32 at ESP+8",
+      "destination at ESP+0xc",
+      "count_raw32 at ESP+0x10"
+    ],
+    "preserved_registers": [
+      "ebx",
+      "ebp",
+      "esi",
+      "edi"
+    ]
+  },
+  "shared_contract": {
+    "mode_zero_callee": "00945bfe",
+    "mode_every_nonzero_dword_callee": "00932c30",
+    "read_arguments": [
+      "field_destination",
+      "field_width",
+      "1",
+      "original stream"
+    ],
+    "helper_return_failure": "unsigned EAX < 1, exactly raw DWORD zero; larger returns accepted locally",
+    "return": "exact DWORD 0 on first failed field; exact DWORD 1 after all records or count zero",
+    "outer_iteration": "unsigned record index starts zero and continues while index < original raw count; native 32-bit address arithmetic",
+    "partial_read": "No rollback; completed direct writes and conversions remain; failed helper may already partially mutate destination/stream; scratch WORD store skipped on failed scratch read",
+    "ownership": "borrowed destination and stream; no local heap allocation/free, stream open/close, explicit global access or RNG call"
+  },
+  "functions": [
+    {
+      "entry_va": "0054dc90",
+      "body_bytes": 2365,
+      "instruction_count": 805,
+      "observed_wrapper_call_va": "0054dc79",
+      "destination_stride": 581,
+      "requested_bytes_per_complete_record": 577,
+      "calls_per_complete_record": 133,
+      "field_order_evidence": "db-field-readers-15-sites.json:functions[0054dc90].field_groups",
+      "byte_to_word_offsets": [
+        128
+      ],
+      "conversion": "((byte == 0 ? 1 : byte) * 500) & 0xffff",
+      "untouched_destination_offsets": [
+        55,
+        82,
+        580
+      ],
+      "failure_epilogue_va": "0054e5c5"
+    },
+    {
+      "entry_va": "0054e9a0",
+      "body_bytes": 1583,
+      "instruction_count": 583,
+      "observed_wrapper_call_va": "0054e98b",
+      "destination_stride": 68,
+      "requested_bytes_per_complete_record": 65,
+      "calls_per_complete_record": 36,
+      "field_order_evidence": "db-field-readers-15-sites.json:functions[0054e9a0].field_groups",
+      "byte_to_word_offsets": [
+        8,
+        10,
+        12
+      ],
+      "conversion": "zero extend byte to WORD, including zero unchanged",
+      "untouched_destination_offsets": [],
+      "failure_epilogue_va": "0054efc8"
+    },
+    {
+      "entry_va": "0054f150",
+      "body_bytes": 2652,
+      "instruction_count": 972,
+      "observed_wrapper_call_va": "0054f13b",
+      "destination_stride": 70,
+      "requested_bytes_per_complete_record": 67,
+      "calls_per_complete_record": 62,
+      "field_order_evidence": "db-field-readers-15-sites.json:functions[0054f150].field_groups",
+      "byte_to_word_offsets": [
+        9,
+        11,
+        13
+      ],
+      "conversion": "zero extend byte to WORD, including zero unchanged",
+      "untouched_destination_offsets": [],
+      "failure_epilogue_va": "0054fba5"
+    },
+    {
+      "entry_va": "0054ffd0",
+      "body_bytes": 510,
+      "instruction_count": 193,
+      "observed_wrapper_call_va": "0054ffbb",
+      "destination_stride": 107,
+      "requested_bytes_per_complete_record": 104,
+      "calls_per_complete_record": 11,
+      "field_order_evidence": "db-field-readers-15-sites.json:functions[0054ffd0].field_groups",
+      "byte_to_word_offsets": [
+        105
+      ],
+      "conversion": "zero extend byte to WORD, including zero unchanged",
+      "untouched_destination_offsets": [
+        55,
+        82
+      ],
+      "failure_epilogue_va": "005501c7"
+    }
+  ],
+  "unresolved": [
+    "semantic record identities and original field declarations",
+    "destination allocation owner, capacity and lifetime",
+    "complete stream helper decode/error/advancement/global and transitive side effects",
+    "physical file offsets and compressed byte consumption",
+    "full database/save schema, disk compatibility and runtime reachability"
+  ],
+  "coverage": {
+    "owned_bytes": 7110,
+    "owned_instructions": 2553,
+    "all_owned_instructions_match_native": true,
+    "native_manifest_sha256": "65503dc3cf33eff2a9a40c1cdc456f5798bc8e04d1d9bbad6132c06b9677ca58",
+    "recommended_ledger_status": "contract-supported for four complete local bodies; stream helpers remain boundaries"
+  }
+}
