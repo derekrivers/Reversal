@@ -90,13 +90,37 @@ for(const [ordinal,row] of oracle.cases.entries()){
 }
 if(steps!==oracle.executed_instruction_steps||expectedTrace.size!==4)
   throw new Error('coverage mismatch');
-for(const [player,memory] of [
-  [0x200000,{read8:()=>0,read16:()=>0,read32:()=>0,write32:()=>{}}],
-  [0x200000,{read8:()=>7,read16:()=>0,read32:(address:number)=>address===0x200000?0:100,write32:()=>{}}],
+const initMemory={read8:()=>0,read16:()=>0,read32:()=>0,write32:()=>{}};
+let initRejected=false;
+try{statusRefreshCallFreeExit(0x300000,0x200000,0,0x108000,initMemory);}
+catch(error){initRejected=error instanceof RangeError;}
+if(!initRejected)throw new Error('initializer call path accepted');
+for(const [kind,globalHigh,globalLow,expectedLastRead] of [
+  ['high',2,2,0x00ae2c92],
+  ['low',1,3,0x00ae2c90],
 ] as const){
+  const reads:number[]=[];
+  const memory={
+    read8:(address:number)=>{reads.push(address);return 7;},
+    read16:(address:number)=>{reads.push(address);
+      if(address===0x00ae2c92)return globalHigh;
+      if(address===0x00ae2c90)return globalLow;
+      throw new Error('unexpected stamp WORD read');},
+    read32:(address:number)=>{reads.push(address);
+      if(address===0)return 0; // Valid synthetic SEH head; reach the stamp checks.
+      if(address===0x200000)return 0; // Player index.
+      if(address===0x00ae2364)return 100; // Count.
+      if(address===0x200061)return 0x220000; // Non-null player slot.
+      if(address===0x300000)return 0x400000; // Row table.
+      if(address===0x400000)return 0x00010002; // Cached stamp.
+      if(address===0x400004)return 0;
+      throw new Error('unexpected stamp DWORD read');},
+    write32:(address:number)=>{if(address!==0)throw new Error('unexpected stamp write');},
+  };
   let rejected=false;
-  try{statusRefreshCallFreeExit(0x300000,player,0,0x108000,memory);}
+  try{statusRefreshCallFreeExit(0x300000,0x200000,0,0x108000,memory);}
   catch(error){rejected=error instanceof RangeError;}
-  if(!rejected)throw new Error('out-of-domain path accepted');
+  if(!rejected||reads.at(-1)!==expectedLastRead||!reads.includes(0x400000))
+    throw new Error(`${kind} stamp-mismatch path was not rejected at the intended check`);
 }
 console.log(JSON.stringify({checked_cases:oracle.function_cases,executed_instruction_steps:steps,body_sha256:oracle.body_sha256}));
