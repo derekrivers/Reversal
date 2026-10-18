@@ -6,7 +6,7 @@
   "decoder": "Capstone 5.0.7 (checked by R17 extractor)",
   "check": "optimized-mode integrity refusal; retained findings unchanged",
   "excluded_extractor": "scripts/extract_cleanup_family_18.py",
-  "audited_assert_extractors": 20,
+  "audited_assert_extractors": 21,
   "assertion_free_extractors": [
     "scripts/extract_db_helpers_18.py",
     "scripts/extract_db_lower_17.py",
@@ -17,6 +17,18 @@
     {
       "script": "scripts/extract_cleanup_helpers_18.py",
       "integrity_assertions": 21,
+      "wrong_specimen_normal": "rejected; no output",
+      "optimized_modes": [
+        "-O",
+        "-OO",
+        "PYTHONOPTIMIZE=1"
+      ],
+      "optimized_cli": "refused; no output",
+      "optimized_audit_probe": "refused before any import/open/mkdir"
+    },
+    {
+      "script": "scripts/extract_cleanup_runtime_19.py",
+      "integrity_assertions": 23,
       "wrong_specimen_normal": "rejected; no output",
       "optimized_modes": [
         "-O",

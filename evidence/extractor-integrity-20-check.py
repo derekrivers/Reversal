@@ -133,7 +133,8 @@ def run(args):
         count = sum(isinstance(node, ast.Assert) for node in ast.walk(tree))
         if count and path.name != EXCLUDED:
             inventory.append((path, count))
-    require(len(inventory) == 20, "extractor inventory changed; review the audit scope")
+    # Discover the whole current tree so newly merged extractors are checked too.
+    require(inventory, "no assertion-bearing extractors found; review the audit scope")
     results = []
     with tempfile.TemporaryDirectory(prefix="extractor-integrity-20-") as temporary:
         temp = Path(temporary)
@@ -202,4 +203,4 @@ if __name__ == "__main__":
     options = parser.parse_args()
     receipt = run(options)
     write_receipt(options, receipt)
-    print("20 extractors: normal wrong-specimen rejection and three optimized refusal modes passed; R17 output unchanged")
+    print(f"{receipt['audited_assert_extractors']} extractors: normal wrong-specimen rejection and three optimized refusal modes passed; R17 output unchanged")
