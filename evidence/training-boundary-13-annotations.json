@@ -1,0 +1,49 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-12",
+  "status": "Name-only proposal; coordinator alone applies canonical changes after independent review",
+  "old_annotation_evidence": "Read-only native preflight verifies old names and instruction existence; .c export headers corroborate. Recheck old names before mutation. No comment, type, calling convention or prototype replacement proposed.",
+  "private_preflight_sha256": "16672c9ae741b03aa84a343a9a8d9de48c6c7c682e52ff14264d9834236c2087",
+  "proposals": [
+    {
+      "address": "008b23b0",
+      "kind": "function_name",
+      "old": "FUN_008b23b0",
+      "new": "cm0102_copy_in_training_block_and_update_candidate",
+      "evidence": "008b23c2 locator; 008b2442/244a/244c copies 54 bytes in; 008b244e..2454 calls mutable 008b2880 with key+0x39 dword and key; candidate update semantics remain incomplete",
+      "confidence": "high direct copy/call contract; moderate update label"
+    },
+    {
+      "address": "008b35a0",
+      "kind": "function_name",
+      "old": "FUN_008b35a0",
+      "new": "cm0102_copy_out_training_54byte_block",
+      "evidence": "008b35ab locates block; 008b3620/362c establish output/source direction; 008b3627/362e/3630 copies 13 dwords plus one word; no update call",
+      "confidence": "high static copy contract"
+    },
+    {
+      "address": "008b3930",
+      "kind": "function_name",
+      "old": "FUN_008b3930",
+      "new": "cm0102_get_training_155byte_record",
+      "evidence": "008b3934..394b relative-ID 0..15 guard; 008b394d..395f signed-byte selector 0..9 else1; 008b3962..3973 returns receiver+155*(7+10*i+j); no successful-path write",
+      "confidence": "high static formula; selector meaning open"
+    },
+    {
+      "address": "008b3c50",
+      "kind": "function_name",
+      "old": "FUN_008b3c50",
+      "new": "cm0102_allocate_default_training_6byte_rows_candidate",
+      "evidence": "008b3c50..3c69 allocates count*6 and publishes +0x651d; 008b3cee..3d2b source stride0x46, indexed byte defaults1/6 and flag clear; constructor calls at008b1011, release/clear at008b107e/1086",
+      "confidence": "high allocation/default writes; moderate full lifecycle role"
+    },
+    {
+      "address": "008b4cd0",
+      "kind": "function_name",
+      "old": "FUN_008b4cd0",
+      "new": "cm0102_get_training_54byte_block",
+      "evidence": "008b4cda..4cdc null guard; 008b4d0d..4d1e relative-ID 0..15 guard; 008b4d20..4d26 returns receiver+0x652d+54*i; explicit zero on failure",
+      "confidence": "high static formula and validation"
+    }
+  ]
+}

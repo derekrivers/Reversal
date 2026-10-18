@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "87ea0f39d5dcb62fe6969ad6570c3dca8b152673",
+  "scope": "R13-C five whole-body static contracts; dependencies are selected context only. No behavioral or complete training-system validation.",
+  "address_space": "PE32 virtual addresses; structure offsets are hexadecimal byte offsets",
+  "evidence": {
+    "sites": "evidence/training-boundary-13-sites.json",
+    "extractor": "scripts/extract_training_boundary_13.py",
+    "report": "reports/training-boundary-13.md",
+    "native_checkpoint": "2026-10-18-investigation-12",
+    "private_export_manifest_sha256": "fa2728212d3189f2a0ec9f4db14b2355b0da8457bc9bff091d5c2b442b38a489",
+    "method": "Pinned original PE decoded with Capstone 5.0.7; all 283 owned instructions agree with independently supplied read-only native exports. No original execution."
+  },
+  "shared_index": {
+    "formula": "i = u32(read32(00ae2364) - read32(key) - 1)",
+    "accepted": "signed checks admit exactly i=0..15 after 32-bit wrapping",
+    "unknown": "Global and key identity meanings; time stability and producers"
+  },
+  "functions": [
+    {
+      "entry_va": "008b23b0",
+      "body_bytes": 182,
+      "coverage_status": "contract-supported",
+      "coverage_basis": "whole-body static",
+      "role": "Copy input into indexed 54-byte block, then invoke mutable update boundary",
+      "abi": "ECX manager; two four-byte stack slots (key pointer, input pointer); RET 8; semantic return value not established",
+      "preconditions": ["Normal clear DF", "Valid manager and 54-byte input", "Key readable through byte +0x3c on success"],
+      "flow": [
+        {"sites": ["008b23b8", "008b23bf", "008b23c2"], "effect": "Preserve receiver in EBX and key in EBP; call 008b4cd0(receiver,key)"},
+        {"sites": ["008b243a", "008b2442", "008b2447", "008b244a", "008b244c"], "effect": "Copy 13 dwords and one word from input to returned interior pointer, forward with ambient DF"},
+        {"sites": ["008b2449", "008b244e", "008b2451", "008b2452", "008b2454"], "effect": "Call 008b2880 with original ECX receiver and stack arguments (read32(key+0x39),key)"}
+      ],
+      "failure": "Null locator result adds diagnostic 0x31a and clears global 00b67a34 after diagnostic helpers return; no copy/update",
+      "limitation": "008b2880 can mutate copied subrows; final bytes and complete transitive effects/RNG are unresolved",
+      "confidence": "high for direct contract; dependency semantics incomplete"
+    },
+    {
+      "entry_va": "008b35a0",
+      "body_bytes": 157,
+      "coverage_status": "contract-supported",
+      "coverage_basis": "whole-body static",
+      "role": "Copy indexed 54-byte block to output",
+      "abi": "ECX manager; two four-byte stack slots (key pointer, output pointer); RET 8; semantic return value not established",
+      "preconditions": ["Normal clear DF", "Valid output for 54 bytes", "No overlap guarantee"],
+      "flow": [
+        {"sites": ["008b35a0", "008b35ab", "008b35b0", "008b35b2"], "effect": "Call 008b4cd0 with same incoming receiver and key, branch on EAX"},
+        {"sites": ["008b3620", "008b3627", "008b362c", "008b362e", "008b3630"], "effect": "Copy 13 dwords plus one word from located block to output; no update call"}
+      ],
+      "failure": "Null locator result adds diagnostic 0x604 and clears global 00b67a34 after diagnostic helpers return; output not copied",
+      "limitation": "Snapshot persistence and caller buffer ownership/lifetime are unresolved",
+      "confidence": "high for direct static copy contract"
+    },
+    {
+      "entry_va": "008b3930",
+      "body_bytes": 188,
+      "coverage_status": "contract-supported",
+      "coverage_basis": "whole-body static",
+      "role": "Return interior 155-byte record selected by relative ID and signed byte selector",
+      "abi": "ECX manager; two four-byte stack slots (key pointer, selector with only low signed byte used); EAX pointer or explicit zero; RET 8",
+      "preconditions": ["Key is dereferenced without null guard", "Manager must back the selected record"],
+      "flow": [
+        {"sites": ["008b3934", "008b3940", "008b3942", "008b3945", "008b3946", "008b394b"], "effect": "Compute shared index; reject negative or signed >=16"},
+        {"sites": ["008b394d", "008b3956", "008b395b", "008b395d", "008b395f"], "effect": "Use selector j=0..9; signed negatives or >=10 become 1"},
+        {"sites": ["008b3962", "008b3965", "008b396b", "008b396e", "008b3970", "008b3973"], "effect": "EAX = manager + 155*(7+10*i+j), all pointer arithmetic 32-bit"}
+      ],
+      "failure": "Invalid index diagnoses 0x68f, clears global 00b67a34 if helpers return, and explicitly returns EAX=0",
+      "limitation": "Selector values and first seven preceding record meanings are unresolved",
+      "confidence": "high for formula, signed width and alias contract"
+    },
+    {
+      "entry_va": "008b3c50",
+      "body_bytes": 230,
+      "coverage_status": "contract-supported",
+      "coverage_basis": "whole-body static",
+      "role": "Allocate and default indexed six-byte rows",
+      "abi": "ECX manager; no stack arguments; plain RET; semantic return value not established",
+      "preconditions": ["Source base 00ae23c4 valid when count>0", "Source dword IDs valid within allocated row count", "Allocation count*6 must not overflow the admitted domain", "Existing +0x651d pointer is not released here"],
+      "flow": [
+        {"sites": ["008b3c50", "008b3c5c", "008b3c60", "008b3c61", "008b3c69"], "effect": "Call 00945501(count,6); publish EAX, including null, to manager+0x651d before testing"},
+        {"sites": ["008b3cdc", "008b3ce2", "008b3ce9", "008b3ceb", "008b3d1f", "008b3d29", "008b3d2b"], "effect": "Iterate signed positive count; reload count each loop; source stride 0x46"},
+        {"sites": ["008b3cee", "008b3cf6", "008b3cf9"], "effect": "Use unchecked source dword ID to address allocation+6*ID; byte +5 &= 0xdf"},
+        {"sites": ["008b3d02", "008b3d0b", "008b3d13", "008b3d15", "008b3d1b"], "effect": "Byte +0 = 1 if signed8(source+0xf)<15, otherwise 6"}
+      ],
+      "failure": "Null allocation diagnoses 0x6e3 and clears global 00b67a34 if helpers return; manager+0x651d remains null",
+      "limitation": "Default constructor branch/nearby release support ownership; full lifecycle, repeat safety and data-ID validity are unproven",
+      "confidence": "high for direct allocation/writes; moderate for lifecycle role"
+    },
+    {
+      "entry_va": "008b4cd0",
+      "body_bytes": 212,
+      "coverage_status": "contract-supported",
+      "coverage_basis": "whole-body static",
+      "role": "Return interior 54-byte relative-ID block",
+      "abi": "ECX manager; one four-byte stack slot (key pointer); EAX pointer or explicit zero; RET 4",
+      "flow": [
+        {"sites": ["008b4cd0", "008b4cda", "008b4cdc"], "effect": "Reject null key before dereferencing"},
+        {"sites": ["008b4d0d", "008b4d13", "008b4d15", "008b4d18", "008b4d19", "008b4d1e"], "effect": "Compute shared index; reject negative or signed >=16"},
+        {"sites": ["008b4d20", "008b4d23", "008b4d26", "008b4d33"], "effect": "Return manager+0x652d+54*i; no successful-path allocation/store"}
+      ],
+      "failure": "Null key diagnoses 0xa20; invalid index diagnoses 0xa2a; each clears global 00b67a34 if helpers return, explicitly returning EAX=0",
+      "limitation": "Returned storage lifetime follows manager and shared-index state; no stable ownership or persistent meaning established",
+      "confidence": "high for formula, validation and alias contract"
+    }
+  ],
+  "layout": [
+    {"offset": "0x0", "extent_bytes": 25885, "evidence": "008b0ee9/0eee/0ef8 supplies 167 entries of 155 bytes; exactly ends at +0x651d; accessor returns indices 7..166", "confidence": "high static region extent; element meaning incomplete"},
+    {"offset": "0x651d", "width_bytes": 4, "evidence": "008b3c69 pointer publication; 008b1073/107e/1086 release and clear", "confidence": "high pointer field; moderate full ownership"},
+    {"offset": "0x652d", "extent_bytes": 864, "evidence": "16*54-byte relative-ID blocks; 008b1016..1034 initializes 96 stride-nine subrows as dword(-1),dword(0),byte(0)", "confidence": "high static extent/default writes"}
+  ],
+  "dependency_boundaries": [
+    {"entry_va": "008b2880", "status": "boundary-mapped", "evidence": "008b28f4 uses 54-byte locator; six stride-nine subrows; resets and per-byte writes at 008b293d..2945/2b89", "limit": "Full update, transitive helpers and RNG open"},
+    {"entry_va": "008b0ec0", "status": "boundary-mapped", "evidence": "008b1006/100d optional loader result bypass; otherwise 008b1011 initializer plus inline defaults", "limit": "Full constructor failure and loader effects open"},
+    {"entry_va": "008b1070", "status": "boundary-mapped", "evidence": "Release +0x651d at 008b107e, clear at 008b1086; release helper can call HeapFree", "limit": "Destructor reachability and all lifetime paths open"},
+    {"entry_va": "00945501", "status": "boundary-mapped", "evidence": "32-bit argument product; successful paths use HeapAlloc flags 8 or zero-fill helper 0094a640", "limit": "Allocator internals and overflow/zero-size behavior are not behavioral validation"}
+  ],
+  "diagnostics": {
+    "ordered_direct_chain": ["00944cff", "0090d130", "00944c9f", "005e8290"],
+    "shared_write": "dword [00b67a34]=0 after helpers return",
+    "limit": "Helpers may have external effects; their return/termination behavior is not fully traced. Copy wrappers can diagnose twice through locator and own failure paths."
+  },
+  "validation_limits": [
+    "Whole-body static contracts only; no original-instruction execution fixture or training outcome oracle",
+    "Successful owned locators, copy-out and initializer have no direct RNG call; transitive RNG purity not established",
+    "Partial manager layout, no proposed native type/prototype replacement",
+    "Source path and provisional names are not independent semantic proof"
+  ],
+  "verification_receipt": {
+    "static_extractor": "passed against pinned PE and hash-verified exports; 283 owned instructions matched",
+    "repository_check": "npm run check passed on Node v24.19.0",
+    "interpretation": "Repository checks retain earlier fixtures and checkpoint metadata; they do not execute these training functions"
+  }
+}
