@@ -20,7 +20,10 @@
     "R13-C": {"report": "reports/training-boundary-13.md", "evidence": "evidence/training-boundary-13-sites.json"},
     "R14-A": {"report": "reports/match-dispatch-14.md", "evidence": "evidence/match-dispatch-14-sites.json"},
     "R14-B": {"report": "reports/db-wrapper-family-14.md", "evidence": "evidence/db-wrapper-family-14-sites.json"},
-    "R14-C": {"report": "reports/scouting-boundary-14.md", "evidence": "evidence/scouting-boundary-14-sites.json"}
+    "R14-C": {"report": "reports/scouting-boundary-14.md", "evidence": "evidence/scouting-boundary-14-sites.json"},
+    "R15-A": {"report": "reports/match-dependency-15.md", "evidence": "evidence/match-dependency-15-sites.json"},
+    "R15-B": {"report": "reports/db-field-readers-15.md", "evidence": "evidence/db-field-readers-15-sites.json"},
+    "R15-C": {"report": "reports/scouting-lifecycle-15.md", "evidence": "evidence/scouting-lifecycle-15-sites.json"}
   },
   "functions": [
     {"address": "00702050", "state": "boundary-mapped", "source": "R09-A"},
@@ -42,7 +45,7 @@
     {"address": "007103e0", "state": "contract-supported", "source": "R11-A"},
     {"address": "007109f0", "state": "boundary-mapped", "source": "R11-A"},
     {"address": "00713fc0", "state": "contract-supported", "source": "R14-A"},
-    {"address": "00714d40", "state": "boundary-mapped", "source": "R11-A"},
+    {"address": "00714d40", "state": "contract-supported", "source": "R15-A"},
     {"address": "008bba30", "state": "contract-supported", "source": "R11-B"},
     {"address": "008bc020", "state": "boundary-mapped", "source": "R11-B"},
     {"address": "005a0590", "state": "contract-supported", "source": "R11-C"},
@@ -86,6 +89,14 @@
     {"address": "007f6be0", "state": "contract-supported", "source": "R14-C"},
     {"address": "007f6cd0", "state": "contract-supported", "source": "R14-C"},
     {"address": "007f6e30", "state": "contract-supported", "source": "R14-C"},
-    {"address": "007f6f20", "state": "contract-supported", "source": "R14-C"}
+    {"address": "007f6f20", "state": "contract-supported", "source": "R14-C"},
+    {"address": "0054dc90", "state": "contract-supported", "source": "R15-B"},
+    {"address": "0054e9a0", "state": "contract-supported", "source": "R15-B"},
+    {"address": "0054f150", "state": "contract-supported", "source": "R15-B"},
+    {"address": "0054ffd0", "state": "contract-supported", "source": "R15-B"},
+    {"address": "007f6760", "state": "contract-supported", "source": "R15-C"},
+    {"address": "007f6aa0", "state": "contract-supported", "source": "R15-C"},
+    {"address": "008041c0", "state": "contract-supported", "source": "R15-C"},
+    {"address": "00804450", "state": "contract-supported", "source": "R15-C"}
   ]
 }
