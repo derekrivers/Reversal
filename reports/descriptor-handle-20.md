@@ -1,6 +1,6 @@
 # Investigation 20: bounded descriptor-to-handle reconstruction
 
-The headless TypeScript helper for **local body `0094fded`** matches retained outputs from the original x86 instructions in **344 synthetic cases**. All 16 instructions execute across those cases, including both return paths. Local validation passed; the coverage-registry entry remains a proposal pending independent review. The shared registry and canonical Ghidra database were not edited.
+The headless TypeScript helper for **local body `0094fded`** matches retained outputs from the original x86 instructions in **344 synthetic cases**. All 16 instructions execute across those cases, including both return paths. Independent review reproduced the oracle and passed; the bounded entry is recorded in the validation registry. The canonical Ghidra database was not edited for this reconstruction.
 
 The pinned PE is the 7,192,576-byte `cm0102.exe`, SHA-256 `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`. The complete body is virtual `0094fded..0094fe29`, 61 bytes, file offset `0054fded`. Its bytes have SHA-256 `bc15fa380be7e1320498ba101d1f41e7bf28ecdfa284dfc1438c4a44ff0cc1c9`; the read-only checkpoint-18 assembly export used by R19 has SHA-256 `f5b8380d00d50539877ec35f2042aeb3cc0b93576608db635218395cbc85d533`. Every input hash/extent check uses explicit exceptions and remains active with `python -O`.
 
@@ -46,6 +46,6 @@ python scripts/check_descriptor_handle_negative_20.py PATH_TO_NODE24 PATH_TO_EXE
 node scripts/check-research.mjs
 ```
 
-[`provenance.json`](../evidence/descriptor-handle-validation/provenance.json) records reproducibility hashes and the local check result. The retained oracle contains synthetic scalar inputs, numerical outputs, address/event observations and digests; no raw executable instructions, original game pages, native projects or bulk assembly are committed. The [registry delta](../evidence/descriptor-handle-validation/validation-registry-proposal.json) is for coordinator review.
+[`provenance.json`](../evidence/descriptor-handle-validation/provenance.json) records reproducibility hashes and validation results; the [independent review receipt](../evidence/descriptor-handle-validation/independent-review.json) records the reproduced checks. The retained oracle contains synthetic scalar inputs, numerical outputs, address/event observations and digests; no raw executable instructions, original game pages, native projects or bulk assembly are committed. The [accepted registry delta](../evidence/descriptor-handle-validation/validation-registry-proposal.json) matches the promoted entry.
 
 R18 `0094c552`, OS calls, descriptor initialization/lifetime, locking, save format and allocator behavior remain outside this unit. This evidence establishes the compared local contract in the stated memory domain; it does not establish a full database, subsystem or game reconstruction. UI remains deferred.
