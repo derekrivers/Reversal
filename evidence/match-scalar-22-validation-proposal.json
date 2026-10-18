@@ -1,0 +1,27 @@
+{
+  "work_unit": "R22-A",
+  "entry_va": "0062c3d0",
+  "validation_class": "complete local original-instruction execution on synthetic mapped memory",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "cases": 274,
+  "executed_instruction_steps": 2312,
+  "instruction_starts": 12,
+  "compared": [
+    "EAX",
+    "EDX",
+    "ordered direct memory reads",
+    "zero native memory writes",
+    "RET4",
+    "nonvolatile registers",
+    "ECX preservation",
+    "original instruction addresses"
+  ],
+  "not_compared": [
+    "EFLAGS",
+    "invalid/unmapped pointers",
+    "alias/concurrent mutation",
+    "connected caller behavior"
+  ],
+  "oracle_sha256": "21b574d659832b463f260f8719acabe4223169e33f5d3d230716c15533a4ce1d",
+  "integration_status": "proposal only; coordinator owns shared registry"
+}

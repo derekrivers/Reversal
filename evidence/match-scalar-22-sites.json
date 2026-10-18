@@ -1,0 +1,300 @@
+{
+  "work_unit": "R22-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "export_manifest_sha256": "a73c3300131cc5162d3f0122dd04d622fe6581505cea12c499ad4794ce79e239",
+  "annotation_preflight_sha256": "16760db81594c51f88b877aa98a8703ccbcc928a9fae7cad935e32ced6c8d5fe",
+  "checkpoint_archive_sha256": "bf4e1739d0c1ab1780fca5f95ec9bf0f9447d7cbe28520366a79aa36b6cc5971",
+  "decoder": "Capstone 5.0.7 x86-32",
+  "scope": "complete local static bodies; no transitive effects",
+  "integrity_under_python_optimized_mode": "explicit ValueError gates",
+  "functions": [
+    {
+      "entry_va": "0062c3d0",
+      "file_offset": "0x22c3d0",
+      "body_bytes": 36,
+      "body_sha256": "bdc128ab628b7cf38356bac5a23a3911009e92080e9c6260c09b4ac2766f2eb2",
+      "instruction_count": 12,
+      "all_pe_instructions_match_native_operands": true,
+      "branches": [
+        [
+          "0062c3dc",
+          "jl",
+          [
+            "0062c3e3",
+            "0062c3de"
+          ]
+        ]
+      ],
+      "direct_calls": [],
+      "memory_reads": [
+        [
+          "0062c3d0",
+          "mov",
+          4,
+          "eax, dword ptr [esp + 4]"
+        ],
+        [
+          "0062c3d4",
+          "mov",
+          4,
+          "edx, dword ptr [0xae2364]"
+        ],
+        [
+          "0062c3ea",
+          "mov",
+          4,
+          "eax, dword ptr [ecx]"
+        ],
+        [
+          "0062c3ec",
+          "movsx",
+          2,
+          "eax, word ptr [edx + eax + 0xc]"
+        ]
+      ],
+      "memory_writes": [],
+      "returns": [
+        [
+          "0062c3e0",
+          4
+        ],
+        [
+          "0062c3f1",
+          4
+        ]
+      ],
+      "x87_sites": [],
+      "native_export_hashes": {
+        "asm": "323201aab481aca537ec6c3f2809d14831a9b5ccaf3954c6b9c87704372d3e14",
+        "c": "93fb9aff0f70798b5c2f17e6c12c907c7615b52590af74a5fcd2e4c33fe98c99"
+      }
+    },
+    {
+      "entry_va": "0062c590",
+      "file_offset": "0x22c590",
+      "body_bytes": 198,
+      "body_sha256": "42befec4caada5dbefebd8717c4a07ed640005c54140b6de3bc0bec3c3f1ec29",
+      "instruction_count": 70,
+      "all_pe_instructions_match_native_operands": true,
+      "branches": [
+        [
+          "0062c59a",
+          "jne",
+          [
+            "0062c5a4",
+            "0062c59c"
+          ]
+        ],
+        [
+          "0062c5ae",
+          "jl",
+          [
+            "0062c5c7",
+            "0062c5b0"
+          ]
+        ],
+        [
+          "0062c601",
+          "jne",
+          [
+            "0062c613",
+            "0062c603"
+          ]
+        ],
+        [
+          "0062c608",
+          "jl",
+          [
+            "0062c613",
+            "0062c60a"
+          ]
+        ],
+        [
+          "0062c611",
+          "jmp",
+          [
+            "0062c622"
+          ]
+        ],
+        [
+          "0062c617",
+          "jle",
+          [
+            "0062c61d",
+            "0062c619"
+          ]
+        ],
+        [
+          "0062c61b",
+          "jmp",
+          [
+            "0062c622"
+          ]
+        ],
+        [
+          "0062c628",
+          "je",
+          [
+            "0062c651",
+            "0062c62a"
+          ]
+        ],
+        [
+          "0062c64a",
+          "jle",
+          [
+            "0062c651",
+            "0062c64c"
+          ]
+        ]
+      ],
+      "direct_calls": [
+        {
+          "target": "0062c400",
+          "sites": [
+            "0062c5cb"
+          ]
+        },
+        {
+          "target": "00945640",
+          "sites": [
+            "0062c641"
+          ]
+        }
+      ],
+      "memory_reads": [
+        [
+          "0062c591",
+          "mov",
+          4,
+          "esi, dword ptr [esp + 8]"
+        ],
+        [
+          "0062c5a4",
+          "mov",
+          4,
+          "eax, dword ptr [esi]"
+        ],
+        [
+          "0062c5a6",
+          "mov",
+          4,
+          "ecx, dword ptr [0xae2364]"
+        ],
+        [
+          "0062c5b0",
+          "mov",
+          4,
+          "eax, dword ptr [esp + 0x10]"
+        ],
+        [
+          "0062c5d0",
+          "mov",
+          4,
+          "edx, dword ptr [edi]"
+        ],
+        [
+          "0062c5d4",
+          "mov",
+          4,
+          "eax, dword ptr [esi]"
+        ],
+        [
+          "0062c5e0",
+          "movsx",
+          2,
+          "ecx, word ptr [ecx + edx + 0xa]"
+        ],
+        [
+          "0062c5e5",
+          "movsx",
+          2,
+          "eax, word ptr [eax + 8]"
+        ],
+        [
+          "0062c622",
+          "mov",
+          4,
+          "ecx, dword ptr [esp + 0x10]"
+        ],
+        [
+          "0062c631",
+          "fild",
+          4,
+          "dword ptr [esp + 0x10]"
+        ],
+        [
+          "0062c635",
+          "fmul",
+          4,
+          "dword ptr [0x96bac8]"
+        ],
+        [
+          "0062c63b",
+          "fadd",
+          8,
+          "qword ptr [0x968968]"
+        ]
+      ],
+      "memory_writes": [
+        [
+          "0062c62d",
+          "mov",
+          4,
+          "dword ptr [esp + 0x10], edx"
+        ]
+      ],
+      "returns": [
+        [
+          "0062c5a1",
+          8
+        ],
+        [
+          "0062c5c4",
+          8
+        ],
+        [
+          "0062c653",
+          8
+        ]
+      ],
+      "x87_sites": [
+        [
+          "0062c631",
+          "fild"
+        ],
+        [
+          "0062c635",
+          "fmul"
+        ],
+        [
+          "0062c63b",
+          "fadd"
+        ]
+      ],
+      "native_export_hashes": {
+        "asm": "7bc266d6a58f79007622d922725cca51ac0f41f2872df71c64009144e0ff06aa",
+        "c": "887eef456b88afde1a89aa8cfdf1593b9b1a519b1fa8766ab44486cc367d65e9"
+      }
+    }
+  ],
+  "runtime_global": "00ae2364 is read as a DWORD; BSS has no raw-file value",
+  "x87_constants": [
+    {
+      "va": "0096bac8",
+      "file_offset": "0x56bac8",
+      "width": 4,
+      "kind": "float32",
+      "value": 0.009999999776482582,
+      "sha256": "0d66bd808e9247acb560fe33efaa62ad6f11ee6f85cc4f61bd17673263de04ee"
+    },
+    {
+      "va": "00968968",
+      "file_offset": "0x568968",
+      "width": 8,
+      "kind": "float64",
+      "value": 0.5,
+      "sha256": "4cfa5b42ca669328764e67cd9a34bb8f90b16ed7ca8d85e8443783d7ccce15ed"
+    }
+  ]
+}
