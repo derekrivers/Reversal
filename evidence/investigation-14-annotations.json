@@ -1,0 +1,126 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 14,
+  "scope": "Twenty-two reviewed static working names only; no behavior oracle, prototype, comment or data type applied.",
+  "annotations": [
+    [
+      "00713fc0",
+      "FUN_00713fc0",
+      "match_slot_coordinate_action_dispatch_00713fc0"
+    ],
+    [
+      "0054d8a0",
+      "FUN_0054d8a0",
+      "cm0102_read_db_38_records_checked"
+    ],
+    [
+      "0054da00",
+      "FUN_0054da00",
+      "cm0102_read_db_4e_records_checked"
+    ],
+    [
+      "0054db50",
+      "FUN_0054db50",
+      "cm0102_read_db_245_records_dispatch_normalize_word80"
+    ],
+    [
+      "0054e630",
+      "FUN_0054e630",
+      "cm0102_read_db_6e_records_checked"
+    ],
+    [
+      "0054e780",
+      "FUN_0054e780",
+      "cm0102_read_db_9d_records_checked"
+    ],
+    [
+      "0054e880",
+      "FUN_0054e880",
+      "cm0102_read_db_44_records_or_delegate"
+    ],
+    [
+      "0054f030",
+      "FUN_0054f030",
+      "cm0102_read_db_46_records_or_delegate"
+    ],
+    [
+      "0054fc10",
+      "FUN_0054fc10",
+      "cm0102_read_db_34_records_checked"
+    ],
+    [
+      "0054fd60",
+      "FUN_0054fd60",
+      "cm0102_read_db_11_records_checked"
+    ],
+    [
+      "0054feb0",
+      "FUN_0054feb0",
+      "cm0102_read_db_6b_records_or_delegate"
+    ],
+    [
+      "00550230",
+      "FUN_00550230",
+      "cm0102_read_db_1a_records_checked"
+    ],
+    [
+      "00550380",
+      "FUN_00550380",
+      "cm0102_read_db_65_records_checked"
+    ],
+    [
+      "005504d0",
+      "FUN_005504d0",
+      "cm0102_read_db_3a_records_checked_005504d0"
+    ],
+    [
+      "005505c0",
+      "FUN_005505c0",
+      "cm0102_read_db_2b_records_checked"
+    ],
+    [
+      "00550710",
+      "FUN_00550710",
+      "cm0102_read_db_3a_records_checked_00550710"
+    ],
+    [
+      "00550860",
+      "FUN_00550860",
+      "cm0102_read_db_3c_records_checked"
+    ],
+    [
+      "007f6af0",
+      "FUN_007f6af0",
+      "cm0102_set_scout_dword_slot_u8_index"
+    ],
+    [
+      "007f6be0",
+      "FUN_007f6be0",
+      "cm0102_get_scout_dword_slot_u8_index"
+    ],
+    [
+      "007f6cd0",
+      "FUN_007f6cd0",
+      "cm0102_get_scout_688byte_record"
+    ],
+    [
+      "007f6e30",
+      "FUN_007f6e30",
+      "cm0102_get_scout_byte_slot_u32_index"
+    ],
+    [
+      "007f6f20",
+      "FUN_007f6f20",
+      "cm0102_set_scout_byte_slot_u32_index"
+    ]
+  ],
+  "function_comments": [],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "match-dispatch-14-annotations.json",
+    "db-wrapper-family-14-annotations.json",
+    "scouting-boundary-14-annotations.json"
+  ]
+}

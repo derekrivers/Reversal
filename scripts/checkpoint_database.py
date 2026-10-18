@@ -48,11 +48,11 @@ def stage():
     names.update({row[0]:row[1] for row in annotations['annotations']})
     types={t['path']:t for t in annotations['partial_data_types']}
     comments_by_address={}
-    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json']:
+    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json']:
       event_receipt=ROOT/'evidence'/receipt_name
       if event_receipt.exists():
         event_annotations=json.loads(event_receipt.read_text())
-        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json') else row[1])
+        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json') else row[1])
                       for row in event_annotations['annotations']})
         labels.update(dict(event_annotations['global_labels']))
         types.update({t['path']:t for t in event_annotations['partial_data_types']})
@@ -64,6 +64,9 @@ def stage():
     r13=json.loads((ROOT/'evidence/investigation-13-annotations.json').read_text())
     r13_names={row[0] for row in r13['annotations']}
     r13_notes={row[0]:'CM0102 investigation13 (2026-10-18): '+row[1] for row in r13['function_comments']}
+    r14=json.loads((ROOT/'evidence/investigation-14-annotations.json').read_text())
+    r14_names={row[0] for row in r14['annotations']}
+    r14_notes={row[0]:'CM0102 investigation14 (2026-10-18): '+row[1] for row in r14['function_comments']}
     functions=[]
     for a,n in sorted(names.items()):
       row={'address':a,'name':n}
@@ -71,6 +74,7 @@ def stage():
       elif a=='006c38c0':row['return_bytes']=2
       if a in r12_names:row['comment']=r12_notes.get(a)
       if a in r13_names:row['comment']=r13_notes.get(a)
+      if a in r14_names:row['comment']=r14_notes.get(a)
       functions.append(row)
     pe=struct.unpack_from('<I',data,0x3c)[0];optional=pe+24
     base=struct.unpack_from('<I',data,optional+28)[0]
