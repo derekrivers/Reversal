@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "edc2a3cafe3695346e706733100eeff59be5b9f4",
+  "native_checkpoint": "2026-10-18-investigation-16",
+  "address_kind": "PE virtual addresses unless file_offset is explicit; field offsets in bytes",
+  "method": "Capstone 5.0.7 full local body decode and all-instruction native comparison; static, no execution",
+  "private_export_manifest_sha256": "096c06e07891855555057cdcc9f33307c6cdee79e7c632be5f593f76d894a2b8",
+  "private_annotation_preflight_sha256": "0d084f0348af44eeb24a73d8cec0fc866525099b14180bd87bd9c6246beda10f",
+  "verified_old_names": {
+    "0068d040": "FUN_0068d040",
+    "009462bb": "FUN_009462bb",
+    "007ae4f0": "FUN_007ae4f0"
+  },
+  "normalization": "Jump aliases, numeric spelling, whitespace, EAX FS DWORD qualifier and plus-negative spelling; operand widths preserved",
+  "owned_bodies": [
+    {
+      "entry_va": "0068d040",
+      "end_exclusive_va": "0068d073",
+      "file_offset": "0028d040",
+      "length_bytes": 51,
+      "body_sha256": "c478e0f509ec6a5990c7398732939a8cb1e88687570876d4bf3878027c3c2391",
+      "instruction_count": 24,
+      "selected_sites": {
+        "0068d043": "mov eax, dword ptr [esi + 2]",
+        "0068d04c": "mov eax, dword ptr [esi + 2]",
+        "0068d051": "mov ebx, dword ptr [eax + 6]",
+        "0068d054": "test edi, edi",
+        "0068d058": "mov ecx, edi",
+        "0068d05f": "push edi",
+        "0068d068": "test ebx, ebx",
+        "0068d06a": "mov dword ptr [esi + 2], ebx"
+      },
+      "all_calls": [
+        {
+          "site": "0068d05a",
+          "target": "0x68d010"
+        },
+        {
+          "site": "0068d060",
+          "target": "0x944c94"
+        }
+      ],
+      "all_branches": [
+        {
+          "site": "0068d048",
+          "instruction": "je 0x68d071"
+        },
+        {
+          "site": "0068d056",
+          "instruction": "je 0x68d068"
+        },
+        {
+          "site": "0068d06d",
+          "instruction": "jne 0x68d04c"
+        }
+      ],
+      "all_returns": [
+        {
+          "site": "0068d072",
+          "instruction": "ret"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "all_local_branch_targets_are_instruction_starts": true,
+        "export_sha256": {
+          "0068d040.asm": "5540da918f8e94d07aae5240e93acc7b33600ba73539ec17063bc50c6058d8e3",
+          "0068d040.c": "0e62fa59c7083dc4bb5c77aed875dc0411184083db5642bc5348677e405d6db6"
+        }
+      }
+    },
+    {
+      "entry_va": "009462bb",
+      "end_exclusive_va": "00946323",
+      "file_offset": "005462bb",
+      "length_bytes": 104,
+      "body_sha256": "d17c180197e0e90d13ace4801e32ead476264f180d4aa764046f619647930451",
+      "instruction_count": 34,
+      "selected_sites": {
+        "009462de": "and dword ptr [ebp - 0x1c], 0",
+        "009462e2": "mov esi, dword ptr [ebp + 0xc]",
+        "009462e7": "imul eax, dword ptr [ebp + 0x10]",
+        "009462eb": "add dword ptr [ebp + 8], eax",
+        "009462ee": "and dword ptr [ebp - 4], 0",
+        "009462f2": "dec dword ptr [ebp + 0x10]",
+        "009462f7": "sub dword ptr [ebp + 8], esi",
+        "009462fa": "mov ecx, dword ptr [ebp + 8]",
+        "00946302": "mov dword ptr [ebp - 0x1c], 1",
+        "00946309": "or dword ptr [ebp - 4], 0xffffffff",
+        "00946315": "mov dword ptr fs:[0], ecx"
+      },
+      "all_calls": [
+        {
+          "site": "009462fd",
+          "target": "dword ptr [ebp + 0x14]"
+        },
+        {
+          "site": "0094630d",
+          "target": "0x946323"
+        }
+      ],
+      "all_branches": [
+        {
+          "site": "009462f5",
+          "instruction": "js 0x946302"
+        },
+        {
+          "site": "00946300",
+          "instruction": "jmp 0x9462f2"
+        }
+      ],
+      "all_returns": [
+        {
+          "site": "00946320",
+          "instruction": "ret 0x10"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "all_local_branch_targets_are_instruction_starts": true,
+        "export_sha256": {
+          "009462bb.asm": "20ef751c4cb9b8210dd27fcaf7d868b758d2141ec85e8d2da2523650a8e3dd2d",
+          "009462bb.c": "1f8aabd50d7c61ad146710cda9573094e195104faef40470e201394757b539fc"
+        }
+      }
+    },
+    {
+      "entry_va": "007ae4f0",
+      "end_exclusive_va": "007ae56c",
+      "file_offset": "003ae4f0",
+      "length_bytes": 124,
+      "body_sha256": "680ca3629a3febe2b17dcd67a95e1d4435d6050bcfb12011132128cc66018dd0",
+      "instruction_count": 34,
+      "selected_sites": {
+        "007ae50e": "mov eax, dword ptr [esi + 0x1ee]",
+        "007ae514": "mov dword ptr [esp + 0x14], 6",
+        "007ae520": "push eax",
+        "007ae529": "mov dword ptr [esi + 0x1ee], 0",
+        "007ae533": "mov edi, dword ptr [esi + 0x170]",
+        "007ae53d": "push edi",
+        "007ae53e": "mov ecx, 0xb74438",
+        "007ae548": "push edi",
+        "007ae551": "mov dword ptr [esi + 0x170], 0",
+        "007ae561": "mov dword ptr fs:[0], ecx"
+      },
+      "all_calls": [
+        {
+          "site": "007ae521",
+          "target": "0x9452ca"
+        },
+        {
+          "site": "007ae543",
+          "target": "0x68d1f0"
+        },
+        {
+          "site": "007ae549",
+          "target": "0x944c94"
+        }
+      ],
+      "all_branches": [
+        {
+          "site": "007ae51e",
+          "instruction": "je 0x7ae533"
+        },
+        {
+          "site": "007ae53b",
+          "instruction": "je 0x7ae55b"
+        }
+      ],
+      "all_returns": [
+        {
+          "site": "007ae56b",
+          "instruction": "ret"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "all_local_branch_targets_are_instruction_starts": true,
+        "export_sha256": {
+          "007ae4f0.asm": "f18e1cd3112fec1b61b2894c2d842ed3db87e5fafa279deb6b1c4e69a0861d17",
+          "007ae4f0.c": "631bd4856b7be213fab1eb63219dd21b98cff3dab1c058d8bc939ebd2733cf17"
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Callees, indirect callback implementations and exception handlers remain boundaries; no execution oracle.",
+    "No full scouting workflow, complete nested ownership, lifetime/alias safety or recoverable failure guarantee."
+  ]
+}
