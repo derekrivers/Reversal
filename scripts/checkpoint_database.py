@@ -49,11 +49,11 @@ def stage():
     names.update({row[0]:row[1] for row in annotations['annotations']})
     types={t['path']:t for t in annotations['partial_data_types']}
     comments_by_address={}
-    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json']:
+    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json']:
       event_receipt=ROOT/'evidence'/receipt_name
       if event_receipt.exists():
         event_annotations=json.loads(event_receipt.read_text())
-        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json') else row[1])
+        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json') else row[1])
                       for row in event_annotations['annotations']})
         labels.update(dict(event_annotations['global_labels']))
         types.update({t['path']:t for t in event_annotations['partial_data_types']})
@@ -74,6 +74,9 @@ def stage():
     r16=json.loads((ROOT/'evidence/investigation-16-annotations.json').read_text())
     r16_names={row[0] for row in r16['annotations']}
     r16_notes={row[0]:'CM0102 investigation16 (2026-10-18): '+row[1] for row in r16['function_comments']}
+    r17=json.loads((ROOT/'evidence/investigation-17-annotations.json').read_text())
+    r17_names={row[0] for row in r17['annotations']}
+    r17_notes={row[0]:'CM0102 investigation17 (2026-10-18): '+row[1] for row in r17['function_comments']}
     functions=[]
     for a,n in sorted(names.items()):
       row={'address':a,'name':n}
@@ -84,6 +87,7 @@ def stage():
       if a in r14_names:row['comment']=r14_notes.get(a)
       if a in r15_names:row['comment']=r15_notes.get(a)
       if a in r16_names:row['comment']=r16_notes.get(a)
+      if a in r17_names:row['comment']=r17_notes.get(a)
       functions.append(row)
     pe=struct.unpack_from('<I',data,0x3c)[0];optional=pe+24
     base=struct.unpack_from('<I',data,optional+28)[0]
@@ -96,7 +100,8 @@ def stage():
             if start<=rva<start+length:
                 signatures.append({'address':a,'hex':data[raw+rva-start:raw+rva-start+16].hex()});break
         else:raise ValueError(a)
-    expected={'sha256':EXPECTED,'functions':functions,
+    body_sites=[{'function':'006f09f0','address':address} for address in ('006f1639','006f163e','006f1640','006f1645','006f1647','006f164c')]
+    expected={'sha256':EXPECTED,'functions':functions,'function_body_sites':body_sites,
               'labels':[{'address':a,'name':n} for a,n in sorted(labels.items())],
               'partial_data_types':list(types.values()),'code_signatures':signatures,'code_comments':comments}
     assert len(functions)>=14 and len(labels)>=5
@@ -104,7 +109,7 @@ def stage():
     write_json(STAGE/'DB-MANIFEST.json',{'date_utc':'2026-10-18','ghidra':'12.1.4','jdk':'21',
         'input_sha256':EXPECTED,'project_files':files(project),
         'scope':'Native Ghidra project, function comments/names, RNG/event labels and recovered structures. Original executable bytes were not patched.',
-        'expected_counts':{'functions':len(functions),'global_labels':len(labels),'structures':len(types),'fields':sum(len(t['fields']) for t in types.values()),'code_samples':len(signatures),'code_comments':len(comments)},
+        'expected_counts':{'functions':len(functions),'global_labels':len(labels),'structures':len(types),'fields':sum(len(t['fields']) for t in types.values()),'code_samples':len(signatures),'code_comments':len(comments),'function_body_sites':len(body_sites)},
         'limitations':'Research types are partial; no full game or match reproduction.'})
     (STAGE/'RESTORE.txt').write_text('''CM 01/02 3.9.68 — Ghidra database checkpoint
 
@@ -147,6 +152,7 @@ def finalize():
     assert receipt['status']=='passed' and receipt['partial_structures']==counts['structures'] and receipt['named_functions_and_comments']==counts['functions']
     assert receipt['global_labels']==counts['global_labels'] and receipt['structure_fields']==counts['fields']
     assert receipt['original_code_signatures']==counts['code_samples'] and receipt['code_comments']==counts['code_comments']
+    assert receipt['function_body_sites_verified']==counts['function_body_sites']
     assert files(STAGE/'ghidra-project')==manifest['project_files']
     restored=RESTORED/'cm0102-ghidra-database/ghidra-project'
     actual={k:v for k,v in files(restored).items() if not k.endswith(('.lock','.lock~'))}

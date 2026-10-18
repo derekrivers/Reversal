@@ -30,6 +30,7 @@ assert.equal(expected.partial_data_types.reduce((sum,t)=>sum+t.fields.length,0),
 assert.equal(Object.keys(manifest.project_files).length,receipt.project_file_hashes_verified);
 assert.equal(expected.code_signatures.length,receipt.original_code_signatures);
 assert.equal(expected.code_comments.length,receipt.code_comments);
+assert.equal(expected.function_body_sites.length,receipt.function_body_sites_verified);
 for(const type of expected.partial_data_types)for(const field of type.fields){
   assert.ok(field.offset>=0&&field.offset+field.bytes<=type.bytes,`${type.path}: ${field.name}`);
 }
@@ -90,7 +91,7 @@ for(const [kind,template] of Object.entries(cleanupSummary.templates))
 const unwindAddresses=new Set(readFileSync('evidence/unwind-family-15-rows.jsonl','utf8').trim().split('\n').map(line=>JSON.parse(line).entry));
 const wrapperAddresses=new Set(readFileSync('evidence/delete-wrapper-family-17-rows.jsonl','utf8').trim().split('\n').map(line=>JSON.parse(line).entry));
 for(const address of cleanupAddresses)assert.ok(!mappedAddresses.has(address)&&!unwindAddresses.has(address)&&!wrapperAddresses.has(address),address);
-const overlayReceipts=['09','10','11','12','13','14','15','16'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
+const overlayReceipts=['09','10','11','12','13','14','15','16','17'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
 for(const receipt of overlayReceipts)assert.equal(receipt.sha256,expected.sha256);
 const overlayRows=overlayReceipts.flatMap(receipt=>receipt.annotations.map(row=>[row[0],receipt.investigation>=12?row[2]:row[1]]));
 const nameOverlay=new Map(overlayRows);

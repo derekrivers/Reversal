@@ -1,0 +1,61 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 17,
+  "scope": "Nine reviewed static working names only; no behavior oracle, prototype, comment or data type applied.",
+  "annotations": [
+    [
+      "006fa250",
+      "FUN_006fa250",
+      "match_candidate_action_dispatch_006fa250"
+    ],
+    [
+      "006fa490",
+      "FUN_006fa490",
+      "match_generated_coordinate_action_dispatch_006fa490"
+    ],
+    [
+      "006f09f0",
+      "FUN_006f09f0",
+      "match_slot_move_contact_dispatch_006f09f0"
+    ],
+    [
+      "0094ab50",
+      "FUN_0094ab50",
+      "cm0102_copy_bytes_overlap_aware"
+    ],
+    [
+      "0094b3e0",
+      "FUN_0094b3e0",
+      "cm0102_read_descriptor_translate_text"
+    ],
+    [
+      "0094b307",
+      "FUN_0094b307",
+      "cm0102_refill_stream_get_byte"
+    ],
+    [
+      "0068d040",
+      "FUN_0068d040",
+      "cm0102_cleanup_linked_nodes_head_02"
+    ],
+    [
+      "009462bb",
+      "FUN_009462bb",
+      "cm0102_reverse_stride_cleanup_callbacks"
+    ],
+    [
+      "007ae4f0",
+      "FUN_007ae4f0",
+      "cm0102_cleanup_scout_record_storage"
+    ]
+  ],
+  "function_comments": [],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "match-dispatch-17-annotations.json",
+    "db-lower-17-annotations.json",
+    "scout-cleanup-17-annotations.json"
+  ]
+}
