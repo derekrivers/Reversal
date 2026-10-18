@@ -1,0 +1,66 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 13,
+  "scope": "Ten reviewed static working names only; no behavior oracle, prototype, comment or data type applied.",
+  "annotations": [
+    [
+      "005b57c0",
+      "FUN_005b57c0",
+      "signed_index_byte_load_005b57c0"
+    ],
+    [
+      "006f4600",
+      "FUN_006f4600",
+      "match_slot_select_byte_by_flag_006f4600"
+    ],
+    [
+      "006f46b0",
+      "FUN_006f46b0",
+      "match_slot_relocate_cell_006f46b0"
+    ],
+    [
+      "004d0c60",
+      "FUN_004d0c60",
+      "cm0102_compute_staff_contract_scalar_candidate"
+    ],
+    [
+      "004cf5f0",
+      "FUN_004cf5f0",
+      "cm0102_find_staff_contract_context_row_candidate"
+    ],
+    [
+      "008b23b0",
+      "FUN_008b23b0",
+      "cm0102_copy_in_training_block_and_update_candidate"
+    ],
+    [
+      "008b35a0",
+      "FUN_008b35a0",
+      "cm0102_copy_out_training_54byte_block"
+    ],
+    [
+      "008b3930",
+      "FUN_008b3930",
+      "cm0102_get_training_155byte_record"
+    ],
+    [
+      "008b3c50",
+      "FUN_008b3c50",
+      "cm0102_allocate_default_training_6byte_rows_candidate"
+    ],
+    [
+      "008b4cd0",
+      "FUN_008b4cd0",
+      "cm0102_get_training_54byte_block"
+    ]
+  ],
+  "function_comments": [],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "match-dependencies-13-annotations.json",
+    "contract-dependencies-13-annotations.json",
+    "training-boundary-13-annotations.json"
+  ]
+}

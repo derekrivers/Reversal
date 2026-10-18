@@ -16,7 +16,9 @@ This inventories the pinned 3.9.68 executable's Ghidra-inferred functions. It is
 
 The function-body byte count measures structural analysis only. It must not be presented as a percentage of simulation or source code reconstructed. Most functions still have no established behavioral contract.
 
-This atlas is the investigation-08 structural snapshot. Investigation 09 adds four native working names in [`investigation-09-annotations.json`](../investigation-09-annotations.json), and investigation 10 adds ten in [`investigation-10-annotations.json`](../investigation-10-annotations.json). The checkpoint verifier applies these small name overlays while retaining the original atlas rows.
+This atlas is the investigation-08 structural snapshot. Later investigations add small native annotation overlays through [`investigation-13-annotations.json`](../investigation-13-annotations.json); the checkpoint verifier applies those overlays while retaining the original atlas rows. A working name does not establish a complete function contract.
+
+[`semantic-coverage.json`](semantic-coverage.json) indexes 43 distinct functions with reviewed static evidence from investigations 09–13. Each entry links to its report and compact instruction evidence and is marked either `contract-supported` for a local instruction-backed body contract or `boundary-mapped` for a partial path or dependency. The other 9,198 inventory entries have no entry in this overlay; this includes some earlier validated functions tracked separately. These counts measure this explicit review ledger, not game completion. [`validation-coverage.json`](validation-coverage.json) separately records original-instruction execution domains.
 
 ## Query the map
 
