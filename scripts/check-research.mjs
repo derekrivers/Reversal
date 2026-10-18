@@ -59,18 +59,34 @@ assert.equal(functions.reduce((n,f)=>n+f.call_instruction_count,0),atlas.counts.
 assert.equal(functions.reduce((n,f)=>n+f.unresolved_indirect_call_sites.length,0),atlas.counts.unresolved_indirect_call_instructions);
 const coverage=JSON.parse(readFileSync('evidence/code-atlas/validation-coverage.json','utf8'));
 for(const entry of coverage.entries)assert.ok(functions.some(f=>f.entry===entry.function),entry.function);
-const overlayReceipts=['09','10','11','12'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
+const semantic=JSON.parse(readFileSync('evidence/code-atlas/semantic-coverage.json','utf8'));
+assert.equal(semantic.specimen_sha256,expected.sha256);
+assert.equal(semantic.inventory_internal_functions,functions.length);
+const inventoryAddresses=new Set(functions.map(f=>f.entry));
+const mappedAddresses=new Set();
+for(const row of semantic.functions){
+  assert.ok(inventoryAddresses.has(row.address),`Unknown mapped function ${row.address}`);
+  assert.ok(!mappedAddresses.has(row.address),`Duplicate mapped function ${row.address}`);
+  assert.ok(['boundary-mapped','contract-supported'].includes(row.state),row.address);
+  assert.ok(semantic.sources[row.source],row.source);
+  mappedAddresses.add(row.address);
+}
+for(const source of Object.values(semantic.sources)){
+  readFileSync(source.report);readFileSync(source.evidence);
+}
+const overlayReceipts=['09','10','11','12','13'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
 for(const receipt of overlayReceipts)assert.equal(receipt.sha256,expected.sha256);
-const overlayRows=overlayReceipts.flatMap(receipt=>receipt.annotations.map(row=>[row[0],receipt.investigation===12?row[2]:row[1]]));
+const overlayRows=overlayReceipts.flatMap(receipt=>receipt.annotations.map(row=>[row[0],receipt.investigation>=12?row[2]:row[1]]));
 const nameOverlay=new Map(overlayRows);
 assert.equal(nameOverlay.size,overlayRows.length);
 for(const [address,name] of nameOverlay)assert.equal(expected.functions.find(f=>f.address===address)?.name,name);
 for(const entry of expected.functions)assert.equal(nameOverlay.get(entry.address)??functions.find(f=>f.entry===entry.address)?.name,entry.name);
-const latestAnnotations=overlayReceipts.at(-1);
-const latestNotes=new Map(latestAnnotations.function_comments);
-for(const [address] of latestAnnotations.annotations){
+for(const annotationReceipt of overlayReceipts.filter(r=>r.investigation>=12)){
+ const notes=new Map(annotationReceipt.function_comments);
+ for(const [address] of annotationReceipt.annotations){
   const actual=expected.functions.find(f=>f.address===address)?.comment;
-  assert.equal(actual,latestNotes.has(address)?`CM0102 investigation12 (2026-10-18): ${latestNotes.get(address)}`:null);
+  assert.equal(actual,notes.has(address)?`CM0102 investigation${annotationReceipt.investigation} (2026-10-18): ${notes.get(address)}`:null);
+ }
 }
 const workstreams=JSON.parse(readFileSync('evidence/code-atlas/workstreams.json','utf8'));
 const groups=Object.values(workstreams.groups);
