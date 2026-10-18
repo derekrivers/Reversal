@@ -182,6 +182,18 @@
     "R24-C": {
       "report": "reports/path-format-24.md",
       "evidence": "evidence/path-format-24-sites.json"
+    },
+    "R25-A": {
+      "report": "reports/status-lookup-25.md",
+      "evidence": "evidence/status-lookup-25-sites.json"
+    },
+    "R25-B": {
+      "report": "reports/slot-effect-25.md",
+      "evidence": "evidence/slot-effect-25-sites.json"
+    },
+    "R25-C": {
+      "report": "reports/copy-helper-25.md",
+      "evidence": "evidence/copy-helper-25-sites.json"
     }
   },
   "functions": [
@@ -222,8 +234,8 @@
     },
     {
       "address": "0062ed70",
-      "state": "boundary-mapped",
-      "source": "R10-A"
+      "state": "contract-supported",
+      "source": "R25-A"
     },
     {
       "address": "0062c680",
@@ -232,8 +244,8 @@
     },
     {
       "address": "006d0980",
-      "state": "boundary-mapped",
-      "source": "R10-A"
+      "state": "contract-supported",
+      "source": "R25-B"
     },
     {
       "address": "00896290",
@@ -819,6 +831,21 @@
       "address": "00944c9f",
       "state": "contract-supported",
       "source": "R24-C"
+    },
+    {
+      "address": "0062ec00",
+      "state": "contract-supported",
+      "source": "R25-A"
+    },
+    {
+      "address": "0062ece0",
+      "state": "contract-supported",
+      "source": "R25-A"
+    },
+    {
+      "address": "00948851",
+      "state": "contract-supported",
+      "source": "R25-C"
     }
   ]
 }

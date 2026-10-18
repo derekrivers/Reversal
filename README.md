@@ -2,7 +2,7 @@
 
 Evidence-led reverse engineering of **Championship Manager 01/02, SI patch 3.9.68**. The current priority is mapping function contracts and incrementally reconstructing bounded behavior in headless TypeScript with original x86 instruction validation. Game and UI implementation is deferred.
 
-This repository contains investigations 01–24: an executable-wide code atlas, recovered layouts, narrow TypeScript reconstructions and numerical validation fixtures. Function recovery and bounded original-instruction validation are the current priorities; no complete match or playable browser game has been reproduced.
+This repository contains investigations 01–25: an executable-wide code atlas, recovered layouts, narrow TypeScript reconstructions and numerical validation fixtures. Function recovery and bounded original-instruction validation are the current priorities; no complete match or playable browser game has been reproduced.
 
 ## Current findings
 
@@ -18,7 +18,7 @@ This repository contains investigations 01–24: an executable-wide code atlas, 
 | Penalty resolution boundaries | Keeper base draws, signed16 shot categories and a scoring-branch gate; 139,224 independent original-slice cases; complete outcomes still open |
 | Keeper response body | Connected penalty base+postlude; 8,192 cases at explicit 53/64-bit precision; entry prelude and full outcome still open |
 | Penalty keeper entry | Action33 entry-to-return, including tactical/grid/variant guards; 9,056 public cases plus a local original-grid repeat |
-| Native database | 147 named functions, 16 globals, 9 recovered structures and 93 fields; restored from an extracted archive |
+| Native database | 150 named functions, 16 globals, 9 recovered structures and 93 fields; restored from an extracted archive |
 | Investigation 09 | Static shot-resolution RNG ordering, keeper field producers, two database read wrappers and CRT x87 precision request; see the scoped reports |
 | Investigation 10 | Static shot-helper refresh/effect dependencies, tactical plan boundaries and league aggregation/amount boundaries; see the scoped reports |
 | Investigation 11 | Static other-slot shot-helper scan, transfer-manager construction and finance row/load boundaries; see the scoped reports |
@@ -34,6 +34,7 @@ This repository contains investigations 01–24: an executable-wide code atlas, 
 | Investigation 22 | Seven complete local bodies mapped under scalar queries, selected-slot scan and runtime callees; one scalar query validated against 274 original-instruction executions, six others remain static; six reviewed names accepted into checkpoint 22 |
 | Investigation 23 | Four complete local bodies mapped under status classification, exit callbacks and selector mode-5 lookup; two bounded TypeScript paths validated against 43 and 288 original-instruction executions; four reviewed names accepted into checkpoint 23 |
 | Investigation 24 | Three new local bodies mapped for date difference and path formatting, plus the prior status-refresh partial upgraded to a full static body contract; two bounded TypeScript paths validated against 13 and 95 original-entry synthetic cases; three reviewed names accepted into checkpoint 24 |
+| Investigation 25 | Three new local bodies mapped for signed status lookup and locale-aware copy, plus two prior partials upgraded to complete local static contracts; bounded TypeScript paths validated against 331, 144 and 180 original-entry synthetic cases; three reviewed names accepted into checkpoint 25 |
 | Structural families | Separate registries classify 3,873 unwind bodies, 192 conditional receiver-release wrappers, 143 receiver-cleanup bodies and 23 import jump thunks; these are structural local-body classifications |
 
 Start with [investigation 08](reports/investigation-08.md), [the current research queue](coordination/QUEUE.md), [the executable code atlas](evidence/code-atlas/README.md), [port architecture](docs/ARCHITECTURE.md) and [the research roadmap](docs/ROADMAP.md). The [historical HTML report](reports/investigation-04.html) includes investigations 01–04; download it to view its formatting.
@@ -66,6 +67,9 @@ There are no npm dependencies for these checks. They compare TypeScript outputs 
 | Mode-5 record lookup | 288 synthetic no-callee entry-to-return cases, 16,200 original x86 instruction steps; diagnostics static |
 | Status-refresh guard | 13 preinitialized call-free original-entry cases, 568 x86 steps; update and callee paths remain static |
 | Date-pair difference | 95 preinitialized nonrecursive original-entry cases, 5,100 x86 steps; recursive and initialization paths remain static |
+| Signed status lookup | 331 original-entry synthetic cases across three functions; refresh and diagnostics paths remain static |
+| Slot condition effect | 144 no-callee severe-path original-entry cases, 8,568 x86 steps; remaining paths and transitive callees remain static |
+| Locale-aware copy helper | 180 nonzero-locale original-entry cases, 11,619 x86 steps; mode-zero delegated `_strncpy` remains static |
 
 The public RNG table is **synthetic**, generated deterministically and supplied to the original instructions during emulation. The earlier fixed-game-table experiment remains documented in the private checkpoint. Clock and event-rule fixtures also use synthetic state. Passing these checks establishes only the tested primitives' behavior, not full-match equivalence.
 
@@ -75,11 +79,11 @@ The same checks run in [GitHub Actions](.github/workflows/research-checks.yml). 
 
 The native Ghidra database and full research bundle are preserved separately as private artifacts. The database contains imported game bytes, so this public repository tracks its **manifest, restore receipt, expected annotations and rebuild scripts** rather than the native project.
 
-- [Current checkpoint metadata](checkpoints/2026-10-18-investigation-24/) and [latest checkpoint pointer](checkpoints/latest.json)
+- [Current checkpoint metadata](checkpoints/2026-10-18-investigation-25/) and [latest checkpoint pointer](checkpoints/latest.json)
 - [Database recovery instructions](docs/DATABASE.md)
 - [Data and evidence inventory](docs/PROVENANCE.md)
 
-The saved database was opened from an extracted archive in **Ghidra 12.1.4 / JDK 21**, read-only and without reanalysis. Verification checked 147 named functions, 16 labels, 9 partial structures with 93 fields, 224 original code samples, 76 code comments and all 10 project-file hashes. The CI metadata check does not repeat this native reopen test.
+The saved database was opened from an extracted archive in **Ghidra 12.1.4 / JDK 21**, read-only and without reanalysis. Verification checked 150 named functions, 16 labels, 9 partial structures with 93 fields, 227 original code samples, 76 code comments and all 10 project-file hashes. The CI metadata check does not repeat this native reopen test.
 
 ## Tooling and specimen
 

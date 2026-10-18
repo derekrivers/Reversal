@@ -169,6 +169,46 @@
       "module": "reconstruction/date-difference.ts",
       "evidence": "evidence/date-difference-24-oracle.json",
       "boundary": "95 original-entry synthetic nonrecursive cases, 5,100 x86 steps and 86 instruction starts with merged read/write event order; initialization callback, recursion, aliasing and abnormal SEH excluded"
+    },
+    {
+      "function": "0062ec00",
+      "scope": "signed-byte-table-lookup-entry-to-return",
+      "behavior": "Signed low-byte index into a synthetic 13-byte-stride table, with partial-register EAX result",
+      "module": "reconstruction/status-lookup-helpers.ts",
+      "evidence": "evidence/status-lookup-25-oracle.json",
+      "boundary": "256 original-entry synthetic cases covering all four instruction starts; original table content, caller range and connected status lifecycle excluded"
+    },
+    {
+      "function": "0062ece0",
+      "scope": "status-row-byte-condition-entry-to-return",
+      "behavior": "Signed row-byte sentinel and floor-to-one result, including AL-only failure and register effects",
+      "module": "reconstruction/status-lookup-helpers.ts",
+      "evidence": "evidence/status-lookup-25-oracle.json",
+      "boundary": "32 original-entry synthetic cases covering all 28 instruction starts; stable disjoint mapped memory, no real caller reachability or invalid-pointer behavior"
+    },
+    {
+      "function": "0062ed70",
+      "scope": "nonnull-count-guard-entry-to-return",
+      "behavior": "Signed index at or above count returns zero without calling refresh or diagnostic helpers",
+      "module": "reconstruction/status-lookup-helpers.ts",
+      "evidence": "evidence/status-lookup-25-oracle.json",
+      "boundary": "43 original-entry synthetic no-callee cases; refresh, RNG, diagnostics, row mapping and connected lifecycle remain static"
+    },
+    {
+      "function": "006d0980",
+      "scope": "no-callee-severe-effect-entry-to-return",
+      "behavior": "Kind -1 and severity above 50: float/flag/counter writes and ordered memory effects",
+      "module": "reconstruction/slot-effect-severe.ts",
+      "evidence": "evidence/slot-effect-25-oracle.json",
+      "boundary": "144 original-entry synthetic cases, 8,568 x86 steps and 65 instruction starts; throttle RNG, kind merge, lower-severity draws, setters and connected shot outcome excluded"
+    },
+    {
+      "function": "00948851",
+      "scope": "nonzero-locale-copy-entry-to-return",
+      "behavior": "Lead-byte-aware bounded copy, truncated lead clearing and zero padding with ordered byte/DWORD memory events",
+      "module": "reconstruction/copy-helper.ts",
+      "evidence": "evidence/copy-helper-25-oracle.json",
+      "boundary": "180 original-entry synthetic cases, 11,619 x86 steps and 57 instruction starts; mode-zero delegated _strncpy, locale initialization, overlap and caller-level path output excluded"
     }
   ]
 }
