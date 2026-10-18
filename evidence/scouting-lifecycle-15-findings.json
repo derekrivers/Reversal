@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "a4fa4bc7745ad3fbc67759325c45a9058ceaecc0",
+  "native_checkpoint": "2026-10-18-investigation-14",
+  "address_kind": "PE virtual addresses; field offsets and stride in bytes",
+  "evidence": "scouting-lifecycle-15-sites.json",
+  "classification": "Four contract-supported local static bodies; transitive dependencies remain boundary-mapped; no execution validation",
+  "contracts": [
+    {
+      "entry": "007f6760",
+      "abi": "ECX manager; one four-byte stack slot; RET4; EAX manager on normal return",
+      "direct_early_zero_ranges": ["manager+0x68..+0xa7", "manager+0xa8..+0xe7"],
+      "gate": "Drive enumeration/type5/path check retries through external helpers; initialization admitted only when 004c0aa0 returns zero",
+      "direct_preload_clear": "16 dwords at manager+0xc",
+      "load_boundary": "Call 007f7bb0(input) only for nonzero input and signed32(wrapping abs(read32(00dd7110))) >= 0x3e025; nonzero result skips fallback",
+      "default_allocation": {"allocator": "00944cf1", "request_bytes": 110084, "leading_cookie": 160, "published_base": "allocation+4 at manager+0", "manager_count": "dword +8=160", "stride": 688, "records": 160, "constructor_callback": "007ae390", "cleanup_callback": "007ae4f0"},
+      "direct_fallback_clear_dwords": ["+0x5c", "+0x60", "+0x64"],
+      "default_loop": "i=0..15, j=0..9; record=base+688*(10*i+j); group byte +0x4c+i=1",
+      "ordered_record_calls": [
+        {"target": "007ae570", "receiver": "record", "argument": "read32(00ae23bc)+110*(read32(00ae2364)-16+i), wrapping32; globals read once per outer iteration"},
+        {"target": "007ae640", "receiver": "record", "argument": "low byte j; upper24 stack bits uninitialized here"},
+        {"target": "007ae6e0", "receiver": "record", "argument": "min(j+1,4)"},
+        {"target": "007fc150", "arguments": ["low byte j with uninitialized upper24", "record+0xb", "100"], "limit": "Immediate call arguments, not a proven 100-byte write"}
+      ],
+      "allocation_failure": "Publish null; diagnostics number0x65; clear global00b67a34; call005cc7d0,005a8f60,00945934(-1); no local recoverable-null return",
+      "unknowns": ["Loaded storage/state", "Callback writes and nested allocation", "Gate/helper termination and I/O", "manager+4 meaning", "Exception unwind behavior"]
+    },
+    {
+      "entry": "007f6aa0",
+      "abi": "ECX manager; RET; EAX unspecified",
+      "array_cleanup": "If base=read32(manager) nonnull, call009462bb(base,688,read32(base-4),007ae4f0), call00944c94(base-4), clear manager+0",
+      "separate_cleanup": "If read32(manager+0x5c) nonnull, call009452ca(pointer), then clear +0x5c",
+      "count_source": "Cookie at base-4, not manager+8",
+      "not_directly_cleared": ["+8", "+0xc..+0x5b", "+0x60/+0x64", "+0x68..+0xe7"],
+      "ownership_limit": "Receiver itself is not released; manager-held array lifetime supported, exclusive ownership and complete resource release unproved"
+    },
+    {
+      "entry": "008041c0",
+      "abi": "ECX object; one four-byte argument with signed low byte; RET4; EAX object",
+      "constructed_arrays": [{"offset": "0x1", "count": 10, "stride": 688}, {"offset": "0x1b0e", "count": 10, "stride": 688}],
+      "subobject_boundary": "0068d020(object+0x361e); selected instructions clear fourteen bytes",
+      "leading_byte": "Accept signed low argument byte0..9, otherwise call007f6e30(key0); store AL without validating fallback",
+      "loop": "j0..9: reload manager global00b74448; source=007f6cd0(low selector byte j,key0); call007b7690(receiver object+1+688*j,source); then clear dword object+0x1ae1+4*j",
+      "direct_final_zero_dwords": ["+0x1b09", "+0x361a", "+0x3634"],
+      "limits": ["No lookup alias null guard", "No copy result check", "Leading byte does not select record copy indices", "Second array has construction only here, no manager-copy calls", "Constructors/copy helper can have transitive effects"]
+    },
+    {
+      "entry": "00804450",
+      "abi": "ECX object; RET; EAX1 after ten returned copy calls",
+      "byte_write_boundary": "Call007f6f20(low value byte read8(object),key0) through global00b74448; ignore return",
+      "loop": "j0..9: reload manager global00b74448; destination=007f6cd0(low selector byte j,key0); call007b7690(receiver destination,source object+1+688*j)",
+      "limits": ["No alias null guard", "No setter/copy success propagation", "No transaction guarantee"]
+    }
+  ],
+  "shared_helper_boundary": {"entry": "007b7690", "supported": "Selected sites identify receiver as destination and stack argument as source, 688-byte initial copy, prior nested pointer cleanup and later allocation/copy/registration calls", "limits": "Not plain memcpy; full nested ownership, failures, self-copy and transitive semantics unresolved"},
+  "r14_connection": "Default160/stride688 matches R14 alias base+688*n for ordinary16 groups of10; caller key0 uses R14 global fallback; cleanup invalidates manager-held aliases",
+  "direct_rng": "No direct RNG call in owned bodies; transitive RNG unresolved",
+  "confidence": "High for direct instruction widths, branches, calls, argument direction and stores; purpose/lifetime labels bounded",
+  "excluded_claims": ["Full scouting workflow", "Persistence compatibility", "Exclusive ownership", "Complete nested cleanup", "Execution equivalence"]
+}

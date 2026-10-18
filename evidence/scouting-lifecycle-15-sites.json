@@ -1,0 +1,675 @@
+{
+  "schema_version": 1,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "a4fa4bc7745ad3fbc67759325c45a9058ceaecc0",
+  "native_checkpoint": "2026-10-18-investigation-14",
+  "address_kind": "PE virtual addresses unless file_offset is explicit; field offsets in bytes",
+  "method": "Capstone 5.0.7 whole-owned-body static decode, every instruction compared to read-only native export; no execution",
+  "private_export_manifest_sha256": "65503dc3cf33eff2a9a40c1cdc456f5798bc8e04d1d9bbad6132c06b9677ca58",
+  "private_annotation_preflight_sha256": "c20393d151da0afff24f0ff7f806f91857d90f454cbff5a52d7bc0463517d1f1",
+  "verified_old_names": {
+    "007f6760": "FUN_007f6760",
+    "007f6aa0": "FUN_007f6aa0",
+    "008041c0": "FUN_008041c0",
+    "00804450": "FUN_00804450"
+  },
+  "native_normalization": "jump aliases, numeric spelling, whitespace, EAX absolute/FS DWORD qualifier, scale-one and plus-negative spelling, REP STOSD rendering; other operand widths preserved",
+  "selected_imports": {
+    "009670f8": "GetLogicalDriveStringsA",
+    "00967100": "GetDriveTypeA"
+  },
+  "owned_bodies": [
+    {
+      "entry_va": "007f6760",
+      "end_exclusive_va": "007f6a92",
+      "file_offset": "003f6760",
+      "length_bytes": 818,
+      "body_sha256": "8842a140374a59cf809cc7a8ef350101f935bcb73a10142048e942a821d790e1",
+      "instruction_count": 243,
+      "selected_sites": {
+        "007f677d": "mov ebp, ecx",
+        "007f6785": "lea eax, [ebp + 0xa8]",
+        "007f678b": "mov ecx, 0x10",
+        "007f6790": "mov dword ptr [eax - 0x40], 0",
+        "007f6797": "mov dword ptr [eax], 0",
+        "007f679d": "add eax, 4",
+        "007f67a3": "mov edi, dword ptr [0x967100]",
+        "007f67ae": "push 0xc8",
+        "007f67b3": "call dword ptr [0x9670f8]",
+        "007f67cc": "call edi",
+        "007f67ce": "cmp eax, 5",
+        "007f67e8": "lea ecx, [esp + 0x3ac]",
+        "007f680d": "call 0x4c0aa0",
+        "007f6817": "je 0x7f6881",
+        "007f6821": "call 0x4c0c10",
+        "007f6829": "add bl, 4",
+        "007f682c": "movsx edx, bl",
+        "007f682f": "mov al, byte ptr [esp + edx + 0x28]",
+        "007f687c": "jmp 0x7f67a9",
+        "007f6881": "lea edi, [ebp + 0xc]",
+        "007f6884": "mov ecx, 0x10",
+        "007f6889": "xor eax, eax",
+        "007f688b": "rep stosd dword ptr es:[edi], eax",
+        "007f688d": "mov ecx, dword ptr [esp + 0x6a8]",
+        "007f6894": "cmp ecx, esi",
+        "007f6898": "mov eax, dword ptr [0xdd7110]",
+        "007f689d": "cdq",
+        "007f689e": "xor eax, edx",
+        "007f68a0": "sub eax, edx",
+        "007f68a2": "cmp eax, 0x3e025",
+        "007f68a7": "jl 0x7f68b9",
+        "007f68ac": "call 0x7f7bb0",
+        "007f68b3": "jne 0x7f6a75",
+        "007f68b9": "push 0x1ae04",
+        "007f68be": "mov dword ptr [ebp + 8], 0xa0",
+        "007f68c5": "mov dword ptr [ebp + 0x64], esi",
+        "007f68c8": "mov dword ptr [ebp + 0x60], esi",
+        "007f68cb": "mov dword ptr [ebp + 0x5c], esi",
+        "007f68ce": "call 0x944cf1",
+        "007f68e3": "je 0x7f690e",
+        "007f68e5": "push 0x7ae4f0",
+        "007f68ea": "push 0x7ae390",
+        "007f68ef": "lea esi, [eax + 4]",
+        "007f68f2": "push 0xa0",
+        "007f68f7": "push 0x2b0",
+        "007f68fd": "mov dword ptr [eax], 0xa0",
+        "007f6903": "call 0x9463af",
+        "007f690e": "xor eax, eax",
+        "007f691d": "mov dword ptr [ebp], eax",
+        "007f6920": "jne 0x7f6992",
+        "007f694f": "push 0x65",
+        "007f697b": "mov dword ptr [0xb67a34], esi",
+        "007f698b": "push -1",
+        "007f6992": "add ebp, 0x4c",
+        "007f69a1": "mov dword ptr [esp + 0x14], 0x10",
+        "007f69a9": "mov edx, dword ptr [0xae2364]",
+        "007f69b5": "lea eax, [eax + edx - 0x10]",
+        "007f69bd": "lea ecx, [eax + eax*4]",
+        "007f69c0": "lea eax, [eax + ecx*2]",
+        "007f69c3": "lea edx, [eax + eax*4]",
+        "007f69c6": "mov eax, dword ptr [0xae23bc]",
+        "007f69cb": "lea ebp, [eax + edx*2]",
+        "007f69d6": "movsx eax, bl",
+        "007f69d9": "add eax, esi",
+        "007f69db": "mov edi, dword ptr [edx]",
+        "007f69dd": "push ebp",
+        "007f69de": "lea ecx, [eax*8]",
+        "007f69e5": "sub ecx, eax",
+        "007f69e7": "lea ecx, [ecx + ecx*2]",
+        "007f69ea": "lea esi, [eax + ecx*2]",
+        "007f69ed": "shl esi, 4",
+        "007f69f4": "call 0x7ae570",
+        "007f69f9": "mov edi, dword ptr [esp + 0x1c]",
+        "007f69ff": "push edi",
+        "007f6a00": "call 0x7ae640",
+        "007f6a05": "test bl, bl",
+        "007f6a09": "push 1",
+        "007f6a0d": "cmp bl, 1",
+        "007f6a12": "push 2",
+        "007f6a16": "cmp bl, 2",
+        "007f6a1b": "push 3",
+        "007f6a1f": "push 4",
+        "007f6a23": "call 0x7ae6e0",
+        "007f6a28": "add esi, 0xb",
+        "007f6a2b": "push 0x64",
+        "007f6a2d": "push esi",
+        "007f6a2e": "push edi",
+        "007f6a2f": "call 0x7fc150",
+        "007f6a37": "inc bl",
+        "007f6a39": "cmp bl, 0xa",
+        "007f6a40": "jl 0x7f69ce",
+        "007f6a4f": "mov byte ptr [eax], 1",
+        "007f6a52": "add edx, 0xa",
+        "007f6a55": "inc eax",
+        "007f6a6b": "jne 0x7f69a9",
+        "007f6a7d": "mov eax, ebp",
+        "007f6a8f": "ret 4"
+      },
+      "all_calls": [
+        {
+          "site": "007f67b3",
+          "target": "dword ptr [0x9670f8]"
+        },
+        {
+          "site": "007f67cc",
+          "target": "edi"
+        },
+        {
+          "site": "007f67f5",
+          "target": "0x944c9f"
+        },
+        {
+          "site": "007f680d",
+          "target": "0x4c0aa0"
+        },
+        {
+          "site": "007f6821",
+          "target": "0x4c0c10"
+        },
+        {
+          "site": "007f6848",
+          "target": "0x66f4e0"
+        },
+        {
+          "site": "007f685d",
+          "target": "0x66f4e0"
+        },
+        {
+          "site": "007f6874",
+          "target": "0x5e8290"
+        },
+        {
+          "site": "007f68ac",
+          "target": "0x7f7bb0"
+        },
+        {
+          "site": "007f68ce",
+          "target": "0x944cf1"
+        },
+        {
+          "site": "007f6903",
+          "target": "0x9463af"
+        },
+        {
+          "site": "007f6939",
+          "target": "0x944cff"
+        },
+        {
+          "site": "007f6953",
+          "target": "0x90d130"
+        },
+        {
+          "site": "007f6963",
+          "target": "0x944c9f"
+        },
+        {
+          "site": "007f6973",
+          "target": "0x5e8290"
+        },
+        {
+          "site": "007f6981",
+          "target": "0x5cc7d0"
+        },
+        {
+          "site": "007f6986",
+          "target": "0x5a8f60"
+        },
+        {
+          "site": "007f698d",
+          "target": "0x945934"
+        },
+        {
+          "site": "007f69f4",
+          "target": "0x7ae570"
+        },
+        {
+          "site": "007f6a00",
+          "target": "0x7ae640"
+        },
+        {
+          "site": "007f6a23",
+          "target": "0x7ae6e0"
+        },
+        {
+          "site": "007f6a2f",
+          "target": "0x7fc150"
+        }
+      ],
+      "all_branches": [
+        {
+          "site": "007f67a1",
+          "instruction": "jne 0x7f6790"
+        },
+        {
+          "site": "007f67bb",
+          "instruction": "je 0x7f683b"
+        },
+        {
+          "site": "007f67c5",
+          "instruction": "je 0x7f683b"
+        },
+        {
+          "site": "007f67d1",
+          "instruction": "jne 0x7f6829"
+        },
+        {
+          "site": "007f6817",
+          "instruction": "je 0x7f6881"
+        },
+        {
+          "site": "007f6839",
+          "instruction": "jne 0x7f67cb"
+        },
+        {
+          "site": "007f687c",
+          "instruction": "jmp 0x7f67a9"
+        },
+        {
+          "site": "007f6896",
+          "instruction": "je 0x7f68b9"
+        },
+        {
+          "site": "007f68a7",
+          "instruction": "jl 0x7f68b9"
+        },
+        {
+          "site": "007f68b3",
+          "instruction": "jne 0x7f6a75"
+        },
+        {
+          "site": "007f68e3",
+          "instruction": "je 0x7f690e"
+        },
+        {
+          "site": "007f690c",
+          "instruction": "jmp 0x7f6910"
+        },
+        {
+          "site": "007f6920",
+          "instruction": "jne 0x7f6992"
+        },
+        {
+          "site": "007f6a07",
+          "instruction": "jne 0x7f6a0d"
+        },
+        {
+          "site": "007f6a0b",
+          "instruction": "jmp 0x7f6a21"
+        },
+        {
+          "site": "007f6a10",
+          "instruction": "jne 0x7f6a16"
+        },
+        {
+          "site": "007f6a14",
+          "instruction": "jmp 0x7f6a21"
+        },
+        {
+          "site": "007f6a19",
+          "instruction": "jne 0x7f6a1f"
+        },
+        {
+          "site": "007f6a1d",
+          "instruction": "jmp 0x7f6a21"
+        },
+        {
+          "site": "007f6a40",
+          "instruction": "jl 0x7f69ce"
+        },
+        {
+          "site": "007f6a6b",
+          "instruction": "jne 0x7f69a9"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "incoming_direct_calls_verified": [
+          "00828a9a",
+          "0082bb1a"
+        ],
+        "export_sha256": {
+          "007f6760.asm": "e28266c11db43646f5542808ea916f86fd1356432d36fa426cc5a9b669c2a07a",
+          "007f6760.c": "19a530391aab71cc5d11b2b80b3d6c91ef69f3f3f3978f387da526fce8327cd5",
+          "007f6760.refs": "8c024acc9d0538736191fae8e4ef6677c7d78a8c33b259b33e5df590802072bc"
+        }
+      }
+    },
+    {
+      "entry_va": "007f6aa0",
+      "end_exclusive_va": "007f6aea",
+      "file_offset": "003f6aa0",
+      "length_bytes": 74,
+      "body_sha256": "daf1f08ed9e18344861304b8b4bef5bdf9b1d9d988352ab6c207663e3476f70c",
+      "instruction_count": 27,
+      "selected_sites": {
+        "007f6aa1": "mov esi, ecx",
+        "007f6aa3": "mov eax, dword ptr [esi]",
+        "007f6aa7": "je 0x7f6ad1",
+        "007f6aa9": "mov ecx, dword ptr [eax - 4]",
+        "007f6aad": "lea edi, [eax - 4]",
+        "007f6ab0": "push 0x7ae4f0",
+        "007f6ab5": "push ecx",
+        "007f6ab6": "push 0x2b0",
+        "007f6abb": "push eax",
+        "007f6abc": "call 0x9462bb",
+        "007f6ac2": "call 0x944c94",
+        "007f6aca": "mov dword ptr [esi], 0",
+        "007f6ad1": "mov eax, dword ptr [esi + 0x5c]",
+        "007f6ad6": "je 0x7f6ae8",
+        "007f6ad8": "push eax",
+        "007f6ad9": "call 0x9452ca",
+        "007f6ae1": "mov dword ptr [esi + 0x5c], 0",
+        "007f6ae9": "ret"
+      },
+      "all_calls": [
+        {
+          "site": "007f6abc",
+          "target": "0x9462bb"
+        },
+        {
+          "site": "007f6ac2",
+          "target": "0x944c94"
+        },
+        {
+          "site": "007f6ad9",
+          "target": "0x9452ca"
+        }
+      ],
+      "all_branches": [
+        {
+          "site": "007f6aa7",
+          "instruction": "je 0x7f6ad1"
+        },
+        {
+          "site": "007f6ad6",
+          "instruction": "je 0x7f6ae8"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "incoming_direct_calls_verified": [
+          "0083030a"
+        ],
+        "export_sha256": {
+          "007f6aa0.asm": "16e7724fcb01ac8720fe6ce04da5e67febf4e67a8da9f48257d35d5ef083048f",
+          "007f6aa0.c": "cb0a799d57dc12210499bd3d2fdcb80d19a034d27be4a50e806d1bcf7e994470",
+          "007f6aa0.refs": "37d3554054a6265e5f1cdab4b02dc3127efb99a25e5f2681b06dd1bc4a1fb08a"
+        }
+      }
+    },
+    {
+      "entry_va": "008041c0",
+      "end_exclusive_va": "008042bb",
+      "file_offset": "004041c0",
+      "length_bytes": 251,
+      "body_sha256": "5611c349a31a641fa9262efdf3e3f912dfdd76ff78e9135cbd60cb5fbeedd113",
+      "instruction_count": 71,
+      "selected_sites": {
+        "008041da": "mov esi, ecx",
+        "008041dc": "push 0x7ae4f0",
+        "008041e1": "push 0x7ae390",
+        "008041e6": "push 0xa",
+        "008041e8": "lea edi, [esi + 1]",
+        "008041eb": "push 0x2b0",
+        "008041f5": "call 0x9463af",
+        "00804204": "push 0xa",
+        "00804206": "lea eax, [esi + 0x1b0e]",
+        "0080420c": "push 0x2b0",
+        "0080421a": "call 0x9463af",
+        "0080421f": "lea ecx, [esi + 0x361e]",
+        "0080422a": "call 0x68d020",
+        "0080422f": "mov al, byte ptr [esp + 0x24]",
+        "00804238": "test al, al",
+        "0080423a": "jl 0x804240",
+        "0080423c": "cmp al, 0xa",
+        "0080423e": "jl 0x80424d",
+        "00804240": "mov ecx, dword ptr [0xb74448]",
+        "00804246": "push 0",
+        "00804248": "call 0x7f6e30",
+        "0080424f": "mov byte ptr [esi], al",
+        "00804251": "mov byte ptr [esp + 0x24], bl",
+        "00804255": "lea ebp, [esi + 0x1ae1]",
+        "0080425b": "mov ecx, dword ptr [esp + 0x24]",
+        "0080425f": "push 0",
+        "00804261": "push ecx",
+        "00804262": "mov ecx, dword ptr [0xb74448]",
+        "00804268": "call 0x7f6cd0",
+        "0080426d": "push eax",
+        "0080426e": "mov ecx, edi",
+        "00804270": "call 0x7b7690",
+        "00804275": "mov dword ptr [ebp], 0",
+        "0080427e": "add edi, 0x2b0",
+        "00804284": "add ebp, 4",
+        "00804287": "cmp bl, 0xa",
+        "0080428e": "jl 0x80425b",
+        "00804296": "mov dword ptr [esi + 0x1b09], eax",
+        "0080429c": "mov dword ptr [esi + 0x361a], eax",
+        "008042a2": "mov dword ptr [esi + 0x3634], eax",
+        "008042a8": "mov eax, esi",
+        "008042b8": "ret 4"
+      },
+      "all_calls": [
+        {
+          "site": "008041f5",
+          "target": "0x9463af"
+        },
+        {
+          "site": "0080421a",
+          "target": "0x9463af"
+        },
+        {
+          "site": "0080422a",
+          "target": "0x68d020"
+        },
+        {
+          "site": "00804248",
+          "target": "0x7f6e30"
+        },
+        {
+          "site": "00804268",
+          "target": "0x7f6cd0"
+        },
+        {
+          "site": "00804270",
+          "target": "0x7b7690"
+        }
+      ],
+      "all_branches": [
+        {
+          "site": "0080423a",
+          "instruction": "jl 0x804240"
+        },
+        {
+          "site": "0080423e",
+          "instruction": "jl 0x80424d"
+        },
+        {
+          "site": "0080428e",
+          "instruction": "jl 0x80425b"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "incoming_direct_calls_verified": [
+          "008085a0"
+        ],
+        "export_sha256": {
+          "008041c0.asm": "b328f7f1fbfc67bbf1c2fd5de024c776edd2608df47ada6142caa8774f60f44e",
+          "008041c0.c": "54c5d74322ad85b2f60bd130df7b705cbfdf43e82d7a419e91b5eec79bda68d0",
+          "008041c0.refs": "9fe81a1800c2b3941166d00913e9489d180262ede9064dce00e1d5ab546fdee1"
+        }
+      }
+    },
+    {
+      "entry_va": "00804450",
+      "end_exclusive_va": "008044a0",
+      "file_offset": "00404450",
+      "length_bytes": 80,
+      "body_sha256": "6fb3e073428f3310fe1e7d1e17258db623dc13a53b733d6b1a26d0d7033468fe",
+      "instruction_count": 30,
+      "selected_sites": {
+        "00804453": "mov esi, ecx",
+        "00804455": "push 0",
+        "00804457": "mov ecx, dword ptr [0xb74448]",
+        "0080445d": "mov al, byte ptr [esi]",
+        "0080445f": "push eax",
+        "00804460": "call 0x7f6f20",
+        "00804467": "inc esi",
+        "00804468": "mov byte ptr [esp + 8], bl",
+        "0080446c": "mov ecx, dword ptr [esp + 8]",
+        "00804470": "push esi",
+        "00804471": "push 0",
+        "00804473": "push ecx",
+        "00804474": "mov ecx, dword ptr [0xb74448]",
+        "0080447a": "call 0x7f6cd0",
+        "0080447f": "mov ecx, eax",
+        "00804481": "call 0x7b7690",
+        "00804488": "add esi, 0x2b0",
+        "0080448e": "cmp bl, 0xa",
+        "00804495": "jl 0x80446c",
+        "00804498": "mov eax, 1",
+        "0080449f": "ret"
+      },
+      "all_calls": [
+        {
+          "site": "00804460",
+          "target": "0x7f6f20"
+        },
+        {
+          "site": "0080447a",
+          "target": "0x7f6cd0"
+        },
+        {
+          "site": "00804481",
+          "target": "0x7b7690"
+        }
+      ],
+      "all_branches": [
+        {
+          "site": "00804495",
+          "instruction": "jl 0x80446c"
+        }
+      ],
+      "native_comparison": {
+        "all_instructions_match": true,
+        "incoming_direct_calls_verified": [
+          "008131d5"
+        ],
+        "export_sha256": {
+          "00804450.asm": "f83b0ce279a96d5b64833460c03f8b080de49a58797007a2ada76bf3357bfdfe",
+          "00804450.c": "a317d42fa148f2374fc3274d50b1c2218cad835483ee24c54cfe2b7fdc829b3f",
+          "00804450.refs": "15227430e0ce306776c2a5dcaf647f9552efa2e92184899302da5b7ba1009fb6"
+        }
+      }
+    }
+  ],
+  "selected_context_spans": [
+    {
+      "decoded_start_va": "007b7690",
+      "decoded_end_exclusive_va": "007b7835",
+      "span_sha256": "b911c3237f4938f91439bd29b97703166544aec972357c6d71a49115c56925f5",
+      "selected_sites": {
+        "007b76ad": "mov ebx, ecx",
+        "007b76b3": "mov eax, dword ptr [ebx + 0x1ee]",
+        "007b76be": "call 0x9452ca",
+        "007b76cc": "mov esi, dword ptr [ebx + 0x170]",
+        "007b76dc": "call 0x68d1f0",
+        "007b76e2": "call 0x944c94",
+        "007b76f0": "mov ebp, dword ptr [esp + 0x224]",
+        "007b76f7": "mov ecx, 0xac",
+        "007b76fc": "mov esi, ebp",
+        "007b76fe": "mov edi, ebx",
+        "007b7700": "rep movsd dword ptr es:[edi], dword ptr [esi]",
+        "007b7702": "mov eax, dword ptr [ebx + 0x1f2]",
+        "007b7717": "call 0x944e46",
+        "007b77b8": "rep movsd dword ptr es:[edi], dword ptr [esi]",
+        "007b77bf": "rep movsb byte ptr es:[edi], byte ptr [esi]",
+        "007b77c1": "mov eax, dword ptr [ebx + 0x170]",
+        "007b77d0": "call 0x944cf1",
+        "007b7804": "rep movsd dword ptr es:[edi], dword ptr [esi]",
+        "007b780b": "call 0x68d0d0",
+        "007b7832": "ret 4"
+      }
+    },
+    {
+      "decoded_start_va": "0068d020",
+      "decoded_end_exclusive_va": "0068d031",
+      "span_sha256": "43b4af31ea8dc1477ff4a04d52d784f3b7f2ebfa11b64ad9b7ae7ef0e0fdf03f",
+      "selected_sites": {
+        "0068d020": "mov eax, ecx",
+        "0068d022": "xor ecx, ecx",
+        "0068d024": "mov dword ptr [eax + 2], ecx",
+        "0068d027": "mov dword ptr [eax + 6], ecx",
+        "0068d02a": "mov dword ptr [eax + 0xa], ecx",
+        "0068d02d": "mov word ptr [eax], cx",
+        "0068d030": "ret"
+      }
+    },
+    {
+      "decoded_start_va": "00944c94",
+      "decoded_end_exclusive_va": "00944c9f",
+      "span_sha256": "4619586bb74a861a7f628dea3ab7943bffcb8147f8110678f03312f5c1bf549b",
+      "selected_sites": {
+        "00944c94": "push dword ptr [esp + 4]",
+        "00944c98": "call 0x9452ca",
+        "00944c9e": "ret"
+      }
+    },
+    {
+      "decoded_start_va": "00944cf1",
+      "decoded_end_exclusive_va": "00944cff",
+      "span_sha256": "1a3e6f3fdb89b0d6c9d0f1236df07539e1fc039ddc634fc7486c6469fb61a4f8",
+      "selected_sites": {
+        "00944cf1": "push 1",
+        "00944cf3": "push dword ptr [esp + 8]",
+        "00944cf7": "call 0x944e58",
+        "00944cfe": "ret"
+      }
+    },
+    {
+      "decoded_start_va": "009463af",
+      "decoded_end_exclusive_va": "00946419",
+      "span_sha256": "1763815c469a99cdd3dcad60bc1a20e34b6268972209b3aede34526df4d7534e",
+      "selected_sites": {
+        "009463e0": "cmp eax, dword ptr [ebp + 0x10]",
+        "009463e5": "mov esi, dword ptr [ebp + 8]",
+        "009463e8": "mov ecx, esi",
+        "009463ea": "call dword ptr [ebp + 0x14]",
+        "009463ed": "add esi, dword ptr [ebp + 0xc]",
+        "00946416": "ret 0x14"
+      }
+    },
+    {
+      "decoded_start_va": "009462bb",
+      "decoded_end_exclusive_va": "00946323",
+      "span_sha256": "d17c180197e0e90d13ace4801e32ead476264f180d4aa764046f619647930451",
+      "selected_sites": {
+        "009462e2": "mov esi, dword ptr [ebp + 0xc]",
+        "009462e7": "imul eax, dword ptr [ebp + 0x10]",
+        "009462eb": "add dword ptr [ebp + 8], eax",
+        "009462f2": "dec dword ptr [ebp + 0x10]",
+        "009462f7": "sub dword ptr [ebp + 8], esi",
+        "009462fa": "mov ecx, dword ptr [ebp + 8]",
+        "009462fd": "call dword ptr [ebp + 0x14]",
+        "00946320": "ret 0x10"
+      }
+    },
+    {
+      "decoded_start_va": "0080857c",
+      "decoded_end_exclusive_va": "008085c1",
+      "span_sha256": "f8c467d2a0aca82e2c1590dd1f947ae3bab765ca2cdba5d634a6b3e37902e7b4",
+      "selected_sites": {
+        "0080857c": "push 0x3638",
+        "00808581": "call 0x944cf1",
+        "0080859d": "push ecx",
+        "0080859e": "mov ecx, eax",
+        "008085a0": "call 0x8041c0",
+        "008085ab": "mov ecx, dword ptr [0xb74448]",
+        "008085b1": "push 0",
+        "008085b3": "push esi",
+        "008085bc": "call 0x7f6af0"
+      }
+    },
+    {
+      "decoded_start_va": "008131d3",
+      "decoded_end_exclusive_va": "0081320b",
+      "span_sha256": "a3a17886062ba62618869f2c463dea039bce31e3fa262f7937e30b2ee4581690",
+      "selected_sites": {
+        "008131d3": "mov ecx, esi",
+        "008131d5": "call 0x804450",
+        "008131da": "mov ecx, esi",
+        "008131dc": "call 0x813140",
+        "008131e1": "push esi",
+        "008131e2": "call 0x944c94",
+        "008131fa": "mov ecx, dword ptr [0xb74448]",
+        "00813200": "push 0",
+        "00813202": "push 0",
+        "00813204": "call 0x7f6af0"
+      }
+    }
+  ],
+  "limitations": [
+    "Selected helper sites establish boundaries only; helper contracts are not complete.",
+    "No execution oracle, complete scouting lifecycle, persistence, exclusive ownership or workflow equivalence."
+  ]
+}

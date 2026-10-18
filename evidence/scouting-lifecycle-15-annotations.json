@@ -1,0 +1,13 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-14",
+  "status": "Name-only proposal; coordinator alone applies after independent review and exact-old-value recheck",
+  "private_preflight_sha256": "c20393d151da0afff24f0ff7f806f91857d90f454cbff5a52d7bc0463517d1f1",
+  "old_annotation_evidence": "Pinned read-only preflight verifies instruction existence and exact old function names; no prototype, calling convention, structure or comment changes proposed",
+  "proposals": [
+    {"address": "007f6760", "kind": "function_name", "old": "FUN_007f6760", "new": "cm0102_construct_scout_storage_manager", "evidence": "Early table clears, conditional007f7bb0, fallback160*688 counted allocation and ordered default calls; ECX manager returned; report documents preceding media gate", "confidence": "High local static construction; loaded state and full lifecycle open"},
+    {"address": "007f6aa0", "kind": "function_name", "old": "FUN_007f6aa0", "new": "cm0102_cleanup_scout_storage_manager", "evidence": "Conditional cookie-counted688-stride cleanup/release and separate+0x5c release; both pointers cleared after calls; receiver not released", "confidence": "High direct cleanup boundary; complete nested resource effects open"},
+    {"address": "008041c0", "kind": "function_name", "old": "FUN_008041c0", "new": "cm0102_construct_scout_record_copy_object", "evidence": "Two embedded10x688 construction calls, selected leading byte, ten manager aliases copied into first array through007b7690; explicit metadata zeros", "confidence": "High local construction and copy direction; object purpose and helper effects open"},
+    {"address": "00804450", "kind": "function_name", "old": "FUN_00804450", "new": "cm0102_copy_ten_records_to_scout_storage", "evidence": "Byte setter then ten007f6cd0 aliases as007b7690 destinations with embedded records as sources; EAX1 normal return", "confidence": "High call direction/count; helper success and workflow completion unproved"}
+  ]
+}
