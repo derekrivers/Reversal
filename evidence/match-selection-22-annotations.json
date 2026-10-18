@@ -1,0 +1,16 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-21",
+  "status": "Optional exact-old name-only proposal; coordinator alone applies after independent review and fresh preflight",
+  "private_preflight_sha256": "03c82ef51e320c9483697b2446ad4421da7e96bd0068532d88f4a26cd5753560",
+  "proposals": [
+    {
+      "address": "006ceb90",
+      "kind": "function_name",
+      "old": "FUN_006ceb90",
+      "new": "match_select_scored_slot_006ceb90",
+      "evidence": "832 complete original/native instructions; twenty indexed candidates, mode-dependent scoring, signed16 strict-greater selection and three conditional direct RNG sites",
+      "confidence": "High for local instruction mechanics; score numeric, callee effects, live lifecycle and connected result open"
+    }
+  ]
+}
