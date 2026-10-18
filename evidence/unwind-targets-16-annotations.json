@@ -1,0 +1,32 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-15",
+  "status": "Name-only proposals; coordinator applies after independent review and fresh exact-old check",
+  "private_preflight_sha256": "12d10d6ba68468a8b44f3756f7ac638758fa82523cb7685df16db742548cb93d",
+  "proposals": [
+    {
+      "address": "005a53c0",
+      "kind": "function_name",
+      "old": "FUN_005a53c0",
+      "new": "cm0102_noop_return_005a53c0",
+      "evidence": "Complete one-byte body is one RET, agreeing with native export and pinned PE",
+      "confidence": "High local contract; caller use and parent frame unresolved"
+    },
+    {
+      "address": "00944c94",
+      "kind": "function_name",
+      "old": "FUN_00944c94",
+      "new": "cm0102_forward_pointer_to_009452ca",
+      "evidence": "Four instructions forward the sole stack dword to direct callee009452ca, discard the forwarded dword and return",
+      "confidence": "High local forwarding contract; callee effect unresolved"
+    },
+    {
+      "address": "00682300",
+      "kind": "function_name",
+      "old": "FUN_00682300",
+      "new": "cm0102_cleanup_receiver_ea_counted_array",
+      "evidence": "Complete115-byte body resets receiver leading dword, conditionally calls counted stride10h helper then forwards pointer-minus4, and invokes base cleanup",
+      "confidence": "High local order/offsets; transitive release, exceptions and type identity unresolved"
+    }
+  ]
+}

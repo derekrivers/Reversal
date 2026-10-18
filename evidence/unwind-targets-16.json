@@ -1,0 +1,112 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "scope": "Complete local-body instruction and native-export comparison for three common unwind targets; transitive effects and unwind parent frames unresolved.",
+  "atlas_sha256": "f877b8bdc086d6a3e77608d537c30dfb94c49fbeada934b7784906b86e8ae26d",
+  "unwind_registry_sha256": "63db9931a00effc51608a94e652dae8fac790a029bb7d840f9aaa906e00ca520",
+  "functions": [
+    {
+      "address": "005a53c0",
+      "body_bytes": 1,
+      "body_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "instructions": 1,
+      "native_asm_sha256": "415afdff6c39b5ffbe0d7842f2011b483b8c737b5b925ad5538905d3f6658709",
+      "native_c_sha256": "ffc7eb8cc66ac3288e0825911c5b2914d141ff1784402a0c1938c119bbc40b74",
+      "direct_calls": [],
+      "unwind_direct_entries": 1711,
+      "selected_sites": [
+        {
+          "address": "005a53c0",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    {
+      "address": "00682300",
+      "body_bytes": 115,
+      "body_sha256": "9fb47daf41cf73b4b2c60e3313facc1618961c4c00fc88a4f73d5eb640147a07",
+      "instructions": 34,
+      "native_asm_sha256": "fc583c2bf458904427fe529a9fefda13471f4552c779a1ea89ef2e8b41fa11c0",
+      "native_c_sha256": "2720d8801c43fa183084f892bf3d3adbbab183c7697ebf5f24ee2de8019d5a4f",
+      "direct_calls": [
+        [
+          "00682345",
+          "009462bb"
+        ],
+        [
+          "0068234b",
+          "00944c94"
+        ],
+        [
+          "0068235e",
+          "0048c650"
+        ]
+      ],
+      "unwind_direct_entries": 237,
+      "selected_sites": [
+        {
+          "address": "0068231d",
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi], 0x96d020"
+        },
+        {
+          "address": "00682323",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [esi + 0xea]"
+        },
+        {
+          "address": "00682335",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax - 4]"
+        },
+        {
+          "address": "00682345",
+          "mnemonic": "call",
+          "operands": "0x9462bb"
+        },
+        {
+          "address": "0068234b",
+          "mnemonic": "call",
+          "operands": "0x944c94"
+        },
+        {
+          "address": "0068235e",
+          "mnemonic": "call",
+          "operands": "0x48c650"
+        },
+        {
+          "address": "00682372",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    {
+      "address": "00944c94",
+      "body_bytes": 11,
+      "body_sha256": "4619586bb74a861a7f628dea3ab7943bffcb8147f8110678f03312f5c1bf549b",
+      "instructions": 4,
+      "native_asm_sha256": "fff3ae2c7224b5c2a8058e1f97a066443b12f850646473c69afe83ffb80e09cb",
+      "native_c_sha256": "c5ee7741f41f4d86bc8c9296864013f4bc11f90f904cee957864c98766dd3105",
+      "direct_calls": [
+        [
+          "00944c98",
+          "009452ca"
+        ]
+      ],
+      "unwind_direct_entries": 1462,
+      "selected_sites": [
+        {
+          "address": "00944c98",
+          "mnemonic": "call",
+          "operands": "0x9452ca"
+        },
+        {
+          "address": "00944c9e",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    }
+  ]
+}
