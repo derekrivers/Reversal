@@ -32,9 +32,17 @@ node reconstruction/check-clock.ts results/new-clock/clock-oracle.json \
 
 python3 scripts/emulate_event_rules.py downloads/cm0102.exe results/new-event-rules
 node reconstruction/check-event-rules.ts results/new-event-rules results/new-event-rule-validation.json
+
+python3 scripts/emulate_penalty_preparation.py downloads/cm0102.exe \
+  evidence/random-validation/random-table.bin results/new-penalty-preparation
+node reconstruction/check-penalty-preparation.ts \
+  results/new-penalty-preparation/x86-penalty-preparation.json \
+  evidence/random-validation/random-table.bin results/new-penalty-preparation-validation.json
 ```
 
 Only admitted original code ranges execute, using synthetic state. Large-bound RNG handling, OS-time seeding, the full commentary loader/formatter, complete goal routines and full matches remain outside these tests.
+
+The penalty-preparation harness joins three calculation slices with synthetic frames, sets sudden-death=1 to suppress commentary and uses the retained synthetic table. It does not execute the shared keeper/goal resolver or establish complete penalty-attempt equivalence.
 
 ## Native analysis
 
@@ -45,6 +53,8 @@ bash scripts/run_ghidra.sh /absolute/path/to/cm0102.exe /new/analysis
 ```
 
 For retained native annotations and restore testing, follow [DATABASE.md](DATABASE.md). Export scripts use exact virtual addresses, never file offsets.
+
+`CM0102Inventory.java OUTPUT_DIRECTORY` exports the whole inferred function inventory and direct source-path references without decompiling all functions. Run it as a read-only post-script against the saved project. Then run `python3 scripts/build_code_atlas.py OUTPUT_DIRECTORY/program-inventory.json evidence/code-atlas` to refresh the public JSON Lines atlas, summary and workstream index. Structural function/byte coverage is not behavioral reconstruction progress.
 
 REA is optional and separate from the checks:
 

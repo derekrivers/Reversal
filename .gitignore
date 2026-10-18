@@ -10,6 +10,7 @@
 /results/
 /evidence/*-map/
 /evidence/pseudocode/
+/evidence/code-atlas/program-inventory.json
 *.exe
 *.dll
 *.gpr

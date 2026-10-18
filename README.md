@@ -2,7 +2,7 @@
 
 Evidence-led reverse engineering of **Championship Manager 01/02, SI patch 3.9.68**, with small TypeScript reconstructions checked against the original x86 instructions.
 
-This repository starts from investigations 01–04. It contains research code, recovered layouts, findings and numerical validation fixtures. It is an early research project: no complete match or playable browser game has been reproduced.
+This repository contains investigations 01–05: an executable-wide code atlas, recovered layouts, narrow TypeScript reconstructions and numerical validation fixtures. It is an early research project: no complete match or playable browser game has been reproduced.
 
 ## Current findings
 
@@ -13,9 +13,11 @@ This repository starts from investigations 01–04. It contains research code, r
 | Tiebreaks | Phases 1–3: 35-yard shootout; phases 4–6: penalties |
 | Commentary | 677 event definitions; 4,754 text variants in the pinned community config |
 | Rules | Golden-goal stop predicate/latch and pitch-condition abandonment event |
-| Native database | 21 named functions, 8 globals, 7 recovered structures and 78 fields; restored independently |
+| Executable atlas | 9,241 internal functions, 143 external symbols, 396 embedded source paths and 93,349 call instructions |
+| Penalty preparation | Pressure-dependent error budget and shot-quality argument; 3,584 original-slice fixtures; goal/save resolution still open |
+| Native database | 22 named functions, 10 globals, 8 recovered structures and 82 fields; restored independently |
 
-Start with [the investigation report](reports/investigation-04.html), [structured findings](evidence/event-findings.json) and [the research roadmap](docs/ROADMAP.md). The HTML report includes earlier investigations; download it to view its formatting.
+Start with [investigation 05](reports/investigation-05.md), [the executable code atlas](evidence/code-atlas/README.md), [port architecture](docs/ARCHITECTURE.md) and [the research roadmap](docs/ROADMAP.md). The [historical HTML report](reports/investigation-04.html) includes investigations 01–04; download it to view its formatting.
 
 ## Run the checks
 
@@ -34,6 +36,7 @@ There are no npm dependencies for these checks. They compare TypeScript outputs 
 | Commentary clock conversion | 196,608 outputs |
 | Event priority lookup | 131,072 outputs |
 | Post-goal stop predicate | 262,144 outputs |
+| Penalty preparation | 3,584 calculation cases and RNG-state comparisons |
 
 The public RNG table is **synthetic**, generated deterministically and supplied to the original instructions during emulation. The earlier fixed-game-table experiment remains documented in the private checkpoint. Clock and event-rule fixtures also use synthetic state. Passing these checks establishes only the tested primitives' behavior, not full-match equivalence.
 
@@ -43,11 +46,11 @@ The same checks run in [GitHub Actions](.github/workflows/research-checks.yml). 
 
 The native Ghidra database and full research bundle are preserved separately as private artifacts. The database contains imported game bytes, so this public repository tracks its **manifest, restore receipt, expected annotations and rebuild scripts** rather than the native project.
 
-- [Checkpoint metadata](checkpoints/2026-10-18-investigation-04/)
+- [Current checkpoint metadata](checkpoints/2026-10-18-investigation-05/) and [latest checkpoint pointer](checkpoints/latest.json)
 - [Database recovery instructions](docs/DATABASE.md)
 - [Data and evidence inventory](docs/PROVENANCE.md)
 
-The saved database was opened from a fresh archive extraction in **Ghidra 12.1.4 / JDK 21**, read-only and without reanalysis. Verification checked the names and layouts above, 26 original code samples, 4 code comments and all 9 project-file hashes. The CI metadata check does not repeat this native reopen test.
+The saved database was opened from a fresh archive extraction in **Ghidra 12.1.4 / JDK 21**, read-only and without reanalysis. Verification checked the names and layouts above, 32 original code samples, 9 code comments and all 10 project-file hashes. The CI metadata check does not repeat this native reopen test.
 
 ## Tooling and specimen
 

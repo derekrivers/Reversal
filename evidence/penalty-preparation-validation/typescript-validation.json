@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "cases": 3584,
+  "comparisons": "preparation outputs and complete exposed RNG state",
+  "oracle": "original x86 calculation slices with original RNG/ftol helpers",
+  "limitations": [
+    "Sudden-death flag=1 suppresses commentary calls; presentation can consume shared RNG when enabled.",
+    "Synthetic frames/context join calculation slices; full routine/caller setup and shared shot outcome do not execute.",
+    "Shot rating meaning at roster+0x180 is unresolved; its signed16*5 bound is restricted to the recovered small-RNG domain.",
+    "Player+0x35 is community-corroborated OneOnOnes, not Penalties at+0x38.",
+    "No keeper-save probability, goal decision or complete penalty attempt equivalence claimed."
+  ]
+}

@@ -1,0 +1,600 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "ghidra": "12.1.4",
+  "counts": {
+    "internal_functions": 9241,
+    "external_function_symbols": 143,
+    "source_path_strings": 396,
+    "functions_with_direct_source_path_reference": 1892,
+    "functions_with_working_research_name": 22,
+    "call_instructions": 93349,
+    "unresolved_indirect_call_instructions": 851,
+    "executable_memory_bytes": 5660672,
+    "executable_bytes_in_inferred_function_bodies": 4309884
+  },
+  "external_functions": [
+    {
+      "entry": "EXTERNAL:00000001",
+      "name": "SetEnvironmentVariableA"
+    },
+    {
+      "entry": "EXTERNAL:00000002",
+      "name": "CompareStringW"
+    },
+    {
+      "entry": "EXTERNAL:00000003",
+      "name": "CompareStringA"
+    },
+    {
+      "entry": "EXTERNAL:00000004",
+      "name": "CreateProcessA"
+    },
+    {
+      "entry": "EXTERNAL:00000005",
+      "name": "WaitForSingleObject"
+    },
+    {
+      "entry": "EXTERNAL:00000006",
+      "name": "GetExitCodeProcess"
+    },
+    {
+      "entry": "EXTERNAL:00000007",
+      "name": "CreateFileA"
+    },
+    {
+      "entry": "EXTERNAL:00000008",
+      "name": "FlushFileBuffers"
+    },
+    {
+      "entry": "EXTERNAL:00000009",
+      "name": "SetStdHandle"
+    },
+    {
+      "entry": "EXTERNAL:0000000a",
+      "name": "IsBadCodePtr"
+    },
+    {
+      "entry": "EXTERNAL:0000000b",
+      "name": "IsBadReadPtr"
+    },
+    {
+      "entry": "EXTERNAL:0000000c",
+      "name": "SetUnhandledExceptionFilter"
+    },
+    {
+      "entry": "EXTERNAL:0000000d",
+      "name": "SetEndOfFile"
+    },
+    {
+      "entry": "EXTERNAL:0000000e",
+      "name": "GetStringTypeA"
+    },
+    {
+      "entry": "EXTERNAL:0000000f",
+      "name": "CreateMutexA"
+    },
+    {
+      "entry": "EXTERNAL:00000010",
+      "name": "GetEnvironmentStrings"
+    },
+    {
+      "entry": "EXTERNAL:00000011",
+      "name": "FreeEnvironmentStringsW"
+    },
+    {
+      "entry": "EXTERNAL:00000012",
+      "name": "FreeEnvironmentStringsA"
+    },
+    {
+      "entry": "EXTERNAL:00000013",
+      "name": "UnhandledExceptionFilter"
+    },
+    {
+      "entry": "EXTERNAL:00000014",
+      "name": "GetFileType"
+    },
+    {
+      "entry": "EXTERNAL:00000015",
+      "name": "GetStdHandle"
+    },
+    {
+      "entry": "EXTERNAL:00000016",
+      "name": "SetHandleCount"
+    },
+    {
+      "entry": "EXTERNAL:00000017",
+      "name": "SetFilePointer"
+    },
+    {
+      "entry": "EXTERNAL:00000018",
+      "name": "LCMapStringW"
+    },
+    {
+      "entry": "EXTERNAL:00000019",
+      "name": "LCMapStringA"
+    },
+    {
+      "entry": "EXTERNAL:0000001a",
+      "name": "MultiByteToWideChar"
+    },
+    {
+      "entry": "EXTERNAL:0000001b",
+      "name": "GetDiskFreeSpaceA"
+    },
+    {
+      "entry": "EXTERNAL:0000001c",
+      "name": "LoadLibraryA"
+    },
+    {
+      "entry": "EXTERNAL:0000001d",
+      "name": "GetProcAddress"
+    },
+    {
+      "entry": "EXTERNAL:0000001e",
+      "name": "FreeLibrary"
+    },
+    {
+      "entry": "EXTERNAL:0000001f",
+      "name": "GetSystemInfo"
+    },
+    {
+      "entry": "EXTERNAL:00000020",
+      "name": "GlobalMemoryStatus"
+    },
+    {
+      "entry": "EXTERNAL:00000021",
+      "name": "GetVersionExA"
+    },
+    {
+      "entry": "EXTERNAL:00000022",
+      "name": "GetCommandLineA"
+    },
+    {
+      "entry": "EXTERNAL:00000023",
+      "name": "GetStringTypeW"
+    },
+    {
+      "entry": "EXTERNAL:00000024",
+      "name": "WinExec"
+    },
+    {
+      "entry": "EXTERNAL:00000025",
+      "name": "WideCharToMultiByte"
+    },
+    {
+      "entry": "EXTERNAL:00000026",
+      "name": "HeapSize"
+    },
+    {
+      "entry": "EXTERNAL:00000027",
+      "name": "WriteFile"
+    },
+    {
+      "entry": "EXTERNAL:00000028",
+      "name": "ReadFile"
+    },
+    {
+      "entry": "EXTERNAL:00000029",
+      "name": "GetLastError"
+    },
+    {
+      "entry": "EXTERNAL:0000002a",
+      "name": "CloseHandle"
+    },
+    {
+      "entry": "EXTERNAL:0000002b",
+      "name": "GlobalAlloc"
+    },
+    {
+      "entry": "EXTERNAL:0000002c",
+      "name": "GlobalFree"
+    },
+    {
+      "entry": "EXTERNAL:0000002d",
+      "name": "GetLogicalDriveStringsA"
+    },
+    {
+      "entry": "EXTERNAL:0000002e",
+      "name": "GetEnvironmentStringsW"
+    },
+    {
+      "entry": "EXTERNAL:0000002f",
+      "name": "GetDriveTypeA"
+    },
+    {
+      "entry": "EXTERNAL:00000030",
+      "name": "IsBadWritePtr"
+    },
+    {
+      "entry": "EXTERNAL:00000031",
+      "name": "VirtualAlloc"
+    },
+    {
+      "entry": "EXTERNAL:00000032",
+      "name": "VirtualFree"
+    },
+    {
+      "entry": "EXTERNAL:00000033",
+      "name": "HeapCreate"
+    },
+    {
+      "entry": "EXTERNAL:00000034",
+      "name": "HeapDestroy"
+    },
+    {
+      "entry": "EXTERNAL:00000035",
+      "name": "GetEnvironmentVariableA"
+    },
+    {
+      "entry": "EXTERNAL:00000036",
+      "name": "GetModuleFileNameA"
+    },
+    {
+      "entry": "EXTERNAL:00000039",
+      "name": "GetCPInfo"
+    },
+    {
+      "entry": "EXTERNAL:0000003a",
+      "name": "GetVersion"
+    },
+    {
+      "entry": "EXTERNAL:0000003b",
+      "name": "RaiseException"
+    },
+    {
+      "entry": "EXTERNAL:0000003c",
+      "name": "GetStartupInfoA"
+    },
+    {
+      "entry": "EXTERNAL:0000003d",
+      "name": "GetModuleHandleA"
+    },
+    {
+      "entry": "EXTERNAL:0000003e",
+      "name": "GetFileAttributesA"
+    },
+    {
+      "entry": "EXTERNAL:0000003f",
+      "name": "SetCurrentDirectoryA"
+    },
+    {
+      "entry": "EXTERNAL:00000040",
+      "name": "GetSystemTimeAsFileTime"
+    },
+    {
+      "entry": "EXTERNAL:00000041",
+      "name": "GetLocalTime"
+    },
+    {
+      "entry": "EXTERNAL:00000042",
+      "name": "GetSystemTime"
+    },
+    {
+      "entry": "EXTERNAL:00000043",
+      "name": "GetTimeZoneInformation"
+    },
+    {
+      "entry": "EXTERNAL:00000044",
+      "name": "HeapAlloc"
+    },
+    {
+      "entry": "EXTERNAL:00000045",
+      "name": "RtlUnwind"
+    },
+    {
+      "entry": "EXTERNAL:00000046",
+      "name": "HeapFree"
+    },
+    {
+      "entry": "EXTERNAL:00000047",
+      "name": "HeapReAlloc"
+    },
+    {
+      "entry": "EXTERNAL:00000048",
+      "name": "ExitProcess"
+    },
+    {
+      "entry": "EXTERNAL:00000049",
+      "name": "TerminateProcess"
+    },
+    {
+      "entry": "EXTERNAL:0000004a",
+      "name": "GetCurrentProcess"
+    },
+    {
+      "entry": "EXTERNAL:0000004b",
+      "name": "MoveFileA"
+    },
+    {
+      "entry": "EXTERNAL:0000004c",
+      "name": "CreateDirectoryA"
+    },
+    {
+      "entry": "EXTERNAL:0000004d",
+      "name": "DeleteFileA"
+    },
+    {
+      "entry": "EXTERNAL:0000004e",
+      "name": "FindFirstFileA"
+    },
+    {
+      "entry": "EXTERNAL:0000004f",
+      "name": "FindNextFileA"
+    },
+    {
+      "entry": "EXTERNAL:00000050",
+      "name": "FindClose"
+    },
+    {
+      "entry": "EXTERNAL:00000051",
+      "name": "FileTimeToSystemTime"
+    },
+    {
+      "entry": "EXTERNAL:00000052",
+      "name": "FileTimeToLocalFileTime"
+    },
+    {
+      "entry": "EXTERNAL:00000053",
+      "name": "GetCurrentDirectoryA"
+    },
+    {
+      "entry": "EXTERNAL:00000054",
+      "name": "GetFullPathNameA"
+    },
+    {
+      "entry": "EXTERNAL:00000055",
+      "name": "ChangeDisplaySettingsA"
+    },
+    {
+      "entry": "EXTERNAL:00000056",
+      "name": "UpdateWindow"
+    },
+    {
+      "entry": "EXTERNAL:00000057",
+      "name": "CreateWindowExA"
+    },
+    {
+      "entry": "EXTERNAL:00000058",
+      "name": "GetWindowRect"
+    },
+    {
+      "entry": "EXTERNAL:00000059",
+      "name": "GetDesktopWindow"
+    },
+    {
+      "entry": "EXTERNAL:0000005a",
+      "name": "GetSystemMetrics"
+    },
+    {
+      "entry": "EXTERNAL:0000005b",
+      "name": "RegisterClassA"
+    },
+    {
+      "entry": "EXTERNAL:0000005c",
+      "name": "LoadIconA"
+    },
+    {
+      "entry": "EXTERNAL:0000005d",
+      "name": "SetCursor"
+    },
+    {
+      "entry": "EXTERNAL:0000005e",
+      "name": "ShowCursor"
+    },
+    {
+      "entry": "EXTERNAL:0000005f",
+      "name": "LoadCursorA"
+    },
+    {
+      "entry": "EXTERNAL:00000060",
+      "name": "GetCursor"
+    },
+    {
+      "entry": "EXTERNAL:00000061",
+      "name": "DestroyWindow"
+    },
+    {
+      "entry": "EXTERNAL:00000062",
+      "name": "DestroyCursor"
+    },
+    {
+      "entry": "EXTERNAL:00000063",
+      "name": "MessageBoxA"
+    },
+    {
+      "entry": "EXTERNAL:00000064",
+      "name": "GetKeyboardLayout"
+    },
+    {
+      "entry": "EXTERNAL:00000065",
+      "name": "DispatchMessageA"
+    },
+    {
+      "entry": "EXTERNAL:00000066",
+      "name": "TranslateMessage"
+    },
+    {
+      "entry": "EXTERNAL:00000067",
+      "name": "GetMessageA"
+    },
+    {
+      "entry": "EXTERNAL:00000068",
+      "name": "MoveWindow"
+    },
+    {
+      "entry": "EXTERNAL:00000069",
+      "name": "SetWindowLongA"
+    },
+    {
+      "entry": "EXTERNAL:0000006a",
+      "name": "PeekMessageA"
+    },
+    {
+      "entry": "EXTERNAL:0000006b",
+      "name": "DefWindowProcA"
+    },
+    {
+      "entry": "EXTERNAL:0000006c",
+      "name": "BeginPaint"
+    },
+    {
+      "entry": "EXTERNAL:0000006d",
+      "name": "EndPaint"
+    },
+    {
+      "entry": "EXTERNAL:0000006e",
+      "name": "CloseWindow"
+    },
+    {
+      "entry": "EXTERNAL:0000006f",
+      "name": "ShowWindow"
+    },
+    {
+      "entry": "EXTERNAL:00000070",
+      "name": "GetDeviceCaps"
+    },
+    {
+      "entry": "EXTERNAL:00000071",
+      "name": "CreateFontA"
+    },
+    {
+      "entry": "EXTERNAL:00000072",
+      "name": "GetTextMetricsA"
+    },
+    {
+      "entry": "EXTERNAL:00000073",
+      "name": "EndPage"
+    },
+    {
+      "entry": "EXTERNAL:00000074",
+      "name": "StartPage"
+    },
+    {
+      "entry": "EXTERNAL:00000075",
+      "name": "SelectObject"
+    },
+    {
+      "entry": "EXTERNAL:00000076",
+      "name": "TextOutA"
+    },
+    {
+      "entry": "EXTERNAL:00000077",
+      "name": "DeleteObject"
+    },
+    {
+      "entry": "EXTERNAL:00000078",
+      "name": "EndDoc"
+    },
+    {
+      "entry": "EXTERNAL:00000079",
+      "name": "StartDocA"
+    },
+    {
+      "entry": "EXTERNAL:0000007a",
+      "name": "EnumPrintersA"
+    },
+    {
+      "entry": "EXTERNAL:0000007b",
+      "name": "PrintDlgA"
+    },
+    {
+      "entry": "EXTERNAL:0000007c",
+      "name": "RegOpenKeyExA"
+    },
+    {
+      "entry": "EXTERNAL:0000007d",
+      "name": "RegQueryValueExA"
+    },
+    {
+      "entry": "EXTERNAL:0000007e",
+      "name": "DirectDrawCreate"
+    },
+    {
+      "entry": "EXTERNAL:0000007f",
+      "name": "Ordinal_1"
+    },
+    {
+      "entry": "EXTERNAL:00000080",
+      "name": "Ordinal_57"
+    },
+    {
+      "entry": "EXTERNAL:00000081",
+      "name": "Ordinal_115"
+    },
+    {
+      "entry": "EXTERNAL:00000082",
+      "name": "Ordinal_116"
+    },
+    {
+      "entry": "EXTERNAL:00000083",
+      "name": "Ordinal_3"
+    },
+    {
+      "entry": "EXTERNAL:00000084",
+      "name": "Ordinal_1"
+    },
+    {
+      "entry": "EXTERNAL:00000085",
+      "name": "Ordinal_51"
+    },
+    {
+      "entry": "EXTERNAL:00000086",
+      "name": "Ordinal_111"
+    },
+    {
+      "entry": "EXTERNAL:00000087",
+      "name": "Ordinal_19"
+    },
+    {
+      "entry": "EXTERNAL:00000088",
+      "name": "Ordinal_16"
+    },
+    {
+      "entry": "EXTERNAL:00000089",
+      "name": "Ordinal_20"
+    },
+    {
+      "entry": "EXTERNAL:0000008a",
+      "name": "Ordinal_17"
+    },
+    {
+      "entry": "EXTERNAL:0000008b",
+      "name": "Ordinal_13"
+    },
+    {
+      "entry": "EXTERNAL:0000008c",
+      "name": "Ordinal_2"
+    },
+    {
+      "entry": "EXTERNAL:0000008d",
+      "name": "Ordinal_12"
+    },
+    {
+      "entry": "EXTERNAL:0000008e",
+      "name": "Ordinal_4"
+    },
+    {
+      "entry": "EXTERNAL:0000008f",
+      "name": "Ordinal_21"
+    },
+    {
+      "entry": "EXTERNAL:00000090",
+      "name": "Ordinal_23"
+    },
+    {
+      "entry": "EXTERNAL:00000091",
+      "name": "Ordinal_9"
+    }
+  ],
+  "limitations": [
+    "Inventory of Ghidra-inferred function boundaries, not recovered original source",
+    "Direct source-path references are anchors, not exclusive ownership or recovered class names",
+    "Indirect calls, tail jumps, inlining, data-driven dispatch and undiscovered code limit graph completeness",
+    "Executable byte coverage is structural, not semantic or behavioral reconstruction progress",
+    "No pseudocode or executable bytes are included"
+  ],
+  "files": {
+    "functions": "functions.jsonl",
+    "source_units": "source-units.jsonl"
+  }
+}

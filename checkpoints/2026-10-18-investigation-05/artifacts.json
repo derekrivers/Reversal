@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-18",
+  "input_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "artifacts": [
+    {
+      "filename": "cm0102-ghidra-database.zip",
+      "bytes": 69706002,
+      "sha256": "3975e06b5ef66ea65996330cb3fda68dddce49af411eef1124277def306d839d",
+      "git_tracked": false
+    }
+  ],
+  "retention": "Native database preserved separately. Research code and factual exports are canonical in Reversal; investigation04 full research archive remains historical."
+}
