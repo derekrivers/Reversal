@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "unit": "R23-B",
+  "evidence_class": "complete local static PE/native mapping; no execution oracle",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "export_manifest_sha256": "b8d302c629ba6fbb98cb45315ee5df6f238b5b9a8e02a1c8220db3e2f384844d",
+  "preflight_sha256": "c7128da6c29d92931c1e096fc17112f28b73a4cd0276f7869e80a6800aee9e3a",
+  "checkpoint_archive_sha256": "ea4c9888f34fe4282434e41a38e842cabec61ded30d064d0417a166e18f7fcc2",
+  "decoder": "Capstone 5.0.7 x86-32",
+  "address_kind": "virtual unless file_offset is explicit",
+  "python_optimized_integrity": "explicit ValueError gates; no assert",
+  "bodies": [
+    {
+      "entry_va": "00945956",
+      "old_native_name": "FUN_00945956",
+      "file_offset": "00545956",
+      "body_bytes": 153,
+      "instruction_count": 49,
+      "body_sha256": "e7d1e3692d4daf3527a5dd9f7d731f6e504b6042c62ed23d7f1b62c66487e5f4",
+      "native_asm_sha256": "1530220f14e3ea54892c992f6636cc74c9c0fdf993e9a6a5eb38647fa458901c",
+      "range_end_exclusive_va": "009459ef",
+      "all_native_instructions_match": true,
+      "return_site": "009459ee",
+      "ret_immediate_bytes": 0
+    },
+    {
+      "entry_va": "009459ef",
+      "old_native_name": "FUN_009459ef",
+      "file_offset": "005459ef",
+      "body_bytes": 26,
+      "instruction_count": 12,
+      "body_sha256": "614c2d6418a410ec481cd0421a3de459f2e61b3861c7e2b7906f555cc009c801",
+      "native_asm_sha256": "28f4d43ff223a4d38f835ae39fa85b8c728c3318cb3104254940d83e9da9822b",
+      "range_end_exclusive_va": "00945a09",
+      "all_native_instructions_match": true,
+      "return_site": "00945a08",
+      "ret_immediate_bytes": 0
+    }
+  ],
+  "branches": [
+    {
+      "site_va": "00945960",
+      "target_va": "00945973"
+    },
+    {
+      "site_va": "00945989",
+      "target_va": "009459c7"
+    },
+    {
+      "site_va": "00945992",
+      "target_va": "009459b6"
+    },
+    {
+      "site_va": "009459a0",
+      "target_va": "009459b5"
+    },
+    {
+      "site_va": "009459a6",
+      "target_va": "009459aa"
+    },
+    {
+      "site_va": "009459b3",
+      "target_va": "009459a2"
+    },
+    {
+      "site_va": "009459db",
+      "target_va": "009459ed"
+    },
+    {
+      "site_va": "009459f8",
+      "target_va": "00945a07"
+    },
+    {
+      "site_va": "009459fe",
+      "target_va": "00945a02"
+    },
+    {
+      "site_va": "00945a05",
+      "target_va": "009459f4"
+    }
+  ],
+  "calls": [
+    {
+      "site_va": "00945966",
+      "kind": "import",
+      "target": "0096716c",
+      "import_identity": "KERNEL32.dll!GetCurrentProcess"
+    },
+    {
+      "site_va": "0094596d",
+      "kind": "import",
+      "target": "00967168",
+      "import_identity": "KERNEL32.dll!TerminateProcess"
+    },
+    {
+      "site_va": "009459a8",
+      "kind": "register",
+      "target": "eax"
+    },
+    {
+      "site_va": "009459c0",
+      "kind": "local",
+      "target": "009459ef"
+    },
+    {
+      "site_va": "009459d1",
+      "kind": "local",
+      "target": "009459ef"
+    },
+    {
+      "site_va": "009459e7",
+      "kind": "import",
+      "target": "00967164",
+      "import_identity": "KERNEL32.dll!ExitProcess"
+    },
+    {
+      "site_va": "00945a00",
+      "kind": "register",
+      "target": "eax"
+    }
+  ],
+  "direct_nonframe_writes": [
+    {
+      "site_va": "0094597d",
+      "address_va": "00de2fd0",
+      "width_bytes": 4
+    },
+    {
+      "site_va": "00945983",
+      "address_va": "00de2fcc",
+      "width_bytes": 1
+    },
+    {
+      "site_va": "009459e1",
+      "address_va": "00de2fd4",
+      "width_bytes": 4
+    }
+  ],
+  "callback_table_ranges": [
+    {
+      "start_va": "009870bc",
+      "end_exclusive_va": "009870c4",
+      "slots": 2
+    },
+    {
+      "start_va": "009870c8",
+      "end_exclusive_va": "009870d0",
+      "slots": 2
+    }
+  ],
+  "limits": [
+    "No original-instruction execution oracle or TypeScript unit",
+    "Imported API and callback return/nonreturn and side effects are boundaries",
+    "No guaranteed process termination under all environments"
+  ]
+}
