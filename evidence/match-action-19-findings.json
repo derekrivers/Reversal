@@ -1,0 +1,64 @@
+{
+  "work_unit": "R19-A",
+  "baseline": "0ab803b3adb19eb9ecdb70d4a31d759127376b78",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "scope": "Two complete local static contracts, no execution oracle or connected outcome claim",
+  "address_kind": "virtual; raw file offsets separately labelled; field offsets hexadecimal",
+  "functions": [
+    {
+      "entry": "006cd770",
+      "contract": "Perturb and commit coordinates/heading/side counters, optionally scan two sets of20 slots, then conditionally delegate last-pointer actions and boundary commentary",
+      "abi": "ECX=m; seven dword stack slots x,y,kind,side,flag,scan,last; first six low-byte inputs, side slot also forwarded full-width, last full dword; RET28 bytes; ESI/EDI/EBX/EBP preserved; no normalized result",
+      "body_bytes": 685,
+      "instructions": 216,
+      "branches": 36,
+      "direct_calls": 19,
+      "direct_rng_sites": 13,
+      "nonframe_stores": 11,
+      "normal_returns": 1,
+      "frame_writes": "x byte and side byte in original argument slots; side upper bytes survive randomized replacement",
+      "ordered_direct_effects": [
+        "Optional006f0970(m.f582); write x/y into8ea7/8ea8; conditionally8eae=ff",
+        "If side==ff, R(2), replace side byte with(EAX==0)",
+        "If flag==0 and signed x outside2..6, R(4); nonzero selects x=ff/9 and two y draws; otherwise four-draw coordinate loop",
+        "Ordinary loop repeats four R(s8(kind)+1) calls while flag!=0 and signed candidate y outside0..11; no local retry cap, no candidate x guard",
+        "kind==0 stores8eaa=0; else draw R(s8(kind)+1) and store low8(EAX+1)",
+        "Store heading word8ed8 from current value or table b67c30+2*(24*s8(dx)+s8(dy)); byte differences precede sign extension",
+        "R(4); store8ea9, candidate x/y,8eab; increment indexed side counter then conditionally subtract10 from Boolean-opposite counter",
+        "Optional ascending2*20 slot scan; eligibility s8(q+19)>=0 and q+105==0; R(3)==0 permits R(2),007160d0(q;EAX)",
+        "If last and current x==4 and y in{ff,0c}, R(4); nonzero permits0070c040/0070a910(last;float32-bits1.0) selected by reread y and last+27",
+        "006cd490(m;full side slot) unless nonzero final special-route status8eb2 skips it"
+      ],
+      "rng_limits": "No finite total bound due to uncapped ordinary retry; optional slot scan alone has at most80 direct draws; all callee-internal RNG excluded",
+      "slot_layout": "q=m+4796+sideIndex*22d8+slotIndex*1be, sideIndex0..1,slotIndex0..19",
+      "counter_indexing": "first8d46+s8(side), second8d46+(side==0); side not constrained to0/1",
+      "limits": ["No pointer or heading-table index validation", "Signed kind+1 bound can be nonpositive for unrestricted inputs", "Current field reloads and callee effects cannot be folded into immutable snapshots", "Retry runtime feasibility/termination and deeper action outcomes unproved"]
+    },
+    {
+      "entry": "006cd490",
+      "contract": "Guard existing status, clear side/active receiver boundary, classify exterior coordinates and emit one of three commentary tokens after status/side writes",
+      "abi": "ECX=m; low byte side at ESP+4; RET4; ESI preserved, EBX/EDI/EBP untouched; AL0/1 defined, high24 EAX residual",
+      "body_bytes": 346,
+      "instructions": 102,
+      "branches": 9,
+      "direct_calls": 6,
+      "direct_rng_sites": 0,
+      "nonframe_stores": 11,
+      "normal_returns": 6,
+      "ordered_effects": "If8eb2!=0,AL1 immediately; otherwise conditionally8eae=ff then optional006f0970(m.f582), read coordinates; interior AL0; exterior status then side writes, commentary,AL1",
+      "coordinate_priority": "Signed x<0 or>=9 overrides y; otherwise signed y<0, y0..11, y>=12",
+      "event_cases": [
+        {"route":"x0..8,y<0,side==1","status":4,"event_side":0,"token":"1f77"},
+        {"route":"x0..8,y<0,side!=1","status":3,"event_side":1,"token":"1f75"},
+        {"route":"x0..8,y>=12,side==1","status":3,"event_side":0,"token":"1f75"},
+        {"route":"x0..8,y>=12,side!=1","status":4,"event_side":1,"token":"1f77"},
+        {"route":"x<0 or x>=9","status":2,"event_side":"side==0","token":"1f76"}
+      ],
+      "commentary": "006d6f70(dword(m+8f7a);token,m,-1,eventSide,-1,-1,0); receiver loaded before status/side writes; exterior-x pushes EAX after SETZ AL so eventSide upper bits unnormalized",
+      "limits": ["Status guard runs once before optional call", "Interior AL0 route may still clear8eae and call006f0970", "High24 return bits and exterior-x commentary side bits residual", "No direct RNG; all callee effects remain boundaries", "Tokens are numeric mechanics, not recovered natural-language gameplay identities"]
+    }
+  ],
+  "totals": {"new_bodies":2,"body_bytes":1031,"instructions":318,"branches":45,"calls":25,"rng_sites":13,"nonframe_stores":22,"normal_returns":7,"supplied_incoming_calls":4},
+  "evidence": "match-action-19-sites.json; every original instruction independently compared with pinned native assembly; authored report expands branches and ordered calls",
+  "limits": ["No runtime/emulation validation or original table export", "No canonical native project, atlas, queue, checkpoint or game/UI implementation changed"]
+}

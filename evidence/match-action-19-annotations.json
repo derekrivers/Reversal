@@ -1,0 +1,11 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-18",
+  "status": "Optional name-only proposals; coordinator alone applies after independent review and fresh exact-old checks",
+  "private_preflight_sha256": "a8b6f47a04ac2dcc2d6fb13537a55b223db5630d50e857ceb014f40f7069cf78",
+  "old_annotation_evidence": "Pinned preflight verifies exact FUN_* names, absent/blank comments and instruction existence; no comment, prototype, calling convention, structure or body change proposed",
+  "proposals": [
+    {"address":"006cd770","kind":"function_name","old":"FUN_006cd770","new":"match_emit_perturbed_coordinate_state_006cd770","evidence":"216 instructions/685 bytes; coordinate perturbation/retry, heading and side/counter commit, optional2*20 slot scan, last-pointer action boundary and006cd490 delegation","confidence":"High for local mechanics; input domains, retry termination, table values and connected action outcomes open"},
+    {"address":"006cd490","kind":"function_name","old":"FUN_006cd490","new":"match_classify_coordinate_boundary_event_006cd490","evidence":"102 instructions/346 bytes; status guard, optional active receiver call, signed x/y classification, status/side writes and tokens1f75/1f76/1f77; AL-only result","confidence":"High for local coordinate/status/commentary mechanics; token gameplay identities and deeper effects open"}
+  ]
+}

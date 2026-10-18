@@ -1,0 +1,36 @@
+{
+  "work_unit": "R19-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "method": "Capstone5.0.7 independently decodes complete original-PE bodies then compares every native-export instruction; no function execution",
+  "sites_sha256": "1897d73b95a92e9ca503c5cc0eb2abcd5f693d5fd6685ada9be7f4d1bf6fba4f",
+  "deterministic_regeneration": "Second in-memory extraction byte-identical to retained sites",
+  "negative_check": "README.md supplied as wrong specimen: rejected before decode with specimen SHA-256 mismatch; no output created",
+  "native_inputs": "Pinned executable, manifest and preflight digests; all20 manifest file sizes/digests; two exact-old FUN_* names and absent/blank comments",
+  "instruction_check": "All318 instructions/1031 bytes compared; both native bodies contiguous; no body correction",
+  "coverage": {
+    "new_bodies": 2,
+    "body_bytes": 1031,
+    "instructions": 318,
+    "branches": 45,
+    "calls": 25,
+    "rng_sites": 13,
+    "nonframe_stores": 22,
+    "normal_returns": 7,
+    "supplied_incoming_calls": 4
+  },
+  "normal_stack": "Every instruction join, including all retry/scan backedges, balances; all7 returns restore entry ESP under explicit normal callee-cleanup assumptions; entry stack widths and RET cleanup asserted; saved-register sequences inspected",
+  "public_consistency": "Authored findings counts and entries checked against generated sites; optional name proposal address sets checked; JSON parses",
+  "research_checks": {
+    "command": "npm run check",
+    "node": "v24.19.0",
+    "status": "passed",
+    "scope": "Earlier retained numerical fixtures and checkpoint/atlas metadata; does not execute R19-A bodies"
+  },
+  "diff_check": "git diff --check and git diff --cached --check passed; staged paths contain only six owned research files",
+  "limits": [
+    "No numerical oracle, runtime input-domain/termination validation or connected gameplay proof",
+    "006cd770 uncapped retry prevents finite total direct RNG bound; bounded2*20 scan alone permits80 draws",
+    "Callee effects, aliasing, exceptional exits and original heading table remain boundaries",
+    "Canonical Ghidra, shared atlas, queue and checkpoint unchanged"
+  ]
+}
