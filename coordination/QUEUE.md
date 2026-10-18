@@ -137,3 +137,14 @@ Baseline: checkpoint 16 and pinned PE SHA-256 `0c78e7da6d0bcb4603fa179449bbe6d1b
 | R17-D | Coordinator: supply checkpoint-16 read-only exports, independently review each research result, apply only safe exact-old-value annotations, preserve/restore-test checkpoint 17 if native state changes, and update distinct coverage counts. | One canonical writer, final-head CI, private native archive, honest remaining-inventory ledger. |
 
 The three assignments do not overlap. Their targets are observed direct dependencies rather than guesses from source filenames. Some targets may prove to be generic runtime mechanics; classify their actual instructions without forcing game-specific names.
+
+### Investigation 17 ownership and evidence paths
+
+These are the bounded assignments before delegation. Research workers own only their report, compact evidence and task-specific extractor; the coordinator owns the shared semantic overlay, annotation integration and native checkpoint. Each worker may read the other bodies as context without claiming their complete behavior.
+
+| Assignment | Owner / branch / worktree | Owned public files | Acceptance |
+| --- | --- | --- | --- |
+| R17-A | Match researcher / `codex/match-dispatch-17` / `agent-a-match-17` | `reports/match-dispatch-17.md`, `evidence/match-dispatch-17-*`, `scripts/extract_match_dispatch_17.py` | Complete three owned local bodies against pinned PE and read-only Ghidra export, widths, branches/calls/stores, compact selected sites, optional exact-old proposal; specifically separate `006f09f0`'s 14,526-byte body from the two smaller callees. |
+| R17-B | Database researcher / `codex/db-lower-17` / `agent-b-db-17` | `reports/db-lower-17.md`, `evidence/db-lower-17-*`, `scripts/extract_db_lower_17.py` | Complete three owned bodies, physical-I/O/error boundary and stream effects with original-instruction evidence, compact selected sites, optional exact-old proposal. |
+| R17-C | Scouting researcher / `codex/scout-cleanup-17` / `agent-c-scout-17` | `reports/scout-cleanup-17.md`, `evidence/scout-cleanup-17-*`, `scripts/extract_scout_cleanup_17.py` | Complete three owned bodies, callback/traversal/release boundary and alias/failure limitations with original-instruction evidence, compact selected sites, optional exact-old proposal. |
+| R17-D | Coordinator / `codex/checkpoint-17` | `evidence/code-atlas/semantic-coverage.json`, `checkpoints/2026-10-18-investigation-17/`, `checkpoints/latest.json`, `evidence/investigation-17-annotations.json`, `scripts/CM0102AnnotateInvestigation17.java`, continuation docs | Independent reviews and CI; sole canonical Ghidra writer; preserve and restore-test new private archive if annotations change; no UI/build work. |
