@@ -1,0 +1,227 @@
+{
+  "investigation": 9,
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses",
+  "method": "Read-only Ghidra native assembly exports from coordinator disposable-project verification; selected instruction operands, widths and formula dataflow reviewed against Capstone findings. Pseudocode used only as navigation.",
+  "scope": "Static corroboration; no new runtime trace, producer oracle, or canonical database mutation.",
+  "exports": [
+    {
+      "function": "006ce110",
+      "assembly_export_sha256": "47b2d364849ec830b1eab5612af4090aad6e3da12087aa99b98a8f7bd912324c"
+    },
+    {
+      "function": "006ec010",
+      "assembly_export_sha256": "9209f7c159111dc1e994443b18b68aecc88b23591ef1a7cae3015abb8cedeeb9"
+    },
+    {
+      "function": "006eecb0",
+      "assembly_export_sha256": "f3c0d66dcf73f83c1fe15750f85fb878a0ab321d6aa63be24321e02d7128a51c"
+    },
+    {
+      "function": "0070a910",
+      "assembly_export_sha256": "954a52d37828c724b1249728d1177472324e4b1e49ead8bd21d2994bf01059e2"
+    },
+    {
+      "function": "0070c040",
+      "assembly_export_sha256": "033e06344b17f2c2a4ea10df585ec8091290f2e2997f72aad262468008beb971"
+    },
+    {
+      "function": "00702050",
+      "assembly_export_sha256": "40afb06c0e55a22091d0aff2bcca1521feadc9fae0bb87f9416ab4a72472f8cf"
+    }
+  ],
+  "selected_sites_corroborated": [
+    {
+      "va": "006ce110",
+      "function": "006ce110"
+    },
+    {
+      "va": "006ce127",
+      "function": "006ce110"
+    },
+    {
+      "va": "006ce171",
+      "function": "006ce110"
+    },
+    {
+      "va": "006ce1dc",
+      "function": "006ce110"
+    },
+    {
+      "va": "006ce1fa",
+      "function": "006ce110"
+    },
+    {
+      "va": "006ce2f2",
+      "function": "006ce110"
+    },
+    {
+      "va": "006ce2f8",
+      "function": "006ce110"
+    },
+    {
+      "va": "006ce2fb",
+      "function": "006ce110"
+    },
+    {
+      "va": "006eecb9",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006eecc1",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006eecc8",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006ef833",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f01f1",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f01f3",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f0224",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f0255",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f025c",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f040d",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f0414",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f0472",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f0495",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f04a2",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f05ad",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006f05b9",
+      "function": "006eecb0"
+    },
+    {
+      "va": "006ec696",
+      "function": "006ec010"
+    },
+    {
+      "va": "006ec789",
+      "function": "006ec010"
+    },
+    {
+      "va": "006ec8c0",
+      "function": "006ec010"
+    },
+    {
+      "va": "006ec9fe",
+      "function": "006ec010"
+    },
+    {
+      "va": "006eca1f",
+      "function": "006ec010"
+    },
+    {
+      "va": "006eca59",
+      "function": "006ec010"
+    },
+    {
+      "va": "006eca80",
+      "function": "006ec010"
+    },
+    {
+      "va": "006ed96b",
+      "function": "006ec010"
+    },
+    {
+      "va": "006ed98d",
+      "function": "006ec010"
+    },
+    {
+      "va": "006ed993",
+      "function": "006ec010"
+    },
+    {
+      "va": "006ed9a0",
+      "function": "006ec010"
+    },
+    {
+      "va": "0070701b",
+      "function": "00702050"
+    },
+    {
+      "va": "0070ae8f",
+      "function": "0070a910"
+    },
+    {
+      "va": "0070c518",
+      "function": "0070c040"
+    },
+    {
+      "va": "0070aa51",
+      "function": "0070a910"
+    },
+    {
+      "va": "0070c188",
+      "function": "0070c040"
+    }
+  ],
+  "sites_outside_supplied_function_exports": [
+    "006b84d7",
+    "006cd88f",
+    "006bbec3",
+    "00700394",
+    "006f08f5",
+    "006cd462",
+    "006cd47e"
+  ],
+  "formula_ranges_reviewed": [
+    [
+      "006eecc1",
+      "006eece8"
+    ],
+    [
+      "006f01f1",
+      "006f025c"
+    ],
+    [
+      "006f0472",
+      "006f04a2"
+    ],
+    [
+      "006ec9de",
+      "006eca80"
+    ],
+    [
+      "006ed927",
+      "006ed9a0"
+    ]
+  ],
+  "result": "No discrepancy found in committed producer formulas, widths or annotation proposals. Jump selectors/constants retain independent pinned-PE byte verification; only the referenced instructions are in these assembly exports."
+}
