@@ -158,6 +158,18 @@
     "R22-D": {
       "report": "reports/match-runtime-22.md",
       "evidence": "evidence/match-runtime-22-sites.json"
+    },
+    "R23-A": {
+      "report": "reports/match-status-23.md",
+      "evidence": "evidence/match-status-23-sites.json"
+    },
+    "R23-B": {
+      "report": "reports/exit-runtime-23.md",
+      "evidence": "evidence/exit-runtime-23-sites.json"
+    },
+    "R23-C": {
+      "report": "reports/selection-probe-23.md",
+      "evidence": "evidence/selection-probe-23-sites.json"
     }
   },
   "functions": [
@@ -760,6 +772,26 @@
       "address": "00945934",
       "state": "contract-supported",
       "source": "R22-D"
+    },
+    {
+      "address": "0062c400",
+      "state": "contract-supported",
+      "source": "R23-A"
+    },
+    {
+      "address": "00945956",
+      "state": "contract-supported",
+      "source": "R23-B"
+    },
+    {
+      "address": "009459ef",
+      "state": "contract-supported",
+      "source": "R23-B"
+    },
+    {
+      "address": "00601070",
+      "state": "contract-supported",
+      "source": "R23-C"
     }
   ]
 }

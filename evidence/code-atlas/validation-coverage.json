@@ -137,6 +137,22 @@
       "module": "reconstruction/match-scalar.ts",
       "evidence": "evidence/match-scalar-22-oracle.json",
       "boundary": "274 original-instruction synthetic mapped-memory cases and 2,312 instruction steps; EAX, EDX and ordered reads compared. Stable mapped memory only; EFLAGS, invalid pointers, alias mutation and connected caller behavior excluded"
+    },
+    {
+      "function": "0062c400",
+      "scope": "no-callee-count-guard-entry-to-return",
+      "behavior": "Signed indexed-status count guard with low-byte zero return",
+      "module": "reconstruction/match-status.ts",
+      "evidence": "evidence/match-status-23-guard-oracle.json",
+      "boundary": "43 original-instruction synthetic stable mapped-memory cases, 688 steps and 16/88 starts; refresh, conversion, diagnostics, aliases, faults and connected caller excluded"
+    },
+    {
+      "function": "00601070",
+      "scope": "no-callee-record-lookup-entry-to-return",
+      "behavior": "Mode-5 direct/fallback record lookup and identifier-sentinel result",
+      "module": "reconstruction/selection-probe.ts",
+      "evidence": "evidence/selection-probe-23-oracle.json",
+      "boundary": "288 original-instruction synthetic stable mapped-memory cases, 16,200 steps and 66/121 starts; diagnostics, invalid pointers, alias mutation and connected selection excluded"
     }
   ]
 }
