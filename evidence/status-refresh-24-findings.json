@@ -1,0 +1,62 @@
+{
+  "work_unit": "R24-A",
+  "entry_va": "0062c680",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "body_sha256": "10271964e0119f7a886c34ba8741174957ec555c822f8affa7f56acb3dab2fe6",
+  "file_offset": "0x22c680",
+  "native_export_manifest_sha256": "c3770d9a3b8b99d80454413ea5ec85114aa0f3baa9ec0c661567c30d7bf40e70",
+  "annotation_preflight_sha256": "1df62ffab8859fa6d1b86e486a26f10f82c82827eb08356caae3ce916694a193",
+  "scope": "complete local static body; call-free guard/cache exits only execution-validated",
+  "existing_name": "cm0102_refresh_player_status_row_candidate",
+  "native_annotation_proposal": null,
+  "semantic_overlay_proposal": {
+    "address": "0062c680",
+    "old_state": "boundary-mapped",
+    "new_state": "contract-supported",
+    "distinct_entry_delta": 0,
+    "condition": "only after independent review of full local body and scoped evidence"
+  },
+  "body_census": {
+    "bytes": 1909,
+    "instructions": 562,
+    "branches": 69,
+    "direct_calls": 27,
+    "direct_call_targets": 11,
+    "direct_nonframe_writes": 11,
+    "returns": [{"site": "0062cdf2", "stack_bytes": 4}],
+    "unresolved_indirect_calls": 0,
+    "all_native_and_original_instructions_match": true
+  },
+  "abi": {
+    "receiver": "ECX pointer to object: DWORD +0 row-base pointer, DWORD +4 record-base pointer, signed32 +8 bound-like field",
+    "stack": ["player pointer"],
+    "ret_cleanup": 4,
+    "meaningful_return": "none established",
+    "exception_frame": "FS:[0] link and unlink"
+  },
+  "critical_sites": {
+    "guard_and_cache": ["0062c738", "0062c748", "0062c757", "0062c790"],
+    "row_index_normalization": "0062c7d8",
+    "record_lifecycle_calls": ["0062c895", "0062c8ac"],
+    "cache_key_and_result_writes": ["0062c98d", "0062c99a"],
+    "direct_rng_calls": ["0062ca4f", "0062cb18"],
+    "auxiliary_byte_increment": "0062ca76",
+    "final_row_word_writes": ["0062cdd3", "0062cdd7"],
+    "stamp_copy_call": "0062cddb"
+  },
+  "original_instruction_oracle": {
+    "cases": 13,
+    "steps": 568,
+    "covered_starts": 58,
+    "sha256": "1d36facfaa5e945e4b5c66669f76bcd9ad3d793f3e8a0333728169ce8ef99cfe",
+    "domain": "old FS:[0] head zero; preinitialized flags; synthetic disjoint mapped memory; call-free null/count/slot-null/cached-stamp exits"
+  },
+  "unresolved": [
+    "0054cc30 date conversion and initialization/SEH effects",
+    "0062e700 lifecycle effects",
+    "00669bd0, 0054cdb0, 0076d780, 0076e040 and 00417c10 callee effects",
+    "0090cfc0 RNG state and transitive call ordering in a connected match",
+    "00945640 x87 conversion behavior, precision and constants for full arithmetic",
+    "valid caller storage and reachability across all update paths"
+  ]
+}

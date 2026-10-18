@@ -1,0 +1,50 @@
+{
+  "work_unit": "R24-A",
+  "normal_optimized_sites_identical": true,
+  "normal_optimized_oracle_identical": true,
+  "sites_sha256": "2cab491602df1cb2694b6c1aafa80257c265df3007f752870e76b7e983310b34",
+  "oracle_sha256": "1d36facfaa5e945e4b5c66669f76bcd9ad3d793f3e8a0333728169ce8ef99cfe",
+  "negative_checks": {
+    "altered_specimen_normal": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_specimen_optimized": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_native_operand_normal": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_native_operand_optimized": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "resealed_native_operand_normal": {
+      "rejected": true,
+      "reason": "original/native operand mismatch"
+    },
+    "resealed_native_operand_optimized": {
+      "rejected": true,
+      "reason": "original/native operand mismatch"
+    },
+    "resealed_native_width_normal": {
+      "rejected": true,
+      "reason": "original/native operand width mismatch"
+    },
+    "resealed_native_width_optimized": {
+      "rejected": true,
+      "reason": "original/native operand width mismatch"
+    },
+    "changed_typescript_result": {
+      "rejected": true,
+      "reason": "register/path mismatch"
+    },
+    "tampered_oracle": {
+      "rejected": true,
+      "reason": "oracle SHA-256 mismatch"
+    }
+  },
+  "scope": "call-free guard/cache exits; update paths static only"
+}
