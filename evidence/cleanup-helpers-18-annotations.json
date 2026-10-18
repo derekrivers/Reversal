@@ -1,0 +1,33 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-17",
+  "status": "Name-only proposal; coordinator alone applies after independent review and exact-old-value recheck",
+  "private_preflight_sha256": "8749c47798c3758dc7509d0b3b71b7147f169ee0390066f01ef023baf670bcbb",
+  "old_annotation_evidence": "Pinned preflight verifies instruction existence, exact FUN_* names and blank comments; no prototype, convention, structure or comment edits requested",
+  "proposals": [
+    {
+      "address": "0068d010",
+      "kind": "function_name",
+      "old": "FUN_0068d010",
+      "new": "cm0102_forward_node_payload_to_00944c94",
+      "evidence": "Read32(ECX), pass dword to00944c94, discard argument and return; no field clear",
+      "confidence": "High local forwarding mechanics; no complete lifetime contract"
+    },
+    {
+      "address": "0068d1f0",
+      "kind": "function_name",
+      "old": "FUN_0068d1f0",
+      "new": "cm0102_unlink_first_node_byte_match",
+      "evidence": "Node-length byte comparison, first-match head/tail/neighbor unlink, word count decrement, cursor advance, payload forwarding and node release boundary; returns0/1 RET4",
+      "confidence": "High local contract, including zero/negative lengths and inherited DF; no ownership, alias or failure-safety guarantee"
+    },
+    {
+      "address": "00946323",
+      "kind": "function_name",
+      "old": "FUN_00946323",
+      "new": "cm0102_frame_guarded_cleanup_forwarder",
+      "evidence": "Inherited EBP flag-0x1c guards forwarding of parent frame +8/+c/+10/+14 to0094633b; normal R17 loop exit sets flag1 and skips call",
+      "confidence": "High narrow frame-dependent mechanics; complete exceptional cleanup remains unresolved"
+    }
+  ]
+}
