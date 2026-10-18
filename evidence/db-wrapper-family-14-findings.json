@@ -1,0 +1,916 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "3d81fa3c056c7d28c3c2a6d99e93d96464f43834",
+  "scope": "R14-B complete local contracts of sixteen directly anchored Db_files.cpp wrappers; static evidence only",
+  "native_comparison": {
+    "manifest_sha256": "233ec2078dc3eacf0d1b83a3d093028caf57c634329bacce4af4ea2efb5c7f86",
+    "checkpoint": "2026-10-18-investigation-13",
+    "owned_bodies": 16,
+    "matched_instructions": 1171,
+    "procedure": "independent original-byte Capstone decode, address and normalized mnemonic/operand equality for every owned instruction; private asm/c/refs files verified against pinned manifest; decompiler inspected as secondary interpretation"
+  },
+  "abi": {
+    "calling_convention": "cdecl supported by four stack arguments, plain RET and internal argument cleanup; no ECX receiver",
+    "arguments_entry_esp": {
+      "0x04": "stream pointer32",
+      "0x08": "mode_raw32",
+      "0x0c": "destination pointer32",
+      "0x10": "descriptor pointer32"
+    },
+    "local_stack_bytes": 512,
+    "preserves": [
+      "ESI",
+      "EDI in 0054db50"
+    ],
+    "other_nonvolatile_registers": "EBX/EBP untouched; EDI untouched outside 0054db50"
+  },
+  "shared_normal_contract": {
+    "selected_helpers": [
+      "00932c30",
+      "00945bfe"
+    ],
+    "direction_basis": "R09 helper body inspection plus freshly decoded destination-store/copy/delegation sites; no write helper used by a direct branch",
+    "return": "direct paths compare saved original count; zero count can satisfy equality without a transfer",
+    "failure": "short count returns 0 without rollback; partial destination/stream effects possible",
+    "validation_limits": "No destination capacity/null check, descriptor null check, count bounds, record-content check or complete schema"
+  },
+  "shared_error_contract": {
+    "source_path_va": "009b8dc0",
+    "message_format_va": "009870e8",
+    "title_va": "009870e0",
+    "shared_buffer_va": "00ae24d0",
+    "state_write": {
+      "va": "00b67a34",
+      "bits": 32,
+      "value": 0
+    },
+    "ordered_callees": [
+      "00944cff",
+      "0090d130",
+      "00944c9f",
+      "005e8290",
+      "005cc7d0",
+      "005a8f60",
+      "00945934"
+    ],
+    "terminal_argument": -1,
+    "termination_dependency": "R09 resolves 00945934 machinery to ExitProcess import at00967164; current decode includes009459e7"
+  },
+  "functions": [
+    {
+      "entry_va": "0054d8a0",
+      "body_bytes": 241,
+      "record_bytes_direct_read": 56,
+      "record_bytes_hex": "0x38",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1,
+          2
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        1,
+        2
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        56,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 519,
+        "constant_site_va": "0054d946",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 0054d8a0"
+    },
+    {
+      "entry_va": "0054da00",
+      "body_bytes": 235,
+      "record_bytes_direct_read": 78,
+      "record_bytes_hex": "0x4e",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        1
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        78,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 573,
+        "constant_site_va": "0054da3d",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 0054da00"
+    },
+    {
+      "entry_va": "0054db50",
+      "body_bytes": 314,
+      "record_bytes_direct_read": 581,
+      "record_bytes_hex": "0x245",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1,
+          2
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        2
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        581,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 645,
+        "constant_site_va": "0054db95",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": {
+        "descriptor_raw32": 1,
+        "callee_va": "0054dc90",
+        "arguments": [
+          "stream",
+          "mode_raw32",
+          "destination",
+          "original_count"
+        ],
+        "return": "EAX forwarded unchanged; wrapper does not recheck total count",
+        "limits": "First field-read and observed 0/1 exit boundaries only; full helper effects, disk width and record layout not assigned"
+      },
+      "local_post_read_writes": [
+        {
+          "guard": "descriptor==2 and helper count == original_count and original_count != 0",
+          "record_offset": "0x80",
+          "bits": 16,
+          "when_equal": 0,
+          "write_value": 1,
+          "stride_bytes": 581,
+          "count": "exactly original_count iterations by DWORD decrement; zero skips"
+        }
+      ],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 0054db50"
+    },
+    {
+      "entry_va": "0054e630",
+      "body_bytes": 237,
+      "record_bytes_direct_read": 110,
+      "record_bytes_hex": "0x6e",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          2
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        2
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        110,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 826,
+        "constant_site_va": "0054e66f",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 0054e630"
+    },
+    {
+      "entry_va": "0054e780",
+      "body_bytes": 241,
+      "record_bytes_direct_read": 157,
+      "record_bytes_hex": "0x9d",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        1
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        157,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 910,
+        "constant_site_va": "0054e7bd",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 0054e780"
+    },
+    {
+      "entry_va": "0054e880",
+      "body_bytes": 283,
+      "record_bytes_direct_read": 68,
+      "record_bytes_hex": "0x44",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1,
+          2
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        2
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        68,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 1007,
+        "constant_site_va": "0054e8c4",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": {
+        "descriptor_raw32": 1,
+        "callee_va": "0054e9a0",
+        "arguments": [
+          "stream",
+          "mode_raw32",
+          "destination",
+          "original_count"
+        ],
+        "return": "EAX forwarded unchanged; wrapper does not recheck total count",
+        "limits": "First field-read and observed 0/1 exit boundaries only; full helper effects, disk width and record layout not assigned"
+      },
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 0054e880"
+    },
+    {
+      "entry_va": "0054f030",
+      "body_bytes": 283,
+      "record_bytes_direct_read": 70,
+      "record_bytes_hex": "0x46",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1,
+          2
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        2
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        70,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 1146,
+        "constant_site_va": "0054f074",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": {
+        "descriptor_raw32": 1,
+        "callee_va": "0054f150",
+        "arguments": [
+          "stream",
+          "mode_raw32",
+          "destination",
+          "original_count"
+        ],
+        "return": "EAX forwarded unchanged; wrapper does not recheck total count",
+        "limits": "First field-read and observed 0/1 exit boundaries only; full helper effects, disk width and record layout not assigned"
+      },
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 0054f030"
+    },
+    {
+      "entry_va": "0054fc10",
+      "body_bytes": 235,
+      "record_bytes_direct_read": 52,
+      "record_bytes_hex": "0x34",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        1
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        52,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 1337,
+        "constant_site_va": "0054fc4d",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 0054fc10"
+    },
+    {
+      "entry_va": "0054fd60",
+      "body_bytes": 235,
+      "record_bytes_direct_read": 17,
+      "record_bytes_hex": "0x11",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        1
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        17,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 1394,
+        "constant_site_va": "0054fd9d",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 0054fd60"
+    },
+    {
+      "entry_va": "0054feb0",
+      "body_bytes": 283,
+      "record_bytes_direct_read": 107,
+      "record_bytes_hex": "0x6b",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1,
+          2
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        2
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        107,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 1449,
+        "constant_site_va": "0054fef4",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": {
+        "descriptor_raw32": 1,
+        "callee_va": "0054ffd0",
+        "arguments": [
+          "stream",
+          "mode_raw32",
+          "destination",
+          "original_count"
+        ],
+        "return": "EAX forwarded unchanged; wrapper does not recheck total count",
+        "limits": "First field-read and observed 0/1 exit boundaries only; full helper effects, disk width and record layout not assigned"
+      },
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 0054feb0"
+    },
+    {
+      "entry_va": "00550230",
+      "body_bytes": 235,
+      "record_bytes_direct_read": 26,
+      "record_bytes_hex": "0x1a",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        1
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        26,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 1541,
+        "constant_site_va": "0055026d",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 00550230"
+    },
+    {
+      "entry_va": "00550380",
+      "body_bytes": 237,
+      "record_bytes_direct_read": 101,
+      "record_bytes_hex": "0x65",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          2
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        2
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        101,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 1592,
+        "constant_site_va": "005503bf",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 00550380"
+    },
+    {
+      "entry_va": "005504d0",
+      "body_bytes": 235,
+      "record_bytes_direct_read": 58,
+      "record_bytes_hex": "0x3a",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        1
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        58,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 1677,
+        "constant_site_va": "0055050d",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 005504d0"
+    },
+    {
+      "entry_va": "005505c0",
+      "body_bytes": 235,
+      "record_bytes_direct_read": 43,
+      "record_bytes_hex": "0x2b",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        1
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        43,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 1738,
+        "constant_site_va": "005505fd",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 005505c0"
+    },
+    {
+      "entry_va": "00550710",
+      "body_bytes": 235,
+      "record_bytes_direct_read": 58,
+      "record_bytes_hex": "0x3a",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        1
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        58,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 1801,
+        "constant_site_va": "0055074d",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 00550710"
+    },
+    {
+      "entry_va": "00550860",
+      "body_bytes": 235,
+      "record_bytes_direct_read": 60,
+      "record_bytes_hex": "0x3c",
+      "descriptor_guard": {
+        "offset": "0x3f",
+        "load_bits": 32,
+        "accepted_raw32": [
+          1
+        ],
+        "meaning": "opaque discriminator; no version/type name inferred"
+      },
+      "count": {
+        "offset": "0x37",
+        "load_bits": 32,
+        "meaning": "raw requested item count; no local range check"
+      },
+      "direct_read_guard_values": [
+        1
+      ],
+      "direct_read_direction": "into caller-supplied destination",
+      "direct_read_arguments": [
+        "destination",
+        60,
+        "original_count",
+        "stream"
+      ],
+      "mode": {
+        "argument": 2,
+        "bits": 32,
+        "zero_helper": "00945bfe",
+        "nonzero_helper": "00932c30"
+      },
+      "direct_return": "EAX exactly 0 or 1 according to helper EAX == original_count",
+      "error": {
+        "condition": "descriptor DWORD not accepted",
+        "diagnostic_constant": 1850,
+        "constant_site_va": "0055089d",
+        "effect": "shared diagnostic and termination(-1); no normal false return"
+      },
+      "delegate": null,
+      "local_post_read_writes": [],
+      "ownership": "borrows stream, destination and descriptor; no local allocation/free/open/close, no descriptor writes; destination and stream mutable through helpers",
+      "semantic_coverage_recommendation": "contract-supported",
+      "coverage_scope": "complete local wrapper body; transitive delegate and stream helper implementations remain boundary context",
+      "evidence": "db-wrapper-family-14-sites.json functions entry 00550860"
+    }
+  ],
+  "coverage_summary": {
+    "contract_supported_owned_functions": 16,
+    "boundary_mapped_owned_functions": 0,
+    "reason": "All local paths, ABI, guards, call marshalling, local writes and return handling are mapped; delegated body semantics remain explicitly outside each local contract",
+    "dependency_only_not_additional_complete_contracts": [
+      "0054dc90",
+      "0054e9a0",
+      "0054f150",
+      "0054ffd0",
+      "00932c30",
+      "00945bfe"
+    ]
+  },
+  "uncertainties": [
+    "No semantic record types or fields except literal post-read WORD predicate are established",
+    "Descriptor+0x3f meaning remains opaque; descriptor==1/2 are raw values",
+    "Delegated helpers have field-read entry boundaries, but full conversion effects, source layouts, total on-disk widths and rollback behavior remain unresolved",
+    "Caller allocation owner, destination capacity/lifetime and complete database/save schema remain unresolved",
+    "Native incoming references are discovered direct-call inventory, not runtime reachability or proof against indirect callers",
+    "No RNG restore/persistence or game-wide determinism claim; no execution oracle or behavior port added"
+  ],
+  "validation": {
+    "deterministic_sites_sha256": "02c8b5426cfc6b8f8e32a13cb5b78eecb2c50d5b1dd72e1826cd6eae18a0f35b",
+    "deterministic_runs": 2,
+    "repository_check": "npm run check passed on Node v24.19.0",
+    "scope": "retained repository checks; no wrapper execution"
+  }
+}
