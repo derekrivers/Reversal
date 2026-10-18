@@ -5,7 +5,7 @@
   "original_body_bytes": 61,
   "original_instructions": 16,
   "oracle_cases": 344,
-  "original_executions": 4329,
+  "executed_instruction_steps": 4329,
   "unmapped_read_probes": 2,
   "reproduced_oracle_sha256": "9556f7e440fdfcec50e66ee5331ec7898b51319c3867660de1436414f4f392e3",
   "negative_checks_rejected": 11,
