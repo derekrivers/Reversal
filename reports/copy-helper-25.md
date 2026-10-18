@@ -1,0 +1,23 @@
+# R25-C: bounded locale-aware copy at `00948851`
+
+The pinned PE32 specimen is SHA-256 `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`. Addresses here are virtual unless labelled as file offsets. The 138-byte complete local body begins at file offset `00548851`; all 63 original instructions match the independently restored checkpoint-24 Ghidra export, whose manifest and exact-old preflight hashes are recorded in [sites](../evidence/copy-helper-25-sites.json). The source-path or CRT identity of this function is not established.
+
+## Local contract
+
+`00948851` uses cdecl: destination is `[EBP+8]`, source `[EBP+0xc]`, unsigned byte count `[EBP+0x10]`, and bare `RET` leaves argument cleanup to the caller. It returns the original destination pointer in `EAX`. The body preserves `EBP`, `EDI` and, on the nonzero-mode branch, `ESI`. The mode DWORD at `00de441c` selects the path:
+
+- If zero, `00948864`–`00948870` forwards `(destination, source, count)` to `_strncpy` at `009466d0`, cleans its 12 argument bytes and returns that callee's `EAX`. This is a **static call boundary**, not an execution-validated `_strncpy` or full mode-zero contract.
+- If nonzero, `00948875`–`009488d5` has no calls. It copies at most `count` bytes. Each first byte is zero-extended before bit `0x4` is tested at `00de4521 + byte` (`00948880`–`0094888d`). A byte with that bit consumes a second source byte and two destination slots when count permits. The second byte is copied without a second table lookup. Ordinary NUL copies stop; if the second byte is NUL, `009488b6` clears the already written lead byte so the pair becomes two NULs.
+- If the count ends after a flagged first byte, `009488b0` clears that byte in the destination. Remaining count after a NUL is filled with zero DWORD stores followed by zero byte stores at `009488c2`–`009488d3`. A zero count neither reads source/table nor writes destination. `009488ba`–`009488d5` sets volatile `EDX` to `0xffffffff` when there is no padding, or to the remaining padding count when there is padding. `ECX` ends as the advanced source pointer without padding and zero after the repeat stores with padding; at zero count it retains its input.
+
+The copy length is in bytes, including both bytes of a flagged pair. The body is not a raw `memcpy`: it stops on NUL, pads, and can replace a count-truncated lead byte with zero. The function itself does not validate source/destination capacity or initialize the locale table. Overlap, invalid pointers, a set direction flag and table changes during a call are outside the validated domain.
+
+## Original-instruction comparison
+
+[The oracle](../evidence/copy-helper-25-oracle.json) executes the original PE bytes from `00948851` through `RET` in Unicorn 2.1.4, with the nonzero mode and a synthetic table marking `0x81` and `0xe0` as lead bytes. It covers 180 cases, 11,619 executed x86 steps and 57 distinct instruction starts in this call-free branch. Counts 0–17 cross early NUL, lead plus trail, count ending after a lead, lead followed by NUL, full-count copy, DWORD padding and byte remainder. Separate mapped source, destination, global and stack pages use synthetic bytes. The [headless TypeScript](../reconstruction/copy-helper.ts) matches every destination byte, ordered source/table reads and destination writes including store widths, `EAX`, `ECX`, `EDX`, stack delta and callee-saved registers through [the retained checker](../reconstruction/check-copy-helper.ts). The six instructions unique to the mode-zero branch are excluded from execution coverage.
+
+The [extractor](../scripts/extract_copy_helper_25.py) checks all original/native instruction operands, exact-old name, PE/manifest/preflight hashes, critical widths, branches and call target. The [negative check](../scripts/check_copy_helper_25_negative.py) rejects a changed PE byte, a changed native operand and a changed preflight name under optimized Python. Normal and `python -O` execution generated the same oracle SHA-256 `c44c407bd62e30b11818320bd05eb657dd449e523669db9e597ea37de872f15e`; a mutated TypeScript output fails case zero. These are local synthetic-memory comparisons, not execution of the R24 path splitter or its diagnostic callers.
+
+## Native proposal and remaining work
+
+[The exact-old proposal](../evidence/copy-helper-25-annotations-proposal.json) changes only `FUN_00948851` to `locale_aware_bounded_copy_00948851`, with medium confidence. `00944cff` can invoke this copy helper; whether any caller uses a nonzero locale mode at runtime remains unmeasured. The `_strncpy` body, locale setup and caller-level path outputs require separate original-instruction comparisons.

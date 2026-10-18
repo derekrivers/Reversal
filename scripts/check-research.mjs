@@ -15,6 +15,7 @@ const checks=[
  ['reconstruction/check-selection-probe.ts','evidence/selection-probe-23-oracle.json'],
  ['reconstruction/check-status-refresh-guard.ts','evidence/status-refresh-24-guard-oracle.json'],
  ['reconstruction/check-date-difference.ts','evidence/date-difference-24-oracle.json'],
+ ['reconstruction/check-copy-helper.ts','evidence/copy-helper-25-oracle.json'],
  ['reconstruction/check-random.ts','evidence/random-validation/x86-oracle.json','evidence/random-validation/random-table.bin','results/random.json'],
  ['reconstruction/check-clock.ts','evidence/clock-validation/clock-oracle.json','evidence/clock-validation/clock-oracle.bin','results/clock.json'],
  ['reconstruction/check-event-rules.ts','evidence/event-rule-validation','results/event-rules.json'],

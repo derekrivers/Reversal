@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "unit": "R25-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "proposals": [
+    {
+      "address": "00948851",
+      "old_name": "FUN_00948851",
+      "new_name": "locale_aware_bounded_copy_00948851",
+      "old_comment": null,
+      "new_comment": null,
+      "confidence": "medium",
+      "evidence": "138-byte complete local PE/native body: nonzero locale mode tests bit 4 in a byte-indexed table, copies bounded source bytes, clears a truncated lead byte and zero-pads; zero mode delegates to _strncpy. 180 nonzero-mode original-entry cases compare output memory, ordered access events and ABI."
+    }
+  ]
+}
