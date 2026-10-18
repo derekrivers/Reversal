@@ -1,0 +1,264 @@
+{
+  "work_unit": "R14-A",
+  "baseline_commit": "3d81fa3c056c7d28c3c2a6d99e93d96464f43834",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "evidence_class": "static original-instruction mapping; no execution oracle",
+  "address_kind": "virtual addresses",
+  "owned_functions": [
+    "00713fc0"
+  ],
+  "evidence": [
+    "reports/match-dispatch-14.md",
+    "evidence/match-dispatch-14-sites.json",
+    "scripts/extract_match_dispatch_14.py"
+  ],
+  "functions": [
+    {
+      "entry": "00713fc0",
+      "coverage_recommendation": "contract-supported",
+      "coverage_limitation": "Full local body/ABI/branch/store/RNG map; transitive state effects, runtime invariants and connected outcome unresolved",
+      "contract": "ECX=slot; one unused four-byte entry stack slot; 16 RET4 exits; no meaningful return value established",
+      "stack_argument_evidence": "Local stack-balance propagation verifies all explicit ESP-based accesses are below entry ESP, consistent CFG joins and entry ESP at all returns; cleanup inferred for normally returning callees",
+      "preservation": "Saves/restores EBX/ESI/EDI; EBP untouched directly. EAX/ECX/EDX/flags and x87 scratch subject to dependencies",
+      "control_order": [
+        "entry byte lookup bit2 snapshot; actionffffh",
+        "sentinel relocation or early action100h",
+        "two alternative region blocks: optional flagsEAX21 profileBound/R5 candidate; threshold20/50 mode4 candidate",
+        "produce X/Y and normalize only lowX; flagsEDX2 tactical corner overrides",
+        "derive B0/16/18/20; optional RB; optional regionalR3; centralize X/Y",
+        "conditional helper Y adjustment; saved tactical word",
+        "partner diagnostic or action105h with optional R21 nudge",
+        "fallback helper then R(5*q),R3 action6bh",
+        "equal coordinate action76h or ordered mode4 candidate gates6ah/69h; differing coordinate converted-bound draw then same gates or action68h"
+      ],
+      "direct_state_writes": {
+        "slot+198": "17 word stores: ffff,68,100,6a,105,6b,76,69 (hex values)",
+        "slot+35": "six wrapping word additions of7",
+        "00b67a34": "one diagnostic dword zero"
+      },
+      "ordered_write_caveats": [
+        "Early action100h store occurs after006f09f0; other selected action stores precede boundary calls",
+        "Profile-bound mode12 candidate success stores6ah without +7",
+        "Action105h is stored before slot+10a test and can continue to fallback",
+        "No direct coordinate, match-score or exposed RNG-state store; callees can write more"
+      ],
+      "direct_rng_sites": 11,
+      "local_cfg_acyclic": true,
+      "cfg_structural_upper_bound_direct_rng_calls": 9,
+      "rng_limit": "Structural direct-body bound only, not proven reachable total; excludes transitive helpers, ignores correlated predicates and counts R0 as a call",
+      "rng_order": "R20? -> [threshold20/50 | profileBound?,R5?,threshold20/50?] -> RB? -> regionalR3? -> [partnerR21? return | fallbackR(5*q)?,R3?,differing-coordinateR(converted)?]",
+      "x87_branches": [
+        {
+          "sites": [
+            "00714176",
+            "0071417e"
+          ],
+          "effect": "grid float compared with double2.0; <= or unordered chooses other region; ordered > enters first threshold"
+        },
+        {
+          "sites": [
+            "007141f4",
+            "00714355"
+          ],
+          "effect": "TEST AH,1: less or unordered permits candidate helper; equal/greater bypass"
+        },
+        {
+          "sites": [
+            "00714859",
+            "00714861"
+          ],
+          "effect": "R21 integer compared with partner float32+ad; less/equal/unordered bypass nudge; ordered greater nudges"
+        }
+      ],
+      "critical_widths": [
+        "side/index/profile/coordinate comparisons use signed bytes at specified sites",
+        "word+35 signed load, modulo65536 increment",
+        "threshold stored float32 after x87 expression with pinned float64 constants",
+        "flag getter returns EDX:EAX two dwords; second gate uses EDX bit2",
+        "local coordinate low-byte stores retain upper dword bits",
+        "saved tactical AX compared to1; mask6h tested as low byte"
+      ],
+      "known_dependencies": [
+        "R13 005b57c0 signed-index byte getter",
+        "R13 006f46b0 relocation normal contract",
+        "prior0090cfc0 RNG and006c38c0 lookup boundaries"
+      ],
+      "unowned_large_r11_dependencies": [
+        "007109f0",
+        "00714d40"
+      ],
+      "confidence": "High for local instruction/ABI/store/branch/RNG mapping; transitive and runtime semantics open"
+    }
+  ],
+  "callee_boundaries": [
+    {
+      "target": "005b57c0",
+      "ecx": "computed base",
+      "stack_or_x87_arguments": "slot+19 low byte",
+      "consumed_return": "AL bit2 snapshot",
+      "scope": "R13 read-only signed-index byte getter"
+    },
+    {
+      "target": "005b5270",
+      "ecx": "computed base",
+      "stack_or_x87_arguments": "slot+19 low byte",
+      "consumed_return": "EAX bit21 / EDX bit2 / EAX bit23",
+      "scope": "Immediate 22-byte leaf checked: two dword reads, RET4, no writes/RNG; no field semantics"
+    },
+    {
+      "target": "006c2a40",
+      "ecx": "match",
+      "stack_or_x87_arguments": "slot,&x,&y",
+      "consumed_return": "output dwords consumed",
+      "scope": "Unassigned coordinate producer"
+    },
+    {
+      "target": "006f46b0",
+      "ecx": "slot",
+      "stack_or_x87_arguments": "x,y dwords",
+      "consumed_return": "result ignored",
+      "scope": "Known R13 normal relocation contract; diagnostics remain open"
+    },
+    {
+      "target": "0090cfc0",
+      "ecx": "scratch",
+      "stack_or_x87_arguments": "one dword bound",
+      "consumed_return": "signed EAX",
+      "scope": "Prior bounded RNG contract; zero bound need not advance state"
+    },
+    {
+      "target": "006cfda0",
+      "ecx": "match",
+      "stack_or_x87_arguments": "slot",
+      "consumed_return": "AL nonzero predicate",
+      "scope": "Unassigned"
+    },
+    {
+      "target": "006f09f0",
+      "ecx": "slot",
+      "stack_or_x87_arguments": "x,y,mode,0,0 in five dword slots; mode100h early, otherwise -1",
+      "consumed_return": "result ignored",
+      "scope": "Unassigned stateful dispatch; early action100h write is after call"
+    },
+    {
+      "target": "006c38c0",
+      "ecx": "match",
+      "stack_or_x87_arguments": "slot",
+      "consumed_return": "AX masks; full EAX stored at 007147ca",
+      "scope": "Prior tactical lookup dependency; repeated calls and guards preserved"
+    },
+    {
+      "target": "006bce80",
+      "ecx": "match",
+      "stack_or_x87_arguments": "slot,&x,&y,mode12 or4 in four dword slots",
+      "consumed_return": "AL predicate plus output dwords",
+      "scope": "Unassigned; seven static sites; failed calls may affect state/RNG"
+    },
+    {
+      "target": "006c2be0",
+      "ecx": "match",
+      "stack_or_x87_arguments": "slot,&X,&Y,1",
+      "consumed_return": "output dwords consumed",
+      "scope": "Unassigned"
+    },
+    {
+      "target": "00715f50",
+      "ecx": "slot",
+      "stack_or_x87_arguments": "X dword",
+      "consumed_return": "AL replaces only local X low byte",
+      "scope": "Unassigned"
+    },
+    {
+      "target": "006cb700",
+      "ecx": "match",
+      "stack_or_x87_arguments": "y,side,1 in three dword slots",
+      "consumed_return": "signed AL compared to R3+1",
+      "scope": "Unassigned"
+    },
+    {
+      "target": "006c4180",
+      "ecx": "match",
+      "stack_or_x87_arguments": "side,Y in two dword slots",
+      "consumed_return": "negative signed AL ignored; otherwise adjusts Y low byte",
+      "scope": "Unassigned"
+    },
+    {
+      "target": "006cb930",
+      "ecx": "match",
+      "stack_or_x87_arguments": "side==0 low byte, partnerY dword",
+      "consumed_return": "AL nonzero bypasses partnerR21",
+      "scope": "Unassigned"
+    },
+    {
+      "target": "00944cff",
+      "ecx": "caller state",
+      "stack_or_x87_arguments": "source pointer,0,0,local buffers",
+      "consumed_return": "not used locally",
+      "scope": "Unassigned diagnostics"
+    },
+    {
+      "target": "0090d130",
+      "ecx": "caller state",
+      "stack_or_x87_arguments": "local buffers,5226h",
+      "consumed_return": "EAX forwarded to formatter",
+      "scope": "R13 tiny dependency returns00ad4394; body outside owned range"
+    },
+    {
+      "target": "00944c9f",
+      "ecx": "caller state",
+      "stack_or_x87_arguments": "shared buffer,format,forwarded EAX",
+      "consumed_return": "not used locally",
+      "scope": "Unassigned diagnostics"
+    },
+    {
+      "target": "005e8290",
+      "ecx": "caller state",
+      "stack_or_x87_arguments": "Error label,shared buffer,0",
+      "consumed_return": "not used locally",
+      "scope": "Unassigned diagnostics; continuation to global zero and fallback if returns"
+    },
+    {
+      "target": "006c4130",
+      "ecx": "match",
+      "stack_or_x87_arguments": "slot",
+      "consumed_return": "signed AL supplies gate and 5*bound",
+      "scope": "Unassigned"
+    },
+    {
+      "target": "006f5b80",
+      "ecx": "slot",
+      "stack_or_x87_arguments": "0",
+      "consumed_return": "result ignored",
+      "scope": "Unassigned action boundary"
+    },
+    {
+      "target": "006cd5f0",
+      "ecx": "match",
+      "stack_or_x87_arguments": "slot",
+      "consumed_return": "AL predicate",
+      "scope": "Unassigned"
+    },
+    {
+      "target": "00945640",
+      "ecx": "caller state",
+      "stack_or_x87_arguments": "x87 float32(slot+e1)+10.0f, no stack slot",
+      "consumed_return": "EAX used as RNG bound",
+      "scope": "Original conversion dependency; exceptional domain remains open"
+    }
+  ],
+  "unresolved": [
+    "Full unassigned callee bodies and ordered transitive RNG/write effects",
+    "Caller reachability and actual side/coordinate/profile/partner/alias invariants",
+    "Meaning and lifecycle of action words and opaque flags",
+    "x87 control, conversion exceptional behavior and live float domain",
+    "Normal-return and nonvolatile preservation assumptions for unassigned helpers",
+    "No original-instruction oracle for connected dispatcher or shot outcome"
+  ],
+  "scope_limits": [
+    "No game or UI build",
+    "No TypeScript behavior port",
+    "No shared atlas/checkpoint/native changes",
+    "No original bytes or bulk source redistributed",
+    "No live shot outcome or full-match equivalence claim"
+  ]
+}
