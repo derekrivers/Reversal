@@ -195,7 +195,7 @@
         "0062ca4f"
       ],
       "order": "within0062ed70 refresh before callerR25",
-      "operation": "loop R(trunc(signed8(player+5b)/3)+2), conditional byte increment; see report for gates",
+      "operation": "per-draw RNG argument=trunc(signed8(player+5b)/3)+2; iteration limit=min(uint16(first elapsed helper result),elapsed-like quantity) at0062c9f9..0062ca19, with early unsigned byte>=50 exit; zero draw increments byte",
       "action33": "conditional cache/update path"
     },
     {

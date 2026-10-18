@@ -111,6 +111,8 @@
       "0062ca4f",
       "0062cb18"
     ],
+    "loop_rng_argument": "trunc(signed8(player+5b)/3)+2 at0062ca4f; argument to each RNG call, separate from iteration count",
+    "loop_iteration_limit": "min(uint16(first elapsed helper result),elapsed-like quantity) at0062c9f9..0062ca19; before each draw unsigned byte(global00ae2d0c base+79*index+a)>=50 exits early",
     "lifecycle_calls": [
       "0062c895",
       "0062c8ac"

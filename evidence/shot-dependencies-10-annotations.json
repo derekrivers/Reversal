@@ -44,7 +44,7 @@
     },
     {
       "address": "0062ca4f",
-      "comment": "R10-A: conditional elapsed-bucket loop bound=trunc(signed8(player+5b)/3)+2. Before each draw unsigned byte(global00ae2d0c base+79*index+a)>=50 stops; zero draw increments byte. RNG precedes caller006cfee7 R25.",
+      "comment": "R10-A: per-draw RNG argument=trunc(signed8(player+5b)/3)+2. Loop iteration limit=min(uint16(first elapsed helper result),elapsed-like quantity), selected at0062c9f9..0062ca19. Before each draw unsigned byte(global00ae2d0c base+79*index+a)>=50 stops; zero draw increments byte. RNG precedes caller006cfee7 R25.",
       "confidence": "high static"
     },
     {
