@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-18",
+  "input_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "artifacts": [
+    {
+      "filename": "cm0102-ghidra-database.zip",
+      "bytes": 69793576,
+      "sha256": "324166438e9148cdf10b757fce21c44e9a114d60c0577fd16cc3ea6da9cfdb08",
+      "git_tracked": false
+    }
+  ],
+  "retention": "Native checkpoint 16 and all earlier archives are preserved separately; canonical project was saved by Ghidra. Earlier checkpoint metadata remains historical."
+}

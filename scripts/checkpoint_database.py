@@ -40,7 +40,8 @@ def stage():
     for p in [STAGE,RESTORED]:remove_stage_tree(p)
     STAGE.mkdir(); RESTORED.mkdir()
     project=STAGE/'ghidra-project'
-    shutil.copytree(ROOT/'ghidra-project',project,ignore=shutil.ignore_patterns('*.lock','*.lock~','.*','tmp*.ps'))
+    project_source=Path(os.environ.get('CM0102_GHIDRA_PROJECT_SOURCE',str(ROOT/'ghidra-project')))
+    shutil.copytree(project_source,project,ignore=shutil.ignore_patterns('*.lock','*.lock~','.*','tmp*.ps'))
     annotations=json.loads((ROOT/'evidence/progression-annotations.json').read_text())
     source=(ROOT/'scripts/CM0102AnnotateMatch.java').read_text()
     rows=re.findall(r'\{"([0-9a-f]{8})","(cm0102_[^"]+)"',source)
@@ -48,11 +49,11 @@ def stage():
     names.update({row[0]:row[1] for row in annotations['annotations']})
     types={t['path']:t for t in annotations['partial_data_types']}
     comments_by_address={}
-    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json']:
+    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json']:
       event_receipt=ROOT/'evidence'/receipt_name
       if event_receipt.exists():
         event_annotations=json.loads(event_receipt.read_text())
-        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json') else row[1])
+        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json') else row[1])
                       for row in event_annotations['annotations']})
         labels.update(dict(event_annotations['global_labels']))
         types.update({t['path']:t for t in event_annotations['partial_data_types']})
@@ -70,6 +71,9 @@ def stage():
     r15=json.loads((ROOT/'evidence/investigation-15-annotations.json').read_text())
     r15_names={row[0] for row in r15['annotations']}
     r15_notes={row[0]:'CM0102 investigation15 (2026-10-18): '+row[1] for row in r15['function_comments']}
+    r16=json.loads((ROOT/'evidence/investigation-16-annotations.json').read_text())
+    r16_names={row[0] for row in r16['annotations']}
+    r16_notes={row[0]:'CM0102 investigation16 (2026-10-18): '+row[1] for row in r16['function_comments']}
     functions=[]
     for a,n in sorted(names.items()):
       row={'address':a,'name':n}
@@ -79,6 +83,7 @@ def stage():
       if a in r13_names:row['comment']=r13_notes.get(a)
       if a in r14_names:row['comment']=r14_notes.get(a)
       if a in r15_names:row['comment']=r15_notes.get(a)
+      if a in r16_names:row['comment']=r16_notes.get(a)
       functions.append(row)
     pe=struct.unpack_from('<I',data,0x3c)[0];optional=pe+24
     base=struct.unpack_from('<I',data,optional+28)[0]
