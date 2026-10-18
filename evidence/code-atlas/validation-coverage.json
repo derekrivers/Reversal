@@ -57,6 +57,22 @@
       "module": "reconstruction/penalty-preparation.ts",
       "evidence": "evidence/penalty-preparation-validation/x86-penalty-preparation.json",
       "boundary": "Synthetic entry frame; prelude skipped; rating*5 restricted to supported RNG domain"
+    },
+    {
+      "function": "00700420",
+      "scope": "independent-instruction-slices",
+      "behavior": "Penalty keeper base-response draws",
+      "module": "reconstruction/penalty-resolution.ts",
+      "evidence": "evidence/penalty-resolution-validation/oracle.json",
+      "boundary": "007004d6..007004ec only; synthetic established frame; validity checks and common x87/RNG postlude excluded"
+    },
+    {
+      "function": "00702050",
+      "scope": "independent-instruction-slices",
+      "behavior": "Penalty shot category and scoring-branch comparison",
+      "module": "reconstruction/penalty-resolution.ts",
+      "evidence": "evidence/penalty-resolution-validation/oracle.json",
+      "boundary": "Independent00703b25..00703be7 and00706cba..00706d26 slices; adjusted quality/keeper terms supplied; no score, save or commentary execution"
     }
   ]
 }

@@ -41,7 +41,7 @@ def stage():
     names.update({row[0]:row[1] for row in annotations['annotations']})
     types={t['path']:t for t in annotations['partial_data_types']}
     comments=[]
-    for receipt_name in ['event-annotations.json','penalty-annotations.json']:
+    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json']:
       event_receipt=ROOT/'evidence'/receipt_name
       if event_receipt.exists():
         event_annotations=json.loads(event_receipt.read_text())

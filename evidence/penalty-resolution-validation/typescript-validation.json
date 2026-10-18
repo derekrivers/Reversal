@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "classification_cases": 131072,
+  "keeper_cases": 4096,
+  "gate_cases": 4056,
+  "comparisons": "category, exposed RNG state, keeper base draw, float32 ratio and branch destination",
+  "limitations": [
+    "Slices are tested independently; no full shot, penalty or match equivalence.",
+    "Classification receives quality after earlier adjustments and an externally supplied variant byte; penalty threshold120 only.",
+    "Keeper base branch skips validity/position checks and stops before00700a4f floating-point adjustment and additional RNG.",
+    "Ratio gate requires shot category1,14 or15; keeperTerm and quality are supplied after upstream changes.",
+    "The71 threshold is a branch comparison, not a probability or unconditional goal; score changes and commentary do not execute."
+  ]
+}
