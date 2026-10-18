@@ -1,6 +1,6 @@
 # Reversal
 
-Evidence-led reverse engineering of **Championship Manager 01/02, SI patch 3.9.68**. The current priority is mapping function contracts across the executable. Earlier small TypeScript reconstructions remain checked against original x86 instructions; game and UI implementation is deferred.
+Evidence-led reverse engineering of **Championship Manager 01/02, SI patch 3.9.68**. The current priority is mapping function contracts and incrementally reconstructing bounded behavior in headless TypeScript with original x86 instruction validation. Game and UI implementation is deferred.
 
 This repository contains investigations 01–18: an executable-wide code atlas, recovered layouts, narrow TypeScript reconstructions and numerical validation fixtures. Function recovery is the current priority; no complete match or playable browser game has been reproduced.
 
