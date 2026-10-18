@@ -1,0 +1,273 @@
+{
+  "investigation": 9,
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses",
+  "method": {
+    "decoder": "Capstone 5.0.9 x86 32-bit",
+    "pe_mapping": "pefile 2024.8.26",
+    "function_boundaries": "evidence/code-atlas/functions.jsonl from retained Ghidra listing",
+    "scope": "Selected static sites; no runtime trace or new behavioral oracle",
+    "limits": "Literal displacement scan was a lead finder; aliases, block operations and indexed loops require manual dataflow."
+  },
+  "instruction_sites": [
+    {
+      "va": "006ce110",
+      "assembly": "mov eax, dword ptr [ecx + 0xf59e]"
+    },
+    {
+      "va": "006ce127",
+      "assembly": "mov dword ptr [ecx + 0xf59e], ebp"
+    },
+    {
+      "va": "006ce171",
+      "assembly": "mov dword ptr [ecx + 0xf59e], eax"
+    },
+    {
+      "va": "006ce1dc",
+      "assembly": "mov byte ptr [ebp + 0x1a], dl"
+    },
+    {
+      "va": "006ce1fa",
+      "assembly": "mov byte ptr [eax + 0x19], bl"
+    },
+    {
+      "va": "006ce2f2",
+      "assembly": "mov eax, dword ptr [ecx + 0xf5a2]"
+    },
+    {
+      "va": "006ce2f8",
+      "assembly": "ret 4"
+    },
+    {
+      "va": "006ce2fb",
+      "assembly": "mov eax, dword ptr [ecx + 0xf59e]"
+    },
+    {
+      "va": "006eecb9",
+      "assembly": "call 0x6ec010"
+    },
+    {
+      "va": "006eecc1",
+      "assembly": "mov al, byte ptr [eax + 0xf]"
+    },
+    {
+      "va": "006eecc8",
+      "assembly": "mov bl, 0x14"
+    },
+    {
+      "va": "006ef833",
+      "assembly": "movsx ebp, bl"
+    },
+    {
+      "va": "006f01f1",
+      "assembly": "mov eax, ebp"
+    },
+    {
+      "va": "006f01f3",
+      "assembly": "imul eax, ebp"
+    },
+    {
+      "va": "006f0224",
+      "assembly": "call 0x945640"
+    },
+    {
+      "va": "006f0255",
+      "assembly": "mov word ptr [esi + 0x168], dx"
+    },
+    {
+      "va": "006f025c",
+      "assembly": "mov word ptr [esi + 0x16a], dx"
+    },
+    {
+      "va": "006f040d",
+      "assembly": "mov ebp, 0x3f"
+    },
+    {
+      "va": "006f0414",
+      "assembly": "lea edi, [esi + 0x11a]"
+    },
+    {
+      "va": "006f0472",
+      "assembly": "movsx eax, word ptr [esi + 0x37]"
+    },
+    {
+      "va": "006f0495",
+      "assembly": "fmul qword ptr [0x96a6e8]"
+    },
+    {
+      "va": "006f04a2",
+      "assembly": "mov word ptr [edi], ax"
+    },
+    {
+      "va": "006f05ad",
+      "assembly": "add edi, 2"
+    },
+    {
+      "va": "006f05b9",
+      "assembly": "call 0x6f44a0"
+    },
+    {
+      "va": "006ec696",
+      "assembly": "mov word ptr [esi + 0x3b], ax"
+    },
+    {
+      "va": "006ec789",
+      "assembly": "mov word ptr [esi + 0x3b], ax"
+    },
+    {
+      "va": "006ec8c0",
+      "assembly": "mov word ptr [esi + 0x3b], ax"
+    },
+    {
+      "va": "006ec9fe",
+      "assembly": "mov word ptr [esi + 0x3b], ax"
+    },
+    {
+      "va": "006eca1f",
+      "assembly": "mov word ptr [esi + 0x3b], ax"
+    },
+    {
+      "va": "006eca59",
+      "assembly": "mov word ptr [esi + 0x3b], ax"
+    },
+    {
+      "va": "006eca80",
+      "assembly": "mov word ptr [esi + 0x3b], ax"
+    },
+    {
+      "va": "006ed96b",
+      "assembly": "movsx eax, word ptr [esi + 0x3b]"
+    },
+    {
+      "va": "006ed98d",
+      "assembly": "fst dword ptr [esi + 0xd1]"
+    },
+    {
+      "va": "006ed993",
+      "assembly": "fcomp qword ptr [0x9689a0]"
+    },
+    {
+      "va": "006ed9a0",
+      "assembly": "mov dword ptr [esi + 0xd1], ebp"
+    },
+    {
+      "va": "0070701b",
+      "assembly": "mov byte ptr [ebx + 0xf], al"
+    },
+    {
+      "va": "0070ae8f",
+      "assembly": "mov byte ptr [edi + 0xf], al"
+    },
+    {
+      "va": "0070c518",
+      "assembly": "mov byte ptr [edi + 0xf], al"
+    },
+    {
+      "va": "006b84d7",
+      "assembly": "mov byte ptr [ebx + 0x8eaa], 0"
+    },
+    {
+      "va": "006cd88f",
+      "assembly": "mov byte ptr [esi + 0x8eaa], al"
+    },
+    {
+      "va": "006bbec3",
+      "assembly": "mov byte ptr [esi + 0x8eaa], dl"
+    },
+    {
+      "va": "00700394",
+      "assembly": "mov byte ptr [ecx + 0x8eaa], al"
+    },
+    {
+      "va": "006f08f5",
+      "assembly": "mov byte ptr [eax + 0x8eaa], bl"
+    },
+    {
+      "va": "0070aa51",
+      "assembly": "call 0x700420"
+    },
+    {
+      "va": "0070c188",
+      "assembly": "call 0x700420"
+    },
+    {
+      "va": "006cd462",
+      "assembly": "mov dword ptr [edx + 0xf5ae], esi"
+    },
+    {
+      "va": "006cd47e",
+      "assembly": "mov dword ptr [eax + 0xf5ae], esi"
+    }
+  ],
+  "constants": [
+    {
+      "va": "00967880",
+      "width_bits": 64,
+      "value": 0.1
+    },
+    {
+      "va": "00967890",
+      "width_bits": 64,
+      "value": 1.0
+    },
+    {
+      "va": "009689a0",
+      "width_bits": 64,
+      "value": 0.0
+    },
+    {
+      "va": "00968968",
+      "width_bits": 64,
+      "value": 0.5
+    },
+    {
+      "va": "009688b0",
+      "width_bits": 64,
+      "value": 10.0
+    },
+    {
+      "va": "009688a0",
+      "width_bits": 64,
+      "value": 5.0
+    },
+    {
+      "va": "00969040",
+      "width_bits": 64,
+      "value": 0.75
+    },
+    {
+      "va": "009689b0",
+      "width_bits": 64,
+      "value": 0.8
+    },
+    {
+      "va": "009689d8",
+      "width_bits": 64,
+      "value": 0.9
+    },
+    {
+      "va": "0096d6e0",
+      "width_bits": 64,
+      "value": 80.0
+    },
+    {
+      "va": "0096a6e8",
+      "width_bits": 64,
+      "value": 0.775
+    }
+  ],
+  "rating_dispatch": [
+    {
+      "slot_offset": "0x168",
+      "word_index": 39,
+      "selector": 7,
+      "target": "006f0472"
+    },
+    {
+      "slot_offset": "0x16a",
+      "word_index": 40,
+      "selector": 7,
+      "target": "006f0472"
+    }
+  ]
+}

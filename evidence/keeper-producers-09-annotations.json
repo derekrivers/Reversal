@@ -1,0 +1,23 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses",
+  "status": "Proposals only; coordinator must inspect before applying to the canonical native project",
+  "annotations": [
+    ["006ec010", "cm0102_recompute_roster_attributes_candidate", "Investigation09 static producer map: writes signed16 derived rating slot+3b (final rescale006eca80), float32 adjustment+d1 at006ed98d with negative-to-zero clamp006ed9a0, and other float attributes. Staff pointer+69/player candidate+6d; ECX slot, RET0. Full producer behavior and semantic source-stat labels unvalidated."],
+    ["006eecb0", "cm0102_refresh_roster_ratings_candidate", "Investigation09 static producer map: calls006ec010 at entry; computes equal initial+168/+16a words006f0255/025c; then63-word dispatch loop from+11a. Indices39/40 both select006f0472, yielding low16(ftol(0.775*s16(initial)+7*(s16(slot+37)+30))). Calls RNG-consuming006f44a0 afterward. ECX slot, RET4; no whole-producer oracle."],
+    ["006ce110", "cm0102_select_goalkeeper_slot_candidate", "Investigation09 static refinement: mutates both caches match+f59e/+f5a2;20 slots/side at+4796/+6a6e stride1be. Invalidates cached negative tactical index; first0..10 tactical-word1 slot otherwise; active-slot fallback may modify+19/+1a. No activity+2b guard here. Input ECX match and side stack byte; selector1 returns+f5a2 otherwise+f59e, pointer EAX, RET4; may return null."]
+  ],
+  "code_comments": [
+    ["006f0255", "Equal initial keeper rating words are subsequently adjusted by indexed loop006f0428..006f05b1; do not use these stores alone as final producer formula."],
+    ["006f0472", "Selected for rating indices39/40 in63-word loop; float64 constant0096a6e8 is0.775. Word store006f04a2 narrows ftol result."],
+    ["006ed98d", "FST float32 slot+d1 leaves x87 value for comparison against0 before optional dword-zero write006ed9a0. Depends on signed16+3b, age-candidate-scaled signed player+3a, and local float adjustment."],
+    ["006eca80", "Final observed+3b store in this routine: low16(ftol(0.5*s16(previous)+80)); earlier tactical lower/upper clamps operate before this rescale."],
+    ["0070701b", "Byte counter+f increments modulo256 behind tactical-position1 guard. Parallel caller sites0070ae8f/0070c518. Initialization/reset and goals-conceded semantics remain open."],
+    ["006cd88f", "Match+8eaa byte producer following coordinate perturbation: third stack argument byte0 ->0; otherwise low8(1+RNG(signed8(arg)+1)). Reachable input domain unresolved."],
+    ["006bbec3", "Match+8eaa countdown decrement; +f582/+f57a nonnull suppress update; +8eb2 nonzero clears state instead. Movement/flight timer remains a candidate label."],
+    ["00700394", "Direct byte setter for match+8eaa; caller006ffc7c supplies1+RNG(3)."],
+    ["006cd462", "Candidate pointer stored to match+f5ae when0070dfd0 returnsAL2; AL1 path increments candidate+12 and stores at006cd47e. Contact/block semantics unresolved."]
+  ],
+  "partial_data_types": [],
+  "global_labels": []
+}
