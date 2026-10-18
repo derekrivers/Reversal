@@ -1,0 +1,25 @@
+{
+  "work_unit": "R22-B",
+  "validation_scope": "extractor integrity, not original-instruction execution",
+  "normal_optimized_output_identical": true,
+  "generated_evidence_sha256": "7f1da32563d245ad5448db4d15722c745abb4761df9a1ef84ec31d77fe57e60b",
+  "negative_checks": {
+    "altered_specimen_normal": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_specimen_optimized": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_native_operand_normal": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    },
+    "altered_native_operand_optimized": {
+      "rejected_before_output": true,
+      "error_class": "ValueError"
+    }
+  },
+  "private_input_note": "Pinned executable and read-only checkpoint-21 exports remain outside Git"
+}

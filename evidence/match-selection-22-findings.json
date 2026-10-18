@@ -1,0 +1,46 @@
+{
+  "work_unit": "R22-B",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "bf4e1739d0c1ab1780fca5f95ec9bf0f9447d7cbe28520366a79aa36b6cc5971",
+  "entry_va": "006ceb90",
+  "body_bytes": 2899,
+  "instruction_count": 832,
+  "contract_class": "complete local static body, original PE/native instruction verified",
+  "execution_validated": false,
+  "normal_abi": {
+    "receiver_register": "ECX",
+    "entry_stack_slots": ["low8 side", "low8 mode", "full mask pointer"],
+    "callee_cleanup_bytes": 12,
+    "nonvolatile_registers_saved_restored": ["EBX", "EBP", "ESI", "EDI"],
+    "return_register": "EAX",
+    "return_meaning": "selected candidate pointer, or zero when mask is nonnull and no candidate is chosen"
+  },
+  "candidate_scan": {
+    "normal_candidate_count": 20,
+    "order": "ascending index 0..19",
+    "address_expression": "m+0x4796+(20*s8(side)+i)*0x1be",
+    "selection_rule": "first scored candidate or signed16(score)>signed16(saved-score); ties keep earlier candidate"
+  },
+  "direct_rng": {
+    "target_va": "0090cfc0",
+    "sites_va": ["006ceedc", "006cef38", "006cf19b"],
+    "max_per_candidate_local_visit": 1,
+    "max_per_normal_local_invocation": 20,
+    "limits": "Transitive RNG from other callees and exceptional paths unproved"
+  },
+  "direct_nonframe_writes": [
+    {"site_va": "006cecea", "target": "candidate+0x19", "width_bytes": 1, "value": "0xff"},
+    {"site_va": "006cecfa", "target": "candidate+0x19", "width_bytes": 1, "value": "0xff"},
+    {"site_va": "006cf654", "target": "global 00b67a34", "width_bytes": 4, "value": 0},
+    {"site_va": "006cf6c8", "target": "global 00b67a34", "width_bytes": 4, "value": 0}
+  ],
+  "normal_return_va": "006cf5f8",
+  "diagnostic_call_sites_va": ["006cf66a", "006cf6de"],
+  "native_name_proposal": "match_select_scored_slot_006ceb90",
+  "limits": [
+    "No original-instruction execution oracle or TypeScript port",
+    "No validated live pointers, aliases, candidate ownership or connected match behavior",
+    "x87 score arithmetic and exceptional values are not numerically validated",
+    "Diagnostic call nonreturn and all transitive callee effects remain boundaries"
+  ]
+}
