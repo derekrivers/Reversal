@@ -2,7 +2,7 @@
 
 Evidence-led reverse engineering of **Championship Manager 01/02, SI patch 3.9.68**. The current priority is mapping function contracts across the executable. Earlier small TypeScript reconstructions remain checked against original x86 instructions; game and UI implementation is deferred.
 
-This repository contains investigations 01–14: an executable-wide code atlas, recovered layouts, narrow TypeScript reconstructions and numerical validation fixtures. It is an early research project: no complete match or playable browser game has been reproduced.
+This repository contains investigations 01–15: an executable-wide code atlas, recovered layouts, narrow TypeScript reconstructions and numerical validation fixtures. Function recovery is the current priority; no complete match or playable browser game has been reproduced.
 
 ## Current findings
 
@@ -18,13 +18,14 @@ This repository contains investigations 01–14: an executable-wide code atlas, 
 | Penalty resolution boundaries | Keeper base draws, signed16 shot categories and a scoring-branch gate; 139,224 independent original-slice cases; complete outcomes still open |
 | Keeper response body | Connected penalty base+postlude; 8,192 cases at explicit 53/64-bit precision; entry prelude and full outcome still open |
 | Penalty keeper entry | Action33 entry-to-return, including tactical/grid/variant guards; 9,056 public cases plus a local original-grid repeat |
-| Native database | 85 named functions, 16 globals, 9 recovered structures and 93 fields; restored from an extracted archive |
+| Native database | 94 named functions, 16 globals, 9 recovered structures and 93 fields; restored from an extracted archive |
 | Investigation 09 | Static shot-resolution RNG ordering, keeper field producers, two database read wrappers and CRT x87 precision request; see the scoped reports |
 | Investigation 10 | Static shot-helper refresh/effect dependencies, tactical plan boundaries and league aggregation/amount boundaries; see the scoped reports |
 | Investigation 11 | Static other-slot shot-helper scan, transfer-manager construction and finance row/load boundaries; see the scoped reports |
 | Investigation 12 | Static match-helper ABI, contract row allocation and match-screen selection/dispatch boundaries; see the scoped reports |
 | Investigation 13 | Static match lookup/relocation, contract scalar/row lookup and training manager contracts; see the scoped reports |
 | Investigation 14 | Static match coordinate/action dispatch, sixteen database read wrappers and five scouting storage accessors; see the scoped reports |
+| Investigation 15 | Static other-slot match dispatch, four database field readers, four scouting lifecycle bodies and a separate structural classification of 3,873 unwind bodies; see the scoped reports |
 
 Start with [investigation 08](reports/investigation-08.md), [the current research queue](coordination/QUEUE.md), [the executable code atlas](evidence/code-atlas/README.md), [port architecture](docs/ARCHITECTURE.md) and [the research roadmap](docs/ROADMAP.md). The [historical HTML report](reports/investigation-04.html) includes investigations 01–04; download it to view its formatting.
 
@@ -58,11 +59,11 @@ The same checks run in [GitHub Actions](.github/workflows/research-checks.yml). 
 
 The native Ghidra database and full research bundle are preserved separately as private artifacts. The database contains imported game bytes, so this public repository tracks its **manifest, restore receipt, expected annotations and rebuild scripts** rather than the native project.
 
-- [Current checkpoint metadata](checkpoints/2026-10-18-investigation-14/) and [latest checkpoint pointer](checkpoints/latest.json)
+- [Current checkpoint metadata](checkpoints/2026-10-18-investigation-15/) and [latest checkpoint pointer](checkpoints/latest.json)
 - [Database recovery instructions](docs/DATABASE.md)
 - [Data and evidence inventory](docs/PROVENANCE.md)
 
-The saved database was opened from an extracted archive in **Ghidra 12.1.4 / JDK 21**, read-only and without reanalysis. Verification checked the names and layouts above, 162 original code samples, 76 code comments and all 10 project-file hashes. The CI metadata check does not repeat this native reopen test.
+The saved database was opened from an extracted archive in **Ghidra 12.1.4 / JDK 21**, read-only and without reanalysis. Verification checked 94 named functions, 16 labels, 9 partial structures with 93 fields, 171 original code samples, 76 code comments and all 10 project-file hashes. The CI metadata check does not repeat this native reopen test.
 
 ## Tooling and specimen
 

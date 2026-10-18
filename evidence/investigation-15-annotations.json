@@ -1,0 +1,61 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 15,
+  "scope": "Nine reviewed static working names only; no behavior oracle, prototype, comment or data type applied.",
+  "annotations": [
+    [
+      "00714d40",
+      "FUN_00714d40",
+      "match_slot_state_coordinate_dispatch_00714d40"
+    ],
+    [
+      "0054dc90",
+      "FUN_0054dc90",
+      "cm0102_read_db_245_fields_expand_word80"
+    ],
+    [
+      "0054e9a0",
+      "FUN_0054e9a0",
+      "cm0102_read_db_44_fields_expand_three_words"
+    ],
+    [
+      "0054f150",
+      "FUN_0054f150",
+      "cm0102_read_db_46_fields_expand_three_words"
+    ],
+    [
+      "0054ffd0",
+      "FUN_0054ffd0",
+      "cm0102_read_db_6b_fields_expand_word69"
+    ],
+    [
+      "007f6760",
+      "FUN_007f6760",
+      "cm0102_construct_scout_storage_manager"
+    ],
+    [
+      "007f6aa0",
+      "FUN_007f6aa0",
+      "cm0102_cleanup_scout_storage_manager"
+    ],
+    [
+      "008041c0",
+      "FUN_008041c0",
+      "cm0102_construct_scout_record_copy_object"
+    ],
+    [
+      "00804450",
+      "FUN_00804450",
+      "cm0102_copy_ten_records_to_scout_storage"
+    ]
+  ],
+  "function_comments": [],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "match-dependency-15-findings.json",
+    "db-field-readers-15-annotations.json",
+    "scouting-lifecycle-15-annotations.json"
+  ]
+}
