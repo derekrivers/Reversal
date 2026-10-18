@@ -37,6 +37,15 @@
     "201": 61
   },
   "sample_manifest_sha256": "e5df99ec062265fe66277a9d1dc09887472fea081132a51471e54b6e49614393",
+  "native_sample_verification": {
+    "comparison": "complete normalized instructions including operand widths, registers, segments, immediates, memory expressions, branch targets and callees",
+    "samples": 4,
+    "instructions": 217,
+    "historical_semantic_commit": "a2a2b8de126d3d8a555c3eb7c8ea777b07a269ec",
+    "historical_semantic_sha256": "dcb2596fde871086ee984e3765ff6a5d726ff23121128c6a0882dbf3c1ca80a1",
+    "current_semantic_disjointness_checked": true,
+    "optimized_python": "refused before evidence I/O"
+  },
   "limitations": [
     "Ghidra-inferred function starts and bounds",
     "call target effects unresolved",
