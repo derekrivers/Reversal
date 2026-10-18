@@ -1,0 +1,242 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "944954fd19b73a133f4505afc5b28a486479b45e",
+  "scope": "R10-C exact league.cpp entries00682b30/00682e10/00682f70; dependencies/callers only support these boundaries. Static evidence, no behavior oracle or game execution.",
+  "address_space": "virtual addresses unless explicitly labelled file offset",
+  "contracts": [
+    {
+      "entry": "00682b30",
+      "proposed_name": "cm0102_write_league_peer_bucket_bytes_candidate",
+      "confidence": {
+        "abi_widths_direct_effects": "high static",
+        "peer_bucket_interpretation": "moderate",
+        "full_league_ranking": "unresolved"
+      },
+      "abi": {
+        "receiver": "ECX; retained in EBX",
+        "stack_arguments": [
+          {
+            "offset_at_entry": 4,
+            "bytes": 4,
+            "role": "borrowed table of0x3b-byte rows"
+          }
+        ],
+        "cleanup": "RET4 at00682bb7 and00682e07",
+        "return": "No supported semantic return; treat as void candidate",
+        "preserved_registers": "EBX/ESI and on successful allocation EBP/EDI are pushed/restored"
+      },
+      "reads": [
+        "receiver+3e signed16 count",
+        "input row+0 raw32 key",
+        "input row+5 pointer32 to14-byte peer entries",
+        "input row+19 word used for equality, not signed ordering",
+        "peer entry+0 raw32 key; +4/+5/+6/+7 bytes; +8/+a/+c words"
+      ],
+      "effects": [
+        "Allocates count*0x3b zeroed scratch through00945501, checked for null at00682b4f. No positive-count validation before allocation.",
+        "Copies each input row key to scratch row+0; for distinct rows with equal input WORD+19, searches up to count-1 nested entries for matching raw32 peer key.",
+        "Adds matched peer bytes+4..7 to scratch bytes+11..14 and words+8/+a/+c to scratch words+15/+17/+19 at native widths (wrap8/wrap16).",
+        "Sort-like call00945333(scratch,signed16 count,0x3b,006834f0) at00682d27. Comparator is a dependency, including global00b679fc; not recovered here as a pure receiver-local contract.",
+        "After sort, first input row matching each scratch key gets BYTE+4. Bucket starts count; after each adjacent non-equal comparator result it decrements by1. Store is low8 bits at00682d94, not a word or DWORD. Duplicate input keys choose first match.",
+        "Frees only scratch via009452ca at00682df5; input table is borrowed and not reordered in this body.",
+        "Allocation failure formats league.cpp diagnostic381, clears DWORD00b67a34 and returns; no explicit termination call."
+      ],
+      "ownership": "Scratch is local allocation/free. Input table and nested entries remain caller-owned/borrowed. No receiver field writes in this body. Sort/comparator may read shared state; transitive effects not fully audited.",
+      "caller_boundary": [
+        "006827d0:00682877 passes explicit table or its earlier fallback receiver+b1; writes receiver pointer to00b679fc at0068281e before peer comparator use.",
+        "006471a0:006471b0 passes receiver+b1. Later caller writes sequential BYTE+4 values at00647213 after another sort. Do not assume the helper byte survives as a final standing."
+      ],
+      "direct_callees": [
+        "005e8290",
+        "006834f0",
+        "0090d130",
+        "00944c9f",
+        "00944cff",
+        "009452ca",
+        "00945333",
+        "00945501"
+      ],
+      "unresolved_indirect_call_sites": [],
+      "atlas_callers": [
+        "006471a0",
+        "006827d0"
+      ]
+    },
+    {
+      "entry": "00682e10",
+      "proposed_name": "cm0102_apply_league_weighted_amounts_candidate",
+      "confidence": {
+        "abi_widths_direct_control": "high static",
+        "finance_related_distribution": "moderate, corroborated by bounded finance helpers",
+        "lifecycle_phase_and_business_meaning": "unresolved"
+      },
+      "abi": {
+        "receiver": "ECX; retained in EDI",
+        "stack_arguments": [],
+        "cleanup": "plain RET; no EDX argument read",
+        "convention_limit": "ECX receiver with zero stack args; thiscall-style. Native decompiler labels fastcall, which does not establish a second EDX argument.",
+        "return": "No supported semantic return; treat as void candidate"
+      },
+      "reads": [
+        "receiver+e1 byte selector",
+        "receiver+3e signed16 count",
+        "receiver+28 signed32 numerator",
+        "receiver+b1 pointer32; row stride0x3b; row+0 opaque record pointer",
+        "selector3: global00adadfc registry; receiver+4 pointer32 whose pointee DWORD indexes registry"
+      ],
+      "effects": [
+        "Selector2 returns before weighted calculation. Selector3 requires nonnull registry, then calls selected object vtable+6c at00682eb2 with ECX=registry object and pushed receiver; concrete target/transitive effects unresolved. Null registry emits diagnostic479, clears00b67a34 and returns.",
+        "Other selector bytes build triangular count in EAX, then MOVSX ESI,AX at00682ed6 deliberately uses only signed low16 bits. Signed IDIV at00682edf divides signed DWORD+28 by this divisor. It executes before nonpositive-count loop guard00682ee8; for count<=0 the divisor is0. No guard prevents the division fault.",
+        "For each row index i, signed count-minus-i multiplies quotient with32-bit result in ESI; row0 pointer resolves via005a0590 with receiver[00ae2a38].",
+        "Amount stays on stack across resolver call005a0590(ret4); EAX becomes ECX for005999a0(ret4), which consumes the remaining amount DWORD at00682f1f.",
+        "Bounded helper005999a0 adds amount to target DWORD+148 and DWORD+a8, and sign-extends it into64-bit pair+0/+4. Resolution may normalize input via005a0590; ownership and full finance lifecycle unresolved.",
+        "If signed amount>1000, calls0048e3e0 at00682f48 with receiver ECX, record pointer, sign-extended64 amount, low-byte(index+1),0,0,-2; full notification/business effect remains a dependency.",
+        "No direct receiver writes here. No latch preventing repeated credits is written by this routine. Caller/transitive guards and dispatch may own lifecycle."
+      ],
+      "caller_boundary": [
+        "Only atlas containing caller00689ad0; exact native call00689ba4 withECX=ESI, no pushes.",
+        "Immediate predecessor tests receiver+e6 DWORD zero at00689b98..00689ba0. Earlier path also checks row table/flags and byte+11 counters; complete caller lifecycle is not claimed."
+      ],
+      "direct_callees": [
+        "0048e3e0",
+        "005999a0",
+        "005a0590",
+        "005e8290",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "unresolved_indirect_call_sites": [
+        "00682eb2"
+      ],
+      "atlas_callers": [
+        "00689ad0"
+      ]
+    },
+    {
+      "entry": "00682f70",
+      "proposed_name": "cm0102_sum_league_weighted_amounts_candidate",
+      "confidence": {
+        "abi_arithmetic_widths": "high static",
+        "use_as_budget_total": "moderate from finance neighbor/caller stores; not an outcome calculation"
+      },
+      "abi": {
+        "receiver": "ECX; retained in EDI",
+        "stack_arguments": [
+          {
+            "offset_at_entry": 4,
+            "bytes": 4,
+            "role": "raw32 increment"
+          }
+        ],
+        "cleanup": "RET4 at00683004",
+        "return": "EAX raw32 sum",
+        "preserved_registers": "ESI/EDI pushed/restored; EBX/EBP unwritten"
+      },
+      "reads": [
+        "receiver+3e signed16 count",
+        "entryESP+4 raw32 increment"
+      ],
+      "effects": [
+        "For positive count n, repeated32-bit additions produce increment*(1+2+...+n) modulo2^32. Formula is static arithmetic description, not a new validated reconstruction.",
+        "For negative count, returns 0 with no zero-count diagnostic. Exactly 0 emits diagnostic 532 and clears 00b67a34, then reloads count; if unchanged, returns 0. No termination call.",
+        "No direct receiver/table writes or allocation. Error helper side effects remain possible."
+      ],
+      "caller_boundary": [
+        "41 native direct incoming references, all verified asE8 targets against pinned bytes and matching41 atlas containing caller functions.",
+        "Caller identities/source anchors and call sites are listed in sites plus atlas; constructors/setup interpretation is provisional.",
+        "Original caller 00574b23 passes increment 250000; 00574b28 stores EAX at receiver +0x28 and 00574b2b sets selector +0xe1 to 1. Caller 00405643 passes 50000 and 00405651 stores EAX at +0x28."
+      ],
+      "direct_callees": [
+        "005e8290",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "unresolved_indirect_call_sites": [],
+      "atlas_callers": [
+        "00405540",
+        "0041e8b0",
+        "0041fd70",
+        "005147b0",
+        "00515cb0",
+        "00516dd0",
+        "00552290",
+        "005538d0",
+        "00554a40",
+        "0056ecb0",
+        "00572bf0",
+        "00574a20",
+        "00576630",
+        "00577f70",
+        "00595b70",
+        "005bc2b0",
+        "005c05d0",
+        "005db230",
+        "005df2b0",
+        "005ead60",
+        "005ebcb0",
+        "005f8430",
+        "0063a740",
+        "00641510",
+        "00646780",
+        "006634e0",
+        "0066bba0",
+        "0078bc50",
+        "0078ec60",
+        "007925e0",
+        "007c9b60",
+        "007cbdf0",
+        "007cf800",
+        "007d1520",
+        "007eb610",
+        "007eed30",
+        "007f2820",
+        "0084fc70",
+        "00855b40",
+        "00890430",
+        "00925b30"
+      ]
+    }
+  ],
+  "partial_fields": {
+    "receiver": {
+      "0x3e": "signed16 count",
+      "0x28": "signed32 distribution numerator, economic units unresolved",
+      "0xb1": "pointer32 to0x3b-byte rows",
+      "0xe1": "raw8 selector;2skip/3dispatch/othersweighted path",
+      "0x4": "pointer32 to registry index source on dispatch path"
+    },
+    "row_0x3b": {
+      "0x0": "raw32 identity/key (pointer-like in callers)",
+      "0x4": "raw8 bucket output, later overwritten by one caller",
+      "0x5": "pointer32 to14-byte peer entries",
+      "0x19": "word peer-equality discriminator, semantic field name unresolved"
+    }
+  },
+  "source_anchor": {
+    "address": "009f15f4",
+    "reference_sites": [
+      "00682b62",
+      "00682e4b",
+      "00682f91"
+    ],
+    "path": "E:\\dev\\CM3\\cm3 00-01\\cm3\\code\\comp\\league.cpp",
+    "limit": "Anchors corroborate source unit, not recovered original function names or algorithm completeness."
+  },
+  "native_corroboration": "All 215/115/47 instructions match read-only Ghidra exact-entry exports after documented textual normalization. All 2/1/41 incoming refs were verified against original calls. Digests/sites are in league-boundary-10-sites.json; private exports remain private.",
+  "limitations": [
+    "No TypeScript implementation, new numerical oracle, runtime league/fixture/result equivalence or complete saved-record format.",
+    "Comparator, custom virtual dispatch and notification/finance dependencies retain transitive uncertainties; helper names are leads only.",
+    "Loop/index/amount arithmetic can wrap at native widths; real input bounds are not established.",
+    "No fixture generation, match scoring or final league-result algorithm is recovered.",
+    "No canonical native edits, atlas changes or checkpoint work performed."
+  ],
+  "validation": {
+    "retained_research_checks": "passed: npm run check",
+    "node": "v24.19.0",
+    "diff_check": "passed before commit",
+    "static_extractor": "pinned hash checked; native assembly and incoming refs match; script compiled",
+    "limit": "No new runtime or numerical validation for league functions."
+  }
+}
