@@ -1,0 +1,30 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 25,
+  "scope": "Three reviewed working names only; two historical R10-A names/comments retained. Five complete local static bodies and bounded TypeScript paths; no prototype, comment or data type applied.",
+  "annotations": [
+    [
+      "0062ec00",
+      "FUN_0062ec00",
+      "status_signed_byte_table_lookup_0062ec00"
+    ],
+    [
+      "0062ece0",
+      "FUN_0062ece0",
+      "status_row_byte_condition_0062ece0"
+    ],
+    [
+      "00948851",
+      "FUN_00948851",
+      "locale_aware_bounded_copy_00948851"
+    ]
+  ],
+  "function_comments": [],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "status-lookup-25-annotations-proposal.json",
+    "copy-helper-25-annotations-proposal.json"
+  ]
+}
