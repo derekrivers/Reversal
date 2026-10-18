@@ -153,6 +153,22 @@
       "module": "reconstruction/selection-probe.ts",
       "evidence": "evidence/selection-probe-23-oracle.json",
       "boundary": "288 original-instruction synthetic stable mapped-memory cases, 16,200 steps and 66/121 starts; diagnostics, invalid pointers, alias mutation and connected selection excluded"
+    },
+    {
+      "function": "0062c680",
+      "scope": "preinitialized-call-free-status-guard-entry-to-return",
+      "behavior": "Null, signed count, null record and cache-stamp exit paths of status-row refresh",
+      "module": "reconstruction/status-refresh-guard.ts",
+      "evidence": "evidence/status-refresh-24-guard-oracle.json",
+      "boundary": "13 original-entry synthetic call-free cases, 568 x86 steps and 58 instruction starts; initialization, update paths, callees, x87 and connected player lifecycle excluded"
+    },
+    {
+      "function": "0054cc30",
+      "scope": "preinitialized-nonrecursive-date-difference-entry-to-return",
+      "behavior": "Signed ordinal and unsigned year pair difference with one-year borrow and global/output writes",
+      "module": "reconstruction/date-difference.ts",
+      "evidence": "evidence/date-difference-24-oracle.json",
+      "boundary": "95 original-entry synthetic nonrecursive cases, 5,100 x86 steps and 86 instruction starts with merged read/write event order; initialization callback, recursion, aliasing and abnormal SEH excluded"
     }
   ]
 }

@@ -170,6 +170,18 @@
     "R23-C": {
       "report": "reports/selection-probe-23.md",
       "evidence": "evidence/selection-probe-23-sites.json"
+    },
+    "R24-A": {
+      "report": "reports/status-refresh-24.md",
+      "evidence": "evidence/status-refresh-24-sites.json"
+    },
+    "R24-B": {
+      "report": "reports/date-difference-24.md",
+      "evidence": "evidence/date-difference-24-sites.json"
+    },
+    "R24-C": {
+      "report": "reports/path-format-24.md",
+      "evidence": "evidence/path-format-24-sites.json"
     }
   },
   "functions": [
@@ -215,8 +227,8 @@
     },
     {
       "address": "0062c680",
-      "state": "boundary-mapped",
-      "source": "R10-A"
+      "state": "contract-supported",
+      "source": "R24-A"
     },
     {
       "address": "006d0980",
@@ -792,6 +804,21 @@
       "address": "00601070",
       "state": "contract-supported",
       "source": "R23-C"
+    },
+    {
+      "address": "0054cc30",
+      "state": "contract-supported",
+      "source": "R24-B"
+    },
+    {
+      "address": "00944cff",
+      "state": "contract-supported",
+      "source": "R24-C"
+    },
+    {
+      "address": "00944c9f",
+      "state": "contract-supported",
+      "source": "R24-C"
     }
   ]
 }
