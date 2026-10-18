@@ -12,7 +12,8 @@ const checks=[
  ['reconstruction/check-clock.ts','evidence/clock-validation/clock-oracle.json','evidence/clock-validation/clock-oracle.bin','results/clock.json'],
  ['reconstruction/check-event-rules.ts','evidence/event-rule-validation','results/event-rules.json'],
  ['reconstruction/check-penalty-preparation.ts','evidence/penalty-preparation-validation/x86-penalty-preparation.json','evidence/random-validation/random-table.bin','results/penalty-preparation.json'],
- ['reconstruction/check-penalty-resolution.ts','evidence/penalty-resolution-validation','evidence/random-validation/random-table.bin','results/penalty-resolution.json']
+ ['reconstruction/check-penalty-resolution.ts','evidence/penalty-resolution-validation','evidence/random-validation/random-table.bin','results/penalty-resolution.json'],
+ ['reconstruction/check-keeper-response.ts','evidence/keeper-response-validation/oracle.json','evidence/random-validation/random-table.bin','results/keeper-response.json']
 ];
 for(const args of checks){const r=spawnSync(process.execPath,args,{stdio:'inherit'});if(r.status!==0)process.exit(r.status??1);}
 const checkpoint=JSON.parse(readFileSync('checkpoints/latest.json','utf8')).path;
