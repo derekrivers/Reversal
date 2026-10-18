@@ -1,0 +1,15 @@
+{
+  "work_unit": "R21-B",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "0eac17d",
+  "checkpoint": "2026-10-18-investigation-19",
+  "evidence_class": "complete local static contracts; no execution validation",
+  "functions": [
+    {"entry":"006f5810","body_bytes":772,"instructions":213,"branches":34,"direct_call_sites":6,"direct_rng_sites":0,"nonframe_store_sites":10,"normal_returns":1,"contract":"Update slot float32 +4d or +51 through signed-byte/profile branches, optional repeated scalar query, optional threshold query and common +59/upper-cap tail","abi":"ECX receiver; low-byte flag at entry ESP+4, full slot reused as scratch; RET4; ESI saved; no normalized return","maximum_direct_calls_per_normal_path":3,"limits":["No x87 numeric oracle or live control word","Zero-flag branch does not copy updated +4d to +51","Lower threshold query can cause fixed6500 store, not returned threshold store","Callee state/RNG/failure effects, aliases and input lifecycle unresolved"]},
+    {"entry":"006c50d0","body_bytes":271,"instructions":92,"branches":15,"direct_call_sites":7,"direct_rng_sites":0,"nonframe_store_sites":2,"normal_returns":1,"contract":"Select slot, install active state, position at x4/y10-or1, then interleave20 side-pairs with conditional relocation and unconditional callbacks","abi":"ECX receiver; no stack args; RET; EBX/EBP/ESI/EDI saved; ECX local low byte overwritten; no normalized return","direct_calls_per_normal_invocation_conservative_range":[43,83],"unconditional_loop_callback_calls":40,"limits":["Selection and coordinate arguments can carry residual high24 bits","No side0/1 validation or selected-pointer null guard","Transitive active-slot/cell/callback/selection effects unresolved","No live lifecycle, alias validity or connected outcome proof"]}
+  ],
+  "new_static_body_count": 2,
+  "new_execution_validated_body_count": 0,
+  "new_typescript_units": 0,
+  "coverage_limit": "Local original-instruction mapping; structural CFG feasibility and normal stack assumptions do not prove runtime behavior"
+}

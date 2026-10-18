@@ -1,0 +1,11 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-19",
+  "status": "Optional name-only proposals; coordinator alone applies after independent review and fresh exact-old checks",
+  "private_preflight_sha256": "f09d2b563f4622f03e2cb81a6f06620567d87a2c6330c86e75e27cffef8de2a3",
+  "old_annotation_evidence": "Pinned preflight verifies exact FUN_* names, absent/blank comments and instruction existence; no comment/prototype/body change proposed",
+  "proposals": [
+    {"address":"006f5810","kind":"function_name","old":"FUN_006f5810","new":"match_update_slot_scalar_fields_006f5810","evidence":"213 instructions/772 bytes; signed-byte branches, profile/query scaling, float32 +4d/+51 stores, common +59/10000 cap","confidence":"High for local instruction mechanics; x87 numeric and connected lifecycle/outcome validation open"},
+    {"address":"006c50d0","kind":"function_name","old":"FUN_006c50d0","new":"match_select_position_and_constrain_slots_006c50d0","evidence":"92 instructions/271 bytes; select/install/position call order, coordinate writes,20 interleaved side-pairs and40 unconditional callbacks","confidence":"High for local mechanics; selector/callback effects and live slot invariants open"}
+  ]
+}

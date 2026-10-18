@@ -1,0 +1,26 @@
+{
+  "work_unit": "R21-B",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "method": "Capstone5.0.7 independently decodes complete original-PE bodies, then compares every native-export address/mnemonic/operand; no function execution",
+  "sites_sha256": "4a15bf782fae11a52e35feb099a08f3edb047993bc7631d1947e246409d44360",
+  "native_inputs": {
+    "export_manifest_sha256": "4963cc13eed5c5754f1afd776fa4ecf74427d1664029dcff47e047b9b3c8d460",
+    "annotation_preflight_sha256": "f09d2b563f4622f03e2cb81a6f06620567d87a2c6330c86e75e27cffef8de2a3",
+    "checkpoint_archive_sha256": "bd7470b1eca19f20992e397d2b2e4db25d47c4bd4f74716d18b331d853acea34",
+    "manifest_files_checked": 4,
+    "exact_old_names_checked": 2
+  },
+  "coverage": {"new_static_bodies":2,"new_execution_validated_bodies":0,"new_typescript_units":0,"body_bytes":1043,"instructions":305,"branches":49,"direct_call_sites":13,"direct_rng_sites":0,"nonframe_store_sites":12,"frame_store_sites":18,"explicit_memory_read_sites":87,"x87_instruction_sites":47,"normal_returns":2},
+  "normal_stack": "All instruction joins balance ESP and local x87 depth; both returns restore entry ESP, under explicit normal callee-cleanup/x87 preservation assumptions; no exceptional/transitive proof",
+  "deterministic_regeneration": "Valid normal and python -O subprocesses both return0 and produce byte-identical retained sites; explicit ValueError integrity gates, no asserts",
+  "negative_checks": [
+    {"case":"altered_specimen","mutation":"Flip one bit at raw file offset0x2f5810 in a temporary private specimen copy","normal_exit":1,"optimized_exit":1,"reason":"specimen SHA-256 mismatch","no_output_created":true},
+    {"case":"altered_manifest","mutation":"Flip one bit in a temporary manifest copy","normal_exit":1,"optimized_exit":1,"reason":"export manifest SHA-256 mismatch","no_output_created":true},
+    {"case":"altered_preflight","mutation":"Flip one bit in a temporary preflight copy","normal_exit":1,"optimized_exit":1,"reason":"annotation preflight SHA-256 mismatch","no_output_created":true}
+  ],
+  "public_consistency": "Authored findings counts/entries, annotations address set, retained sites digest and all JSON checked; Python source compiles",
+  "research_checks": {"command":"npm run check","node":"v24.19.0","status":"passed","scope":"Earlier retained numerical primitives and checkpoint/atlas metadata; does not execute R21-B bodies"},
+  "privacy_review": "Six owned text research paths only; no raw PE bytes, original game table/data, bulk native assembly/decompilation or native project; selected semantic operands, addresses, scalar values and digests only",
+  "diff_check": "git diff --check and git diff --cached --check passed",
+  "limits": ["No new execution oracle or numerical x87 validation","Callee effects/RNG/failures and live pointer/alias/lifecycle validity unresolved","No connected period/match/game outcome claim","Canonical native project, shared atlas/queue and checkpoint metadata unchanged"]
+}
