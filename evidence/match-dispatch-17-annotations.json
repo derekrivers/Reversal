@@ -1,0 +1,33 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-16",
+  "status": "Name-only proposals; coordinator alone applies after independent review and fresh exact-old check",
+  "private_preflight_sha256": "0d084f0348af44eeb24a73d8cec0fc866525099b14180bd87bd9c6246beda10f",
+  "old_annotation_evidence": "Pinned preflight verifies exact FUN_* names and instruction existence; no comment, prototype, calling convention, structure or body-membership change proposed",
+  "proposals": [
+    {
+      "address": "006fa250",
+      "kind": "function_name",
+      "old": "FUN_006fa250",
+      "new": "match_candidate_action_dispatch_006fa250",
+      "evidence": "All176 instructions/576 bytes verified; supplied action/candidate/coordinates forwarded with mutable flag, optional candidate distance draw and ordered match state/counter updates",
+      "confidence": "High for local mechanical dispatch; helper effects, recursive RNG and natural-language action identity remain open"
+    },
+    {
+      "address": "006fa490",
+      "kind": "function_name",
+      "old": "FUN_006fa490",
+      "new": "match_generated_coordinate_action_dispatch_006fa490",
+      "evidence": "All678 instructions/2222 bytes verified; signed-byte generated coordinates, selected actions, ordered draws/midpoint loops, delegated dispatch and optional state updates",
+      "confidence": "High for local coordinate generation/delegation; scalar/tactical meanings and transitive outcomes remain open"
+    },
+    {
+      "address": "006f09f0",
+      "kind": "function_name",
+      "old": "FUN_006f09f0",
+      "new": "match_slot_move_contact_dispatch_006f09f0",
+      "evidence": "All4483 native-export instructions plus6 original-PE switch-closure instructions verified; movement/contact paths, occupancy swap-delete/append, coordinate commit, state/counters and movement-cost boundary; move_to diagnostic anchor",
+      "confidence": "High for local movement/contact mechanics; native21-byte membership omission documented separately, helper effects and connected outcomes remain open"
+    }
+  ]
+}

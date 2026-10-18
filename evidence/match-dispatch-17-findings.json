@@ -1,0 +1,113 @@
+{
+  "work_unit": "R17-A",
+  "baseline_commit": "edc2a3c",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "sites": "match-dispatch-17-sites.json",
+  "scope": "Three complete local static instruction contracts, including the21-byte PE-only switch closure of006f09f0; no execution oracle or connected outcome claim",
+  "functions": [
+    {
+      "entry": "006fa250",
+      "contract": "Increment slot byte2b, delegate supplied coordinates/action/candidate with mutable flag pointer; optional returned-slot route and match state/candidate updates",
+      "abi": "ECX=p; five dword stack slots(action,candidate,flag,X,Y); RET20; flag and action consumed at low-byte width in local gates; full slots forwarded; EAX/AL not normalized",
+      "normal_return_sites": ["006fa3d8", "006fa48d"],
+      "direct_rng_sites": 2,
+      "structural_direct_rng_upper_bound": 2,
+      "direct_nonframe_stores": 13,
+      "ordered_side_effects": [
+        "Increment p+2b before006fad40",
+        "Delegate via006fad40 with address of flag stack slot, then consume AL and updated low flag byte",
+        "Optional006cfd70 result invokes006f09b0 twice; first result stored float32; F(2*first_saved*second) supplies R bound",
+        "Nonzero draw: event1f78, side accumulator++, other byte13++, p byte1--, match coordinates, state7, side Boolean, active pointer0; return",
+        "Zero draw:006bb9a0 before state/updated-flag gate",
+        "State0 plus flag: candidate pointer, side marker, signed-side counters, optional R80 then007103e0(candidate)"
+      ],
+      "local_failure_boundary": "Delegated AL0 and guarded null006cfd70 result return or bypass after earlier increment; no rollback or null-entry guarantee"
+    },
+    {
+      "entry": "006fa490",
+      "contract": "Generate signed-byte coordinates and action from slot scalar, side, match coordinates and low-byte mode; optional midpoint adjustment; delegate with candidate0; optional match state route",
+      "abi": "ECX=p; two dword stack slots(mode,adjust), read as bytes; body ESP=entry ESP-0x24; RET8; EAX/AL not normalized",
+      "normal_return_sites": ["006fac83", "006fad3b"],
+      "direct_rng_sites": 37,
+      "structural_direct_rng_upper_bound": 7,
+      "direct_nonframe_stores": 9,
+      "ordered_side_effects": [
+        "Classify s16(p+19a), calculate selected-end distance, then branch-dependent Y draws before X draws",
+        "Mode/adjust/position can bypass or admit optional R3, midpoint R2 and two RNG-free signed-byte anchor loops",
+        "Increment p+2b, set local flag1, call006fad40 with candidate0",
+        "AL0 returns; otherwise optional006cfd70 result leads to F(2*g*g), R and same event/state stores as006fa250",
+        "Zero draw invokes006bb9a0; state0 and invalid match coordinates call006cd490"
+      ],
+      "local_failure_boundary": "Distance less-or-unordered branch retained; signed-byte coordinate overflow and caller/helper aliasing not normalized; no direct action/coordinate write to p"
+    },
+    {
+      "entry": "006f09f0",
+      "contract": "Move toward supplied coordinates; active-slot contact score/output dispatch and restart/loss/win routes; occupancy relocation, candidate scans and movement-cost helper; late match coordinate/state updates",
+      "abi": "ECX=p; five dword stack slots(X,Y,action,flag,mode); action low16 and flag/mode low8 used locally; body ESP=entry ESP-0x26c; six RET20 sites; EAX/AL not normalized",
+      "normal_return_sites": ["006f0af4", "006f0c1a", "006f1e30", "006f2837", "006f4262", "006f42c0"],
+      "native_body_bytes": 14526,
+      "admitted_original_bytes": 14547,
+      "native_membership_omission": {
+        "range": ["006f1639", "006f164e"],
+        "bytes": 21,
+        "source": "Pinned executable; six decoded instructions absent from native exported body",
+        "switch_site": "006f1632",
+        "table": "006f4354",
+        "mapping": [[2,"006f1647","1ff9"],[3,"006f1640","1ff7"],[4,"006f164e","1ff8"],[5,"006f1639","1ff6"]],
+        "join": "006f1670",
+        "native_change": "None applied; coordinator may evaluate body-membership correction separately"
+      },
+      "direct_rng_sites": 59,
+      "refresh_rng_bound_at_006f27b8": "30*s8(other+17)+50; MOVSX then LEA multipliers3,5,2; zero result gates subsequent R5",
+      "structural_direct_rng_upper_bound": 146,
+      "bound_assumptions": "Each of three separate signed-byte candidate scans <=127 iterations under normal callee preservation; correlated predicates ignored, feasibility not proved; transitive RNG excluded",
+      "direct_nonframe_stores": 93,
+      "local_regions": [
+        ["006f09f0","006f0af7","Snapshot, increment byte2b; equal-target/action guard and first candidate scan then return"],
+        ["006f0af7","006f0c1d","Non-active effect/helper gates, target helper, second candidate scan, action6f and return"],
+        ["006f0c1d","006f0ccf","One-step destination plus optional R1000 second step; non-active bypass to movement"],
+        ["006f0ccf","006f0e7a","Active-slot converted bounds, conditional word19c clamp, action-selected score and weather/state draws;006c87e0 output preparation"],
+        ["006f0e7a","006f124f","Initial regional commentary and distance-derived parameter; optional R20/R2"],
+        ["006f124f","006f1ea6","Other-slot contact helpers and result/action switches; optional event state, record helper, state exit or other-slot action/counter changes"],
+        ["006f1ea6","006f283a","Reset gates and lost-contact route; action dispatch, word/scalar clamp, mode helper, optional counters and immediate return"],
+        ["006f283a","006f2bc3","Won/absent contact route; float1a2, side counters, word19c clamps, per-action accumulators and state clear"],
+        ["006f2bc3","006f39af","Action0f/11/12 commentary, crossing/region/flag branches and returning diagnostic branch"],
+        ["006f39af","006f3a67","Reset state and counters, commentary and optional roster refresh draws"],
+        ["006f3a67","006f3c7d","Occupancy swap-delete/append, coordinate commit, side extreme-pointer update and third candidate scan"],
+        ["006f3c7d","006f3f7d","Match-byte/tactics/grid/flags movement cost and006f56c0 boundary"],
+        ["006f3f7d","006f42c3","Active/reset coordinate propagation or possession-pointer helper gates and final side-selected coordinate blending"]
+      ],
+      "local_failure_boundary": "Nonnull/aligned slot and early match/profile accesses assumed; no occupancy capacity checks, transactional rollback, normalized result or transitive exception guarantee; diagnostic rejoins movement"
+    }
+  ],
+  "dependency_boundaries": [
+    {"targets":["006fad40"],"boundary":"ECX=p; seven slots(currentX,currentY,action,&flag,candidate,targetX,targetY); AL gates continuation; mutable flag/output and all transitive effects unresolved"},
+    {"targets":["006cfd70"],"boundary":"ECX=match; four slots(side,currentY,targetY,0); nullable EAX slot pointer"},
+    {"targets":["006c87e0"],"boundary":"ECX=match; nine slots(p,side,action,&output37,&output2f,&output38,&output28,&output48,0); EAX nullable other slot; local output byte/word views retained"},
+    {"targets":["006cfc60"],"boundary":"ECX=match; seven slots(other,p,output28,-1,&output44,&output40,&output30); AL contact result"},
+    {"targets":["006cfcd0"],"boundary":"ECX=match; eight slots(other,p,&result24,output44,output40,output48,&output4c,output30); mutates local result/output record"},
+    {"targets":["006cfe10"],"boundary":"ECX=match; five slots(p,action,other,selector,mode); previous effect-helper scope only; return ignored"},
+    {"targets":["006bb9a0","006bb8d0","006cd490","006cd770","006cda20","006ceb90"],"boundary":"ECX=match; restart/contact helpers; nullable EAX from006ceb90 consumed; other returns ignored; helper bodies remain open"},
+    {"targets":["006cb650","006cb910","006cb930","006cd5f0","006fa140"],"boundary":"AL zero/nonzero predicate results; coordinates/selector/pointer inputs; effects unresolved"},
+    {"targets":["006bce20","00714d40","007103e0"],"boundary":"Previously mapped filter/dispatch bodies retain prior scopes; recursion and transitive RNG remain boundaries"},
+    {"targets":["006f0630","006f4920","006f56c0","0070d430","00716c90","00716e10"],"boundary":"ECX=slot; mode/coordinate/movement helpers, returns generally ignored except0070d430 EAX zero early return"},
+    {"targets":["006c38c0","006c38f0","006c3950","006f09b0","005b5270"],"boundary":"Repeated tactical/grid/region/getter calls; AX words, ST0 floats or EAX flags consumed; retain existing partial/read-only contracts without assuming all repeated values stable"},
+    {"targets":["007172d0","006eecb0","007c1e30","00600a50","0068d0d0"],"boundary":"Optional roster/profile/record helper routes; AL predicate, x87 return or EAX-zero tests where present; object lifetime and failure unresolved"},
+    {"targets":["006d6f70","0090cfc0","00945640"],"boundary":"Commentary, bounded RNG and original x87 conversion retain prior scopes; state/exception boundaries recorded"},
+    {"targets":["00944c9f","00944cff","0090d130","005e8290"],"boundary":"Returning diagnostic sequence in006f09f0; EAX token result forwarded, remaining results ignored; no local terminate call"}
+  ],
+  "annotation_proposals": [
+    {"kind":"function-name-only","address":"006fa250","old_name":"FUN_006fa250","new_name":"match_candidate_action_dispatch_006fa250","confidence":"High for local mechanical dispatch; natural-language action identity open"},
+    {"kind":"function-name-only","address":"006fa490","old_name":"FUN_006fa490","new_name":"match_generated_coordinate_action_dispatch_006fa490","confidence":"High for generation/delegation; tactical meanings open"},
+    {"kind":"function-name-only","address":"006f09f0","old_name":"FUN_006f09f0","new_name":"match_slot_move_contact_dispatch_006f09f0","confidence":"High for local move/contact mechanics and diagnostic anchor; outcomes depend on unresolved callees"}
+  ],
+  "proposal_preflight_sha256": "0d084f0348af44eeb24a73d8cec0fc866525099b14180bd87bd9c6246beda10f",
+  "proposal_apply_status": "Proposals only; coordinator rechecks exact old names and owns canonical native changes",
+  "remaining": [
+    "Review native function-membership omission independently; canonical correction and re-export are coordinator work",
+    "Admit complete helper effects, failure, aliasing, lifetime and recursive/RNG behavior",
+    "Establish live side/coordinate/occupancy/profile invariants and runtime x87 control",
+    "Validate numerical behavior and connected match/shot reachability; static CFG is not a runtime oracle",
+    "Recover natural-language action identities and accumulator meanings"
+  ]
+}
