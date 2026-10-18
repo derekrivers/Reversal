@@ -1,0 +1,18 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-18",
+  "status": "Name-only proposal; coordinator applies after independent review and fresh exact-old check",
+  "private_preflight_sha256": "a8b6f47a04ac2dcc2d6fb13537a55b223db5630d50e857ceb014f40f7069cf78",
+  "old_annotation_evidence": "Hash-pinned native header and preflight agree on FUN_0094fded and absent function comment; no comment, prototype, convention or structure change proposed",
+  "preserved_native_names": {"00944e46": "_malloc", "00944e58": "__nh_malloc"},
+  "proposals": [
+    {
+      "address": "0094fded",
+      "kind": "function_name",
+      "old": "FUN_0094fded",
+      "new": "cm0102_descriptor_to_handle_or_error9",
+      "evidence": "All 16 instructions/61 bytes verified; unsigned descriptor bound, signed-shift page lookup, byte open-bit check, raw handle DWORD read or ordered error globals 0/9 and result -1",
+      "confidence": "high for complete local static contract; stored handle validity and table lifetime remain open"
+    }
+  ]
+}

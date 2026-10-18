@@ -1,0 +1,51 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline": "c78cda13406c25a32747749bc07c8bc7936c7a3a / checkpoint 18",
+  "scope": "Three complete local static contracts; no execution oracle, heap-internal or whole-file compatibility claim",
+  "abi": "cdecl supported by plain RET, R18 caller cleanup and owned call-site POP cleanup; DWORD stack arguments; EAX raw result; no direct EBX/EBP/ESI/EDI writes; transitive preservation depends on callee ABI",
+  "functions": [
+    {
+      "entry_va": "0094fded",
+      "state": "contract-supported",
+      "owned_bytes": 61,
+      "instruction_count": 16,
+      "arguments": ["descriptor_raw32"],
+      "reads": "Require F<unsigned DWORD[de43e0]; page=DWORD[de42e0+4*(signed32(F)>>5)]; entry=page+8*(F&31); BYTE entry+4 bit0x01 required",
+      "success": "Return raw DWORD entry+0; no memory write or call; stored 0 and 0xffffffff are not rejected",
+      "failure_order": ["AND DWORD[de2f90],0 (read/modify/write)", "Write DWORD[de2f8c]=9", "Return EAX=0xffffffff"],
+      "ambiguity": "Returned -1 can be stored success value without either error-global write",
+      "R18_context": "Seek caller 0094c57f obtains handle; helper validation failure clears de2f90, whereas open stored -1 leaves it unchanged before caller error9 write",
+      "limits": "No signed-negative check beyond unsigned bound, page/handle validation, OS call, lock or fault recovery; invalid table memory can fault before error writes"
+    },
+    {
+      "entry_va": "00944e46",
+      "native_name_preserved": "_malloc",
+      "state": "contract-supported",
+      "owned_bytes": 18,
+      "instruction_count": 6,
+      "arguments": ["size_raw32"],
+      "effects_order": ["Read and push DWORD[de3008] once", "Push original size argument", "Call 00944e58(size,flag_snapshot)", "Discard eight argument bytes; return callee EAX unchanged"],
+      "direct_nonstack_writes": [],
+      "limits": "Global flag meaning, allocator state/ownership/errors and exceptional behavior are not established by the native library name"
+    },
+    {
+      "entry_va": "00944e58",
+      "native_name_preserved": "__nh_malloc",
+      "state": "contract-supported",
+      "owned_bytes": 44,
+      "instruction_count": 16,
+      "arguments": ["size_raw32", "flag_raw32"],
+      "cutoff": "Unsigned size>0xffffffe0 => return0 with no calls; equality and zero proceed",
+      "effects_order": ["Call 00944e84(size)", "Nonzero EAX => return it", "Zero EAX and flag argument zero => return0", "Zero EAX and flag argument nonzero => call 0094895b(size)", "Callback zero => return0; callback nonzero => repeat allocation call without repeating entry cutoff"],
+      "direct_nonstack_writes": [],
+      "retry": "Flag slot reread after each failed allocation; any nonzero flag/callback DWORD is accepted; no local retry limit; original size forwarded assuming callees preserve caller argument storage",
+      "R18_context": "Stream-buffer helper passes size0x1000 through _malloc; inline fallback is reached only when chain returns zero normally",
+      "limits": "No local rounding, zero-size substitution, direct error-global update, synchronization or exception handling; allocator helper and callback remain unresolved"
+    }
+  ],
+  "unresolved_dependencies": [
+    {"entry_va": "00944e84", "caller_site_va": "00944e63", "boundary": "Underlying allocation result, writes, errors, ownership, synchronization and exceptional effects"},
+    {"entry_va": "0094895b", "caller_site_va": "00944e77", "boundary": "Callback dispatch/identity, writes, errors and exceptional effects; only raw zero/nonzero retry result mapped"}
+  ],
+  "remaining_limits": ["No runtime execution trace", "No descriptor/table lifetime or concurrency guarantee", "No heap layout/global semantics", "No complete database/save compatibility", "No transitive RNG exclusion or connected subsystem equivalence"]
+}
