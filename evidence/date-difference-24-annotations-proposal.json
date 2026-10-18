@@ -1,0 +1,14 @@
+{
+  "work_unit": "R24-B",
+  "native_baseline": "checkpoint 23",
+  "proposals": [
+    {
+      "address": "0054cc30",
+      "old_name": "FUN_0054cc30",
+      "new_name": "DatePairDifference",
+      "confidence": "medium for complete local body; date-like field semantics, initialization callback and recursion remain bounded",
+      "evidence": "All 111 original PE instructions, exact memory widths and operands match the independently restored native export; 95 preinitialized nonrecursive entry-to-RET12 cases compare outputs, globals, register/stack results and merged read/write event order"
+    }
+  ],
+  "applied_to_native_project": false
+}
