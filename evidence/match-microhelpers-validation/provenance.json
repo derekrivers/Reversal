@@ -1,0 +1,23 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "native_manifest_sha256": "53a57fa6d04b97a8803e5660e146407e865c87d60cb67e23ff801cd0d33921e8",
+  "preflight_sha256": "02f34af94bb8e6243450b8120d604491ad9208a716525fbdc8485b3a4e636167",
+  "checkpoint_archive_sha256": "bd7470b1eca19f20992e397d2b2e4db25d47c4bd4f74716d18b331d853acea34",
+  "tools": {
+    "python": "3.13.7",
+    "capstone": "5.0.7",
+    "unicorn": "2.1.4",
+    "node": "24.19.0"
+  },
+  "inputs": "Original pinned executable and saved read-only native exports; no original runtime/game data in fixture",
+  "public_fixture": "Synthetic numerical registers, authored JSON, aggregate SHA256 of ordered accesses and deterministic memory only",
+  "oracle_sha256": "b05f7aa13e0d62f0f384ed131799ab9c1108ae2e8d9453ab56546090227b974d",
+  "registers_sha256": "77d3ad8deb71e8900a1905f4e80eb89232ac6abefb6c838519112f5cb06a5271",
+  "optimized_valid_regeneration": {
+    "oracle_identical": true,
+    "registers_identical": true
+  },
+  "check_command": "node reconstruction/check-match-microhelpers.ts evidence/match-microhelpers-validation results/match-microhelpers.json",
+  "shared_npm_check": "passed Node24; root integrates focused check into shared runner",
+  "independent_review": "pending"
+}

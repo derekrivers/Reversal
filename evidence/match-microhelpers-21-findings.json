@@ -1,0 +1,63 @@
+{
+  "work_unit": "R21-A",
+  "baseline": "0eac17d",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "state": "complete-local-static-contracts plus original-instruction-validated bounded TypeScript; independent review pending",
+  "functions": [
+    {
+      "entry": "006f0970",
+      "contract": "Reset four match fields and two receiver words with four ordered match pointer reloads",
+      "abi": "ECX receiver, plain RET, no stack arguments; observed EAX0, EDX final reloaded match pointer; ECX/EBX/EBP/ESI/EDI preserved",
+      "ordered_writes": [
+        "u32(m0+0x4786)=0",
+        "u8(m1+0x8eae)=255",
+        "u32(m2+0xf582)=0",
+        "u8(m3+0x1a7)=0",
+        "u16(p+0x29)=0",
+        "u16(p+0x19c)=0"
+      ],
+      "pointer_reads": "m0..m3 each separately read u32(p+0x19e) immediately before their respective store",
+      "cases": 36,
+      "old_name": "FUN_006f0970",
+      "proposed_name": "MatchSlot_ResetMatchAndReceiverFields"
+    },
+    {
+      "entry": "007160d0",
+      "contract": "Add low argument byte to receiver byte +0x2b modulo256",
+      "abi": "ECX receiver, byte ESP+4 from four-byte slot, RET4; AL=argument, DL=result, upper24 EAX/EDX preserved; ECX/EBX/EBP/ESI/EDI preserved",
+      "ordered_writes": [
+        "u8(p+0x2b)=low8(u8(p+0x2b)+low8(argument))"
+      ],
+      "cases": 65542,
+      "old_name": "FUN_007160d0",
+      "proposed_name": "MatchSlot_AddByte2b"
+    },
+    {
+      "entry": "007160e0",
+      "contract": "Replace receiver byte +0x2b with low argument byte",
+      "abi": "ECX receiver, byte ESP+4 from four-byte slot, RET4; AL=argument, upper24 EAX and full EDX preserved; ECX/EBX/EBP/ESI/EDI preserved",
+      "ordered_writes": [
+        "u8(p+0x2b)=low8(argument)"
+      ],
+      "cases": 262,
+      "old_name": "FUN_007160e0",
+      "proposed_name": "MatchSlot_SetByte2b"
+    }
+  ],
+  "totals": {
+    "new_bodies": 3,
+    "bytes": 88,
+    "instructions": 20,
+    "calls": 0,
+    "branches": 0,
+    "rng_sites": 0,
+    "cases": 65840
+  },
+  "limits": [
+    "Stable nonaliasing mapped synthetic receiver/match/stack only",
+    "Invalid pointers, aliasing, concurrency and native exception behavior unresolved",
+    "Byte+2b and cleared-field source names unresolved",
+    "No caller reachability, connected match or gameplay equivalence",
+    "XOR AF=0 is an emulator observation; architecturally undefined"
+  ]
+}
