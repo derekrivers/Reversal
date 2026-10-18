@@ -74,7 +74,7 @@ for(const row of semantic.functions){
 for(const source of Object.values(semantic.sources)){
   readFileSync(source.report);readFileSync(source.evidence);
 }
-const overlayReceipts=['09','10','11','12','13','14','15'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
+const overlayReceipts=['09','10','11','12','13','14','15','16'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
 for(const receipt of overlayReceipts)assert.equal(receipt.sha256,expected.sha256);
 const overlayRows=overlayReceipts.flatMap(receipt=>receipt.annotations.map(row=>[row[0],receipt.investigation>=12?row[2]:row[1]]));
 const nameOverlay=new Map(overlayRows);

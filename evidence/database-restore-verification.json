@@ -2,11 +2,11 @@
   "status": "passed",
   "mode": "restored archive opened read-only; no reanalysis",
   "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
-  "named_functions_and_comments": 94,
+  "named_functions_and_comments": 102,
   "global_labels": 16,
   "partial_structures": 9,
   "structure_fields": 93,
-  "original_code_signatures": 171,
+  "original_code_signatures": 179,
   "code_comments": 76,
   "total_function_symbols": 9384,
   "project_file_hashes_verified": 10

@@ -1,0 +1,57 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 16,
+  "scope": "Eight reviewed static working names only; no behavior oracle, prototype, comment or data type applied.",
+  "annotations": [
+    [
+      "007109f0",
+      "FUN_007109f0",
+      "match_slot_select_action_dispatch_007109f0"
+    ],
+    [
+      "00945bfe",
+      "FUN_00945bfe",
+      "cm0102_read_items_buffered"
+    ],
+    [
+      "00932c30",
+      "FUN_00932c30",
+      "cm0102_read_items_bounded_or_byterun4"
+    ],
+    [
+      "007b7690",
+      "FUN_007b7690",
+      "cm0102_replace_scout_record_from_source"
+    ],
+    [
+      "00813140",
+      "FUN_00813140",
+      "cm0102_cleanup_scout_record_copy_object"
+    ],
+    [
+      "005a53c0",
+      "FUN_005a53c0",
+      "cm0102_noop_return_005a53c0"
+    ],
+    [
+      "00944c94",
+      "FUN_00944c94",
+      "cm0102_forward_pointer_to_009452ca"
+    ],
+    [
+      "00682300",
+      "FUN_00682300",
+      "cm0102_cleanup_receiver_ea_counted_array"
+    ]
+  ],
+  "function_comments": [],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "match-core-16-findings.json",
+    "db-stream-16-annotations.json",
+    "scout-copy-16-annotations.json",
+    "unwind-targets-16-annotations.json"
+  ]
+}
