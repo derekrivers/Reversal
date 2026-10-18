@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "files_scanned": 16,
+  "checks": [
+    "Only assigned authored reports/code and compact synthetic fixture/provenance paths staged",
+    "No complete original body bytes appear in any staged file",
+    "No native export, specimen, project, archive or original runtime page staged"
+  ],
+  "numerical_fixture_bytes": 790080,
+  "limitations": "Body-substring scan supports manual staged-content review; it does not establish origin of arbitrary untracked files"
+}
