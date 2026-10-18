@@ -11,6 +11,7 @@ const checks=[
  ['reconstruction/check-descriptor-handle.ts','evidence/descriptor-handle-validation/oracle.json','results/descriptor-handle.json'],
  ['reconstruction/check-match-microhelpers.ts','evidence/match-microhelpers-validation','results/match-microhelpers.json'],
  ['reconstruction/check-match-scalar.ts','evidence/match-scalar-22-oracle.json'],
+ ['reconstruction/check-match-status.ts','evidence/match-status-23-guard-oracle.json'],
  ['reconstruction/check-random.ts','evidence/random-validation/x86-oracle.json','evidence/random-validation/random-table.bin','results/random.json'],
  ['reconstruction/check-clock.ts','evidence/clock-validation/clock-oracle.json','evidence/clock-validation/clock-oracle.bin','results/clock.json'],
  ['reconstruction/check-event-rules.ts','evidence/event-rule-validation','results/event-rules.json'],

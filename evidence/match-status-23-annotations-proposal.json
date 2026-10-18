@@ -1,0 +1,14 @@
+{
+  "work_unit": "R23-A",
+  "native_baseline": "checkpoint 22",
+  "proposals": [
+    {
+      "address": "0062c400",
+      "old_name": "FUN_0062c400",
+      "new_name": "MatchClassifyIndexedStatusBand",
+      "confidence": "medium for local body only",
+      "evidence": "All 88 original PE instructions and operands match independently restored native export; 43 original-instruction no-callee guard cases; refresh/conversion and diagnostics remain boundaries"
+    }
+  ],
+  "applied_to_native_project": false
+}
