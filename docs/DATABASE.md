@@ -2,11 +2,11 @@
 
 The native database is the ongoing working checkpoint. Keep `cm0102.gpr` beside the complete `cm0102.rep` directory. Open the existing `cm0102.exe` program in that project; importing the executable into a new project does not recover the annotations.
 
-The [current checkpoint](../checkpoints/2026-10-18-investigation-10/) records:
+The [current checkpoint](../checkpoints/2026-10-18-investigation-11/) records:
 
-- 41 named functions and comments; 16 global labels.
+- 46 named functions and comments; 16 global labels.
 - 9 recovered structures with 93 named fields under `/CM0102/Recovered`.
-- 107 original code samples and 65 code comments.
+- 121 original code samples and 74 code comments.
 - 10 canonical project files, each with SHA-256 and byte length.
 
 `checkpoints/latest.json` identifies the current dated checkpoint. Investigations 04–09 metadata remain historical. This checkpoint records the canonical files retained by Ghidra after saving the current project; older separately saved checkpoint versions remain historical.
@@ -33,6 +33,7 @@ Use a **new isolated output directory**, the hash-pinned executable and Ghidra 1
 7. `CM0102AnnotateKeeperEntry.java /new/keeper-entry-annotations.json`
 8. `CM0102AnnotateInvestigation09.java /new/investigation-09-annotations.json /path/shot-resolver-09-annotations.json /path/keeper-producers-09-annotations.json /path/database-boundary-09-annotations.json`
 9. `CM0102AnnotateInvestigation10.java /new/investigation-10-annotations.json /path/shot-dependencies-10-annotations.json /path/tactics-boundary-10-annotations.json /path/league-boundary-10-annotations.json`
+10. `CM0102AnnotateInvestigation11.java /new/investigation-11-annotations.json /path/shot-helper-11-annotations.json /path/transfer-boundary-11-annotations.json /path/finance-boundary-11-annotations.json`
 
 Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original project. Then reopen the rebuilt project read-only and execute:
 
@@ -41,7 +42,7 @@ Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original p
   -process cm0102.exe -noanalysis -readOnly \
   -scriptPath /absolute/path/to/Reversal/scripts \
   -postScript CM0102VerifyCheckpoint.java \
-  /absolute/path/to/Reversal/checkpoints/2026-10-18-investigation-10/expected-database.json \
+  /absolute/path/to/Reversal/checkpoints/2026-10-18-investigation-11/expected-database.json \
   /new/rebuilt-verification.json
 ```
 

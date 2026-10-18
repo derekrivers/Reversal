@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-18",
+  "input_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "artifacts": [
+    {
+      "filename": "cm0102-ghidra-database.zip",
+      "bytes": 69766707,
+      "sha256": "ea81e9b614aade8ab2adfd67559b03049eba93d3db7e0f65dfc5f35889b089a9",
+      "git_tracked": false
+    }
+  ],
+  "retention": "Native database and investigation-08/09/10 predecessors are preserved separately; current canonical project saved by Ghidra. Earlier checkpoint metadata remains historical."
+}
