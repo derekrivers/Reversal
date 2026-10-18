@@ -31,6 +31,14 @@ def run(args):
         changed_pe.write_bytes(raw)
         results["altered_specimen"] = reject(changed_pe, args.exports, args.preflight,
                                                "specimen size/SHA-256 mismatch")
+        original_ranges = core.EXPECTED_RANGE_PUSHES
+        try:
+            core.EXPECTED_RANGE_PUSHES = {**original_ranges, 0x9459B6: 0x9870C8}
+            results["wrong_callback_range_expectation"] = reject(
+                args.binary, args.exports, args.preflight,
+                "callback range push operand mismatch")
+        finally:
+            core.EXPECTED_RANGE_PUSHES = original_ranges
         for case, old, new in (
             ("changed_write_width", "00945983  MOV byte ptr", "00945983  MOV dword ptr"),
             ("changed_import_slot", "009459e7  CALL dword ptr [0x00967164]",

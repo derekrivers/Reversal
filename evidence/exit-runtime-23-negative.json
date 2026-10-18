@@ -5,6 +5,7 @@
   "positive_complete_local_bodies": 2,
   "rejections": {
     "altered_specimen": "specimen size/SHA-256 mismatch",
+    "wrong_callback_range_expectation": "callback range push operand mismatch",
     "changed_write_width": "native mnemonic/operand mismatch at 00945983",
     "changed_import_slot": "native mnemonic/operand mismatch at 009459e7"
   },

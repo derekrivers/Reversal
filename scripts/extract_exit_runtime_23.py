@@ -39,6 +39,10 @@ EXPECTED_WRITES = {
     0x94597D: (0xDE2FD0, 4), 0x945983: (0xDE2FCC, 1),
     0x9459E1: (0xDE2FD4, 4),
 }
+EXPECTED_RANGE_PUSHES = {
+    0x9459B6: 0x9870C4, 0x9459BB: 0x9870BC,
+    0x9459C7: 0x9870D0, 0x9459CC: 0x9870C8,
+}
 
 
 def need(condition, message):
@@ -153,7 +157,7 @@ def run(binary, exports, preflight):
     md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
     md.detail = True
     result_bodies = []
-    seen_branches, seen_calls, seen_writes = {}, {}, {}
+    seen_branches, seen_calls, seen_writes, seen_range_pushes = {}, {}, {}, {}
     for va, (length, old_name) in SPECS.items():
         body = read_va(va, length)
         decoded = list(md.disasm(body, va))
@@ -167,6 +171,11 @@ def run(binary, exports, preflight):
         for ins, (address, asm) in zip(decoded, native):
             need(ins.address == address and norm(ins.mnemonic+" "+ins.op_str) == norm(asm),
                  "native mnemonic/operand mismatch at " + hx(ins.address))
+            if address in EXPECTED_RANGE_PUSHES:
+                need(ins.mnemonic == "push" and len(ins.operands) == 1 and
+                     ins.operands[0].type == capstone.x86.X86_OP_IMM,
+                     "callback range push shape mismatch at " + hx(address))
+                seen_range_pushes[address] = ins.operands[0].imm
             if ins.mnemonic.startswith("j"):
                 need(len(ins.operands) == 1 and ins.operands[0].type == capstone.x86.X86_OP_IMM,
                      "nonlocal/indirect branch at " + hx(address))
@@ -199,10 +208,11 @@ def run(binary, exports, preflight):
     need(seen_branches == EXPECTED_BRANCHES, "branch target set mismatch")
     need(seen_calls == EXPECTED_CALLS, "direct/indirect call set mismatch")
     need(seen_writes == EXPECTED_WRITES, "direct global write set mismatch")
+    need(seen_range_pushes == EXPECTED_RANGE_PUSHES,
+         "callback range push operand mismatch")
     need(0x9459EF == 0x945956+153 and 0x945A09 == 0x9459EF+26,
          "body adjacency mismatch")
-    # Explicitly pin the status reads and exit-mode argument tests. Their precise
-    # operands are already checked above; these site identities protect summary.
+    # The four decoded PUSH operands above pin both emitted callback ranges.
     for first, last in ((0x9870BC, 0x9870C4), (0x9870C8, 0x9870D0)):
         offset(first, last-first)
     return {
