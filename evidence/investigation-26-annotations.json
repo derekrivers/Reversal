@@ -1,0 +1,31 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 26,
+  "status": "saved; independently reopened read-only without reanalysis",
+  "scope": "Three reviewed working names only; four new complete local static contracts, three bounded TypeScript entry domains. Existing R21 setter and _strncpy name/comment preserved. No prototype, comment, body or data type applied.",
+  "annotations": [
+    [
+      "0062e700",
+      "FUN_0062e700",
+      "cm0102_invalidate_linked_status_record_candidate"
+    ],
+    [
+      "0062be00",
+      "FUN_0062be00",
+      "cm0102_merge_keyed_kind_severity_candidate"
+    ],
+    [
+      "006834f0",
+      "FUN_006834f0",
+      "cm0102_compare_league_rows_by_shared_rules_candidate"
+    ]
+  ],
+  "function_comments": [],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "match-dependencies-26-annotations-proposal.json",
+    "league-comparator-26-annotations.json"
+  ]
+}

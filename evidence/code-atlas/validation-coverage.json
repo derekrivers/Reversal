@@ -209,6 +209,30 @@
       "module": "reconstruction/copy-helper.ts",
       "evidence": "evidence/copy-helper-25-oracle.json",
       "boundary": "180 original-entry synthetic cases, 11,619 x86 steps and 57 instruction starts; mode-zero delegated _strncpy, locale initialization, overlap and caller-level path output excluded"
+    },
+    {
+      "function": "0062e700",
+      "scope": "call-free-linked-status-guard-entry-to-return",
+      "behavior": "Signed count and sentinel-link exits, plus status-0x51 invalidation with notification bypass and final row/table reloads",
+      "module": "reconstruction/match-dependencies-26.ts",
+      "evidence": "evidence/match-dependencies-26-oracle.json",
+      "boundary": "77 original-entry synthetic cases, 2,185 x86 steps and 44/97 instruction starts; disjoint stable memory, diagnostics, update/notification callees and connected player lifecycle excluded"
+    },
+    {
+      "function": "009466d0",
+      "scope": "bounded-strncpy-entry-to-return",
+      "behavior": "Count-limited copy and zero padding with exact alignment, NUL, ordered source/stack reads and destination/stack writes",
+      "module": "reconstruction/strncpy-runtime-26.ts",
+      "evidence": "evidence/strncpy-runtime-26-oracle.json.gz",
+      "boundary": "6,912 original-entry synthetic cases, 580,732 x86 steps and all 109 instructions/130 local edges; valid stable disjoint memory, count 0..65; aliasing, faults, caller and locale initialization excluded"
+    },
+    {
+      "function": "006834f0",
+      "scope": "stable-shared-rule-comparator-entry-to-return",
+      "behavior": "Signed field comparisons selected by a five-entry external switch table with exact ordered row/shared/stack reads",
+      "module": "reconstruction/league-comparator-26.ts",
+      "evidence": "evidence/league-comparator-26-oracle.json.gz",
+      "boundary": "840 original-entry synthetic cases, 40,128 x86 steps, all 67 starts and 79 in-body edges; stable valid rows/shared pointer, no sort caller or final standings"
     }
   ]
 }
