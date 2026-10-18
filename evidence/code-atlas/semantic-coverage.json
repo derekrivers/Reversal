@@ -194,6 +194,18 @@
     "R25-C": {
       "report": "reports/copy-helper-25.md",
       "evidence": "evidence/copy-helper-25-sites.json"
+    },
+    "R26-A": {
+      "report": "reports/match-dependencies-26.md",
+      "evidence": "evidence/match-dependencies-26-sites.json"
+    },
+    "R26-B": {
+      "report": "reports/strncpy-runtime-26.md",
+      "evidence": "evidence/strncpy-runtime-26-sites.json"
+    },
+    "R26-C": {
+      "report": "reports/league-comparator-26.md",
+      "evidence": "evidence/league-comparator-26-sites.json"
     }
   },
   "functions": [
@@ -846,6 +858,26 @@
       "address": "00948851",
       "state": "contract-supported",
       "source": "R25-C"
+    },
+    {
+      "address": "0062e700",
+      "state": "contract-supported",
+      "source": "R26-A"
+    },
+    {
+      "address": "0062be00",
+      "state": "contract-supported",
+      "source": "R26-A"
+    },
+    {
+      "address": "009466d0",
+      "state": "contract-supported",
+      "source": "R26-B"
+    },
+    {
+      "address": "006834f0",
+      "state": "contract-supported",
+      "source": "R26-C"
     }
   ]
 }

@@ -2,11 +2,11 @@
 
 The native database is the ongoing working checkpoint. Keep `cm0102.gpr` beside the complete `cm0102.rep` directory. Open the existing `cm0102.exe` program in that project; importing the executable into a new project does not recover the annotations.
 
-The [current checkpoint](../checkpoints/2026-10-18-investigation-25/) records:
+The [current checkpoint](../checkpoints/2026-10-19-investigation-26/) records:
 
-- 150 named functions; 16 global labels.
+- 153 named functions; 16 global labels.
 - 9 recovered structures with 93 named fields under `/CM0102/Recovered`.
-- 227 original code samples and 76 code comments.
+- 230 original code samples and 76 code comments.
 - 10 canonical project files, each with SHA-256 and byte length.
 
 `checkpoints/latest.json` identifies the current dated checkpoint. Earlier dated metadata and separately saved archives remain historical. This checkpoint records the canonical files retained by Ghidra after saving the current project.
@@ -22,7 +22,7 @@ The archive contains its own manifest, expected annotations, restore receipt and
 
 ## Rebuild annotations when the saved archive is unavailable
 
-Use a **new isolated output directory**, the hash-pinned executable and Ghidra 12.1.4/JDK 21. Run `scripts/run_ghidra.sh` to import and analyze, then apply these scripts in order with `analyzeHeadless -process cm0102.exe -noanalysis`:
+Use a **new isolated output directory**, the hash-pinned executable and Ghidra 12.1.4/JDK 21. Run `scripts/run_ghidra.sh` to import and analyze, then apply historical scripts 1–24 in order with `analyzeHeadless -process cm0102.exe -noanalysis`. Step 25 applies only to the preserved checkpoint-25 project, because its exact-old preflight requires that project's prior annotations:
 
 1. `CM0102AnnotateMatch.java /new/match-annotations.txt`
 2. `CM0102AnnotateProgression.java /new/progression-annotations.json`
@@ -48,6 +48,9 @@ Use a **new isolated output directory**, the hash-pinned executable and Ghidra 1
 22. `CM0102AnnotateInvestigation23.java /new/investigation-23-annotations.json /path/match-status-23-annotations-proposal.json /path/exit-runtime-23-annotations-proposal.json /path/selection-probe-23-annotations-proposal.json`
 23. `CM0102AnnotateInvestigation24.java /new/investigation-24-annotations.json /path/date-difference-24-annotations-proposal.json /path/path-format-24-annotations-proposal.json`
 24. `CM0102AnnotateInvestigation25.java /new/investigation-25-annotations.json /path/status-lookup-25-annotations-proposal.json /path/copy-helper-25-annotations-proposal.json`
+25. `CM0102AnnotateInvestigation26.java /new/investigation-26-annotations.json /path/investigation-26-exact-old-preflight.json /path/match-dependencies-26-annotations-proposal.json /path/league-comparator-26-annotations.json`
+
+The investigation-26 script requires the preserved checkpoint-25 project and private exact-old preflight/proposal files with pinned hashes; it intentionally refuses an unrelated fresh import. Use the saved checkpoint-26 archive for direct recovery.
 
 Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original project. Then reopen the rebuilt project read-only and execute:
 
@@ -56,7 +59,7 @@ Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original p
   -process cm0102.exe -noanalysis -readOnly \
   -scriptPath /absolute/path/to/Reversal/scripts \
   -postScript CM0102VerifyCheckpoint.java \
-  /absolute/path/to/Reversal/checkpoints/2026-10-18-investigation-25/expected-database.json \
+  /absolute/path/to/Reversal/checkpoints/2026-10-19-investigation-26/expected-database.json \
   /new/rebuilt-verification.json
 ```
 
