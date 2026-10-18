@@ -1,0 +1,350 @@
+{
+  "investigation": 10,
+  "baseline_main": "944954fd19b73a133f4505afc5b28a486479b45e",
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses",
+  "scope": "Static tactical selection/result-statistics contracts; no new behavioral oracle or whole-tactics claim.",
+  "evidence_method": "Pinned PE Capstone5.0.9/pefile2024.8.26 decode; coordinator read-only native Ghidra asm/ref exports corroborate selected sites and incoming direct references. Pseudocode is navigation only.",
+  "functions": [
+    {
+      "entry": "00896290",
+      "existing_name": "FUN_00896290",
+      "source_anchor": [
+        "tactics.cpp"
+      ],
+      "direct_callees": [
+        "0054a110",
+        "005e8290",
+        "00600a50",
+        "007e4750",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "incoming_direct_calls": [
+        "006ba9a0"
+      ],
+      "native_assembly_export_sha256": "0bf3952e0b4529ffffb7d608b9e05dce654b1b114fcbeb5d67642d53fade950d",
+      "native_refs_export_sha256": "f1d560f3eb435fde53e23a5ed9cd755d0b96c1281ad94d4a28021b8d1206663a",
+      "sites": [
+        {
+          "va": "008962b2",
+          "assembly": "mov ebx, ecx"
+        },
+        {
+          "va": "00896341",
+          "assembly": "ret 4"
+        },
+        {
+          "va": "00896351",
+          "assembly": "call 0x600a50"
+        },
+        {
+          "va": "0089636a",
+          "assembly": "call 0x600a50"
+        },
+        {
+          "va": "00896415",
+          "assembly": "mov eax, dword ptr [ebx + 0x601]"
+        },
+        {
+          "va": "0089641b",
+          "assembly": "movsx eax, word ptr [edx + eax]"
+        },
+        {
+          "va": "00896424",
+          "assembly": "lea esi, [eax + edx*8]"
+        },
+        {
+          "va": "0089642e",
+          "assembly": "call 0x7e4750"
+        },
+        {
+          "va": "00896436",
+          "assembly": "inc word ptr [esi + 2]"
+        },
+        {
+          "va": "0089644a",
+          "assembly": "inc word ptr [esi + 4]"
+        },
+        {
+          "va": "0089644e",
+          "assembly": "add word ptr [esi + 0xe], 3"
+        },
+        {
+          "va": "00896457",
+          "assembly": "inc word ptr [esi + 6]"
+        },
+        {
+          "va": "0089645b",
+          "assembly": "inc word ptr [esi + 0xe]"
+        },
+        {
+          "va": "00896461",
+          "assembly": "inc word ptr [esi + 8]"
+        },
+        {
+          "va": "00896465",
+          "assembly": "movsx ax, byte ptr [esp + 0x51]"
+        },
+        {
+          "va": "0089646b",
+          "assembly": "add word ptr [esi + 0xa], ax"
+        },
+        {
+          "va": "00896473",
+          "assembly": "movsx cx, byte ptr [esp + 0x52]"
+        },
+        {
+          "va": "00896479",
+          "assembly": "add word ptr [esi + 0xc], cx"
+        },
+        {
+          "va": "008964d9",
+          "assembly": "fstp qword ptr [esp + 0x1c]"
+        },
+        {
+          "va": "008964f0",
+          "assembly": "fst qword ptr [esp + 0x24]"
+        },
+        {
+          "va": "008964f8",
+          "assembly": "fst qword ptr [esp + 0x2c]"
+        },
+        {
+          "va": "00896500",
+          "assembly": "fst qword ptr [esp + 0xc]"
+        },
+        {
+          "va": "00896506",
+          "assembly": "fstp qword ptr [esp + 0x1c]"
+        },
+        {
+          "va": "00896520",
+          "assembly": "fstp qword ptr [esi + 0x10]"
+        },
+        {
+          "va": "00896531",
+          "assembly": "fstp qword ptr [esi + 0x18]"
+        },
+        {
+          "va": "0089653c",
+          "assembly": "fstp qword ptr [esi + 0x20]"
+        },
+        {
+          "va": "0089655c",
+          "assembly": "mov eax, 1"
+        },
+        {
+          "va": "0089656c",
+          "assembly": "ret 4"
+        }
+      ]
+    },
+    {
+      "entry": "00896660",
+      "existing_name": "FUN_00896660",
+      "source_anchor": [
+        "tactics.cpp"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "005fbd00",
+        "005fbe20",
+        "005fd210",
+        "005fea50",
+        "00600a50",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "incoming_direct_calls": [
+        "006e0bfd",
+        "0072ccfe",
+        "005472fc",
+        "008a7a0f",
+        "008ac019",
+        "005fec42"
+      ],
+      "native_assembly_export_sha256": "95d5dcbcbae04d47314c9c933ddec3910852dc8f539fb50603865948cc9dbc14",
+      "native_refs_export_sha256": "52dfeebefabbde0441ff65ea309939b887e0a5ecfe27d0157a01a8c83556036f",
+      "sites": [
+        {
+          "va": "0089666f",
+          "assembly": "mov esi, ecx"
+        },
+        {
+          "va": "008966db",
+          "assembly": "ret 8"
+        },
+        {
+          "va": "008966e7",
+          "assembly": "call 0x600a50"
+        },
+        {
+          "va": "00896700",
+          "assembly": "call 0x5fd210"
+        },
+        {
+          "va": "00896718",
+          "assembly": "call 0x5fea50"
+        },
+        {
+          "va": "00896737",
+          "assembly": "call 0x5fbe20"
+        },
+        {
+          "va": "00896749",
+          "assembly": "call 0x5fbd00"
+        },
+        {
+          "va": "00896759",
+          "assembly": "mov eax, dword ptr [edi]"
+        },
+        {
+          "va": "0089675b",
+          "assembly": "mov edx, dword ptr [esi + 0x601]"
+        },
+        {
+          "va": "00896769",
+          "assembly": "movsx eax, word ptr [ecx + edx]"
+        },
+        {
+          "va": "0089676d",
+          "assembly": "mov ecx, dword ptr [esi + 0x5fd]"
+        },
+        {
+          "va": "00896775",
+          "assembly": "jge 0x89679b"
+        },
+        {
+          "va": "00896786",
+          "assembly": "mov ecx, dword ptr [esi + 0x5f9]"
+        },
+        {
+          "va": "00896798",
+          "assembly": "ret 8"
+        },
+        {
+          "va": "0089679b",
+          "assembly": "sub eax, ecx"
+        },
+        {
+          "va": "008967ac",
+          "assembly": "mov ecx, dword ptr [esi + 0x5f1]"
+        }
+      ]
+    },
+    {
+      "entry": "008967d0",
+      "existing_name": "FUN_008967d0",
+      "source_anchor": [
+        "tactics.cpp"
+      ],
+      "direct_callees": [
+        "005e8290",
+        "008982b0",
+        "0090d130",
+        "00944c9f",
+        "00944cff"
+      ],
+      "incoming_direct_calls": [
+        "006e0be9"
+      ],
+      "native_assembly_export_sha256": "767e4fde6621b4a16e195cf8c1e731120d5e3c4d1b664e4ab08f41cc882e3a93",
+      "native_refs_export_sha256": "d366fdd95755d919f6c6f3b1bdec6ac01adf1c17414a5959c57b4ac5a0a3edc1",
+      "sites": [
+        {
+          "va": "008967d0",
+          "assembly": "mov eax, dword ptr [esp + 4]"
+        },
+        {
+          "va": "008967de",
+          "assembly": "mov esi, ecx"
+        },
+        {
+          "va": "00896817",
+          "assembly": "mov di, word ptr [esp + 0x210]"
+        },
+        {
+          "va": "00896824",
+          "assembly": "mov ecx, dword ptr [esi + 0x5fd]"
+        },
+        {
+          "va": "0089682a",
+          "assembly": "mov edx, dword ptr [esi + 0x5f5]"
+        },
+        {
+          "va": "00896830",
+          "assembly": "lea ecx, [ecx + edx - 1]"
+        },
+        {
+          "va": "00896834",
+          "assembly": "movsx edx, di"
+        },
+        {
+          "va": "00896839",
+          "assembly": "jg 0x896876"
+        },
+        {
+          "va": "00896846",
+          "assembly": "call 0x8982b0"
+        },
+        {
+          "va": "0089684b",
+          "assembly": "cmp eax, -1"
+        },
+        {
+          "va": "0089685c",
+          "assembly": "mov eax, dword ptr [esi + 0x601]"
+        },
+        {
+          "va": "00896862",
+          "assembly": "mov word ptr [eax + edx], di"
+        },
+        {
+          "va": "00896867",
+          "assembly": "mov eax, 1"
+        },
+        {
+          "va": "00896873",
+          "assembly": "ret 0xc"
+        },
+        {
+          "va": "008968cf",
+          "assembly": "mov dword ptr [0xb67a34], 0"
+        },
+        {
+          "va": "008968da",
+          "assembly": "xor eax, eax"
+        },
+        {
+          "va": "008968e3",
+          "assembly": "ret 0xc"
+        }
+      ]
+    }
+  ],
+  "dependency_leads": [
+    [
+      "008982b0",
+      "Conditional club/registry row resolver; setter dependency"
+    ],
+    [
+      "007e4750",
+      "Orients score bytes into descriptor+19/+1a"
+    ],
+    [
+      "006e0230",
+      "Set/get/copy caller; copies0x18e3 bytes into live match region"
+    ],
+    [
+      "005fbe20",
+      "Registry path can modify selection byte"
+    ],
+    [
+      "005fbd00",
+      "Registry plan pointer result returned unchanged"
+    ]
+  ]
+}

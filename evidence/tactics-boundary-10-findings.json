@@ -1,0 +1,66 @@
+{
+  "investigation": 10,
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses",
+  "scope": "Static contracts for three owned tactics.cpp anchors, with dependencies read for call/state interpretation. No new behavior oracle.",
+  "confidence": {
+    "high": "Local assembly widths, pointer arithmetic, call/return and branch/write sequence corroborated by pinned PE plus read-only native exports",
+    "candidate": "Plan selection, result-statistics labels and shared tactical context semantics supported by consumers/callers; allocator and internal plan layout unresolved"
+  },
+  "context_pointer": "Observed callers load ECX from global00de1d08; storage lifetime and allocation ownership unproven",
+  "context_fields": [
+    {"offset": "0x0", "bytes": 4, "role": "result-statistics base, row stride0x28"},
+    {"offset": "0x5f1", "bytes": 4, "role": "second plan bank base"},
+    {"offset": "0x5f5", "bytes": 4, "role": "second bank count, used with signed comparison"},
+    {"offset": "0x5f9", "bytes": 4, "role": "first plan bank base"},
+    {"offset": "0x5fd", "bytes": 4, "role": "first bank count/split point, signed comparison"},
+    {"offset": "0x601", "bytes": 4, "role": "mapping rows at stride0x91; first word is selected plan index"}
+  ],
+  "setter": {
+    "function": "008967d0",
+    "abi": "ECX=context; club pointer32, signed16 low-word plan ID, opaque32 row option; EAX0/1; RET0xc",
+    "guard": "nonnull club and0<=s16(plan ID)<=signed32(first_count+second_count-1)",
+    "row": "008982b0(club,option); result -1 returns0; other results used without further local bound",
+    "write": "word at mapping+0x91*row, VA00896862",
+    "error": "Diagnostics and global00b67a34 dword zero; return0 if diagnostics return"
+  },
+  "lookup": {
+    "function": "00896660",
+    "abi": "ECX=context; club pointer32, opaque32 registry option; pointer32 EAX; RET8",
+    "bank_path": "k=s16(mapping[club.id*0x91]); if k<first_count: first_base+0x18e3*k, else second_base+0x18e3*(k-first_count)",
+    "bank_limits": "No local lower bound for k, total-count check, club-ID bound or mapped-pointer extent check",
+    "registry_path": "00600a50(club,1,1,0,0)!=0 and either005fd210(club+cf)==0 or low8(005fea50(2,club+cf))!=0; calls005fbe20(option,club,club+cf), then returns005fbd00(club+cf)",
+    "effects": "Registry selection helper can write indexed record byte+0x9a69; public lookup is not pure",
+    "error": "Null club diagnoses, clears00b67a34 and returns null if diagnostics return"
+  },
+  "statistics": {
+    "function": "00896290",
+    "abi": "ECX=context; match-record pointer32; EAX0/1; RET4",
+    "preflight": "Null record returns0 after diagnostics; any nonnull club passing00600a50(club,0,1,0,0) returns0 before row writes",
+    "selection": "For clubs at record+1c/+20: stats_base+0x28*s16(mapping[club.id*0x91])",
+    "score": "007e4750 orients signed byte pair into descriptor+19/+1a; return ignored",
+    "word_writes": {"0x2":"games+1","0x4":"higher-score count+1","0x6":"equal-score count+1","0x8":"lower-score count+1","0xa":"sum own signed8 score","0xc":"sum opponent signed8 score","0xe":"points+3 on higher or+1 on equal"},
+    "metric_stores": {"0x10":"float64 at00896520","0x18":"float64 at00896531","0x20":"float64 at0089653c"},
+    "metrics_real_arithmetic_only": "Clamp signed16 games=m,own goals=f,opponent goals=a,points=p each to>=1. q=p/m,g=f/m,z=m/a. Metrics z*g^2*q^2; z*g*q^3; z^2*g*q^2. Live x87 values/spills prevent claiming exact equivalent evaluation order from these expressions.",
+    "completion": "1 after loop even if null club skipped with diagnostics; no rollback, duplicate guard or word-overflow saturation"
+  },
+  "caller_links": [
+    ["006ba9a0","Match advance passes live match+4792 record except record.id==-2"],
+    ["006e0be9","Match-manager caller sets plan selection"],
+    ["006e0bfd","Same caller resolves plan, then copies0x638 dwords+word+byte into match+91e2+side*18e3"],
+    ["008a7a16","Tactics-screen caller stores returned pointer in its+dec field"]
+  ],
+  "validation": {
+    "retained_evidence_check": "npm run check passed on Node24.19.0",
+    "native_corroboration": "61 selected instruction sites matched operands and widths after normalizing decoder spelling, hex formatting and unit index scales",
+    "new_behavior_oracle": false
+  },
+  "unknowns": [
+    "Context allocation/lifetime and all mapping writers/persistence",
+    "Full meanings of0x18e3 plan contents and metric selection policy",
+    "Complete classification/registry side effects and row remapping domain",
+    "Reachable negative/overflow states, plan-bank capacities and failed score extraction behavior",
+    "Runtime x87 precision, exact numerical equivalence and transitive RNG effects",
+    "Indirect callers and complete tactical/match decision behavior"
+  ]
+}
