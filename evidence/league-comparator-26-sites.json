@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "unit": "R26-C",
+  "entry_va": "006834f0",
+  "old_native_name": "FUN_006834f0",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "670587a05d1f75ae729c32a93e3ba5739f3d513a3c27126ddd4d9185b8620b6a",
+  "export_manifest_sha256": "e86692ed3575e204e9e22c5c6d15bba0f5a299d1bc30ce64111b25f0e66cad75",
+  "annotation_preflight_sha256": "b06dff40898efb2ba18f02c7cfe49d272377bc9854920eb1ab1332c4093331fd",
+  "address_kind": "virtual unless explicitly file_offset",
+  "file_offset": "002834f0",
+  "body_bytes": 178,
+  "body_sha256": "6d08215550e4a70622f50d9cf87e401edb59c20037c272a815697a5a722ada33",
+  "instruction_count": 67,
+  "instruction_starts": [
+    "006834f0",
+    "006834f1",
+    "006834f2",
+    "006834f3",
+    "006834f7",
+    "006834f8",
+    "006834fb",
+    "00683501",
+    "00683505",
+    "00683508",
+    "0068350e",
+    "00683512",
+    "00683516",
+    "00683519",
+    "0068351b",
+    "0068351e",
+    "00683521",
+    "00683522",
+    "00683523",
+    "00683524",
+    "00683526",
+    "00683527",
+    "00683528",
+    "0068352d",
+    "00683532",
+    "00683534",
+    "0068353a",
+    "0068353c",
+    "0068353e",
+    "00683540",
+    "00683543",
+    "00683544",
+    "00683547",
+    "00683549",
+    "00683550",
+    "00683554",
+    "00683558",
+    "0068355c",
+    "0068355e",
+    "00683562",
+    "00683564",
+    "00683566",
+    "00683568",
+    "0068356a",
+    "0068356e",
+    "00683572",
+    "00683574",
+    "00683576",
+    "00683578",
+    "0068357c",
+    "00683580",
+    "00683582",
+    "00683584",
+    "00683586",
+    "0068358a",
+    "0068358e",
+    "00683590",
+    "00683592",
+    "00683593",
+    "00683596",
+    "00683599",
+    "0068359b",
+    "0068359c",
+    "0068359d",
+    "0068359e",
+    "006835a0",
+    "006835a1"
+  ],
+  "all_instructions_reachable": true,
+  "all_native_operands_match": true,
+  "calls": [],
+  "branches": {
+    "006834fb": [
+      "0068359b",
+      "00683501"
+    ],
+    "00683508": [
+      "0068359b",
+      "0068350e"
+    ],
+    "00683519": [
+      "00683528",
+      "0068351b"
+    ],
+    "0068353e": [
+      "0068359b",
+      "00683540"
+    ],
+    "00683547": [
+      "00683592",
+      "00683549"
+    ],
+    "00683549": [
+      "00683550",
+      "0068356a",
+      "00683586",
+      "00683592",
+      "00683578"
+    ],
+    "00683566": [
+      "00683521",
+      "00683568"
+    ],
+    "00683568": [
+      "00683592"
+    ],
+    "00683574": [
+      "00683521",
+      "00683576"
+    ],
+    "00683576": [
+      "00683592"
+    ],
+    "00683582": [
+      "00683521",
+      "00683584"
+    ],
+    "00683584": [
+      "00683592"
+    ],
+    "00683590": [
+      "00683521",
+      "00683592"
+    ],
+    "00683599": [
+      "0068353a",
+      "0068359b"
+    ]
+  },
+  "returns": [
+    "00683527",
+    "006835a1"
+  ],
+  "explicit_memory_reads": [
+    {
+      "va": "006834f3",
+      "width": 4,
+      "operand": "esi, dword ptr [esp + 0x10]"
+    },
+    {
+      "va": "006834f8",
+      "width": 4,
+      "operand": "dword ptr [esi], 0"
+    },
+    {
+      "va": "00683501",
+      "width": 4,
+      "operand": "edx, dword ptr [esp + 0x18]"
+    },
+    {
+      "va": "00683505",
+      "width": 4,
+      "operand": "dword ptr [edx], 0"
+    },
+    {
+      "va": "0068350e",
+      "width": 2,
+      "operand": "cx, word ptr [esi + 0x19]"
+    },
+    {
+      "va": "00683512",
+      "width": 2,
+      "operand": "ax, word ptr [edx + 0x19]"
+    },
+    {
+      "va": "00683528",
+      "width": 4,
+      "operand": "eax, dword ptr [0xb679fc]"
+    },
+    {
+      "va": "0068353a",
+      "width": 1,
+      "operand": "al, byte ptr [edi]"
+    },
+    {
+      "va": "00683549",
+      "width": 4,
+      "operand": "dword ptr [eax*4 + 0x6835a4]"
+    },
+    {
+      "va": "00683550",
+      "width": 2,
+      "operand": "eax, word ptr [esi + 0x17]"
+    },
+    {
+      "va": "00683554",
+      "width": 2,
+      "operand": "ecx, word ptr [esi + 0x15]"
+    },
+    {
+      "va": "00683558",
+      "width": 2,
+      "operand": "ebp, word ptr [edx + 0x17]"
+    },
+    {
+      "va": "0068355e",
+      "width": 2,
+      "operand": "eax, word ptr [edx + 0x15]"
+    },
+    {
+      "va": "0068356a",
+      "width": 2,
+      "operand": "ecx, word ptr [esi + 0x15]"
+    },
+    {
+      "va": "0068356e",
+      "width": 2,
+      "operand": "eax, word ptr [edx + 0x15]"
+    },
+    {
+      "va": "00683578",
+      "width": 2,
+      "operand": "ecx, word ptr [esi + 0x31]"
+    },
+    {
+      "va": "0068357c",
+      "width": 2,
+      "operand": "eax, word ptr [edx + 0x31]"
+    },
+    {
+      "va": "00683586",
+      "width": 1,
+      "operand": "ecx, byte ptr [esi + 0x12]"
+    },
+    {
+      "va": "0068358a",
+      "width": 1,
+      "operand": "eax, byte ptr [edx + 0x12]"
+    }
+  ],
+  "switch_table": {
+    "va": "006835a4",
+    "file_offset": "002835a4",
+    "bytes": 20,
+    "hex": "503568006a356800863568009235680078356800",
+    "sha256": "db1835fa55fd6b84aa49555e828ac096edf165e009215802a8cfc5abf01d8c7e",
+    "targets": [
+      "00683550",
+      "0068356a",
+      "00683586",
+      "00683592",
+      "00683578"
+    ],
+    "outside_native_body": true,
+    "all_targets_inside_body": true
+  },
+  "python_optimized_integrity": "explicit ValueError gates, no assert"
+}

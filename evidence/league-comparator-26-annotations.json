@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "unit": "R26-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "670587a05d1f75ae729c32a93e3ba5739f3d513a3c27126ddd4d9185b8620b6a",
+  "preflight_sha256": "b06dff40898efb2ba18f02c7cfe49d272377bc9854920eb1ab1332c4093331fd",
+  "function_names": [
+    {
+      "address": "006834f0",
+      "expected_old_name": "FUN_006834f0",
+      "expected_body_addresses": 178,
+      "proposed_name": "cm0102_compare_league_rows_by_shared_rules_candidate",
+      "confidence": "high for local signed-field comparator and shared-rule mechanics; business field meanings remain unresolved",
+      "evidence": "league-comparator-26-sites.json pins all 67 native/PE instructions and the external five-entry switch table; league-comparator-26-oracle.json.gz executes every local branch and switch edge across 840 synthetic entry-to-return cases"
+    }
+  ],
+  "scope": "name-only proposal; coordinator applies after independent review with exact-old native preflight",
+  "comments": [],
+  "prototype_changes": [],
+  "body_changes": [],
+  "table_note": "006835a4..006835b7 is read-only dispatch data outside the 178-byte body; all five destinations are existing body instruction starts. No native body expansion is needed."
+}

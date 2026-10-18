@@ -8,3 +8,4 @@
 evidence/** text eol=lf
 checkpoints/** text eol=lf
 *.bin binary
+evidence/league-comparator-26-oracle.json.gz binary

@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "unit": "R26-C",
+  "status": "passed",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "static_scope": {
+    "entry_va": "006834f0",
+    "body_bytes": 178,
+    "instructions": 67,
+    "external_table_bytes": 20,
+    "all_native_operands_match": true,
+    "all_reachable_cfg_edges_resolved": true
+  },
+  "execution_scope": {
+    "entry_to_return": true,
+    "callee_stubs": false,
+    "cases": 840,
+    "x86_instruction_steps": 40128,
+    "ordered_memory_events": 17891,
+    "covered_instruction_starts": 67,
+    "covered_in_body_edges": 79,
+    "all_conditional_and_switch_edges_executed": true,
+    "memory": "synthetic stable mapped rows, shared rules, shared pointer and disjoint stack",
+    "comparison": [
+      "EAX/ECX/EDX",
+      "EBX/EBP/ESI/EDI preservation",
+      "ESP and return address",
+      "full ordered data/stack read and stack-write events",
+      "complete final stack window"
+    ],
+    "eflags_compared": false,
+    "limits": [
+      "same-row alias tested; arbitrary overlapping records/config and stack/input aliases excluded",
+      "no invalid pointers, concurrent mutation, sort caller, final standings or caller lifecycle execution"
+    ]
+  },
+  "tools": {
+    "python": "3.13.7",
+    "capstone": "5.0.7",
+    "unicorn": "2.1.4",
+    "node": "24.19.0"
+  },
+  "checks": {
+    "normal_python_extract_emulate_negative": "passed",
+    "optimized_python_extract_emulate_negative": "passed",
+    "normal_optimized_artifacts": "byte-identical sites/gzip oracle/negative",
+    "task_node24_checker": "passed",
+    "inherited_npm_run_check_node24": "passed",
+    "negative_mutations_rejected": 7,
+    "git_diff_cached_check": "passed",
+    "shared_ci_runner_updated": false,
+    "task_checker_invoked_separately": true,
+    "staged_gzip_blob_sha256_matches_pin": true,
+    "model_and_case_schedule_unchanged": true
+  },
+  "privacy": {
+    "unit_files_inspected": 12,
+    "allowed_artifact_types": "authored UTF-8 text plus one deterministic gzip of the reviewed synthetic JSON",
+    "private_artifact_paths": 0,
+    "oracle_payload_identical_to_reviewed_json": true,
+    "all_oracle_record_and_stack_inputs": "deterministically synthetic; generated locally by task emulator",
+    "selected_original_bytes": "20-byte switch table only in static evidence; no executable body bytes or bulk listing"
+  },
+  "artifacts": {
+    "evidence/league-comparator-26-annotations.json": {
+      "bytes": 1300,
+      "sha256": "94493f618888d789d1a4bd7d55c5a9a4935b23abae83e811386866ccdb94fe0c"
+    },
+    "evidence/league-comparator-26-negative.json": {
+      "bytes": 560,
+      "sha256": "4d893f588ec06435ce3bba71b387b48586be78ed6e5aa72c2c552b9589ff6187"
+    },
+    "evidence/league-comparator-26-oracle.json.gz": {
+      "bytes": 164929,
+      "sha256": "61d70223745ee7f928dcb6aa16fecfc74d16050cdab16309dd4d53118790f61f"
+    },
+    "evidence/league-comparator-26-sites.json": {
+      "bytes": 5232,
+      "sha256": "04f8094be48c53adf139101dff117ac57611ed84044d58fec723e9be40adf867"
+    },
+    "reconstruction/check-league-comparator-26.ts": {
+      "bytes": 5518,
+      "sha256": "a6737adae9565af3538c5152f8d5ea8f3a8b4d1a6c02b74ad89ed841798ce174"
+    },
+    "reconstruction/league-comparator-26.ts": {
+      "bytes": 3162,
+      "sha256": "572c95dc9f66236c0ca59535c4520136f21d12260908e37bf41fa0d4ffba5426"
+    },
+    "reports/league-comparator-26.md": {
+      "bytes": 12565,
+      "sha256": "75de690a3a5e0856718bccec3349974e7de58904afe4a09657521db53c6f1b33"
+    },
+    "scripts/check_league_comparator_26_negative.py": {
+      "bytes": 4274,
+      "sha256": "87c471ce257be282c0c59887d726f9033c1ae10c2ff19ef865e042a29ace77e4"
+    },
+    "scripts/emulate_league_comparator_26.py": {
+      "bytes": 10193,
+      "sha256": "1cf81c58bdc930c2bd0d7e35fff7f7472d73306d795f3a5440cf87478b26646f"
+    },
+    "scripts/extract_league_comparator_26.py": {
+      "bytes": 8111,
+      "sha256": "daa350679059cca264fc7bd6fe68fc65faed99b7fa46f5d6eefdf6b766a8e492"
+    },
+    ".gitattributes": {
+      "bytes": 237,
+      "sha256": "04b6da2ef4d8fe65cd4ec6519e0faf422bd68f1126b1c5beda8b6197a53e3025"
+    }
+  },
+  "oracle_encoding": {
+    "format": "gzip",
+    "compresslevel": 9,
+    "mtime": 0,
+    "compressed_bytes": 164929,
+    "compressed_sha256": "61d70223745ee7f928dcb6aa16fecfc74d16050cdab16309dd4d53118790f61f",
+    "decompressed_bytes": 1845201,
+    "decompressed_sha256": "515149d388520acfab141cf9c229edf8bd6676a6d30def46c6d3809d2cdb1775",
+    "gitattributes": "evidence/league-comparator-26-oracle.json.gz binary"
+  }
+}
