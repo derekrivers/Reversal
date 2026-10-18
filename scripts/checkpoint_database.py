@@ -4,6 +4,9 @@
 Run 'stage' only after the live project has closed. Run the retained Ghidra
 verification command against restore-test, then run 'finalize'.
 """
+if not __debug__:
+    raise SystemExit('Refusing optimized Python: checkpoint integrity checks require assertions')
+
 from pathlib import Path
 import argparse, hashlib, json, os, re, shutil, stat, struct, zipfile
 
