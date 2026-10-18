@@ -1,0 +1,29 @@
+{
+  "work_unit": "R14-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "status": "proposal only; coordinator owns native writes",
+  "scope": "One descriptive working function name only; no prototype/comment/layout changes",
+  "old_state_evidence": "Checkpoint13 read-only preflight SHA256728f0dbb5ccd7860c03a35203f30b7bb377048879c2b95601b1744fd78e7fc3d and generic export name; extractor verifies both. Coordinator must recheck exact old value before applying.",
+  "functions": [
+    {
+      "address": "00713fc0",
+      "old_name": "FUN_00713fc0",
+      "new_name": "match_slot_coordinate_action_dispatch_00713fc0",
+      "evidence_sites": [
+        "0071404c",
+        "007140e6",
+        "007143ba",
+        "007147c5",
+        "007148b4",
+        "0071496c",
+        "00714c49"
+      ],
+      "confidence": "high for descriptive local dispatch operation; action semantics/transitive effects open"
+    }
+  ],
+  "evidence": [
+    "reports/match-dispatch-14.md",
+    "evidence/match-dispatch-14-findings.json",
+    "evidence/match-dispatch-14-sites.json"
+  ]
+}

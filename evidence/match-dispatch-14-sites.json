@@ -1,0 +1,1571 @@
+{
+  "work_unit": "R14-A",
+  "baseline_commit": "3d81fa3c056c7d28c3c2a6d99e93d96464f43834",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "export_manifest_sha256": "233ec2078dc3eacf0d1b83a3d093028caf57c634329bacce4af4ea2efb5c7f86",
+  "annotation_preflight_sha256": "728f0dbb5ccd7860c03a35203f30b7bb377048879c2b95601b1744fd78e7fc3d",
+  "evidence_class": "static original-instruction mapping; no execution oracle",
+  "address_kind": "virtual addresses; raw file offsets explicitly labelled",
+  "decoder": "Capstone 5.0.7 x86-32",
+  "function": {
+    "entry": "00713fc0",
+    "end_exclusive": "00714c5a",
+    "bytes": 3226,
+    "raw_file_offset": "0x313fc0",
+    "code_sha256": "f83239cb8e38cc1fe4ff20d694553587a76ae9c242b1bf30ae60f202455937f5",
+    "instruction_count": 997,
+    "direct_call_count": 66,
+    "branch_count": 161,
+    "native_corroboration": {
+      "asm_sha256": "b20f4a4499a06913ed430e42ceddbdb43d509da2b10bf46e9ab3881085615f3a",
+      "c_sha256": "bb150f134f3afc547b6b3490c7a4817d47ecb1f45308cd3a4a0bd6905dcf6d3c",
+      "refs_sha256": "52cf7773afd05fca3d33b19dae80b93ab519e582d7182c46160e012bfb3a0a57",
+      "checkpoint": "2026-10-18-investigation-13",
+      "old_name": "FUN_00713fc0",
+      "instruction_addresses_and_direct_calls_agree": true,
+      "incoming_targets_verified": true
+    },
+    "incoming_direct_call_sites": [
+      "006ba4ea",
+      "007109d1"
+    ],
+    "direct_calls": [
+      {
+        "site": "00713ff6",
+        "target": "005b57c0"
+      },
+      {
+        "site": "00714032",
+        "target": "006c2a40"
+      },
+      {
+        "site": "0071404c",
+        "target": "006f46b0"
+      },
+      {
+        "site": "00714075",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "007140b4",
+        "target": "006cfda0"
+      },
+      {
+        "site": "007140e6",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00714198",
+        "target": "006c38c0"
+      },
+      {
+        "site": "007141de",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "00714210",
+        "target": "006bce80"
+      },
+      {
+        "site": "0071423d",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00714273",
+        "target": "005b5270"
+      },
+      {
+        "site": "0071428b",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "00714294",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "007142b3",
+        "target": "006bce80"
+      },
+      {
+        "site": "007142d7",
+        "target": "006f09f0"
+      },
+      {
+        "site": "007142f9",
+        "target": "006c38c0"
+      },
+      {
+        "site": "0071433f",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "0071436d",
+        "target": "006bce80"
+      },
+      {
+        "site": "00714396",
+        "target": "006f09f0"
+      },
+      {
+        "site": "007143ba",
+        "target": "006c2be0"
+      },
+      {
+        "site": "007143c6",
+        "target": "00715f50"
+      },
+      {
+        "site": "007143f5",
+        "target": "005b5270"
+      },
+      {
+        "site": "0071441d",
+        "target": "006c38c0"
+      },
+      {
+        "site": "00714435",
+        "target": "006c38c0"
+      },
+      {
+        "site": "007144b2",
+        "target": "006c38c0"
+      },
+      {
+        "site": "007144d4",
+        "target": "006c38c0"
+      },
+      {
+        "site": "00714547",
+        "target": "006c38c0"
+      },
+      {
+        "site": "0071455f",
+        "target": "006c38c0"
+      },
+      {
+        "site": "007145cc",
+        "target": "006c38c0"
+      },
+      {
+        "site": "007145ea",
+        "target": "006c38c0"
+      },
+      {
+        "site": "0071464f",
+        "target": "006c38c0"
+      },
+      {
+        "site": "00714665",
+        "target": "006c38c0"
+      },
+      {
+        "site": "0071467c",
+        "target": "006c38c0"
+      },
+      {
+        "site": "007146d3",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "0071472c",
+        "target": "006cb700"
+      },
+      {
+        "site": "00714736",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "0071477d",
+        "target": "006c4180"
+      },
+      {
+        "site": "0071479f",
+        "target": "005b5270"
+      },
+      {
+        "site": "007147c5",
+        "target": "006c38c0"
+      },
+      {
+        "site": "00714830",
+        "target": "006cb930"
+      },
+      {
+        "site": "00714849",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "007148b4",
+        "target": "006f09f0"
+      },
+      {
+        "site": "007148db",
+        "target": "00944cff"
+      },
+      {
+        "site": "007148f5",
+        "target": "0090d130"
+      },
+      {
+        "site": "00714905",
+        "target": "00944c9f"
+      },
+      {
+        "site": "00714916",
+        "target": "005e8290"
+      },
+      {
+        "site": "0071492f",
+        "target": "006c4130"
+      },
+      {
+        "site": "00714945",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "00714953",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "0071496c",
+        "target": "006f5b80"
+      },
+      {
+        "site": "007149c8",
+        "target": "006f09f0"
+      },
+      {
+        "site": "007149ee",
+        "target": "006cd5f0"
+      },
+      {
+        "site": "00714a18",
+        "target": "006bce80"
+      },
+      {
+        "site": "00714a41",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00714a7e",
+        "target": "006bce80"
+      },
+      {
+        "site": "00714aa7",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00714ad7",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00714b07",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00714b2a",
+        "target": "00945640"
+      },
+      {
+        "site": "00714b30",
+        "target": "0090cfc0"
+      },
+      {
+        "site": "00714b60",
+        "target": "006bce80"
+      },
+      {
+        "site": "00714b89",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00714bc8",
+        "target": "006bce80"
+      },
+      {
+        "site": "00714bf1",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00714c1d",
+        "target": "006f09f0"
+      },
+      {
+        "site": "00714c49",
+        "target": "006f09f0"
+      }
+    ],
+    "returns": [
+      {
+        "site": "0071405a",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "007140fd",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "0071424b",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "007142e5",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "007143a4",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "007148c2",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "0071497a",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "007149d6",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "00714a4f",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "00714ab5",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "00714ae5",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "00714b15",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "00714b97",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "00714bff",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "00714c2b",
+        "cleanup_bytes": 4
+      },
+      {
+        "site": "00714c57",
+        "cleanup_bytes": 4
+      }
+    ],
+    "direct_state_stores": [
+      {
+        "site": "0071400a",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "ffff"
+      },
+      {
+        "site": "00714043",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "68"
+      },
+      {
+        "site": "007140eb",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "100"
+      },
+      {
+        "site": "00714225",
+        "width_bytes": 2,
+        "destination": "slot+35",
+        "value": "+7 wrapping"
+      },
+      {
+        "site": "00714234",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "6a"
+      },
+      {
+        "site": "007142ce",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "6a"
+      },
+      {
+        "site": "0071437e",
+        "width_bytes": 2,
+        "destination": "slot+35",
+        "value": "+7 wrapping"
+      },
+      {
+        "site": "0071438d",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "6a"
+      },
+      {
+        "site": "007147f1",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "105"
+      },
+      {
+        "site": "0071491e",
+        "width_bytes": 4,
+        "destination": "00b67a34",
+        "value": "0"
+      },
+      {
+        "site": "00714963",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "6b"
+      },
+      {
+        "site": "007149bf",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "76"
+      },
+      {
+        "site": "00714a29",
+        "width_bytes": 2,
+        "destination": "slot+35",
+        "value": "+7 wrapping"
+      },
+      {
+        "site": "00714a38",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "6a"
+      },
+      {
+        "site": "00714a8f",
+        "width_bytes": 2,
+        "destination": "slot+35",
+        "value": "+7 wrapping"
+      },
+      {
+        "site": "00714a9e",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "69"
+      },
+      {
+        "site": "00714ace",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "76"
+      },
+      {
+        "site": "00714afe",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "76"
+      },
+      {
+        "site": "00714b71",
+        "width_bytes": 2,
+        "destination": "slot+35",
+        "value": "+7 wrapping"
+      },
+      {
+        "site": "00714b80",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "6a"
+      },
+      {
+        "site": "00714bd9",
+        "width_bytes": 2,
+        "destination": "slot+35",
+        "value": "+7 wrapping"
+      },
+      {
+        "site": "00714be8",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "69"
+      },
+      {
+        "site": "00714c14",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "68"
+      },
+      {
+        "site": "00714c40",
+        "width_bytes": 2,
+        "destination": "slot+198",
+        "value": "68"
+      }
+    ],
+    "all_explicit_memory_store_sites": [
+      "00713fcb",
+      "00713fff",
+      "0071400a",
+      "00714043",
+      "007140eb",
+      "007141ac",
+      "007141c8",
+      "007141e3",
+      "00714225",
+      "00714234",
+      "007142ce",
+      "0071430d",
+      "00714329",
+      "00714344",
+      "0071437e",
+      "0071438d",
+      "007143cb",
+      "00714498",
+      "0071449d",
+      "00714533",
+      "00714538",
+      "007145ba",
+      "00714639",
+      "0071463e",
+      "0071464a",
+      "0071466e",
+      "00714685",
+      "0071468c",
+      "00714757",
+      "00714760",
+      "007147ba",
+      "007147ca",
+      "007147f1",
+      "0071480e",
+      "00714812",
+      "0071484e",
+      "00714880",
+      "0071489e",
+      "0071491e",
+      "00714963",
+      "007149bf",
+      "00714a29",
+      "00714a38",
+      "00714a8f",
+      "00714a9e",
+      "00714ace",
+      "00714afe",
+      "00714b71",
+      "00714b80",
+      "00714bd9",
+      "00714be8",
+      "00714c14",
+      "00714c40"
+    ],
+    "branches": [
+      {
+        "site": "00713ffd",
+        "kind": "je",
+        "target": "00714004"
+      },
+      {
+        "site": "00714021",
+        "kind": "jne",
+        "target": "0071405d"
+      },
+      {
+        "site": "00714025",
+        "kind": "je",
+        "target": "00714065"
+      },
+      {
+        "site": "0071405f",
+        "kind": "jne",
+        "target": "00714100"
+      },
+      {
+        "site": "0071406b",
+        "kind": "jne",
+        "target": "007140a3"
+      },
+      {
+        "site": "00714082",
+        "kind": "je",
+        "target": "007140a3"
+      },
+      {
+        "site": "007140a1",
+        "kind": "jmp",
+        "target": "007140e4"
+      },
+      {
+        "site": "007140b1",
+        "kind": "jne",
+        "target": "00714100"
+      },
+      {
+        "site": "007140bb",
+        "kind": "je",
+        "target": "00714100"
+      },
+      {
+        "site": "007140cb",
+        "kind": "jne",
+        "target": "00714100"
+      },
+      {
+        "site": "00714106",
+        "kind": "jne",
+        "target": "00714112"
+      },
+      {
+        "site": "00714110",
+        "kind": "jl",
+        "target": "00714128"
+      },
+      {
+        "site": "00714114",
+        "kind": "jne",
+        "target": "0071424e"
+      },
+      {
+        "site": "00714122",
+        "kind": "jle",
+        "target": "0071424e"
+      },
+      {
+        "site": "00714131",
+        "kind": "jl",
+        "target": "00714138"
+      },
+      {
+        "site": "00714136",
+        "kind": "jle",
+        "target": "00714187"
+      },
+      {
+        "site": "00714181",
+        "kind": "jne",
+        "target": "0071424e"
+      },
+      {
+        "site": "00714195",
+        "kind": "je",
+        "target": "0071419f"
+      },
+      {
+        "site": "0071419d",
+        "kind": "jmp",
+        "target": "007141a1"
+      },
+      {
+        "site": "007141f7",
+        "kind": "je",
+        "target": "007143a7"
+      },
+      {
+        "site": "00714217",
+        "kind": "je",
+        "target": "007143a7"
+      },
+      {
+        "site": "00714281",
+        "kind": "je",
+        "target": "007142e8"
+      },
+      {
+        "site": "0071429e",
+        "kind": "jl",
+        "target": "007142e8"
+      },
+      {
+        "site": "007142ba",
+        "kind": "je",
+        "target": "007142e8"
+      },
+      {
+        "site": "007142f6",
+        "kind": "je",
+        "target": "00714300"
+      },
+      {
+        "site": "007142fe",
+        "kind": "jmp",
+        "target": "00714302"
+      },
+      {
+        "site": "00714358",
+        "kind": "je",
+        "target": "007143a7"
+      },
+      {
+        "site": "00714374",
+        "kind": "je",
+        "target": "007143a7"
+      },
+      {
+        "site": "00714401",
+        "kind": "je",
+        "target": "00714643"
+      },
+      {
+        "site": "00714412",
+        "kind": "jne",
+        "target": "00714542"
+      },
+      {
+        "site": "0071441a",
+        "kind": "je",
+        "target": "00714424"
+      },
+      {
+        "site": "00714422",
+        "kind": "jmp",
+        "target": "00714426"
+      },
+      {
+        "site": "00714428",
+        "kind": "je",
+        "target": "007144a7"
+      },
+      {
+        "site": "00714432",
+        "kind": "je",
+        "target": "0071443c"
+      },
+      {
+        "site": "0071443a",
+        "kind": "jmp",
+        "target": "0071443e"
+      },
+      {
+        "site": "00714440",
+        "kind": "je",
+        "target": "007144a7"
+      },
+      {
+        "site": "00714459",
+        "kind": "jne",
+        "target": "00714477"
+      },
+      {
+        "site": "0071445d",
+        "kind": "jl",
+        "target": "00714490"
+      },
+      {
+        "site": "00714461",
+        "kind": "jg",
+        "target": "00714643"
+      },
+      {
+        "site": "0071446a",
+        "kind": "jl",
+        "target": "00714490"
+      },
+      {
+        "site": "0071446f",
+        "kind": "jle",
+        "target": "00714643"
+      },
+      {
+        "site": "00714475",
+        "kind": "jmp",
+        "target": "00714490"
+      },
+      {
+        "site": "00714479",
+        "kind": "jl",
+        "target": "00714490"
+      },
+      {
+        "site": "0071447d",
+        "kind": "jg",
+        "target": "00714643"
+      },
+      {
+        "site": "00714485",
+        "kind": "jl",
+        "target": "00714490"
+      },
+      {
+        "site": "0071448a",
+        "kind": "jle",
+        "target": "00714643"
+      },
+      {
+        "site": "00714492",
+        "kind": "jge",
+        "target": "00714643"
+      },
+      {
+        "site": "007144a2",
+        "kind": "jmp",
+        "target": "00714643"
+      },
+      {
+        "site": "007144af",
+        "kind": "je",
+        "target": "007144b9"
+      },
+      {
+        "site": "007144b7",
+        "kind": "jmp",
+        "target": "007144bb"
+      },
+      {
+        "site": "007144c3",
+        "kind": "je",
+        "target": "00714643"
+      },
+      {
+        "site": "007144d1",
+        "kind": "je",
+        "target": "007144db"
+      },
+      {
+        "site": "007144d9",
+        "kind": "jmp",
+        "target": "007144dd"
+      },
+      {
+        "site": "007144df",
+        "kind": "je",
+        "target": "00714643"
+      },
+      {
+        "site": "007144fc",
+        "kind": "jne",
+        "target": "00714516"
+      },
+      {
+        "site": "00714500",
+        "kind": "jl",
+        "target": "00714533"
+      },
+      {
+        "site": "00714504",
+        "kind": "jg",
+        "target": "0071452b"
+      },
+      {
+        "site": "00714509",
+        "kind": "jl",
+        "target": "0071452b"
+      },
+      {
+        "site": "0071450e",
+        "kind": "jle",
+        "target": "00714643"
+      },
+      {
+        "site": "00714514",
+        "kind": "jmp",
+        "target": "0071452b"
+      },
+      {
+        "site": "00714518",
+        "kind": "jl",
+        "target": "00714533"
+      },
+      {
+        "site": "0071451c",
+        "kind": "jg",
+        "target": "0071452b"
+      },
+      {
+        "site": "00714520",
+        "kind": "jl",
+        "target": "0071452b"
+      },
+      {
+        "site": "00714525",
+        "kind": "jle",
+        "target": "00714643"
+      },
+      {
+        "site": "0071452d",
+        "kind": "jge",
+        "target": "00714643"
+      },
+      {
+        "site": "0071453d",
+        "kind": "jmp",
+        "target": "00714643"
+      },
+      {
+        "site": "00714544",
+        "kind": "je",
+        "target": "0071454e"
+      },
+      {
+        "site": "0071454c",
+        "kind": "jmp",
+        "target": "00714550"
+      },
+      {
+        "site": "00714552",
+        "kind": "je",
+        "target": "007145c1"
+      },
+      {
+        "site": "0071455c",
+        "kind": "je",
+        "target": "00714566"
+      },
+      {
+        "site": "00714564",
+        "kind": "jmp",
+        "target": "00714568"
+      },
+      {
+        "site": "0071456a",
+        "kind": "je",
+        "target": "007145c1"
+      },
+      {
+        "site": "00714583",
+        "kind": "jne",
+        "target": "0071459d"
+      },
+      {
+        "site": "00714587",
+        "kind": "jl",
+        "target": "007145ba"
+      },
+      {
+        "site": "0071458b",
+        "kind": "jg",
+        "target": "007145b2"
+      },
+      {
+        "site": "00714590",
+        "kind": "jl",
+        "target": "007145b2"
+      },
+      {
+        "site": "00714595",
+        "kind": "jle",
+        "target": "00714643"
+      },
+      {
+        "site": "0071459b",
+        "kind": "jmp",
+        "target": "007145b2"
+      },
+      {
+        "site": "0071459f",
+        "kind": "jl",
+        "target": "007145ba"
+      },
+      {
+        "site": "007145a3",
+        "kind": "jg",
+        "target": "007145b2"
+      },
+      {
+        "site": "007145a7",
+        "kind": "jl",
+        "target": "007145b2"
+      },
+      {
+        "site": "007145ac",
+        "kind": "jle",
+        "target": "00714643"
+      },
+      {
+        "site": "007145b4",
+        "kind": "jge",
+        "target": "00714643"
+      },
+      {
+        "site": "007145bf",
+        "kind": "jmp",
+        "target": "0071463e"
+      },
+      {
+        "site": "007145c9",
+        "kind": "je",
+        "target": "007145d3"
+      },
+      {
+        "site": "007145d1",
+        "kind": "jmp",
+        "target": "007145d5"
+      },
+      {
+        "site": "007145dd",
+        "kind": "je",
+        "target": "00714643"
+      },
+      {
+        "site": "007145e7",
+        "kind": "je",
+        "target": "007145f1"
+      },
+      {
+        "site": "007145ef",
+        "kind": "jmp",
+        "target": "007145f3"
+      },
+      {
+        "site": "007145f5",
+        "kind": "je",
+        "target": "00714643"
+      },
+      {
+        "site": "0071460e",
+        "kind": "jne",
+        "target": "00714624"
+      },
+      {
+        "site": "00714612",
+        "kind": "jl",
+        "target": "00714635"
+      },
+      {
+        "site": "00714616",
+        "kind": "jg",
+        "target": "00714643"
+      },
+      {
+        "site": "0071461b",
+        "kind": "jl",
+        "target": "00714635"
+      },
+      {
+        "site": "00714620",
+        "kind": "jle",
+        "target": "00714643"
+      },
+      {
+        "site": "00714622",
+        "kind": "jmp",
+        "target": "00714635"
+      },
+      {
+        "site": "00714626",
+        "kind": "jl",
+        "target": "00714635"
+      },
+      {
+        "site": "0071462a",
+        "kind": "jg",
+        "target": "00714643"
+      },
+      {
+        "site": "0071462e",
+        "kind": "jl",
+        "target": "00714635"
+      },
+      {
+        "site": "00714633",
+        "kind": "jle",
+        "target": "00714643"
+      },
+      {
+        "site": "00714637",
+        "kind": "jge",
+        "target": "00714643"
+      },
+      {
+        "site": "0071465c",
+        "kind": "je",
+        "target": "0071468c"
+      },
+      {
+        "site": "0071466c",
+        "kind": "je",
+        "target": "00714675"
+      },
+      {
+        "site": "00714673",
+        "kind": "jmp",
+        "target": "00714691"
+      },
+      {
+        "site": "00714683",
+        "kind": "je",
+        "target": "00714691"
+      },
+      {
+        "site": "0071468a",
+        "kind": "jmp",
+        "target": "00714691"
+      },
+      {
+        "site": "007146b9",
+        "kind": "je",
+        "target": "00714795"
+      },
+      {
+        "site": "007146c5",
+        "kind": "je",
+        "target": "007146e2"
+      },
+      {
+        "site": "007146e0",
+        "kind": "jg",
+        "target": "00714743"
+      },
+      {
+        "site": "007146e7",
+        "kind": "jne",
+        "target": "00714701"
+      },
+      {
+        "site": "007146fb",
+        "kind": "jle",
+        "target": "00714701"
+      },
+      {
+        "site": "007146ff",
+        "kind": "jg",
+        "target": "0071471e"
+      },
+      {
+        "site": "00714704",
+        "kind": "jne",
+        "target": "00714764"
+      },
+      {
+        "site": "00714718",
+        "kind": "jge",
+        "target": "00714764"
+      },
+      {
+        "site": "0071471c",
+        "kind": "jge",
+        "target": "00714764"
+      },
+      {
+        "site": "00714726",
+        "kind": "je",
+        "target": "00714764"
+      },
+      {
+        "site": "00714741",
+        "kind": "jge",
+        "target": "00714764"
+      },
+      {
+        "site": "0071476c",
+        "kind": "je",
+        "target": "007147be"
+      },
+      {
+        "site": "00714784",
+        "kind": "jl",
+        "target": "007147be"
+      },
+      {
+        "site": "0071478f",
+        "kind": "jne",
+        "target": "007147b8"
+      },
+      {
+        "site": "00714793",
+        "kind": "jmp",
+        "target": "007147ba"
+      },
+      {
+        "site": "007147ad",
+        "kind": "jne",
+        "target": "007146c7"
+      },
+      {
+        "site": "007147b3",
+        "kind": "jmp",
+        "target": "007146e2"
+      },
+      {
+        "site": "007147d6",
+        "kind": "je",
+        "target": "00714928"
+      },
+      {
+        "site": "007147e2",
+        "kind": "je",
+        "target": "007148c5"
+      },
+      {
+        "site": "007147eb",
+        "kind": "je",
+        "target": "007148c5"
+      },
+      {
+        "site": "00714816",
+        "kind": "je",
+        "target": "00714928"
+      },
+      {
+        "site": "00714837",
+        "kind": "jne",
+        "target": "007148a2"
+      },
+      {
+        "site": "0071483f",
+        "kind": "jne",
+        "target": "007148a2"
+      },
+      {
+        "site": "00714864",
+        "kind": "jne",
+        "target": "007148a2"
+      },
+      {
+        "site": "0071486b",
+        "kind": "jne",
+        "target": "00714875"
+      },
+      {
+        "site": "0071486f",
+        "kind": "jle",
+        "target": "00714875"
+      },
+      {
+        "site": "00714873",
+        "kind": "jmp",
+        "target": "00714880"
+      },
+      {
+        "site": "00714877",
+        "kind": "jne",
+        "target": "00714884"
+      },
+      {
+        "site": "0071487c",
+        "kind": "jge",
+        "target": "00714884"
+      },
+      {
+        "site": "0071488a",
+        "kind": "jg",
+        "target": "00714894"
+      },
+      {
+        "site": "0071488e",
+        "kind": "jge",
+        "target": "00714894"
+      },
+      {
+        "site": "00714892",
+        "kind": "jmp",
+        "target": "0071489e"
+      },
+      {
+        "site": "00714896",
+        "kind": "jl",
+        "target": "007148a2"
+      },
+      {
+        "site": "0071489a",
+        "kind": "jle",
+        "target": "007148a2"
+      },
+      {
+        "site": "00714936",
+        "kind": "jl",
+        "target": "0071497d"
+      },
+      {
+        "site": "0071495d",
+        "kind": "jle",
+        "target": "0071497d"
+      },
+      {
+        "site": "00714989",
+        "kind": "jne",
+        "target": "00714b18"
+      },
+      {
+        "site": "0071499b",
+        "kind": "jne",
+        "target": "00714b18"
+      },
+      {
+        "site": "007149a9",
+        "kind": "jne",
+        "target": "007149d9"
+      },
+      {
+        "site": "007149b3",
+        "kind": "je",
+        "target": "007149d9"
+      },
+      {
+        "site": "007149e1",
+        "kind": "jne",
+        "target": "00714ae8"
+      },
+      {
+        "site": "007149f5",
+        "kind": "jne",
+        "target": "00714ae8"
+      },
+      {
+        "site": "00714a03",
+        "kind": "je",
+        "target": "00714a52"
+      },
+      {
+        "site": "00714a1f",
+        "kind": "je",
+        "target": "00714a52"
+      },
+      {
+        "site": "00714a5a",
+        "kind": "je",
+        "target": "00714ab8"
+      },
+      {
+        "site": "00714a5f",
+        "kind": "jne",
+        "target": "00714ab8"
+      },
+      {
+        "site": "00714a69",
+        "kind": "je",
+        "target": "00714ab8"
+      },
+      {
+        "site": "00714a85",
+        "kind": "je",
+        "target": "00714ab8"
+      },
+      {
+        "site": "00714b3d",
+        "kind": "jle",
+        "target": "00714c2e"
+      },
+      {
+        "site": "00714b4b",
+        "kind": "je",
+        "target": "00714b9a"
+      },
+      {
+        "site": "00714b67",
+        "kind": "je",
+        "target": "00714b9a"
+      },
+      {
+        "site": "00714ba2",
+        "kind": "je",
+        "target": "00714c02"
+      },
+      {
+        "site": "00714ba9",
+        "kind": "jne",
+        "target": "00714c02"
+      },
+      {
+        "site": "00714bb3",
+        "kind": "je",
+        "target": "00714c02"
+      },
+      {
+        "site": "00714bcf",
+        "kind": "je",
+        "target": "00714c02"
+      }
+    ],
+    "rng_sites": [
+      {
+        "site": "00714075",
+        "bound": "20",
+        "local_gate": "match f57a==slot and either sentinel byte is ff"
+      },
+      {
+        "site": "007141de",
+        "bound": "20 if tactical mask40h set else 50",
+        "local_gate": "special region/distance route"
+      },
+      {
+        "site": "0071428b",
+        "bound": "s8(byte(dword(slot+6d)+1a))",
+        "local_gate": "other route and flags EAX bit21"
+      },
+      {
+        "site": "00714294",
+        "bound": "5",
+        "local_gate": "immediately after 0071428b"
+      },
+      {
+        "site": "0071433f",
+        "bound": "20 if tactical mask40h set else 50",
+        "local_gate": "other route after failed/bypassed bit21 path"
+      },
+      {
+        "site": "007146d3",
+        "bound": "0,16,18 or20",
+        "local_gate": "team mask1000h with nonzero match+6+side, or flags EAX bit23"
+      },
+      {
+        "site": "00714736",
+        "bound": "3",
+        "local_gate": "direction/region and slot+109 gate; after optional failed 007146d3"
+      },
+      {
+        "site": "00714849",
+        "bound": "21",
+        "local_gate": "valid partner and slot+10a nonzero; helper false and saved lookup bit2 clear"
+      },
+      {
+        "site": "00714945",
+        "bound": "5*s8(AL from 006c4130)",
+        "local_gate": "fallback helper AL>=0"
+      },
+      {
+        "site": "00714953",
+        "bound": "3",
+        "local_gate": "immediately after 00714945"
+      },
+      {
+        "site": "00714b30",
+        "bound": "EAX from 00945640 on x87(float32(slot+e1)+10.0f)",
+        "local_gate": "fallback coordinates differ"
+      }
+    ],
+    "local_cfg_acyclic": true,
+    "cfg_upper_bound_direct_rng_calls": 9,
+    "rng_bound_limit": "CFG upper bound ignores correlated predicates and transitive calls; R(0) need not advance state",
+    "stack_balance_check": {
+      "entry_stack_argument_read": false,
+      "all_explicit_esp_accesses_below_entry_esp": true,
+      "all_cfg_joins_balanced": true,
+      "all_returns_restore_entry_esp": true,
+      "callee_cleanup_inference": "local stack-balance contract; normal callee return assumed",
+      "callee_cleanup_bytes": {
+        "005b57c0": 4,
+        "006c2a40": 12,
+        "006f46b0": 8,
+        "0090cfc0": 0,
+        "006cfda0": 4,
+        "006f09f0": 20,
+        "006c38c0": 4,
+        "006bce80": 16,
+        "005b5270": 4,
+        "006c2be0": 16,
+        "00715f50": 4,
+        "006cb700": 12,
+        "006c4180": 8,
+        "006cb930": 8,
+        "00944cff": 0,
+        "0090d130": 0,
+        "00944c9f": 0,
+        "005e8290": 0,
+        "006c4130": 4,
+        "006f5b80": 4,
+        "006cd5f0": 4,
+        "00945640": 0
+      }
+    },
+    "checked_contract_sites": [
+      "00713fc0",
+      "00713ffb",
+      "0071407a",
+      "00714080",
+      "00714082",
+      "00714176",
+      "0071417e",
+      "007141a1",
+      "007141da",
+      "007141f4",
+      "00714286",
+      "00714355",
+      "007143cb",
+      "007143fa",
+      "00714649",
+      "0071464a",
+      "007146af",
+      "007146c7",
+      "007146e0",
+      "00714733",
+      "00714741",
+      "00714754",
+      "0071475b",
+      "0071475c",
+      "0071475e",
+      "00714782",
+      "007147ca",
+      "007147df",
+      "007147e8",
+      "0071485f",
+      "00714861",
+      "00714888",
+      "0071488c",
+      "00714894",
+      "00714898",
+      "0071493e",
+      "0071495d",
+      "007149a5",
+      "00714a5c",
+      "00714b18",
+      "00714b1e",
+      "00714ba4"
+    ]
+  },
+  "dependency_caller_windows": [
+    {
+      "start": "007109cd",
+      "end_exclusive": "007109d6",
+      "code_sha256": "54daa8cdb7a0b3dd67d52105bf325a3d2da1342615787f78d2e3c0d21cc0e465",
+      "direct_calls": [
+        {
+          "site": "007109d1",
+          "target": "00713fc0"
+        }
+      ]
+    },
+    {
+      "start": "006ba4df",
+      "end_exclusive": "006ba4ef",
+      "code_sha256": "7c1689960adffd8a3b458fa8ae2a24c3ab955307b227a561d6c07a2309a2eca4",
+      "direct_calls": [
+        {
+          "site": "006ba4ea",
+          "target": "00713fc0"
+        }
+      ]
+    },
+    {
+      "start": "005b5270",
+      "end_exclusive": "005b5286",
+      "code_sha256": "c45b36c5331102b4373a88dd60a1b2747dc99ba587cd81e6dd844f41165f1fbb",
+      "direct_calls": []
+    }
+  ],
+  "constants": [
+    {
+      "address": "00968950",
+      "width_bytes": 8,
+      "value": 2.0,
+      "sha256": "3f710ac088db33363087de2b9a657541fe5447821debaa9fe5cbd538eb1a5f29"
+    },
+    {
+      "address": "0096a600",
+      "width_bytes": 8,
+      "value": 0.0002,
+      "sha256": "67943f99dfdbe54456eb583710aa02bf9f448b92446645524e29ac8036509582"
+    },
+    {
+      "address": "00968e18",
+      "width_bytes": 8,
+      "value": 2.5,
+      "sha256": "5caaabe50da77f59f448b3edf650d68fbca7b858390664c251c52b3f458a881c"
+    },
+    {
+      "address": "00968a78",
+      "width_bytes": 4,
+      "value": 10.0,
+      "sha256": "80c8a717ccd70c8809eb78e6a9591c003e11c721fe0ccaf62fd592abda1a5593"
+    }
+  ],
+  "limits": [
+    "No execution oracle, live reachability or connected shot outcome",
+    "Incoming references are supplied direct calls, not a completeness proof",
+    "Callee effects/RNG remain unresolved except prior bounded contracts",
+    "Stack slot consumed by RET4 is not read in local body; do not copy inferred fastcall prototype",
+    "No original bytes, bulk assembly, decompilation or private paths emitted"
+  ]
+}
