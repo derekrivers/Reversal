@@ -1,0 +1,37 @@
+{
+  "work_unit": "R12-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "status": "proposal only; coordinator owns native writes and checkpoint preservation",
+  "scope": "Three descriptive research names and function comments; no prototype or structure changes",
+  "old_state_evidence": "Checkpoint-11 read-only native preflight reported FUN_ names, null function comments and null entry EOL comments for these three entries. Exported FUN_ names are independently corroborated by the extractor. Recheck exact old state before any native application.",
+  "evidence": ["reports/match-helpers-12.md", "evidence/match-helpers-12-sites.json"],
+  "functions": [
+    {
+      "address": "006f09b0",
+      "old_name": "FUN_006f09b0",
+      "new_name": "match_grid_lookup_from_slot_006f09b0",
+      "old_comment": null,
+      "new_comment": "R12-A static contract: ECX=slot; low-byte x/y at entry ESP+4/+8; RET8. Read signed slot+102/+103 and signed target bytes; abs each signed32 delta, retain signed low8; index=9*dy+dx. FLD float32 at a15e44+4*index returns via ST0. Saves ESI; clobbers EAX/ECX/EDX. No calls or game-state writes; no coordinate/index/null guard. No original grid data or execution equivalence added.",
+      "evidence_sites": ["006f09b0", "006f09b7", "006f09c4", "006f09ca", "006f09d1", "006f09dd", "006f09e2", "006f09ea", "00710560"],
+      "confidence": "high for static ABI/index/load; grid meaning and admitted runtime bounds provisional"
+    },
+    {
+      "address": "006cb960",
+      "old_name": "FUN_006cb960",
+      "new_name": "match_signed_rectangle_predicate_006cb960",
+      "old_comment": null,
+      "new_comment": "R12-A static contract: low-byte side/x/y at entry ESP+4/+8/+c; RETc; ECX unused. AL=1 iff signed x in 2..6 and signed y in 10..11 when side byte exactly1, otherwise y in 0..1; else AL=0. EAX upper24 unchanged. No calls, game-state reads/writes or RNG. 007103e0 calls twice using side=(slot+27==0), x/y=match+8ea7/+8ea8 and tests AL only. Semantic region label provisional.",
+      "evidence_sites": ["006cb964", "006cb96a", "006cb96e", "006cb97e", "006cb991", "006cb993", "006cb99e", "007104b9", "007109bb"],
+      "confidence": "high for static byte/signed predicate and ABI; semantic region meaning provisional"
+    },
+    {
+      "address": "006bce20",
+      "old_name": "FUN_006bce20",
+      "new_name": "match_candidate_filter_006bce20",
+      "old_comment": null,
+      "new_comment": "R12-A static contract: ECX=match; candidate dword and low-byte x/y at entry ESP+4/+8/+c; RETc, normalized EAX0/1. In order reject null, equal coordinate bytes, signed candidate+2b>=2, candidate==match+f582 or +f57a; then call unresolved 006f4600 with ECX=candidate, no explicit args, require AL!=0; finally require post-call match+8eb2==0. Saves ESI; no direct game-state writes/RNG. Transitive effects and full callee ABI remain open; AL gates R11 candidate RNG paths, not a proven outcome.",
+      "evidence_sites": ["006bce29", "006bce45", "006bce4b", "006bce4d", "006bce55", "006bce5d", "006bce66", "006bce70", "006bce79", "007105fd"],
+      "confidence": "high for ordered direct checks, widths and return; 006f4600 transitive behavior unassigned"
+    }
+  ]
+}

@@ -19,7 +19,11 @@ public class CM0102VerifyCheckpoint extends GhidraScript {
             JsonObject row=element.getAsJsonObject();
             Function f=currentProgram.getFunctionManager().getFunctionAt(toAddr(Long.parseLong(row.get("address").getAsString(),16)));
             require(f!=null&&f.getName().equals(row.get("name").getAsString()),"function "+row);
-            require(f.getComment()!=null&&!f.getComment().isBlank(),"function comment "+row);
+            String actualComment=f.getComment();
+            if(row.has("comment")) {
+                if(row.get("comment").isJsonNull())require(actualComment==null||actualComment.isBlank(),"function comment null "+row);
+                else require(row.get("comment").getAsString().equals(actualComment),"function comment exact "+row);
+            } else require(actualComment!=null&&!actualComment.isBlank(),"function comment "+row);
             if(row.has("return_bytes"))require(f.getReturnType().getLength()==row.get("return_bytes").getAsInt(),"return width "+row);
             functions++;
         }

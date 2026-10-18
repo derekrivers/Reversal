@@ -1,0 +1,40 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "a5972e1659afa4b2937490cdc57ebd8f4a5887d3",
+  "scope": "R12-B: complete static instruction map of 004c7560 and 004c79a0; selected immediate caller/callee evidence only. No runtime or end-to-end negotiation/finance claim.",
+  "address_space": "virtual addresses; offsets hexadecimal bytes; count/capacity raw32; source pointers and row pointers DWORD",
+  "confidence": {"control_and_widths": "high static, all 392 owned instructions independently matched to supplied native listings", "row_collection_role": "high static, diagnostic labels and pointer/count/stride arithmetic", "calendar_semantics": "partial", "business_fields_and_runtime_reachability": "unresolved"},
+  "initializer": {
+    "entry": "004c7560",
+    "abi": "ECX receiver retained EBX; no stack argument; no supported EAX result; RET at004c7944. EBX/ESI/EDI, conditional EBP, FS:[0] restored on normal return; exception unwind unaudited.",
+    "direct_manager_writes": [
+      {"site":"004c759a","offset":"4","bytes":4,"value":"DWORD00ae2364 capacity"},
+      {"site":"004c75ae","offset":"0","bytes":4,"value":"malloc(count*0x50) result, including null"},
+      {"site":"004c7645","offset":"8","bytes":4,"value":"zero, only after nonnull initial allocation"}
+    ],
+    "allocation_failure": "Call004c75a4; pointer store004c75ae before null check004c75b0. Diagnostic line0xd7 then normal return if helpers return; +8 is not cleared, and no owned free/rollback exists.",
+    "scan": "Source base DWORD00ae23bc, stride0x6e. Auxiliary base DWORD00ae2d0c, scan offset stride0x4f. Signed count test, bound reloaded from00ae2364 each iteration.",
+    "effects": [
+      "Clear BYTE(auxiliary+scan_index*0x4f+0xb) bit7 at004c7671..78.",
+      "Call004d0c60(manager;source,source.DWORD+39,1,-1,0); store raw32 result to source+52 at004c768b. Full callee unassigned.",
+      "Conditional eight-byte writes to source+46 and source+31 via00417c10 (WORD+0/WORD+2/DWORD+4). Direct RNG bounds6 then28 on first sentinel equality, bound5 on second; opaque transitive RNG remains unresolved.",
+      "Nonzero source.DWORD+39 and source.BYTE+3d in{0,6,7,8,9,10,11,12,13,15} admits004c79a0(manager,1). Nonnegative result publishes auxiliary[source.ID*0x4f]=row index and row.DWORD+0=source.ID, then calls0085e960(row;source,source.DWORD+52).",
+      "For same admitted class and nonnull source.DWORD+61, clamp signed BYTE[pointer+4] to1..50, negate low8, write BYTE row+3a at004c7904. Lookup checks signed ID<globalcount and index>=0 only; null fallback not guarded before write."
+    ],
+    "date_boundary": "00549ef0(0x1f,0x76c) first two WORDs compared with source groups. +46 additionally loops comparing0054c770(global00dd6ec8,8) against source, unsigned high WORD then signed low WORD; greater calls0054c770(source+46,0x34), copies back, repeats. Termination and full calendar behavior unknown. WORD year-like and BYTE helper-result locals are later loaded DWORD; upper bytes are not established clean.00549f70 has selected RET0x10;00417c10 RET8.",
+    "failure_reachability_limit": "Initial malloc failure bypasses scan. Reserve negative result skips row construction but continues optional source+61 path; failed lookup chooses zero before unconditional BYTE[EAX+3a] store. This is conditional static reachability, not observed runtime failure. Under stable global capacity and valid helper effects, one row per input may avoid reserve growth entirely."
+  },
+  "reserve": {
+    "entry":"004c79a0",
+    "abi":"ECX receiver retained ESI; one raw32 flag at entryESP+4; EAX raw32 index or-1; RET4; ESI restored.",
+    "reuse":"Flag0 scans signed-positive count rows at stride0x50 for DWORD+0=-1, returning first index without mutation. Both inventoried calls pass1; zero-mode runtime caller unproven.",
+    "append":"Only count==capacity grows. Otherwise append without count<capacity or nonnull base test. Store count+1 at004c7aac; return old count at004c7ab1; row contents untouched.",
+    "growth":"Capacity +=0xc8 stored004c79e4 before allocation. Nonnull base calls00945667(old,new_capacity*0x50)004c79f1; null calls malloc004c7a02. All arithmetic32, no overflow guard.",
+    "failure":"Store returned pointer004c7a0c before null check004c7a0e. Null diagnostic source line0x175; setEAX=-1 at004c7a9b if helpers return. Count unchanged, capacity already incremented, old pointer not retained in manager by this body.00945667 old-allocation lifetime policy unassigned."
+  },
+  "caller_boundary":"00828110 selected sites008297ca..00829809: request0x3c; conditional004c7040(allocation;EBP); publish returnDWORD00ae1050; branch comparison againstEBP; pass resultECX to004c7560. EBP zeroed0082876e with no later explicit writes through call; under nonvolatile convention argument=0 and comparisons=null checks. Full constructor/setup and callee register preservation outside scope. Supplied refs list only00829809.",
+  "ownership":"Rows retained at manager+0; no owned free/rollback. Reinitializing replaces base without owned free.0085e960 and manager destructor lifetime unassigned; no leak or double-free runtime claim.",
+  "preconditions":["Writable receiver/global tables and valid row/source/auxiliary extents.","Consistent count/capacity, valid nonnegative source IDs and auxiliary indexes; unchecked high/negative conditions are documented, not repaired.","Global stability and opaque helper effects need proof before fixed-count, growth-unreachable or RNG-total claims."],
+  "unresolved_dependencies":["004d0c60 full state/RNG effects","0085e960 full row/source writes, allocation and RNG","0085e410 temporary construction/unwind","00549f70/0054c770/0054c5b0/0054cfb0/00669bd0 full date-like effects","00945667 allocator old-pointer policy and diagnostic nonreturn/UI effects","004c7040 setup constructor, destruction and persistence"],
+  "validation":"PE SHA-256 pin, full independent owned decode/native listing agreement, hashes and direct reference checks; static only. Existing npm checks cover retained unrelated primitives and checkpoint metadata."
+}
