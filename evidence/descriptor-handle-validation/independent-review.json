@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "reviewed_local_commit": "1a8a65c133b9abc759fb0105fc5bec7ca770f8bd",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "original_body_bytes": 61,
+  "original_instructions": 16,
+  "oracle_cases": 344,
+  "original_executions": 4329,
+  "unmapped_read_probes": 2,
+  "reproduced_oracle_sha256": "9556f7e440fdfcec50e66ee5331ec7898b51319c3867660de1436414f4f392e3",
+  "negative_checks_rejected": 11,
+  "review": "Independent decode checked operands, widths, branches, stack/return ABI, ordered error writes, register preservation and unchanged synthetic memory. Normal and optimized oracle regeneration, TypeScript comparison, negative checks and Node24 research checks passed.",
+  "boundary": "Synthetic stable nonaliasing memory only; no descriptor lifecycle, operating-system behavior, save format or complete game behavior."
+}

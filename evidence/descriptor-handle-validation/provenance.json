@@ -1,5 +1,5 @@
 {
-  "status": "locally passed; independent review pending",
+  "status": "passed independent review and merged PR #65",
   "specimen": {
     "filename": "cm0102.exe",
     "bytes": 7192576,
@@ -54,5 +54,5 @@
     "node": "v24.19.0",
     "status": "passed"
   },
-  "scope": "Local whole-body comparison within explicitly supported synthetic memory domain; coverage proposal only until independent review"
+  "scope": "Local whole-body comparison within explicitly supported synthetic memory domain; independent review passed and registry entry promoted"
 }
