@@ -1,0 +1,1642 @@
+{
+  "work_unit": "R24-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "9cb03ce3740e5529a2f6155aa20b1a61ea4ba321c6d3520e1c91525782703f52",
+  "export_manifest_sha256": "c3770d9a3b8b99d80454413ea5ec85114aa0f3baa9ec0c661567c30d7bf40e70",
+  "annotation_preflight_sha256": "1df62ffab8859fa6d1b86e486a26f10f82c82827eb08356caae3ce916694a193",
+  "entry_va": "0062c680",
+  "file_offset": "0x22c680",
+  "body_bytes": 1909,
+  "body_sha256": "10271964e0119f7a886c34ba8741174957ec555c822f8affa7f56acb3dab2fe6",
+  "instruction_count": 562,
+  "all_original_and_native_instructions_match": true,
+  "branches": [
+    [
+      "0062c6b6",
+      "jne",
+      [
+        "0062c6da",
+        "0062c6b8"
+      ]
+    ],
+    [
+      "0062c6e1",
+      "jne",
+      [
+        "0062c705",
+        "0062c6e3"
+      ]
+    ],
+    [
+      "0062c70f",
+      "jne",
+      [
+        "0062c732",
+        "0062c711"
+      ]
+    ],
+    [
+      "0062c738",
+      "je",
+      [
+        "0062cde1",
+        "0062c73e"
+      ]
+    ],
+    [
+      "0062c748",
+      "jge",
+      [
+        "0062cde1",
+        "0062c74e"
+      ]
+    ],
+    [
+      "0062c757",
+      "je",
+      [
+        "0062cde1",
+        "0062c75d"
+      ]
+    ],
+    [
+      "0062c787",
+      "jne",
+      [
+        "0062c796",
+        "0062c789"
+      ]
+    ],
+    [
+      "0062c790",
+      "je",
+      [
+        "0062cde1",
+        "0062c796"
+      ]
+    ],
+    [
+      "0062c7d1",
+      "jg",
+      [
+        "0062c7d8",
+        "0062c7d3"
+      ]
+    ],
+    [
+      "0062c7d6",
+      "jge",
+      [
+        "0062c7df",
+        "0062c7d8"
+      ]
+    ],
+    [
+      "0062c7e6",
+      "je",
+      [
+        "0062c8b6",
+        "0062c7ec"
+      ]
+    ],
+    [
+      "0062c83c",
+      "jge",
+      [
+        "0062c847",
+        "0062c83e"
+      ]
+    ],
+    [
+      "0062c842",
+      "jmp",
+      [
+        "0062cb35"
+      ]
+    ],
+    [
+      "0062c84d",
+      "jge",
+      [
+        "0062c870",
+        "0062c84f"
+      ]
+    ],
+    [
+      "0062c854",
+      "jge",
+      [
+        "0062c867",
+        "0062c856"
+      ]
+    ],
+    [
+      "0062c862",
+      "jmp",
+      [
+        "0062cb35"
+      ]
+    ],
+    [
+      "0062c86b",
+      "jmp",
+      [
+        "0062cb35"
+      ]
+    ],
+    [
+      "0062c874",
+      "jle",
+      [
+        "0062c89f",
+        "0062c876"
+      ]
+    ],
+    [
+      "0062c89a",
+      "jmp",
+      [
+        "0062cb35"
+      ]
+    ],
+    [
+      "0062c8b1",
+      "jmp",
+      [
+        "0062cb35"
+      ]
+    ],
+    [
+      "0062c8c5",
+      "je",
+      [
+        "0062c930",
+        "0062c8c7"
+      ]
+    ],
+    [
+      "0062c913",
+      "jbe",
+      [
+        "0062c91c",
+        "0062c915"
+      ]
+    ],
+    [
+      "0062c91a",
+      "jmp",
+      [
+        "0062c937"
+      ]
+    ],
+    [
+      "0062c91c",
+      "jae",
+      [
+        "0062c922",
+        "0062c91e"
+      ]
+    ],
+    [
+      "0062c920",
+      "jmp",
+      [
+        "0062c937"
+      ]
+    ],
+    [
+      "0062c92e",
+      "jmp",
+      [
+        "0062c937"
+      ]
+    ],
+    [
+      "0062c93c",
+      "je",
+      [
+        "0062cb35",
+        "0062c942"
+      ]
+    ],
+    [
+      "0062c944",
+      "jne",
+      [
+        "0062cb35",
+        "0062c94a"
+      ]
+    ],
+    [
+      "0062c950",
+      "jne",
+      [
+        "0062c96b",
+        "0062c952"
+      ]
+    ],
+    [
+      "0062c959",
+      "jne",
+      [
+        "0062c96b",
+        "0062c95b"
+      ]
+    ],
+    [
+      "0062c969",
+      "je",
+      [
+        "0062c9a4",
+        "0062c96b"
+      ]
+    ],
+    [
+      "0062c9ab",
+      "je",
+      [
+        "0062cb35",
+        "0062c9b1"
+      ]
+    ],
+    [
+      "0062c9f3",
+      "jae",
+      [
+        "0062ca87",
+        "0062c9f9"
+      ]
+    ],
+    [
+      "0062ca01",
+      "jge",
+      [
+        "0062ca09",
+        "0062ca03"
+      ]
+    ],
+    [
+      "0062ca07",
+      "jmp",
+      [
+        "0062ca0f"
+      ]
+    ],
+    [
+      "0062ca19",
+      "jle",
+      [
+        "0062cac5",
+        "0062ca1f"
+      ]
+    ],
+    [
+      "0062ca34",
+      "jae",
+      [
+        "0062cac5",
+        "0062ca3a"
+      ]
+    ],
+    [
+      "0062ca59",
+      "jne",
+      [
+        "0062ca78",
+        "0062ca5b"
+      ]
+    ],
+    [
+      "0062ca83",
+      "jl",
+      [
+        "0062ca1f",
+        "0062ca85"
+      ]
+    ],
+    [
+      "0062ca85",
+      "jmp",
+      [
+        "0062cac5"
+      ]
+    ],
+    [
+      "0062caa3",
+      "jns",
+      [
+        "0062caad",
+        "0062caa5"
+      ]
+    ],
+    [
+      "0062cab1",
+      "jge",
+      [
+        "0062cab7",
+        "0062cab3"
+      ]
+    ],
+    [
+      "0062cac9",
+      "jae",
+      [
+        "0062caf2",
+        "0062cacb"
+      ]
+    ],
+    [
+      "0062cae6",
+      "jns",
+      [
+        "0062cb35",
+        "0062cae8"
+      ]
+    ],
+    [
+      "0062caf0",
+      "jmp",
+      [
+        "0062cb35"
+      ]
+    ],
+    [
+      "0062cb14",
+      "jge",
+      [
+        "0062cb35",
+        "0062cb16"
+      ]
+    ],
+    [
+      "0062cb45",
+      "jns",
+      [
+        "0062cb4b",
+        "0062cb47"
+      ]
+    ],
+    [
+      "0062cb49",
+      "jmp",
+      [
+        "0062cb51"
+      ]
+    ],
+    [
+      "0062cb4d",
+      "jle",
+      [
+        "0062cb51",
+        "0062cb4f"
+      ]
+    ],
+    [
+      "0062cbb1",
+      "jge",
+      [
+        "0062cbb8",
+        "0062cbb3"
+      ]
+    ],
+    [
+      "0062cbdc",
+      "jge",
+      [
+        "0062cbe0",
+        "0062cbde"
+      ]
+    ],
+    [
+      "0062cbef",
+      "jle",
+      [
+        "0062cbf3",
+        "0062cbf1"
+      ]
+    ],
+    [
+      "0062cc00",
+      "jle",
+      [
+        "0062cc21",
+        "0062cc02"
+      ]
+    ],
+    [
+      "0062cc1c",
+      "jmp",
+      [
+        "0062ccdd"
+      ]
+    ],
+    [
+      "0062cc27",
+      "jle",
+      [
+        "0062cc5f",
+        "0062cc29"
+      ]
+    ],
+    [
+      "0062cc49",
+      "jle",
+      [
+        "0062ccdd",
+        "0062cc4f"
+      ]
+    ],
+    [
+      "0062cc5d",
+      "jmp",
+      [
+        "0062ccc9"
+      ]
+    ],
+    [
+      "0062cc65",
+      "jle",
+      [
+        "0062ccdd",
+        "0062cc67"
+      ]
+    ],
+    [
+      "0062cc8f",
+      "jle",
+      [
+        "0062ccb3",
+        "0062cc91"
+      ]
+    ],
+    [
+      "0062ccb9",
+      "jle",
+      [
+        "0062ccdd",
+        "0062ccbb"
+      ]
+    ],
+    [
+      "0062cce3",
+      "jle",
+      [
+        "0062ccea",
+        "0062cce5"
+      ]
+    ],
+    [
+      "0062cd03",
+      "jge",
+      [
+        "0062cd0a",
+        "0062cd05"
+      ]
+    ],
+    [
+      "0062cd11",
+      "jge",
+      [
+        "0062cd15",
+        "0062cd13"
+      ]
+    ],
+    [
+      "0062cd1a",
+      "jle",
+      [
+        "0062cd1e",
+        "0062cd1c"
+      ]
+    ],
+    [
+      "0062cd34",
+      "jle",
+      [
+        "0062cd5c",
+        "0062cd36"
+      ]
+    ],
+    [
+      "0062cd5a",
+      "jne",
+      [
+        "0062cd6e",
+        "0062cd5c"
+      ]
+    ],
+    [
+      "0062cd62",
+      "jle",
+      [
+        "0062cd72",
+        "0062cd64"
+      ]
+    ],
+    [
+      "0062cd6c",
+      "jmp",
+      [
+        "0062cd72"
+      ]
+    ],
+    [
+      "0062cdc0",
+      "jle",
+      [
+        "0062cdc7",
+        "0062cdc2"
+      ]
+    ]
+  ],
+  "direct_calls": [
+    {
+      "target": "00417c10",
+      "sites": [
+        "0062c818",
+        "0062c99f",
+        "0062cddb"
+      ]
+    },
+    {
+      "target": "0054a110",
+      "sites": [
+        "0062c6c8",
+        "0062c6f3",
+        "0062c720"
+      ]
+    },
+    {
+      "target": "0054cc30",
+      "sites": [
+        "0062c7a7",
+        "0062c809"
+      ]
+    },
+    {
+      "target": "0054cdb0",
+      "sites": [
+        "0062c9cb",
+        "0062c9e5"
+      ]
+    },
+    {
+      "target": "0062e700",
+      "sites": [
+        "0062c895",
+        "0062c8ac"
+      ]
+    },
+    {
+      "target": "00669bd0",
+      "sites": [
+        "0062c976"
+      ]
+    },
+    {
+      "target": "0076d780",
+      "sites": [
+        "0062c8d5"
+      ]
+    },
+    {
+      "target": "0076e040",
+      "sites": [
+        "0062c8f0"
+      ]
+    },
+    {
+      "target": "0090cfc0",
+      "sites": [
+        "0062ca4f",
+        "0062cb18"
+      ]
+    },
+    {
+      "target": "00945640",
+      "sites": [
+        "0062cc12",
+        "0062cc39",
+        "0062cc7b",
+        "0062cca5",
+        "0062cccf",
+        "0062cd8c",
+        "0062cdac"
+      ]
+    },
+    {
+      "target": "0094627a",
+      "sites": [
+        "0062c6d2",
+        "0062c6fd",
+        "0062c72a"
+      ]
+    }
+  ],
+  "memory_reads": [
+    [
+      "0062c687",
+      "mov",
+      4,
+      "eax, dword ptr fs:[0]"
+    ],
+    [
+      "0062c698",
+      "mov",
+      1,
+      "al, byte ptr [0xb63d10]"
+    ],
+    [
+      "0062c6da",
+      "mov",
+      1,
+      "al, byte ptr [0xb63d10]"
+    ],
+    [
+      "0062c705",
+      "mov",
+      1,
+      "cl, byte ptr [0xb63d10]"
+    ],
+    [
+      "0062c732",
+      "mov",
+      4,
+      "ecx, dword ptr [esp + 0x4c]"
+    ],
+    [
+      "0062c73e",
+      "mov",
+      4,
+      "eax, dword ptr [ecx]"
+    ],
+    [
+      "0062c740",
+      "mov",
+      4,
+      "edx, dword ptr [0xae2364]"
+    ],
+    [
+      "0062c74e",
+      "mov",
+      4,
+      "ecx, dword ptr [ecx + 0x61]"
+    ],
+    [
+      "0062c75d",
+      "mov",
+      4,
+      "edx, dword ptr [ebp]"
+    ],
+    [
+      "0062c767",
+      "mov",
+      4,
+      "eax, dword ptr [ebx + edx]"
+    ],
+    [
+      "0062c770",
+      "mov",
+      2,
+      "dx, word ptr [esp + 0x2e]"
+    ],
+    [
+      "0062c779",
+      "mov",
+      4,
+      "ecx, dword ptr [ebx + 4]"
+    ],
+    [
+      "0062c77c",
+      "cmp",
+      2,
+      "dx, word ptr [0xae2c92]"
+    ],
+    [
+      "0062c789",
+      "cmp",
+      2,
+      "ax, word ptr [0xae2c90]"
+    ],
+    [
+      "0062c796",
+      "mov",
+      4,
+      "eax, dword ptr [ebx + 4]"
+    ],
+    [
+      "0062c799",
+      "mov",
+      4,
+      "ecx, dword ptr [ebx]"
+    ],
+    [
+      "0062c7ac",
+      "mov",
+      4,
+      "eax, dword ptr [esp + 0x26]"
+    ],
+    [
+      "0062c7b4",
+      "movsx",
+      2,
+      "edx, word ptr [esp + 0x24]"
+    ],
+    [
+      "0062c7c4",
+      "mov",
+      4,
+      "ecx, dword ptr [ebp + 8]"
+    ],
+    [
+      "0062c7ca",
+      "mov",
+      4,
+      "eax, dword ptr [ebx + 0xe]"
+    ],
+    [
+      "0062c7e0",
+      "mov",
+      4,
+      "edi, dword ptr [ebx + 0xe]"
+    ],
+    [
+      "0062c7ec",
+      "mov",
+      4,
+      "edx, dword ptr [ebp + 4]"
+    ],
+    [
+      "0062c7fb",
+      "mov",
+      4,
+      "eax, dword ptr [edi + 0x24]"
+    ],
+    [
+      "0062c7fe",
+      "mov",
+      4,
+      "ecx, dword ptr [edi + 0x20]"
+    ],
+    [
+      "0062c81d",
+      "mov",
+      4,
+      "eax, dword ptr [esp + 0x2a]"
+    ],
+    [
+      "0062c821",
+      "movsx",
+      2,
+      "edx, word ptr [esp + 0x28]"
+    ],
+    [
+      "0062c831",
+      "movsx",
+      2,
+      "ecx, word ptr [edi + 0x2a]"
+    ],
+    [
+      "0062c847",
+      "movsx",
+      2,
+      "edx, word ptr [edi + 0x28]"
+    ],
+    [
+      "0062c886",
+      "mov",
+      4,
+      "eax, dword ptr [esp + 0x54]"
+    ],
+    [
+      "0062c89f",
+      "mov",
+      4,
+      "eax, dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062c8b6",
+      "mov",
+      4,
+      "ebp, dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062c8c0",
+      "mov",
+      4,
+      "eax, dword ptr [ebp + 0x24]"
+    ],
+    [
+      "0062c8c7",
+      "mov",
+      1,
+      "cl, byte ptr [ebp + 0x5e]"
+    ],
+    [
+      "0062c8ce",
+      "mov",
+      4,
+      "ecx, dword ptr [0xb74318]"
+    ],
+    [
+      "0062c8de",
+      "mov",
+      4,
+      "eax, dword ptr [ebp + 0x24]"
+    ],
+    [
+      "0062c8e1",
+      "mov",
+      4,
+      "edx, dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062c8e5",
+      "mov",
+      4,
+      "ecx, dword ptr [eax + 0x53]"
+    ],
+    [
+      "0062c8ea",
+      "mov",
+      4,
+      "ecx, dword ptr [0xb74318]"
+    ],
+    [
+      "0062c8f7",
+      "mov",
+      2,
+      "di, word ptr [0xae2c92]"
+    ],
+    [
+      "0062c8fe",
+      "mov",
+      4,
+      "eax, dword ptr [edx]"
+    ],
+    [
+      "0062c904",
+      "mov",
+      4,
+      "ecx, dword ptr [edx + 4]"
+    ],
+    [
+      "0062c90b",
+      "mov",
+      2,
+      "cx, word ptr [esp + 0x32]"
+    ],
+    [
+      "0062c924",
+      "cmp",
+      2,
+      "ax, word ptr [0xae2c90]"
+    ],
+    [
+      "0062c930",
+      "mov",
+      2,
+      "di, word ptr [0xae2c92]"
+    ],
+    [
+      "0062c937",
+      "mov",
+      4,
+      "eax, dword ptr [ebp + 0x39]"
+    ],
+    [
+      "0062c94a",
+      "cmp",
+      4,
+      "eax, dword ptr [0xb63d2c]"
+    ],
+    [
+      "0062c952",
+      "cmp",
+      2,
+      "word ptr [0xb63d0a], di"
+    ],
+    [
+      "0062c95b",
+      "mov",
+      2,
+      "dx, word ptr [0xae2c90]"
+    ],
+    [
+      "0062c962",
+      "cmp",
+      2,
+      "word ptr [0xb63d08], dx"
+    ],
+    [
+      "0062c992",
+      "mov",
+      4,
+      "eax, dword ptr [ebp + 0x39]"
+    ],
+    [
+      "0062c9a4",
+      "mov",
+      4,
+      "eax, dword ptr [0xb63d30]"
+    ],
+    [
+      "0062c9b1",
+      "mov",
+      4,
+      "edx, dword ptr [0xb63d24]"
+    ],
+    [
+      "0062c9b7",
+      "mov",
+      4,
+      "eax, dword ptr [0xb63d20]"
+    ],
+    [
+      "0062c9d0",
+      "mov",
+      4,
+      "ecx, dword ptr [0xae2c94]"
+    ],
+    [
+      "0062c9d6",
+      "mov",
+      4,
+      "edx, dword ptr [0xae2c90]"
+    ],
+    [
+      "0062ca1f",
+      "mov",
+      4,
+      "eax, dword ptr [ebp]"
+    ],
+    [
+      "0062ca2a",
+      "mov",
+      4,
+      "eax, dword ptr [0xae2d0c]"
+    ],
+    [
+      "0062ca2f",
+      "cmp",
+      1,
+      "byte ptr [ecx + eax + 0xa], 0x32"
+    ],
+    [
+      "0062ca3a",
+      "movsx",
+      1,
+      "ecx, byte ptr [ebp + 0x5b]"
+    ],
+    [
+      "0062ca5b",
+      "mov",
+      4,
+      "eax, dword ptr [ebp]"
+    ],
+    [
+      "0062ca5e",
+      "mov",
+      4,
+      "edx, dword ptr [0xae2d0c]"
+    ],
+    [
+      "0062ca70",
+      "mov",
+      1,
+      "cl, byte ptr [ecx + edx + 0xa]"
+    ],
+    [
+      "0062ca78",
+      "mov",
+      4,
+      "eax, dword ptr [esp + 0x1c]"
+    ],
+    [
+      "0062ca7c",
+      "mov",
+      4,
+      "edx, dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062caad",
+      "cmp",
+      4,
+      "esi, dword ptr [esp + 0x10]"
+    ],
+    [
+      "0062cab7",
+      "mov",
+      4,
+      "eax, dword ptr [esp + 0x10]"
+    ],
+    [
+      "0062cabb",
+      "mov",
+      4,
+      "edx, dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062cacb",
+      "mov",
+      4,
+      "ecx, dword ptr [esp + 0x10]"
+    ],
+    [
+      "0062caf2",
+      "movsx",
+      2,
+      "ecx, word ptr [ebx + 0xa]"
+    ],
+    [
+      "0062caf6",
+      "movsx",
+      2,
+      "eax, word ptr [ebx + 8]"
+    ],
+    [
+      "0062cb1d",
+      "mov",
+      4,
+      "ecx, dword ptr [esp + 0x14]"
+    ],
+    [
+      "0062cb35",
+      "mov",
+      4,
+      "edx, dword ptr [esp + 0x20]"
+    ],
+    [
+      "0062cb39",
+      "mov",
+      1,
+      "al, byte ptr [ebx + 0x1e]"
+    ],
+    [
+      "0062cb3c",
+      "movsx",
+      2,
+      "ebp, word ptr [ebx + 8]"
+    ],
+    [
+      "0062cb40",
+      "mov",
+      1,
+      "cl, byte ptr [edx + 0x34]"
+    ],
+    [
+      "0062cb85",
+      "mov",
+      4,
+      "ecx, dword ptr [esp + 0x18]"
+    ],
+    [
+      "0062cb92",
+      "mov",
+      4,
+      "edx, dword ptr [esp + 0x18]"
+    ],
+    [
+      "0062cbe3",
+      "imul",
+      4,
+      "edx, dword ptr [esp + 0x10]"
+    ],
+    [
+      "0062cbf3",
+      "imul",
+      4,
+      "ebx, dword ptr [esp + 0x14]"
+    ],
+    [
+      "0062cc08",
+      "fild",
+      4,
+      "dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062cc0c",
+      "fmul",
+      8,
+      "qword ptr [0x967880]"
+    ],
+    [
+      "0062cc2f",
+      "fild",
+      4,
+      "dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062cc33",
+      "fmul",
+      8,
+      "qword ptr [0x968918]"
+    ],
+    [
+      "0062cc59",
+      "fild",
+      4,
+      "dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062cc71",
+      "fild",
+      4,
+      "dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062cc75",
+      "fmul",
+      8,
+      "qword ptr [0x96af30]"
+    ],
+    [
+      "0062cc9b",
+      "fild",
+      4,
+      "dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062cc9f",
+      "fmul",
+      8,
+      "qword ptr [0x96bad0]"
+    ],
+    [
+      "0062ccc5",
+      "fild",
+      4,
+      "dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062ccc9",
+      "fmul",
+      8,
+      "qword ptr [0x968968]"
+    ],
+    [
+      "0062ccea",
+      "mov",
+      4,
+      "edx, dword ptr [esp + 0x1c]"
+    ],
+    [
+      "0062ccfd",
+      "mov",
+      4,
+      "eax, dword ptr [esp + 0x20]"
+    ],
+    [
+      "0062cd1e",
+      "mov",
+      4,
+      "ebp, dword ptr [esp + 0x24]"
+    ],
+    [
+      "0062cd22",
+      "fld",
+      8,
+      "qword ptr [0x967890]"
+    ],
+    [
+      "0062cd28",
+      "mov",
+      2,
+      "ax, word ptr [ebp + 0xc]"
+    ],
+    [
+      "0062cd2c",
+      "movsx",
+      2,
+      "ebx, word ptr [ebp + 0xa]"
+    ],
+    [
+      "0062cd3f",
+      "fild",
+      4,
+      "dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062cd43",
+      "fmul",
+      8,
+      "qword ptr [0x96a608]"
+    ],
+    [
+      "0062cd49",
+      "fsubr",
+      8,
+      "qword ptr [0x968dc0]"
+    ],
+    [
+      "0062cd4f",
+      "fcom",
+      8,
+      "qword ptr [0x9689d0]"
+    ],
+    [
+      "0062cd5c",
+      "mov",
+      4,
+      "esi, dword ptr [esp + 0x10]"
+    ],
+    [
+      "0062cd66",
+      "fld",
+      8,
+      "qword ptr [0x9689d0]"
+    ],
+    [
+      "0062cd6e",
+      "mov",
+      4,
+      "esi, dword ptr [esp + 0x10]"
+    ],
+    [
+      "0062cd72",
+      "mov",
+      4,
+      "eax, dword ptr [esp + 0x14]"
+    ],
+    [
+      "0062cd86",
+      "fild",
+      4,
+      "dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062cda2",
+      "fild",
+      4,
+      "dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062cdb1",
+      "mov",
+      4,
+      "ecx, dword ptr [esp + 0x50]"
+    ],
+    [
+      "0062cde1",
+      "mov",
+      4,
+      "ecx, dword ptr [esp + 0x3c]"
+    ]
+  ],
+  "memory_writes": [
+    [
+      "0062c68e",
+      "mov",
+      4,
+      "dword ptr fs:[0], esp"
+    ],
+    [
+      "0062c6a6",
+      "mov",
+      4,
+      "dword ptr [esp + 0x14], esi"
+    ],
+    [
+      "0062c6aa",
+      "mov",
+      4,
+      "dword ptr [esp + 0x18], esi"
+    ],
+    [
+      "0062c6ae",
+      "mov",
+      4,
+      "dword ptr [esp + 0xc], esi"
+    ],
+    [
+      "0062c6b2",
+      "mov",
+      4,
+      "dword ptr [esp + 0x10], esi"
+    ],
+    [
+      "0062c6c2",
+      "mov",
+      1,
+      "byte ptr [0xb63d10], dl"
+    ],
+    [
+      "0062c6ed",
+      "mov",
+      1,
+      "byte ptr [0xb63d10], dl"
+    ],
+    [
+      "0062c71a",
+      "mov",
+      1,
+      "byte ptr [0xb63d10], dl"
+    ],
+    [
+      "0062c753",
+      "mov",
+      4,
+      "dword ptr [esp + 0x1c], ecx"
+    ],
+    [
+      "0062c76c",
+      "mov",
+      4,
+      "dword ptr [esp + 0x2c], eax"
+    ],
+    [
+      "0062c775",
+      "mov",
+      4,
+      "dword ptr [esp + 0x20], ebx"
+    ],
+    [
+      "0062c783",
+      "mov",
+      4,
+      "dword ptr [esp + 0x30], ecx"
+    ],
+    [
+      "0062c7b0",
+      "mov",
+      4,
+      "dword ptr [esp + 0x44], esi"
+    ],
+    [
+      "0062c7d8",
+      "mov",
+      4,
+      "dword ptr [ebx + 0xe], 0xffffffff"
+    ],
+    [
+      "0062c83e",
+      "mov",
+      4,
+      "dword ptr [esp + 0x18], esi"
+    ],
+    [
+      "0062c85a",
+      "mov",
+      4,
+      "dword ptr [esp + 0x10], eax"
+    ],
+    [
+      "0062c85e",
+      "mov",
+      4,
+      "dword ptr [esp + 0x18], esi"
+    ],
+    [
+      "0062c867",
+      "mov",
+      4,
+      "dword ptr [esp + 0x10], esi"
+    ],
+    [
+      "0062c880",
+      "mov",
+      4,
+      "dword ptr [esp + 0x14], eax"
+    ],
+    [
+      "0062c88a",
+      "mov",
+      4,
+      "dword ptr [esp + 0x18], ecx"
+    ],
+    [
+      "0062c891",
+      "mov",
+      4,
+      "dword ptr [esp + 0x20], esi"
+    ],
+    [
+      "0062c8a8",
+      "mov",
+      4,
+      "dword ptr [esp + 0x1c], esi"
+    ],
+    [
+      "0062c8bc",
+      "mov",
+      4,
+      "dword ptr [esp + 0x14], esi"
+    ],
+    [
+      "0062c8da",
+      "mov",
+      1,
+      "byte ptr [esp + 0x50], al"
+    ],
+    [
+      "0062c900",
+      "mov",
+      4,
+      "dword ptr [esp + 0x30], eax"
+    ],
+    [
+      "0062c907",
+      "mov",
+      4,
+      "dword ptr [esp + 0x34], ecx"
+    ],
+    [
+      "0062c98d",
+      "mov",
+      4,
+      "dword ptr [0xb63d30], eax"
+    ],
+    [
+      "0062c99a",
+      "mov",
+      4,
+      "dword ptr [0xb63d2c], eax"
+    ],
+    [
+      "0062c9c3",
+      "mov",
+      4,
+      "dword ptr [esp + 0x1c], 0"
+    ],
+    [
+      "0062c9ef",
+      "mov",
+      4,
+      "dword ptr [esp + 0x50], edx"
+    ],
+    [
+      "0062ca03",
+      "mov",
+      4,
+      "dword ptr [esp + 0x1c], edi"
+    ],
+    [
+      "0062ca09",
+      "mov",
+      4,
+      "dword ptr [esp + 0x1c], esi"
+    ],
+    [
+      "0062ca11",
+      "mov",
+      4,
+      "dword ptr [esp + 0x10], esi"
+    ],
+    [
+      "0062ca76",
+      "mov",
+      1,
+      "byte ptr [eax], cl"
+    ],
+    [
+      "0062ca9f",
+      "mov",
+      4,
+      "dword ptr [esp + 0x10], ecx"
+    ],
+    [
+      "0062caa5",
+      "mov",
+      4,
+      "dword ptr [esp + 0x10], 0"
+    ],
+    [
+      "0062cab3",
+      "mov",
+      4,
+      "dword ptr [esp + 0x10], esi"
+    ],
+    [
+      "0062cac1",
+      "mov",
+      4,
+      "dword ptr [esp + 0x18], esi"
+    ],
+    [
+      "0062cade",
+      "mov",
+      4,
+      "dword ptr [esp + 0x14], eax"
+    ],
+    [
+      "0062cae2",
+      "mov",
+      4,
+      "dword ptr [esp + 0x10], ecx"
+    ],
+    [
+      "0062cae8",
+      "mov",
+      4,
+      "dword ptr [esp + 0x10], 0"
+    ],
+    [
+      "0062cb2d",
+      "mov",
+      4,
+      "dword ptr [esp + 0x14], eax"
+    ],
+    [
+      "0062cb31",
+      "mov",
+      4,
+      "dword ptr [esp + 0x10], ecx"
+    ],
+    [
+      "0062cbad",
+      "mov",
+      4,
+      "dword ptr [esp + 0x20], eax"
+    ],
+    [
+      "0062cc04",
+      "mov",
+      4,
+      "dword ptr [esp + 0x50], ecx"
+    ],
+    [
+      "0062cc2b",
+      "mov",
+      4,
+      "dword ptr [esp + 0x50], ecx"
+    ],
+    [
+      "0062cc55",
+      "mov",
+      4,
+      "dword ptr [esp + 0x50], ecx"
+    ],
+    [
+      "0062cc6d",
+      "mov",
+      4,
+      "dword ptr [esp + 0x50], ecx"
+    ],
+    [
+      "0062cc97",
+      "mov",
+      4,
+      "dword ptr [esp + 0x50], ecx"
+    ],
+    [
+      "0062ccc1",
+      "mov",
+      4,
+      "dword ptr [esp + 0x50], ecx"
+    ],
+    [
+      "0062cd3b",
+      "mov",
+      4,
+      "dword ptr [esp + 0x50], eax"
+    ],
+    [
+      "0062cd82",
+      "mov",
+      4,
+      "dword ptr [esp + 0x50], ecx"
+    ],
+    [
+      "0062cd9e",
+      "mov",
+      4,
+      "dword ptr [esp + 0x50], eax"
+    ],
+    [
+      "0062cda6",
+      "mov",
+      4,
+      "dword ptr [esp + 0x50], edx"
+    ],
+    [
+      "0062cdd3",
+      "mov",
+      2,
+      "word ptr [ebp + 8], di"
+    ],
+    [
+      "0062cdd7",
+      "mov",
+      2,
+      "word ptr [ebp + 0xa], ax"
+    ],
+    [
+      "0062cde8",
+      "mov",
+      4,
+      "dword ptr fs:[0], ecx"
+    ]
+  ],
+  "returns": [
+    [
+      "0062cdf2",
+      4
+    ]
+  ],
+  "native_export_hashes": {
+    "asm": "d4deb12fbedb1229c64240b313b0d57fcd426bf4ad99f2619000ed494a2c5905",
+    "c": "d63f5b0e5c5a0474d43887b5e27cda21a0c763b16ddf26ebaa4dd62eb441fc7e"
+  },
+  "scope": "complete local body; transitive callee effects unresolved",
+  "integrity_under_python_optimized_mode": "explicit ValueError gates"
+}
