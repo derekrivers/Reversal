@@ -1,0 +1,462 @@
+{
+  "investigation": 11,
+  "work_unit": "R11-A",
+  "baseline_commit": "2c6bb83f13c92a3f9d2309e71e5e77aac7715383",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual addresses; raw offsets explicitly labelled",
+  "evidence_class": "static assembly mapping; no new original-instruction oracle",
+  "owned_range": {
+    "start": "007103e0",
+    "end_exclusive": "007109eb",
+    "bytes": 1547,
+    "file_offset": "0x3103e0",
+    "sha256": "148c163c2dda7d5c79f5de5771ad222055b3b268781c4d697250a2794b1a70c2",
+    "instruction_count": 454,
+    "direct_call_count": 34
+  },
+  "direct_calls": [
+    {
+      "site": "007103fb",
+      "target": "006c38c0"
+    },
+    {
+      "site": "00710411",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "00710424",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "00710466",
+      "target": "006c38c0"
+    },
+    {
+      "site": "007104b9",
+      "target": "006cb960"
+    },
+    {
+      "site": "007104cd",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "00710510",
+      "target": "006c38c0"
+    },
+    {
+      "site": "00710560",
+      "target": "006f09b0"
+    },
+    {
+      "site": "0071056b",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "0071058e",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "007105fd",
+      "target": "006bce20"
+    },
+    {
+      "site": "0071061b",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "00710637",
+      "target": "00714d40"
+    },
+    {
+      "site": "00710654",
+      "target": "007109f0"
+    },
+    {
+      "site": "007106b0",
+      "target": "00945640"
+    },
+    {
+      "site": "007106b6",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "007106bf",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "00710705",
+      "target": "006bce20"
+    },
+    {
+      "site": "00710723",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "0071073f",
+      "target": "00714d40"
+    },
+    {
+      "site": "00710799",
+      "target": "006bce20"
+    },
+    {
+      "site": "007107b7",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "007107d3",
+      "target": "00714d40"
+    },
+    {
+      "site": "00710807",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "00710858",
+      "target": "006bce20"
+    },
+    {
+      "site": "00710876",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "00710892",
+      "target": "00714d40"
+    },
+    {
+      "site": "007108c1",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "00710912",
+      "target": "006bce20"
+    },
+    {
+      "site": "00710930",
+      "target": "0090cfc0"
+    },
+    {
+      "site": "0071094c",
+      "target": "00714d40"
+    },
+    {
+      "site": "007109bb",
+      "target": "006cb960"
+    },
+    {
+      "site": "007109d1",
+      "target": "00713fc0"
+    },
+    {
+      "site": "007109df",
+      "target": "00714d40"
+    }
+  ],
+  "rng_sites": [
+    "00710411",
+    "00710424",
+    "007104cd",
+    "0071056b",
+    "0071058e",
+    "0071061b",
+    "007106b6",
+    "007106bf",
+    "00710723",
+    "007107b7",
+    "00710807",
+    "00710876",
+    "007108c1",
+    "00710930"
+  ],
+  "abi": {
+    "entry": "ECX=slot; no explicit stack arguments",
+    "return_cleanup": 0,
+    "preserves": [
+      "EBX",
+      "ESI",
+      "EDI"
+    ],
+    "return_value": "no meaningful result established",
+    "return_sites": [
+      "00710767",
+      "00710826",
+      "007108e0",
+      "00710974",
+      "007109dc",
+      "007109ea"
+    ]
+  },
+  "loop_sites": [
+    {
+      "entry": "007105dc",
+      "predicate_call": "007105fd",
+      "rng900": "0071061b",
+      "candidate_boundary": "00710637",
+      "backedge": "0071064e",
+      "path": "owner continuation"
+    },
+    {
+      "entry": "007106e4",
+      "predicate_call": "00710705",
+      "rng900": "00710723",
+      "candidate_boundary": "0071073f",
+      "backedge": "00710756",
+      "path": "entry float gate"
+    },
+    {
+      "entry": "00710778",
+      "predicate_call": "00710799",
+      "rng900": "007107b7",
+      "candidate_boundary": "007107d3",
+      "backedge": "007107ea",
+      "path": "R(20)==0 and slot10d==0"
+    },
+    {
+      "entry": "00710837",
+      "predicate_call": "00710858",
+      "rng900": "00710876",
+      "candidate_boundary": "00710892",
+      "backedge": "007108a9",
+      "path": "state5 distance and slot10d gate"
+    },
+    {
+      "entry": "007108f1",
+      "predicate_call": "00710912",
+      "rng900": "00710930",
+      "candidate_boundary": "0071094c",
+      "backedge": "00710963",
+      "path": "nonowner slot2b!=0"
+    }
+  ],
+  "limitations": [
+    "Names and field meanings remain provisional",
+    "No caller reachability or transitive side-effect certification",
+    "Large callees are immediate ABI boundaries only; their bodies are unassigned",
+    "No behavioral port, connected attempt oracle or complete outcome claim"
+  ],
+  "direct_external_writes": [
+    {
+      "site": "0071065f",
+      "width": "byte",
+      "target": "match+1a7",
+      "value": "0"
+    },
+    {
+      "site": "00710758",
+      "width": "word",
+      "target": "slot+198",
+      "value": "67"
+    },
+    {
+      "site": "007107ef",
+      "width": "word",
+      "target": "slot+35",
+      "value": "add -15 (word wrap)"
+    },
+    {
+      "site": "007107f6",
+      "width": "word",
+      "target": "slot+198",
+      "value": "67"
+    },
+    {
+      "site": "00710801",
+      "width": "byte",
+      "target": "slot+2b",
+      "value": "1 if previously zero"
+    },
+    {
+      "site": "0071081e",
+      "width": "float32",
+      "target": "slot+4d",
+      "value": "x87 slot4d + 5 + R(5)"
+    },
+    {
+      "site": "007108ae",
+      "width": "word",
+      "target": "slot+198",
+      "value": "67"
+    },
+    {
+      "site": "007108bb",
+      "width": "byte",
+      "target": "slot+2b",
+      "value": "1 if previously zero"
+    },
+    {
+      "site": "007108d8",
+      "width": "float32",
+      "target": "slot+4d",
+      "value": "x87 slot4d + 5 + R(5)"
+    },
+    {
+      "site": "00710965",
+      "width": "word",
+      "target": "slot+198",
+      "value": "67"
+    }
+  ],
+  "constants": [
+    {
+      "va": "0096d818",
+      "kind": "float64",
+      "value": 0.0078125
+    },
+    {
+      "va": "0096d754",
+      "kind": "float32",
+      "value": 9.0
+    },
+    {
+      "va": "00968e18",
+      "kind": "float64",
+      "value": 2.5
+    }
+  ],
+  "dependency_selected_ranges": [
+    {
+      "start": "00702180",
+      "end_exclusive": "007021b5",
+      "sha256": "956e5b2795351e3c175c7486445676e60a32c05210e1e00d2547c1d4da75d580",
+      "instruction_count": 15,
+      "direct_calls": [
+        {
+          "site": "00702193",
+          "target": "00945640"
+        }
+      ]
+    },
+    {
+      "start": "00703e19",
+      "end_exclusive": "00703eca",
+      "sha256": "86b63af5d21a1b53af133825a524f9e930544308ec5da1440b2193e122645ce5",
+      "instruction_count": 44,
+      "direct_calls": [
+        {
+          "site": "00703e24",
+          "target": "0090cfc0"
+        },
+        {
+          "site": "00703e8c",
+          "target": "007103e0"
+        }
+      ]
+    },
+    {
+      "start": "006beacd",
+      "end_exclusive": "006beb12",
+      "sha256": "6746bec85c8bc8817d3c2f16086eb1ab46e6a363621e11f086b3688676664750",
+      "instruction_count": 24,
+      "direct_calls": [
+        {
+          "site": "006beaeb",
+          "target": "00700bd0"
+        },
+        {
+          "site": "006beaf8",
+          "target": "0090cfc0"
+        }
+      ]
+    },
+    {
+      "start": "006beda9",
+      "end_exclusive": "006bedb5",
+      "sha256": "53688ad3e3714d34e675a5206dbfa01267e23c57109b0e98e95788a62e72d5d4",
+      "instruction_count": 4,
+      "direct_calls": [
+        {
+          "site": "006bedb0",
+          "target": "00702050"
+        }
+      ]
+    }
+  ],
+  "native_owned_corroboration": {
+    "export_sha256": "97e97431078e8a5d49b37b3d0548fdb297862b05c8ecc7112f9e027974765dd4",
+    "all_instruction_addresses_match": true,
+    "all_direct_call_sites_targets_match": true
+  },
+  "large_callee_boundaries": [
+    {
+      "entry": "007109f0",
+      "declared_bytes": 13162,
+      "code_range_sha256": "65df2cd5f8e855008089f2e8984b72b563d3fe76ae2eac3742de44d60564d2cd",
+      "export_sha256": "63d24722d137a6822e66476ef353b5084dad9d805271657dbee923716a8f53b6",
+      "representative_owned_call": "00710654",
+      "explicit_argument": "pushed dword0",
+      "ecx": "slot pointer",
+      "return_cleanup": 4,
+      "return_sites": [
+        "00713bf6"
+      ],
+      "scope": "immediate entry/call/return boundary only; no body contract"
+    },
+    {
+      "entry": "00713fc0",
+      "declared_bytes": 3226,
+      "code_range_sha256": "f83239cb8e38cc1fe4ff20d694553587a76ae9c242b1bf30ae60f202455937f5",
+      "export_sha256": "b20f4a4499a06913ed430e42ceddbdb43d509da2b10bf46e9ab3881085615f3a",
+      "representative_owned_call": "007109d1",
+      "explicit_argument": "1",
+      "ecx": "slot pointer",
+      "return_cleanup": 4,
+      "return_sites": [
+        "0071405a",
+        "007140fd",
+        "0071424b",
+        "007142e5",
+        "007143a4",
+        "007148c2",
+        "0071497a",
+        "007149d6",
+        "00714a4f",
+        "00714ab5",
+        "00714ae5",
+        "00714b15",
+        "00714b97",
+        "00714bff",
+        "00714c2b",
+        "00714c57"
+      ],
+      "scope": "immediate entry/call/return boundary only; no body contract"
+    },
+    {
+      "entry": "00714d40",
+      "declared_bytes": 4583,
+      "code_range_sha256": "3d2a1085dcb8a21cd987e08fa845a21a297970d12d1cd02120934739943c1047",
+      "export_sha256": "a35afc33ba8767ec01898e2d4b17e221222e7d8fc4bcd4b8ef7161b5cd5d4ff7",
+      "representative_owned_call": "007109df",
+      "explicit_argument": "no explicit stack argument",
+      "ecx": "slot pointer",
+      "return_cleanup": 0,
+      "return_sites": [
+        "00714e86",
+        "00714f91",
+        "0071502c",
+        "00715121",
+        "007151b3",
+        "00715278",
+        "007153ce",
+        "007154c0",
+        "00715582",
+        "007158f5",
+        "007159d3",
+        "00715a7f",
+        "00715b41",
+        "00715bcb",
+        "00715bf3",
+        "00715dcf",
+        "00715df2",
+        "00715e6e",
+        "00715eed",
+        "00715f26"
+      ],
+      "scope": "immediate entry/call/return boundary only; no body contract"
+    }
+  ],
+  "native_manifest_check": {
+    "sha256": "38a88c80f29cc7c0ab6267b5ad6a153788781ac29bcc5956e7d3e4941a39eb76",
+    "relevant_export_count": 4,
+    "all_relevant_digests_and_sizes_match": true
+  }
+}
