@@ -1,0 +1,30 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 24,
+  "scope": "Three reviewed working names only; 0062c680 retains its historical name/comment. Four complete local static bodies and two bounded TypeScript paths; no prototype, comment or data type applied.",
+  "annotations": [
+    [
+      "0054cc30",
+      "FUN_0054cc30",
+      "DatePairDifference"
+    ],
+    [
+      "00944cff",
+      "FUN_00944cff",
+      "split_path_components_00944cff"
+    ],
+    [
+      "00944c9f",
+      "FUN_00944c9f",
+      "format_buffer_variadic_00944c9f"
+    ]
+  ],
+  "function_comments": [],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "date-difference-24-annotations-proposal.json",
+    "path-format-24-annotations-proposal.json"
+  ]
+}
