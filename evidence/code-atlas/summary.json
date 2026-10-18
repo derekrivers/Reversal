@@ -6,7 +6,7 @@
     "external_function_symbols": 143,
     "source_path_strings": 396,
     "functions_with_direct_source_path_reference": 1892,
-    "functions_with_working_research_name": 26,
+    "functions_with_working_research_name": 27,
     "call_instructions": 93349,
     "unresolved_indirect_call_instructions": 851,
     "executable_memory_bytes": 5660672,

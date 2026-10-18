@@ -1,0 +1,54 @@
+{
+  "date_utc": "2026-10-18",
+  "ghidra": "12.1.4",
+  "jdk": "21",
+  "input_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "project_files": {
+    "cm0102.gpr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cm0102.rep/idata/00/00000000.prp": {
+      "bytes": 487,
+      "sha256": "2610d327ab8b4ac9573742ecb6c58c4acbb4a243343060f94bd9ffa7ecdaf3c4"
+    },
+    "cm0102.rep/idata/00/~00000000.db/db.12.gbf": {
+      "bytes": 114868224,
+      "sha256": "420c855eb10108cf6cd0a0a0e36cc69c03a385704baf7718f93011c2545247ec"
+    },
+    "cm0102.rep/idata/~index.bak": {
+      "bytes": 107,
+      "sha256": "48592bfc34a329aae62e223249eaa9e4660dacf8b417063e299fd25f4fcec5e1"
+    },
+    "cm0102.rep/idata/~index.dat": {
+      "bytes": 107,
+      "sha256": "48592bfc34a329aae62e223249eaa9e4660dacf8b417063e299fd25f4fcec5e1"
+    },
+    "cm0102.rep/project.prp": {
+      "bytes": 157,
+      "sha256": "b082f0373ca4a46905f24e87f4325f5c764d2426d9fda5736ee5f75c8c19c66f"
+    },
+    "cm0102.rep/user/~index.dat": {
+      "bytes": 59,
+      "sha256": "0a5034997e47499d758115fa580ad21d96557d2a32c89f2263bcfd3fa8a9a6e5"
+    },
+    "cm0102.rep/versioned/~index.bak": {
+      "bytes": 59,
+      "sha256": "0a5034997e47499d758115fa580ad21d96557d2a32c89f2263bcfd3fa8a9a6e5"
+    },
+    "cm0102.rep/versioned/~index.dat": {
+      "bytes": 59,
+      "sha256": "0a5034997e47499d758115fa580ad21d96557d2a32c89f2263bcfd3fa8a9a6e5"
+    }
+  },
+  "scope": "Native Ghidra project, function comments/names, RNG/event labels and recovered structures. Original executable bytes were not patched.",
+  "expected_counts": {
+    "functions": 27,
+    "global_labels": 16,
+    "structures": 9,
+    "fields": 93,
+    "code_samples": 53,
+    "code_comments": 25
+  },
+  "limitations": "Research types are partial; no full game or match reproduction."
+}

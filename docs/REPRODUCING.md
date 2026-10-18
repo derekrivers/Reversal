@@ -68,6 +68,17 @@ node reconstruction/check-keeper-response.ts results/new-keeper-response/oracle.
 
 This uses 2,048 inputs per entry mode repeated under control words 027fh/037fh (8,192 cases total). The same inputs/RNG states are paired across53/64-bit precision. Only the body/postlude, original RNG and original `__ftol` run; prelude state is synthetic and supplied. `CM0102FloatControlSites.java OUTPUT_JSON` records control-word instructions and bounded incoming-reference samples from the inferred listing; it is not a runtime precision trace.
 
+Regenerate the penalty keeper path from the original function entry:
+
+```sh
+python3 scripts/emulate_penalty_keeper_entry.py downloads/cm0102.exe \
+  evidence/random-validation/random-table.bin results/new-penalty-keeper-entry
+node reconstruction/check-penalty-keeper-entry.ts results/new-penalty-keeper-entry/oracle.json \
+  evidence/random-validation/random-table.bin results/new-penalty-keeper-entry-validation.json
+```
+
+Add `--original-grid-private` to the emulator for the additional original-lookup comparison. That mode requires an output under ignored `results/`; never publish its original-grid input/output oracle. Run the same TypeScript checker against it. The public fixture instead uses an explicitly synthetic float32 hypot grid; both modes execute the original entry-to-return action33 path and verify ABI and unchanged input memory. Original tactical-position/RNG/ftol instructions execute in both. Other actions and the shot caller are excluded.
+
 ## Native analysis
 
 Install Ghidra 12.1.4 and JDK 21, set `GHIDRA_INSTALL_DIR` and `JAVA_HOME`, then:
