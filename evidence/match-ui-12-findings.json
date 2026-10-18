@@ -1,0 +1,69 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline": "a5972e1659afa4b2937490cdc57ebd8f4a5887d3",
+  "scope": "Static owned bodies 00727e20 and 00727f00; dependency observations explicitly separate; no behavior reconstruction or native writes",
+  "address_kind": "PE virtual addresses; + offsets are hexadecimal byte offsets",
+  "owned_contracts": [
+    {
+      "entry": "00727e20",
+      "abi": "Two raw32 stack arguments, caller stack cleanup, plain RET; only AL is a defined result contract. EBX/ESI and, on nonnull path, EBP/EDI preserved. ECX is set to global32[00de1d08] for lookup calls, not a receiver supplied by this caller.",
+      "arguments": ["nonnull club/context pointer32 candidate", "opaque raw32 row-selection option"],
+      "result": "AL=0..10 for earliest candidate with maximal signed16 helper result, AL=ff when no lookup succeeds or first argument null; do not use upper EAX bits as status or pointer",
+      "sequence": [
+        "Null argument: diagnostics at 00727e49/00727e63/00727e73/00727e83, line token 20e1, DWORD00b67a34=0 at 00727e8b, AL=ff at 00727e91 if diagnostics return.",
+        "Initialize byte local winner to ff at 00727ea5 and EDI=0. For EBX 0 through 10 call 008968f0(ECX=global32[00de1d08],arg1,index,arg2) at 00727eb5.",
+        "For nonzero lookup result call 006e1cf0(candidate,0,arg1) at 00727ec2; compare AX and DI with signed16 CMP/JLE at 00727ed3/00727ed6.",
+        "First successful candidate always replaces sentinel, even if score is negative. Thereafter replace only on strictly greater signed16 score; ties preserve earlier index. Store index byte at 00727ed8 and raw EAX in EDI at 00727edc; only DI participates in later score comparison.",
+        "Continue all eleven lookup attempts; return winner in AL at 00727ee4. No candidate pointer is returned or explicitly freed."
+      ],
+      "direct_nonstack_writes": ["DWORD00b67a34=0 on null diagnostic path only; otherwise owned stores are stack locals"],
+      "preconditions": ["Valid shared tactical holder, input object and opaque option for callees", "Lookup/scorer transitive effects and validity are not proven by owned null guard"],
+      "ownership": "Input and returned lookup pointers appear borrowed: no direct allocation, free, retention or object construction. Shared holder lifetime and candidate allocation ownership unproven.",
+      "confidence": "High for local ABI widths/selection/control; club/tactical meaning supported by dependencies, full score semantics and purity unresolved"
+    },
+    {
+      "entry": "00727f00",
+      "abi": "One raw32 stack argument, caller stack cleanup, plain RET; no supplied receiver. Nonnull path sets ECX=00b74450 and callee consumes six arguments with RET18.",
+      "arguments": ["nonzero raw32 manager filter key; pointer identity is a hypothesis, no dereference in owned body"],
+      "sequence": [
+        "Null argument: diagnostics at 00727f24/00727f3e/00727f4e/00727f5f with line token2113; DWORD00b67a34=0 at 00727f67; no explicit EAX status assignment after diagnostic helpers.",
+        "Nonzero argument: 007fe4a0(ECX=00b74450,key,00727fa0,00727fb0,0,0,0) at00727f8e; forward callee EAX on ordinary return."
+      ],
+      "direct_nonstack_writes": ["DWORD00b67a34=0 on null diagnostic path only"],
+      "ownership": "Static-address receiver shared with 00727c30; wrapper passes code pointers and key without direct allocation/free or constructing a receiver. Manager owns mutable storage in dependency, lifetime unresolved.",
+      "confidence": "High for call/argument/return boundary; screen-manager interpretation supported by dependency fields and scrman.cpp anchor, exact screen and callback lifecycle unresolved"
+    }
+  ],
+  "dependency_observations_outside_owned_bodies": [
+    {
+      "entry": "008968f0",
+      "role": "Lookup dependency; not a pure query",
+      "sites": ["00896972", "00896985", "008969a6", "008969b1", "008969fe", "00896a14"],
+      "contract_fragment": "With row r from 008982b0 and signed8 index i, uses holder DWORD+601 + 91*r + 2 + 4*i. Stored signed32 ID <=-1 returns null. Otherwise candidate base is global32[00ae23bc]+6e*ID. Missing candidate DWORD+61 clears mapped ID toffffffff at008969b1. One failing classification/affiliation path also clears at008969fe. Admitted candidate returns pointer to that global row at00896a14.",
+      "scope_limit": "Only these lookup/invalid-ID effects are mapped; complete transitive classification, ownership, all malformed inputs and RNG effects remain open. These writes are not instructions in00727e20."
+    },
+    {
+      "entry": "00727c30 and00897760",
+      "role": "Caller conditionally publishes selection through a setter",
+      "sites": ["00727c3b", "00727c49", "00727d70", "00727d80", "00727d93", "00727d9e", "00727da6", "00727dac", "00727dbb", "008977ed", "00727dcb", "00727e0c"],
+      "contract_fragment": "Caller gets EDI from manager lookup007ff010(0), EBX from007ff010(2). In resolved mode3, signed8 checks on00897590 can lead to00727e20(EDI,EBX). If returned signed8 AL>-1, caller passes EDI, index low byte, EBX to00897760; dependency writes mapped DWORD ID into row+52 at008977ed. It does not write the selected index itself into+52. Later caller writes DWORD00dd6be0=1 and sign-extended resolved mode toDWORD00dd6be4.",
+      "scope_limit": "No claim about full caller routing, runtime reachability, exact screen labels or simulation policy. Setter row lookup is a separate call with unresolved stability. Caller and setter writes are outside both owned bodies."
+    },
+    {
+      "entry": "007fe4a0",
+      "role": "Mutable manager traversal invoked by00727f00",
+      "sites": ["007fe4af", "007fe4b6", "007fe4cb", "007fe4e4", "007fe504", "007fe560", "007fe580", "007fe5c9", "007fe5d0", "007fe5e4", "007fe5ed", "007fe5f4"],
+      "contract_fragment": "Saves WORD receiver+382a, sets it0, scans sixteen groups, restores saved word. Group count WORD+380a+2*g gates processing; nonzero key filters DWORD+7d6+300*g. Matching records delegate five remaining arguments to007fe600. Traversal also copies30-byte records through0090ba90. Normal EAX=1 even if no matching records; not a screen construction success predicate.",
+      "scope_limit": "Dependency can mutate lists and allocate through007fe600. Complete copy semantics, group invariants, exception cleanup and callbacks unresolved. Fields are manager storage, not inferred match-simulation fields."
+    },
+    {
+      "entry": "007fe600,00727fa0,00727fb0 and006b4360",
+      "role": "Ownership/lifecycle counterevidence and callback leads",
+      "sites": ["007fe635", "007fe667", "007fe86b", "007fe872", "007fe89c", "007fe8b2", "00727fa2", "00727fcf", "007280a0", "007280b8", "006b466f", "006b467b", "006b4685"],
+      "contract_fragment": "Selected manager path allocates300 bytes and stores effective argument1 at node+0 and effective argument2 at node+8; defaults may replace passed arguments first when group roots are zero and receiver+37d4 is nonzero. An existing node+4 code pointer may be invoked at007fe86b. First passed callback calls0041c0d0(0); second reads a separate object's DWORD+e2, can call00718aa0, writesDWORD00b77c4a on one branch and returns control codes -4/-6/-11. Incoming006b4685 is preceded by writes of ESI and0 into retrieved object DWORD+e2/+e6.",
+      "scope_limit": "Selected sites do not establish callback scheduling, full callback contract, allocation success, destruction ownership, or simulation/RNG separation. No owned-body pointer lifetime proof."
+    }
+  ],
+  "simulation_ui_boundary": "No direct RNG function call or simulation-advance call is identified in the two owned call lists. This is not a transitive RNG-free or simulation-free claim: tactical lookup mutates shared mapping, caller can publish selection, manager dispatch has an indirect callback, and callback lead00727fb0 calls untraced00718aa0. Source anchors alone cannot establish UI purity or control of simulation.",
+  "validation": "Static independent PE decode and complete owned-body comparison with supplied private Ghidra assembly plus incoming refs. No runtime oracle or TypeScript behavior added."
+}

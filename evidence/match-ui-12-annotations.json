@@ -1,0 +1,61 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "status": "Proposal only; no canonical native changes",
+  "preflight": {
+    "checkpoint": "2026-10-18-investigation-11",
+    "method": "Coordinator read-only Ghidra preflight against pinned specimen; supplied annotation-preflight-12.json and coordinator confirmation of absent function/EOL comments",
+    "receipt_sha256": "356a57488f9535331a71c7dbb02984bae9e94515724b7c308c9b898226e7977f",
+    "null_policy": "Source receipt omits null comment fields; coordinator explicitly verified absence. Recheck old values in the actual native write transaction; do not overwrite unexpected comments."
+  },
+  "changes": [
+    {
+      "address": "00727e20",
+      "kind": "function_name",
+      "old": "FUN_00727e20",
+      "new": "cm0102_select_eleven_slot_max_score_index",
+      "evidence": "00727eb5 lookup, 00727ec2 scorer, 00727ed3/00727ed6 signed16 comparison, 00727edf loop bound, 00727ee4 AL result",
+      "confidence": "High for local selection algorithm; score semantics unresolved"
+    },
+    {
+      "address": "00727e20",
+      "kind": "function_comment",
+      "old": null,
+      "new": "R12-C static: two raw32 stack args, caller cleanup/plain RET; only AL result specified. Nonnull arg1 scans indices0..10 via008968f0(ECX=global32[00de1d08],arg1,index,arg2), scores nonnull candidates via006e1cf0(candidate,0,arg1), returns earliest maximal signed16 AX score's index. First candidate accepted even if negative; ties keep earlier index. No candidates/null arg1 returnsAL=ff; null diagnostic clearsDWORD00b67a34. No direct input-field stores or allocations; dependency008968f0 can invalidate shared mapping IDs and caller00727c30 can separately commit selected mapped ID via00897760. No purity, full score, transitive RNG or simulation-boundary claim.",
+      "evidence": "match-ui-12-sites.json owned body PE/native agreement and selected dependency sites; match-ui-12-findings.json",
+      "confidence": "High for ABI/control/widths; dependency observations are separately scoped"
+    },
+    {
+      "address": "00727f00",
+      "kind": "function_name",
+      "old": "FUN_00727f00",
+      "new": "cm0102_dispatch_match_screen_callbacks_candidate",
+      "evidence": "00727f78..00727f8e call setup, manager traversal007fe4a0 and passed code pointers00727fa0/00727fb0; source anchor used only as supporting navigation evidence",
+      "confidence": "High for dispatch boundary; screen-specific name remains a candidate"
+    },
+    {
+      "address": "00727f00",
+      "kind": "function_comment",
+      "old": null,
+      "new": "R12-C static: one raw32 stack key, caller cleanup/plain RET. Nonzero key calls007fe4a0(ECX=00b74450,key,00727fa0,00727fb0,0,0,0), forwarding callee EAX. Dependency scans16 manager groups, filters by key, mutates/restores WORD+382a and normally returns1 even with no match. Null key diagnoses, clearsDWORD00b67a34 and has no explicit EAX status assignment. Wrapper has no direct receiver construction/allocation/free. Callback invocation, storage lifetime, transitive simulation and RNG effects remain open.",
+      "evidence": "match-ui-12-sites.json owned body PE/native agreement and selected manager boundary sites",
+      "confidence": "High for call/return and local effects; lifecycle unresolved"
+    },
+    {
+      "address": "00727ed3",
+      "kind": "eol_comment",
+      "old": null,
+      "new": "R12-C: signed16 AX versus DI; following JLE skips replacement on lower/equal score. Sentinel path accepts first nonnull candidate even with negative score. EDI holds raw helper EAX, but only DI is compared; winner is returned in AL.",
+      "evidence": "00727ece..00727edc and00727ee4; no inferred32-bit score comparison",
+      "confidence": "High"
+    },
+    {
+      "address": "00727f8e",
+      "kind": "eol_comment",
+      "old": null,
+      "new": "R12-C: ECX=00b74450; six stack args in logical order: key,00727fa0,00727fb0,0,0,0. CalleeRET18; scans/filter-dispatches manager groups, may mutate/allocate through007fe600. Return1 does not prove screen construction or callback success.",
+      "evidence": "00727f78..00727f8e; selected007fe4a0/007fe600 dependency sites outside owned body",
+      "confidence": "High for argument order and callee cleanup; transitive semantics unresolved"
+    }
+  ],
+  "policy": "No prototype, datatype, structure or dependency annotations proposed. Coordinator alone applies reviewed changes after verifying preflight values."
+}
