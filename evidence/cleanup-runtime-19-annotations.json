@@ -1,0 +1,14 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-18",
+  "status": "Optional name-only proposals; coordinator alone applies after independent review and exact-old-value recheck",
+  "private_preflight_sha256": "a8b6f47a04ac2dcc2d6fb13537a55b223db5630d50e857ceb014f40f7069cf78",
+  "old_annotation_evidence": "Pinned preflight verifies instruction existence and exact FUN_* names; no prototype, convention, comment or structure changes requested",
+  "proposals": [
+    {"address": "0094633b", "kind": "function_name", "old": "FUN_0094633b", "new": "cm0102_reverse_stride_callback_seh", "evidence": "Own exception frame, DEC/JS count, subtract stride from stack base, indirect ECX callback, restore FS chain, RET16", "confidence": "High local normal-path mechanics; exception fragments remain boundaries"},
+    {"address": "009452ca", "kind": "function_name", "old": "FUN_009452ca", "new": "cm0102_release_pointer_by_runtime_mode", "evidence": "Null guard; mode3 table lookup/release, mode2 descriptor lookup/bookkeeping, fallback imported HeapFree; no result check", "confidence": "High local dispatch; allocator/lifetime and imported implementation remain open"},
+    {"address": "00948b90", "kind": "function_name", "old": "FUN_00948b90", "new": "cm0102_find_pointer_1m_window_entry", "evidence": "20-byte global table entries; first unsigned pointer-minus-entry+0xc below0x100000; returns entry or0", "confidence": "High arithmetic predicate; no allocation identity guarantee"},
+    {"address": "009498eb", "kind": "function_name", "old": "FUN_009498eb", "new": "cm0102_lookup_aligned_page_descriptor", "evidence": "Strict unsigned list interval,16-byte alignment and page-offset guard; outputs region/page and returns byte-descriptor address", "confidence": "High local arithmetic and output order; descriptor meaning partial"},
+    {"address": "00949942", "kind": "function_name", "old": "FUN_00949942", "new": "cm0102_accumulate_clear_page_descriptor", "evidence": "Add unsigned descriptor byte into page row, clear byte, set row+4=0xf1, conditional global increment/helper", "confidence": "High ordered direct effects; complete release and counter invariants open"}
+  ]
+}
