@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "unit": "R24-C",
+  "evidence_class": "complete local static PE/native mapping; no execution oracle",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "export_manifest_sha256": "c3770d9a3b8b99d80454413ea5ec85114aa0f3baa9ec0c661567c30d7bf40e70",
+  "preflight_sha256": "1df62ffab8859fa6d1b86e486a26f10f82c82827eb08356caae3ce916694a193",
+  "checkpoint_archive_sha256": "9cb03ce3740e5529a2f6155aa20b1a61ea4ba321c6d3520e1c91525782703f52",
+  "decoder": "Capstone 5.0.7 x86-32",
+  "address_kind": "virtual unless file_offset is explicit",
+  "python_optimized_integrity": "explicit ValueError gates; no assert",
+  "bodies": [
+    {
+      "entry_va": "00944c9f",
+      "old_native_name": "FUN_00944c9f",
+      "file_offset": "00544c9f",
+      "body_bytes": 82,
+      "instruction_count": 32,
+      "body_sha256": "c036aea03f7c286ca5dab23f82672dfafb7f3d09779751c96bc220d028f518a3",
+      "native_asm_sha256": "cde17125a6f8230ff89389b678d7370c00d31c3b2bba31b9d08afe5ee93a9aaa",
+      "end_exclusive_va": "00944cf1",
+      "return_site": "00944cf0",
+      "ret_immediate_bytes": 0,
+      "all_native_instructions_match": true
+    },
+    {
+      "entry_va": "00944cff",
+      "old_native_name": "FUN_00944cff",
+      "file_offset": "00544cff",
+      "body_bytes": 327,
+      "instruction_count": 135,
+      "body_sha256": "8532cc9785a6b89d80a79ce48ddef7819b1e79ec5ab560be20a88bb8c6b83ebc",
+      "native_asm_sha256": "2c77d5adb326a4288cc212ffd485d46b9e0785b9e5a48819d69f121293892113",
+      "end_exclusive_va": "00944e46",
+      "return_site": "00944e45",
+      "ret_immediate_bytes": 0,
+      "all_native_instructions_match": true
+    }
+  ],
+  "branches": [
+    {
+      "site_va": "00944cd5",
+      "target_va": "00944cdf"
+    },
+    {
+      "site_va": "00944cdd",
+      "target_va": "00944cec"
+    },
+    {
+      "site_va": "00944d17",
+      "target_va": "00944d3a"
+    },
+    {
+      "site_va": "00944d1d",
+      "target_va": "00944d3a"
+    },
+    {
+      "site_va": "00944d24",
+      "target_va": "00944d36"
+    },
+    {
+      "site_va": "00944d38",
+      "target_va": "00944d44"
+    },
+    {
+      "site_va": "00944d3f",
+      "target_va": "00944d44"
+    },
+    {
+      "site_va": "00944d55",
+      "target_va": "00944dbc"
+    },
+    {
+      "site_va": "00944d63",
+      "target_va": "00944d68"
+    },
+    {
+      "site_va": "00944d66",
+      "target_va": "00944d82"
+    },
+    {
+      "site_va": "00944d6b",
+      "target_va": "00944d7c"
+    },
+    {
+      "site_va": "00944d70",
+      "target_va": "00944d7c"
+    },
+    {
+      "site_va": "00944d75",
+      "target_va": "00944d82"
+    },
+    {
+      "site_va": "00944d7a",
+      "target_va": "00944d82"
+    },
+    {
+      "site_va": "00944d86",
+      "target_va": "00944d57"
+    },
+    {
+      "site_va": "00944d90",
+      "target_va": "00944dbc"
+    },
+    {
+      "site_va": "00944d96",
+      "target_va": "00944db7"
+    },
+    {
+      "site_va": "00944d9c",
+      "target_va": "00944da0"
+    },
+    {
+      "site_va": "00944dba",
+      "target_va": "00944dc6"
+    },
+    {
+      "site_va": "00944dc1",
+      "target_va": "00944dc6"
+    },
+    {
+      "site_va": "00944dcb",
+      "target_va": "00944e19"
+    },
+    {
+      "site_va": "00944dcf",
+      "target_va": "00944e19"
+    },
+    {
+      "site_va": "00944dd5",
+      "target_va": "00944df6"
+    },
+    {
+      "site_va": "00944ddb",
+      "target_va": "00944ddf"
+    },
+    {
+      "site_va": "00944dfb",
+      "target_va": "00944e41"
+    },
+    {
+      "site_va": "00944e02",
+      "target_va": "00944e06"
+    },
+    {
+      "site_va": "00944e17",
+      "target_va": "00944e41"
+    },
+    {
+      "site_va": "00944e1e",
+      "target_va": "00944e37"
+    },
+    {
+      "site_va": "00944e24",
+      "target_va": "00944e28"
+    },
+    {
+      "site_va": "00944e3c",
+      "target_va": "00944e41"
+    }
+  ],
+  "calls": [
+    {
+      "site_va": "00944cc8",
+      "target_va": "00947c67"
+    },
+    {
+      "site_va": "00944ce5",
+      "target_va": "00947b52"
+    },
+    {
+      "site_va": "00944d0e",
+      "target_va": "009488e0"
+    },
+    {
+      "site_va": "00944d2a",
+      "target_va": "00948851",
+      "copy_role": "drive:2"
+    },
+    {
+      "site_va": "00944da5",
+      "target_va": "00948851",
+      "copy_role": "directory:<=255"
+    },
+    {
+      "site_va": "00944de4",
+      "target_va": "00948851",
+      "copy_role": "basename_before_last_dot:<=255"
+    },
+    {
+      "site_va": "00944e0b",
+      "target_va": "00948851",
+      "copy_role": "extension_including_dot:<=255"
+    },
+    {
+      "site_va": "00944e2b",
+      "target_va": "00948851",
+      "copy_role": "basename_without_extension:<=255"
+    }
+  ],
+  "output_byte_zero_sites": [
+    {
+      "site_va": "00944cda",
+      "role": "formatter_cursor[0]"
+    },
+    {
+      "site_va": "00944d32",
+      "role": "drive[2]"
+    },
+    {
+      "site_va": "00944d41",
+      "role": "drive[0]"
+    },
+    {
+      "site_va": "00944db0",
+      "role": "directory[min(delta,255)]"
+    },
+    {
+      "site_va": "00944dc3",
+      "role": "directory[0]"
+    },
+    {
+      "site_va": "00944def",
+      "role": "basename[min(dot-basename,255)]"
+    },
+    {
+      "site_va": "00944e13",
+      "role": "extension[min(end-dot,255)]"
+    },
+    {
+      "site_va": "00944e33",
+      "role": "basename[min(end-basename,255)]"
+    },
+    {
+      "site_va": "00944e3e",
+      "role": "extension[0]"
+    }
+  ],
+  "scan_table_read": {
+    "site_va": "00944d5c",
+    "base_va": "00de4521",
+    "tested_bit": 4,
+    "index": "zero-extended source byte"
+  },
+  "copy_limit_bytes": 255,
+  "limits": [
+    "No original-instruction execution oracle or TypeScript unit",
+    "Copy, strlen, formatter and finalizer callees remain transitive boundaries",
+    "No buffer-capacity, aliasing, malformed lead-byte or caller-path guarantee"
+  ]
+}
