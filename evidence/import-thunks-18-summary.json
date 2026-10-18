@@ -1,0 +1,11 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-17",
+  "native_export_manifest_sha256": "5ca2aa2d28e4bd92880421876d2f9f3aa69866761b8c4c91feb4c7bc06b0695b",
+  "private_preflight_sha256": "5a5d559926751b77b50a1e9797f047f19748b70af0dd1b73a1dfe141cbc0f298",
+  "total": 23,
+  "contiguous_group": 22,
+  "separate_entry": "009532a0",
+  "unique_iat_slots": 23,
+  "scope": "Complete six-byte local jump bodies only; imported target code, ordinal namespace and runtime IAT contents are outside scope."
+}

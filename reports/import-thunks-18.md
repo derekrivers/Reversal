@@ -1,0 +1,15 @@
+# Investigation 18-E: imported jump thunks
+
+The investigation-08 atlas includes **23 six-byte local bodies** that each contain exactly one `JMP dword ptr [absolute slot]` instruction. Twenty-two occupy consecutive entries `00944c10..00944c8e` at a six-byte stride; `009532a0` is separate. These are complete local forwarding bodies in the pinned CM 01/02 3.9.68 PE (SHA-256 `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`). They are **not** implementations of the imported APIs. Their code reads a 32-bit target from an absolute image slot and jumps to that target without a local push, call, return, register write or stack adjustment. Runtime slot contents, loader binding, callee ABI/behavior, failures and any exception handling remain external boundaries.
+
+The [row registry](../evidence/import-thunks-18-rows.jsonl) records each entry, the existing Ghidra/atlas function name, body SHA-256 and absolute slot address. All 23 slots are distinct and map into the pinned PE image. Several names are `Ordinal_*`; an ordinal number alone does not identify a unique DLL export. `RtlUnwind` at `009532a0` is only the local forwarding thunk, not the unwind implementation. The original import names are navigation labels and do not make an external function's semantics part of this review.
+
+`scripts/extract_import_thunks_18.py` independently checks the pinned PE hash and size, all 9,241 atlas entries, every candidate's complete original six-byte body and absolute-memory operand, the no-direct-call atlas fields, 46 private export file hashes and every corresponding read-only Ghidra 12.1.4/JDK 21 assembly instruction. It verifies native names with a separate read-only preflight and requires disjointness from the 88-entry semantic overlay, 3,873 unwind rows, 192 conditional-release rows and 143 receiver-cleanup rows. These 23 entries reduce the explicit-registry remainder from 4,945 to 4,922, but do not add game-function contracts or execution equivalence. The standalone private export manifest SHA-256 is `5ca2aa2d28e4bd92880421876d2f9f3aa69866761b8c4c91feb4c7bc06b0695b`; preflight SHA-256 is `5a5d559926751b77b50a1e9797f047f19748b70af0dd1b73a1dfe141cbc0f298`.
+
+Reproduce with Capstone 5.0.7 and the separately retained inputs:
+
+```powershell
+python scripts/extract_import_thunks_18.py --binary <private-cm0102.exe> --atlas evidence/code-atlas/functions.jsonl --exports <private-read-only-exports-import-thunks-18> --preflight <private-annotation-preflight-import-thunks-18.json> --summary evidence/import-thunks-18-summary.json --rows evidence/import-thunks-18-rows.jsonl
+```
+
+Two runs should give byte-identical output. The summary SHA-256 is `d83a92663b3fc963325a2a28dc07d5bfb1390a6c747c951a9ef35c9cf370aaa5`; the row registry SHA-256 is `b14d933485e1f9fcd2d031d60df18a38f6be8de494db012676b3af8987003f52`. The public files include no original instruction bytes, bulk assembly/pseudocode, native project, import slot contents or game data. Existing native names need no annotation change; checkpoint 17 remains the current canonical project.
