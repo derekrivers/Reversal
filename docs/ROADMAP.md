@@ -6,11 +6,11 @@ Investigations 01–04 established a pinned specimen, verified it against an arc
 
 The TypeScript modules now cover the small-bound random helper/CRT generator, event-minute conversion, event-priority lookup, the post-goal stop predicate, penalty preparation and three shot-resolution boundaries. Their supported scope and limits are recorded with the oracles and [validation coverage registry](../evidence/code-atlas/validation-coverage.json).
 
-## Map the whole program by function contracts
+## Map functions and reconstruct verified behavior
 
 The [code atlas](../evidence/code-atlas/README.md) inventories all 9,241 currently inferred internal functions. The [workstream index](../evidence/code-atlas/WORKSTREAMS.md) groups direct source-path anchors for match simulation, data/storage, tactics/training, transfers/contracts/scouting, competitions, managers/news/finance and UI screens. These are research navigation groups, not completed modules.
 
-For each workstream, recover state ownership and a bounded function contract, record dependencies and unresolved effects, and continue mapping unanchored functions through callers, callees and data references. [`semantic-coverage.json`](../evidence/code-atlas/semantic-coverage.json) tracks reviewed static contracts separately from the structural inventory and execution validation. The current phase prioritizes function mapping; new game and UI implementation work is deferred.
+For each workstream, recover state ownership and a bounded function contract, record dependencies and unresolved effects, and continue mapping unanchored functions through callers, callees and data references. In parallel, implement tractable supported contracts in headless TypeScript and compare them with original-instruction execution over an explicit domain. [`semantic-coverage.json`](../evidence/code-atlas/semantic-coverage.json) tracks reviewed static contracts separately from the structural inventory and execution validation. Game and UI construction remains deferred.
 
 ## Next: map connected dependencies across workstreams
 
@@ -26,4 +26,4 @@ Additional leads are the event token formatter, the weather logic that selects t
 
 ## Deferred: browser simulation
 
-Game construction and UI work are deferred while function-level reverse engineering is the active objective. [ARCHITECTURE.md](ARCHITECTURE.md) retains earlier design notes for a future phase. No complete React app or playable match exists yet.
+Game construction and UI work are deferred while function mapping and headless validated reconstruction advance. [ARCHITECTURE.md](ARCHITECTURE.md) retains earlier design notes for a future phase. No complete React app or playable match exists yet.
