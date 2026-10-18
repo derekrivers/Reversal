@@ -1,0 +1,78 @@
+{
+  "work_unit": "R15-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "function": "00714d40",
+  "scope": "complete local static contract; no execution oracle or connected outcome",
+  "sites": "match-dependency-15-sites.json",
+  "abi": {
+    "input": "ECX=slot; no explicit stack arguments",
+    "preserved": ["EBX", "ESI", "EDI", "EBP", "entry ESP on all normal returns"],
+    "return": "20 plain RET sites; no consistent meaningful result established",
+    "frame": "saved original EBP; ESP aligned down to 8; 0x238 locals; second saved frame EBP used to restore ESP after scratch EBP use",
+    "assumptions": "normal callee cleanup/preservation; diagnostic 00945934 does not return"
+  },
+  "stores": {
+    "action_word_count": 23,
+    "accumulator_word_add4_count": 2,
+    "partner_dword_clear_count": 1,
+    "diagnostic_global_dword_clear_count": 1,
+    "direct_coordinate_or_score_stores": 0,
+    "ordering": "100 at 00715268/007153c0, 6b at 007158e5 and 78 at 007159c3 follow their dispatch/helper; T==1 equal-coordinate commentary writes after calls; T!=1 writes before calls"
+  },
+  "rng": {
+    "direct_sites": 13,
+    "cfg_upper_bound_calls": 10,
+    "local_cycle": false,
+    "order": "entry20?; side-selected25; selected-side region100?; opposing/tactical conversion pair?; partner21 then return OR destination conversion?,10?,150?,team-byte-bound?,25?",
+    "limits": "Earlier exits bypass suffixes. Structural bound ignores predicate correlation and transitive draws. R(0) need not advance exposed state. Conversion exceptional domain and x87 control remain open."
+  },
+  "dependencies": [
+    {"target":"005b57c0","calls":1,"observed_abi":"ECX=side table; stack(index low byte); EAX bit2 consumed","scope":"R13 signed-index byte getter"},
+    {"target":"005b5270","calls":2,"observed_abi":"ECX=side table; stack(index low byte); EAX masks8000h/2000h consumed","scope":"R14 two-dword read-only leaf; EDX result unused here"},
+    {"target":"006c38c0","calls":9,"observed_abi":"ECX=match; stack(slot); AX tactical word","scope":"bounded earlier lookup; distinct calls not cached"},
+    {"target":"006c2a40","calls":1,"observed_abi":"ECX=match; stack(slot,&x,&y); output dwords consumed","scope":"producer body unresolved"},
+    {"target":"006c2be0","calls":3,"observed_abi":"ECX=match; stack(slot,&DX,&DY,1); output dwords consumed","scope":"producer body unresolved"},
+    {"target":"006cfda0","calls":4,"observed_abi":"ECX=match; stack(slot); AL zero/nonzero","scope":"effects unresolved; separate evaluations"},
+    {"target":"006c4180","calls":1,"observed_abi":"ECX=match; stack(side==0,ownerY low byte); signed AL>=0","scope":"effects unresolved"},
+    {"target":"006cb930","calls":1,"observed_abi":"ECX=match; stack(side==0,partnerY); AL zero/nonzero","scope":"effects unresolved"},
+    {"target":"006cd5f0","calls":1,"observed_abi":"ECX=match; stack(slot); AL zero/nonzero","scope":"effects unresolved"},
+    {"target":"00715f50","calls":1,"observed_abi":"ECX=slot; stack(DX dword); AL replaces DX low byte","scope":"effects unresolved"},
+    {"target":"006c4130","calls":1,"observed_abi":"ECX=match; stack(slot); signed AL>=0","scope":"effects unresolved"},
+    {"target":"006f5b80","calls":1,"observed_abi":"ECX=slot; stack(0); result ignored","scope":"effects unresolved; 6b action follows return"},
+    {"target":"006cb960","calls":2,"observed_abi":"ECX=match; stack(side,AX,AY), byte inputs; AL zero/nonzero","scope":"prior signed rectangle predicate contract"},
+    {"target":"006ce110","calls":1,"observed_abi":"ECX=match; stack(side low byte); EAX slot pointer; result+2b read signed","scope":"prior keeper-selector boundary; caller runtime conditions unresolved"},
+    {"target":"006c3950","calls":1,"observed_abi":"ECX=match; stack(side==0,AX,AY,1); x87 compared with double2.5","scope":"effects and numeric domain unresolved"},
+    {"target":"006cc4e0","calls":1,"observed_abi":"ECX=match; stack(AX,AY,DX,DY); x87 compared with float2.0","scope":"effects and numeric domain unresolved"},
+    {"target":"006f09f0","calls":14,"observed_abi":"ECX=slot; stack(x,y,100h or -1,0,0); result ignored","scope":"stateful dispatch unresolved; some coordinate dwords have only low bytes initialized"},
+    {"target":"006f46b0","calls":1,"observed_abi":"ECX=slot; stack(output x,output y); result ignored","scope":"R13 bounded relocation contract"},
+    {"target":"006f4920","calls":2,"observed_abi":"ECX=slot; stack(currentX,currentY,4,side==0 ? 11 : 0); result ignored","scope":"effects unresolved"},
+    {"target":"006d6f70","calls":2,"observed_abi":"ECX=dword(match+8f7a); stack(event,match,slot+2e byte,side byte,-1,-1,0); result ignored","scope":"commentary enqueue label; event lifecycle unresolved"},
+    {"target":"006f0630","calls":2,"observed_abi":"ECX=slot; no explicit stack args; result ignored","scope":"effects unresolved"},
+    {"target":"0090cfc0","calls":13,"observed_abi":"stack(bound dword), caller cleanup; EAX integer result","scope":"prior bounded RNG contract; zero-bound call may not advance state"},
+    {"target":"00945640","calls":3,"observed_abi":"x87 input; no explicit stack args; EAX low conversion result used as RNG bound","scope":"original conversion authoritative; exceptional domain unresolved"},
+    {"target":"00944cff","calls":1,"observed_abi":"stack(source pointer,0,0,buffer1,buffer2), caller cleanup; result ignored","scope":"diagnostic boundary only"},
+    {"target":"0090d130","calls":1,"observed_abi":"stack(buffer1,buffer2,5418h), caller cleanup; EAX forwarded","scope":"diagnostic boundary only"},
+    {"target":"00944c9f","calls":1,"observed_abi":"stack(global buffer,format pointer,EAX), caller cleanup; result ignored","scope":"diagnostic boundary only"},
+    {"target":"005e8290","calls":1,"observed_abi":"stack(error pointer,global buffer,0), caller cleanup; result ignored","scope":"diagnostic boundary only"},
+    {"target":"005cc7d0","calls":1,"observed_abi":"no explicit args; result ignored","scope":"termination-chain body unresolved"},
+    {"target":"005a8f60","calls":1,"observed_abi":"no explicit args; result ignored","scope":"termination-chain body unresolved"},
+    {"target":"00945934","calls":1,"observed_abi":"stack(-1); no local cleanup or normal epilogue follows this call path","scope":"native export nonreturn annotation; nonreturn assumed for local stack/CFG checks"}
+  ],
+  "annotation_proposal": {
+    "kind": "function-name-only",
+    "address": "00714d40",
+    "old_name": "FUN_00714d40",
+    "new_name": "match_slot_state_coordinate_dispatch_00714d40",
+    "confidence": "high for local dispatch boundary; field semantics remain provisional",
+    "evidence": "complete decoded range and native agreement; coordinate/action call gates, direct action writes and exits mapped in report",
+    "preflight_sha256": "c20393d151da0afff24f0ff7f806f91857d90f454cbff5a52d7bc0463517d1f1",
+    "apply_status": "proposal only; coordinator sole native writer"
+  },
+  "remaining": [
+    "007109f0 full local body and effects remain open",
+    "Transitive effects/RNG and helper output invariants are not closed by this mapping",
+    "Runtime side/coordinate/alias/pointer invariants and reachability from connected action33 remain open",
+    "x87 control and conversion exceptional inputs lack an execution oracle",
+    "No full match, numerical equivalence or game/UI claim"
+  ]
+}
