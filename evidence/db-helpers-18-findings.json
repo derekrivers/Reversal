@@ -1,0 +1,67 @@
+{
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline": "267756ebe6d797b6477efd5f829d45ed6cb54d07 / checkpoint 17",
+  "scope": "Three complete local static contracts; no runtime oracle or whole-file compatibility claim",
+  "abi": "cdecl supported by plain RET and observed R17 caller cleanup; DWORD entry stack arguments; EAX machine result; no prototype edits",
+  "functions": [
+    {
+      "entry_va": "0094b2a0",
+      "state": "contract-supported",
+      "owned_bytes": 103,
+      "instruction_count": 26,
+      "arguments": ["error_raw32"],
+      "effects_order": [
+        "Store raw error DWORD to de2f90",
+        "Scan 45 eight-byte rows from ad8dc0 to ad8f28 exclusive; first exact DWORD key match writes paired DWORD value to de2f8c",
+        "Only after no match: unsigned 0x13..0x24 =>13, unsigned 0xbc..0xca =>8, otherwise22 to de2f8c",
+        "For misses above 0xca the body transiently writes 8 before 22"
+      ],
+      "return": "Incidental EAX=mapped value on hit or ad8f28 on miss; observed callers ignore it",
+      "registers": "ECX retains raw error; EDX matching row index or 45; no calls or direct nonvolatile-register writes",
+      "table": "Original rows private; structure, extent and digest in sites evidence",
+      "limits": "Fixed globals do not establish errno API or thread ownership; unsynchronized writes"
+    },
+    {
+      "entry_va": "0094c552",
+      "state": "contract-supported",
+      "owned_bytes": 154,
+      "instruction_count": 51,
+      "arguments": ["descriptor_raw32", "offset_raw32", "method_raw32"],
+      "descriptor": "F<unsigned DWORD[de43e0]; page=DWORD[de42e0+4*(signed(F)>>5)]; entry offset=8*(F&31); BYTE entry+4 bit0x01 required",
+      "invalid_descriptor": "DWORD[de2f90]=0; DWORD[de2f8c]=9; EAX=-1",
+      "handle_call": "0094fded(F); result -1 sets DWORD[de2f8c]=9 then returns -1; no local de2f90 write on that path",
+      "os_call": "SetFilePointer(handle,offset_raw32,NULL,method_raw32); no local method/offset validation or high-distance output",
+      "api_error": "Only result 0xffffffff consults GetLastError; nonzero error passes to 0094b2a0 and returns -1 without local flag clear",
+      "accepted": "All non-0xffffffff results, plus 0xffffffff when GetLastError()==0: reload page pointer, AND BYTE entry+4 with 0xfd, return raw API result",
+      "ambiguity": "Accepted result 0xffffffff and failure both return -1; no SetLastError(0) before API call",
+      "preservation": "Locally saves/restores EBX/ESI/EDI; EBP untouched; callee ABI remains boundary",
+      "R17_context": "Caller passes(F,-1,1), ignores return; restoration of lookahead byte is an attempted seek, not guaranteed",
+      "limits": "No local cache/buffer reset or retry; actual handle movement and descriptor concurrency/lifetime external"
+    },
+    {
+      "entry_va": "0094ec37",
+      "state": "contract-supported",
+      "owned_bytes": 68,
+      "instruction_count": 19,
+      "arguments": ["stream"],
+      "effects_order": [
+        "Increment DWORD[de3144] modulo 2^32 without LOCK before allocation/stream access",
+        "Call 00944e46(0x1000); store returned pointer DWORD to stream+8",
+        "Nonzero: OR DWORD flags+c with 8; set DWORD size+18=0x1000",
+        "Zero: OR DWORD flags+c with 4; replace DWORD base+8 with stream+14; set DWORD size+18=2",
+        "Reload base+8 to EAX; clear DWORD count+4; set DWORD cursor+0=base"
+      ],
+      "return": "Selected base in EAX, despite decompiler void signature; no local -1 result; R17 caller ignores return",
+      "direct_fields_written": ["+0 DWORD cursor", "+4 DWORD count", "+8 DWORD base", "+c DWORD flags OR", "+18 DWORD size"],
+      "limits": "No old buffer release, old flag clear, buffer-byte initialization, existing ownership/capacity check, or direct I/O. Allocation implementation and eventual release remain boundaries"
+    }
+  ],
+  "original_PE_imports": {"009670a0": "KERNEL32.dll!SetFilePointer", "009670e8": "KERNEL32.dll!GetLastError"},
+  "unresolved_dependencies": [
+    {"entry_va": "0094fded", "caller_site_va": "0094c57f", "boundary": "Descriptor-to-handle result and all transitive state/error effects"},
+    {"entry_va": "00944e46", "caller_site_va": "0094ec42", "boundary": "Native-labelled malloc allocation implementation, ownership, errors and exceptional behavior"},
+    {"iat_slot_va": "009670a0", "boundary": "SetFilePointer physical handle effects and host outcomes"},
+    {"iat_slot_va": "009670e8", "boundary": "GetLastError host/thread state"}
+  ],
+  "remaining_limits": ["No runtime execution/OS trace", "No descriptor or stream lifetime/concurrency guarantee", "No complete database/save or disk compatibility", "No fault recovery or rollback guarantee", "No connected gameplay/subsystem equivalence"]
+}
