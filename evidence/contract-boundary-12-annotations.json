@@ -1,0 +1,26 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint": "2026-10-18-investigation-11",
+  "status": "proposal only; coordinator performs canonical native changes after independent review",
+  "scope": "Names only. No function comment, code comment, data type or prototype replacement is proposed.",
+  "old_annotation_evidence": "Supplied checkpoint-11 .c exports identify both functions by the old FUN_ names; export hashes recorded in contract-boundary-12-sites.json. Coordinator read-only native preflight also verifies both old names and instruction existence against pinned specimen. Coordinator reports null function/EOL comments at entries; the JSON receipt omits null fields, and no comment mutation is proposed. Recheck exact old names before applying.",
+  "coordinator_private_preflight_receipt_sha256": "356a57488f9535331a71c7dbb02984bae9e94515724b7c308c9b898226e7977f",
+  "proposals": [
+    {
+      "address": "004c7560",
+      "kind": "function_name",
+      "old": "FUN_004c7560",
+      "new": "cm0102_initialize_staff_contract_rows_candidate",
+      "evidence": "Diagnostic009a8134 names initialise_all_staff_contracts; owned004c759a..75ae allocates capacity*0x50;004c7645 clears count;004c786c..78a2 appends/publishes rows and invokes row initializer boundary. Original PE305 instructions match native export.",
+      "confidence": "high static role; candidate label avoids full negotiation or successful lifecycle claim"
+    },
+    {
+      "address": "004c79a0",
+      "kind": "function_name",
+      "old": "FUN_004c79a0",
+      "new": "cm0102_reserve_staff_contract_row_candidate",
+      "evidence": "Diagnostic009a81c4 names get_free_staff_contract_space;004c79b1..79cb optional sentinel reuse;004c79cd..7a0e capacity growth by200;004c7aa8..7ab1 increments count/returns old index. Original PE87 instructions match native export. Does not initialize/mark row.",
+      "confidence": "high static allocation/index boundary; runtime caller/domain behavior unvalidated"
+    }
+  ]
+}
