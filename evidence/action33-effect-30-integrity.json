@@ -1,0 +1,22 @@
+{
+  "unit": "R30-B",
+  "status": "passed",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "sites_sha256": "e72a4d4747f6171f08620c83b9fdb6465427c5e9a72936107174981161172c1d",
+  "oracle_sha256": "6d6e2cc15ec23077ecc1bb2a199fa37b5ebbe05c4465f3e2a1ad08ec5630c0fc",
+  "cases": 160,
+  "effect_returns": 0,
+  "diagnostic_stops": 160,
+  "integrity": "explicit exceptions; normal and -O produce identical retained bytes",
+  "negative_checks": {
+    "changed_PE": "specimen size/SHA-256 mismatch",
+    "independently_changed_native_operand": "native operand mismatch 0062ed83: jne 0x62edee / JNZ 0x0062ed85",
+    "changed_native_file": "native export digest mismatch 006cfe10.asm",
+    "invented_player_pointer": "unexpected supplied player/attribute pointers",
+    "invented_lookup_object": "lookup global is not original zero-mapped image state",
+    "normalized_fourth_dword": "R30-A raw argument frame changed",
+    "crossing_diagnostic_boundary": "instruction outside admitted RNG ranges: 0x62ed99"
+  },
+  "privacy": "only fixed synthetic input-derived scalars, addresses, call/RNG/events and full-region/trace digests are retained; private full traces stay in results/",
+  "scope": "connected original execution to an unsupported diagnostic call; no effect return or TypeScript equivalence"
+}
