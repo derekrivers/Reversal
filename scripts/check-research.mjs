@@ -26,6 +26,7 @@ const checks=[
  ['reconstruction/check-merge-initializer-28.ts','evidence/merge-initializer-28-oracle.json.gz'],
  ['reconstruction/check-sort-swap-28.ts','evidence/sort-helpers-28-swap-oracle.json.gz'],
  ['reconstruction/check-collection-head-29.ts','evidence/collection-continuation-29-oracle.json'],
+ ['reconstruction/check-tactical-word-29.ts','evidence/tactical-word-29-oracle.json.gz'],
  ['reconstruction/check-random.ts','evidence/random-validation/x86-oracle.json','evidence/random-validation/random-table.bin','results/random.json'],
  ['reconstruction/check-clock.ts','evidence/clock-validation/clock-oracle.json','evidence/clock-validation/clock-oracle.bin','results/clock.json'],
  ['reconstruction/check-event-rules.ts','evidence/event-rule-validation','results/event-rules.json'],
@@ -35,6 +36,11 @@ const checks=[
  ['reconstruction/check-penalty-keeper-entry.ts','evidence/penalty-keeper-entry-validation/oracle.json','evidence/random-validation/random-table.bin','results/penalty-keeper-entry.json']
 ];
 for(const args of checks){const r=spawnSync(process.execPath,args,{stdio:'inherit'});if(r.status!==0)process.exit(r.status??1);}
+// R30-A checks original-entry evidence; it is not a TypeScript equivalence scope.
+{
+ const r=spawnSync(process.execPath,['scripts/check-action33-prefix-30.mjs'],{stdio:'inherit'});
+ if(r.status!==0)process.exit(r.status??1);
+}
 const checkpoint=JSON.parse(readFileSync('checkpoints/latest.json','utf8')).path;
 const expected=JSON.parse(readFileSync(`${checkpoint}/expected-database.json`,'utf8'));
 const receipt=JSON.parse(readFileSync(`${checkpoint}/RESTORE-VERIFICATION.json`,'utf8'));
