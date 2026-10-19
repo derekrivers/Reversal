@@ -1,0 +1,31 @@
+{
+  "unit": "R32-A",
+  "status": "passed",
+  "oracle_sha256": "cb721094cdebd96b0ff87f1bae68afe437091c17a0277e52c362a348c5683ab6",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "coverage": {
+    "cases": 220,
+    "guard_clear": 204,
+    "guard_set": 16,
+    "instructions": 63587,
+    "events": 26821,
+    "rng_calls": 0
+  },
+  "normal_optimized": "byte-identical original instruction regeneration; all integrity gates use explicit exceptions",
+  "negative_checks": {
+    "changed_PE": "specimen SHA-256/size mismatch",
+    "independent_native_operand": "native operand mismatch 006d59e7",
+    "changed_native_file": "native file mismatch",
+    "changed_manifest": "native manifest mismatch",
+    "unannounced_bit04_path": "unexpected stop",
+    "original_out_of_grid_read": "unadmitted data access",
+    "appended_json_whitespace": "noncanonical public payload",
+    "alternate_gzip_envelope": "noncanonical gzip envelope",
+    "oversized_expansion": "oversized public payload",
+    "private_raw_fragment": "private original fragment",
+    "private_hex_fragment": "private original fragment",
+    "compressed_private_fragment": "private original fragment"
+  },
+  "privacy": "fixed synthetic schedules; bounded gzip expansion; raw/hex original code and grid fragment scans on task files and expanded oracle; original inputs absent",
+  "scope": "synthetic original-entry execution to pre-00702193 or pre-0071614b; no original-game observation or connected shot outcome"
+}

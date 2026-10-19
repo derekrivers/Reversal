@@ -321,6 +321,14 @@
       "module": "reconstruction/action33-grid-31.ts",
       "evidence": "evidence/action33-grid-31-oracle.bin",
       "boundary": "160 guarded synthetic original-entry cases; complete admitted stack/game/grid reads and writes, GPR/flags, active x87 and unchanged RNG; no opposing scan, later interior composition connection, effect return or shot outcome"
+    },
+    {
+      "function": "00702050",
+      "scope": "bounded-original-entry-opponent-scan-continuation",
+      "behavior": "Continue the original resolver from entry through the opposing roster scan, guarded tactical path and first next unsupported call with shared synthetic memory",
+      "module": "reconstruction/action33-opponent-32.ts",
+      "evidence": "evidence/action33-opponent-32-oracle.bin",
+      "boundary": "220 original-entry synthetic cases: 204 bit-04-clear paths to pre-00702193 and 16 bit-04-set paths to pre-0071614b; 63,587 original steps, 26,821 ordered events and no RNG; first 160 grid-prefix checkpoints match R31-A; no join to 007022fd interior, resolver return or shot outcome"
     }
   ]
 }
