@@ -11,3 +11,4 @@ checkpoints/** text eol=lf
 evidence/strncpy-runtime-26-oracle.json.gz binary
 evidence/league-comparator-26-oracle.json.gz binary
 evidence/iterator-helpers-27-oracle.json.gz binary
+evidence/merge-initializer-28-oracle.json.gz binary

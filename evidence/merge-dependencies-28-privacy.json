@@ -1,0 +1,7 @@
+{
+  "work_unit": "R28-B",
+  "status": "passed",
+  "synthetic_cases": 256,
+  "retained_memory": "two SHA-256 digests per case; no memory pages or PE bytes",
+  "oracle_compressed_bytes": 19028
+}

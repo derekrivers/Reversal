@@ -1,0 +1,25 @@
+{
+  "work_unit": "R28-B",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "d2836fd1b28d194dbfda32454106f9af23495809f09a408ed1ee072e6c4b7de1",
+  "preflight_sha256": "9f9e52088fc32356aebecb6fc39ba78fea96e14f359383afb01362287409fbb2",
+  "proposals": [
+    {
+      "address": "0068d020",
+      "old_function_name": "FUN_0068d020",
+      "new_function_name": "cm0102_zero_14_byte_collection_header",
+      "body_addresses": 17,
+      "confidence": "high",
+      "basis": "Complete native/PE body plus 256 original-entry synthetic executions; three DWORD and one WORD zero stores cover exactly 14 bytes"
+    },
+    {
+      "address": "0068d0d0",
+      "old_function_name": "FUN_0068d0d0",
+      "new_function_name": "cm0102_append_copied_record_to_collection",
+      "body_addresses": 221,
+      "confidence": "medium",
+      "basis": "Complete native/PE local body; allocation and constructor calls remain external, but direct branches and link/count writes show append intent"
+    }
+  ],
+  "policy": "Exact-old name-only proposals; coordinator must recheck current canonical Ghidra sites before mutation"
+}
