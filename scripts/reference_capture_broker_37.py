@@ -27,7 +27,7 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results"
 CAPTURE = ROOT / "scripts" / "reference_capture_37.py"
-CAPTURE_SHA = "c67a49ec38b812d31d44bc3fd4a1cb98f38662368a74beaecf35d6bd48d5639d"
+CAPTURE_SHA = "e83f8a6142692ba6560e64c346830f541fc780d60ac5010106f60c0b6d89e7bd"
 MAX_WIRE = 4096
 MAX_REQUESTS = 120
 LIFETIME_SECONDS = 7200
@@ -136,13 +136,21 @@ def mark_delete(api, handle) -> None:
 
 
 @contextlib.contextmanager
-def guarded_result_directories():
+def guarded_result_directories(parent: Path | None = None):
     """Reject directory reparses and retain handles without delete sharing."""
     need(os.name == "nt", "Windows required")
+    parent = RESULTS if parent is None else parent
+    need(parent.is_relative_to(RESULTS) and ".." not in parent.parts,
+         "private result parent outside results")
     api = file_api()
     handles = []
     try:
-        for directory in (ROOT, RESULTS):
+        directories = [ROOT, RESULTS]
+        current = RESULTS
+        for component in parent.relative_to(RESULTS).parts:
+            current = current / component
+            directories.append(current)
+        for directory in directories:
             handle = api.CreateFileW(str(directory), FILE_READ_ATTRIBUTES, FILE_SHARE_READ,
                                      None, OPEN_EXISTING,
                                      FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT,
@@ -167,11 +175,11 @@ def guarded_result_directories():
 def secure_new_result(path: Path, security: SecurityAttributes | None = None,
                       delete_on_failure: bool = False):
     """Create and write through one handle while result directories are locked."""
-    need(path.parent == RESULTS and path.suffix == ".json",
-         "private result must be a direct JSON child of results")
+    need(path.is_relative_to(RESULTS) and ".." not in path.parts and path.suffix == ".json",
+         "private result must be JSON beneath results")
     need(path.name.isascii() and all(ch.isalnum() or ch in "-_." for ch in path.name)
          and ".." not in path.name, "invalid private result filename")
-    with guarded_result_directories() as api:
+    with guarded_result_directories(path.parent) as api:
         handle = api.CreateFileW(str(path), GENERIC_WRITE | DELETE,
                                  FILE_SHARE_READ | FILE_SHARE_WRITE,
                                  ctypes.byref(security) if security is not None else None, CREATE_NEW,

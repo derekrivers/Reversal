@@ -3,6 +3,7 @@ import argparse
 import contextlib
 import ctypes as C
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
@@ -198,6 +199,21 @@ def main():
             forbidden[-1] = str(tool.ROOT/"public-capture-must-not-exist.json")
             outside = subprocess.run(forbidden, capture_output=True, text=True, timeout=15)
             check(outside.returncode == 1 and not Path(forbidden[-1]).exists(), "CLI wrote outside ignored results")
+            negatives += 1
+            circular = []
+            circular.append(circular)
+            unfinished = Path(directory)/"unfinished.json"
+            actual_capture, actual_argv = tool.capture, sys.argv
+            tool.capture = lambda _args: {"samples": circular}
+            sys.argv = [str(Path(tool.__file__)), "inventory", "--pid", str(target.pid),
+                        "--exe", str(exe), "--output", str(unfinished)]
+            try:
+                with contextlib.redirect_stdout(io.StringIO()):
+                    status = tool.main()
+            finally:
+                tool.capture, sys.argv = actual_capture, actual_argv
+            check(status == 1 and not unfinished.exists(),
+                  "CLI serialization failure left a partial private output")
             negatives += 1
         # Verify the thread remains resumable and the target exits normally.
         target.stdin.write("done\n")

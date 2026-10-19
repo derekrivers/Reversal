@@ -367,23 +367,27 @@ def parser():
 def main():
     args = parser().parse_args()
     try:
-        output = args.output.resolve()
+        from reference_capture_broker_37 import secure_new_result
+        output = Path(os.path.abspath(args.output))
         require(output.is_relative_to(ROOT/"results") and output.suffix == ".json",
                 "output must be a new .json beneath this checkout's ignored results directory")
         require(not output.exists(), "refusing to overwrite output")
-        # Reserve output before touching the target. A failed attempt records an
-        # explicit rejection, never an apparently valid or empty capture.
-        output.parent.mkdir(parents=True, exist_ok=True)
-        with output.open("x", encoding="utf-8") as stream:
+        # The guarded writer creates one file exclusively and removes incomplete
+        # serialization through its open handle. Capture refusals remain labelled.
+        failed = None
+        with secure_new_result(output, delete_on_failure=True) as stream:
             try:
                 result = capture(args)
             except (CaptureError, OSError, ValueError, AttributeError, KeyboardInterrupt) as error:
+                failed = error
                 message = str(error) if isinstance(error, CaptureError) else type(error).__name__
                 json.dump({"private": True, "capture_accepted": False, "error": message}, stream)
                 stream.write("\n")
-                raise
-            json.dump(result, stream, indent=2)
-            stream.write("\n")
+            else:
+                json.dump(result, stream, indent=2)
+                stream.write("\n")
+        if failed is not None:
+            raise failed
         print(json.dumps({"profile": result["profile"], "stop_reason": result["stop_reason"],
                           "boundary_observed": result["boundary_observed"],
                           "probe_count": result["probe_count"], "private_output_written": True}))
