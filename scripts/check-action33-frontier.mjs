@@ -125,6 +125,7 @@ assert.equal(createHash('sha256').update(gridOracle).digest('hex'), grid.oracle_
 assert.equal(map.typescript_composition.start, '007022fd');
 assert.equal(map.typescript_composition.stop_before, '007024b4');
 assert.equal(map.typescript_composition.first_full_entry_gap, '0070210b -> 006d59b0');
+assert.equal(map.typescript_composition.first_full_entry_gap_source, 'reports/action33-grid-31.md');
 source(map.typescript_composition.first_full_entry_gap_source);
 assert.match(readFileSync(new URL(`../${map.typescript_composition.first_full_entry_gap_source}`, import.meta.url), 'utf8'), /0070210b.*006d59b0/);
 assert.equal(map.typescript_composition.cases, composition.coverage.cases);
