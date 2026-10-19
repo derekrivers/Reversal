@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "unit": "R27-B",
+  "function_va": "009488e0",
+  "function_name": "_strlen",
+  "body_bytes": 123,
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "old_native_name_and_comment_action": "preserve",
+  "local_contract_state": "complete",
+  "validated_behavior_state": "bounded original entry-to-return",
+  "argument": "char pointer at [ESP+4]; cdecl RET without immediate",
+  "result": "EAX is the byte distance from the argument pointer to the first NUL within the admitted mapped string",
+  "registers": "ECX is restored to the argument pointer; EDX is unchanged on early unaligned-byte exits and becomes 0x7efefeff plus the last scanned word modulo 2^32 on word-scan exits; ESP advances four bytes; EBX, EBP, ESI and EDI are preserved",
+  "memory": "No writes; initial four-byte argument read, one-byte reads until alignment, four-byte aligned scan, optional four-byte reread on detector candidate, four-byte argument reread and four-byte return-address read",
+  "scan_word_detector": "((~word ^ (word + 0x7efefeff)) & 0x81010100) != 0; candidate word is reread and tested bytewise",
+  "return_sites": ["0094893c", "00948946", "00948950", "0094895a"],
+  "oracle": {
+    "file": "evidence/strlen-runtime-27-oracle.json.gz",
+    "sha256": "2a6f932806c3e4b30bf8764c693a059d3c40965409480f5214a2d1faa042466b",
+    "cases": 576,
+    "instruction_steps": 58526,
+    "instruction_starts": 44,
+    "cfg_edges": 48,
+    "source_byte_reads": 848,
+    "source_word_reads": 6027,
+    "stack_word_reads": 1728,
+    "cases_with_candidate_word_reread": 552,
+    "cases_with_word_read_past_nul": 420,
+    "maximum_bytes_read_past_nul": 3,
+    "memory_writes": 0
+  },
+  "admitted_domain": "Stable synthetic 104-byte source regions with first NUL at selected offsets 0..95, all four pointer alignments and four nonzero fill patterns; all performed reads and 36-byte stack region mapped and disjoint; no code patch or intercepted callee",
+  "boundaries": [
+    "Unmapped/faulting pointers and page crossings are not modeled.",
+    "Concurrent source mutation, source/stack aliasing and 32-bit address wrapping are outside the domain.",
+    "The R24 formatter, locale-aware copy callers and their output remain unvalidated here.",
+    "EFLAGS and elapsed timing are not compared."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "unit": "R27-B",
+  "optimized_python_safe": true,
+  "integrity_rejections": {
+    "specimen_byte": "pinned specimen mismatch",
+    "native_read_width": "native export mismatch: 009488e0.asm",
+    "existing_name": "native manifest/preflight SHA-256 mismatch",
+    "existing_comment": "native manifest/preflight SHA-256 mismatch",
+    "retained_oracle": "oracle SHA-256 mismatch"
+  },
+  "model_comparison_rejections": {
+    "length": "original-instruction mismatch",
+    "register": "original-instruction mismatch",
+    "stack": "original-instruction mismatch",
+    "return": "original-instruction mismatch",
+    "read": "original-instruction mismatch",
+    "width": "original-instruction mismatch"
+  },
+  "positive_checker": "R27-B: 576 original-entry cases; 58526 x86 steps; 44 instructions / 48 CFG edges; length, stack, eight registers, return PC and ordered reads match. Nine unsupported-input checks pass.",
+  "oracle_sha256": "2a6f932806c3e4b30bf8764c693a059d3c40965409480f5214a2d1faa042466b",
+  "node_version": "v24.19.0"
+}
