@@ -29,16 +29,23 @@ def source_literal(pe):
 
 
 def private_forms(pe):
-    samples=[]
+    samples=[]; unpadded=[]
     for start,(end,_,_) in selector.RANGES.items():
         length=end-start
         offset=life.offset(pe,start,length)
         block=pe[offset:offset+length]
         life.need(len(block)==length,'incomplete private range')
         samples.extend(block[i:i+32] for i in range(max(1,length-31)))
+        width=min(30,length);width-=width%3
+        if width:unpadded.extend(block[i:i+width] for i in range(length-width+1))
     source=source_literal(pe);life.need(len(source)>=16,'incomplete constructor source literal')
     samples.append(source)
     forms=[form for sample in samples for form in (sample,sample.hex().encode(),base64.b64encode(sample))]
+    # A 32-byte sample encodes with '=' padding and does not occur inside a
+    # longer base64 string. Thirty-byte windows have no padding, so one window
+    # from every aligned position is present in any longer encoded excerpt.
+    unpadded.extend(source[i:i+30] for i in range(len(source)-29))
+    forms.extend(base64.b64encode(sample) for sample in unpadded)
     # JSON escapes path separators; scanning that representation also rejects
     # a plain source-text property in the expanded evidence.
     forms.append(json.dumps(source.decode('ascii'))[1:-1].encode())
@@ -94,6 +101,10 @@ def main():
     for label,hidden_value in (('hex',later.hex()),('base64',base64.b64encode(later).decode())):
         hidden=copy.deepcopy(value);hidden['private_fragment']=hidden_value
         probes.append(reject('later '+label+' private fragment','private fragment in expanded evidence',lambda:privacy_check(life.pack(hidden),pe)))
+    for width in (33,48,64,96):
+        longer=pe[life.offset(pe,0x84b9c0,width):life.offset(pe,0x84b9c0,width)+width]
+        hidden=copy.deepcopy(value);hidden['private_fragment']=base64.b64encode(longer).decode()
+        probes.append(reject('later base64 '+str(width)+'-byte fragment','private fragment in expanded evidence',lambda:privacy_check(life.pack(hidden),pe)))
     source=source_literal(pe)
     probes.append(reject('raw constructor source in container','private fragment in compressed evidence',lambda:privacy_check(retained+source,pe)))
     for label,hidden_value in (('plain JSON',source.decode('ascii')),('hex',source.hex()),('base64',base64.b64encode(source).decode())):
@@ -109,7 +120,7 @@ def main():
         'native_operand_instructions':sum(r['instructions'] for r in sites['ranges'] if r['validation']=='PE/native operands'),
         'pe_only_instructions':sum(r['instructions'] for r in sites['ranges'] if r['validation']=='pinned PE decoding only'),
         'source_literal':{'address':'00a8278c','bytes':len(source),'sha256':life.sha(source)},
-        'negative_probes':probes,'privacy':'compressed and bounded expanded evidence plus task files scanned for overlapping 32-byte raw/hex/base64 code samples across each range and complete constructor source literal, including JSON-escaped source text',
+        'negative_probes':probes,'privacy':'compressed and bounded expanded evidence plus task files scanned for overlapping 32-byte raw/hex and unpadded 30-byte base64 samples across each range and complete constructor source literal, including JSON-escaped source text',
         'limits':selector.SCOPE}
     a.receipt.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps({'unit':'R36-C','status':'passed','negative_probes':len(probes)}))
