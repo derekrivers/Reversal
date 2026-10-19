@@ -47,8 +47,13 @@
     "plain JSON constructor source in expanded evidence rejected",
     "hex constructor source in expanded evidence rejected",
     "base64 constructor source in expanded evidence rejected",
+    "partial raw constructor source rejected",
+    "partial JSON constructor source rejected",
+    "partial hex private fragment rejected",
+    "uppercase hex private fragment rejected",
+    "mixed-case hex private fragment rejected",
     "oversized expansion rejected"
   ],
-  "privacy": "compressed and bounded expanded evidence plus task files scanned for overlapping 32-byte raw/hex and unpadded 30-byte base64 samples across each range and complete constructor source literal, including JSON-escaped source text",
+  "privacy": "compressed and bounded expanded evidence plus task files scanned for overlapping 32-byte raw/case-insensitive hex and unpadded 30-byte base64 samples across each code range and constructor source literal, including JSON-escaped source text",
   "limits": "separate constructor entries, original flag-store window and caller allocation interiors; no initialized receiver, rows or selector join"
 }

@@ -6,7 +6,7 @@ import {strict as assert} from 'node:assert';
 import {pathToFileURL} from 'node:url';
 const SPECIMEN='0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86';
 const ORACLE_HASH='3054ec34f543a3534c0a0ca12e6e42828ec299d15eace19483fddef7afd11841';
-const RECEIPT_HASH='b375a943edb417c642844ea6ce673ca4d32f76c81a806e9fd33612801ad5566a';
+const RECEIPT_HASH='87eafbc6ce1f2aab7902306634805045c1a79e914a272b1b3b0f99d59ee91551';
 const SCOPE='separate constructor entries, original flag-store window and caller allocation interiors; no initialized receiver, rows or selector join';
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const keys=(o,s)=>assert.deepEqual(Object.keys(o).sort(),s.split(' ').sort());
@@ -93,13 +93,15 @@ export function checkRetained(raw,receiptRaw){
  assert.equal(r.unit,'R36-C');assert.equal(r.status,'passed');assert.equal(r.specimen_sha256,SPECIMEN);
  assert.equal(r.evidence_sha256,hash(raw));assert.equal(r.expanded_canonical_sha256,hash(gunzipSync(raw)));
  assert.deepEqual(r.coverage,coverage);assert.deepEqual([r.native_operand_instructions,r.pe_only_instructions],[native,pe]);
- assert.equal(r.normal_optimized_evidence,'byte-identical original-instruction regeneration');assert.equal(r.negative_probes.length,24);
+ assert.equal(r.normal_optimized_evidence,'byte-identical original-instruction regeneration');assert.equal(r.negative_probes.length,29);
  keys(r.source_literal,'address bytes sha256');assert.equal(r.source_literal.address,'00a8278c');
  assert.ok(r.source_literal.bytes>=16);hex(r.source_literal.sha256,64);
  for(const probe of ['later raw private fragment','later hex private fragment','later base64 private fragment',
   ...[33,48,64,96].map(n=>'later base64 '+n+'-byte fragment'),
   'raw constructor source in container','plain JSON constructor source in expanded evidence',
-  'hex constructor source in expanded evidence','base64 constructor source in expanded evidence'])assert.ok(r.negative_probes.includes(probe+' rejected'));
+  'hex constructor source in expanded evidence','base64 constructor source in expanded evidence',
+  'partial raw constructor source','partial JSON constructor source','partial hex private fragment',
+  'uppercase hex private fragment','mixed-case hex private fragment'])assert.ok(r.negative_probes.includes(probe+' rejected'));
  assert.ok(r.negative_probes.every(p=>p.endsWith(' rejected')));assert.equal(r.limits,SCOPE);
  return v;
 }

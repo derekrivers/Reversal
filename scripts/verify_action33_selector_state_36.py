@@ -39,26 +39,38 @@ def private_forms(pe):
         width=min(30,length);width-=width%3
         if width:unpadded.extend(block[i:i+width] for i in range(length-width+1))
     source=source_literal(pe);life.need(len(source)>=16,'incomplete constructor source literal')
+    samples.extend(source[i:i+32] for i in range(len(source)-31))
     samples.append(source)
-    forms=[form for sample in samples for form in (sample,sample.hex().encode(),base64.b64encode(sample))]
     # A 32-byte sample encodes with '=' padding and does not occur inside a
     # longer base64 string. Thirty-byte windows have no padding, so one window
     # from every aligned position is present in any longer encoded excerpt.
     unpadded.extend(source[i:i+30] for i in range(len(source)-29))
-    forms.extend(base64.b64encode(sample) for sample in unpadded)
+    raw_forms=[sample for sample in samples]
+    hex_forms=[sample.hex().encode() for sample in samples]
+    base64_forms=[base64.b64encode(sample) for sample in samples+unpadded]
     # JSON escapes path separators; scanning that representation also rejects
     # a plain source-text property in the expanded evidence.
-    forms.append(json.dumps(source.decode('ascii'))[1:-1].encode())
-    return forms
+    escaped_source=json.dumps(source.decode('ascii'))[1:-1].encode()
+    raw_forms.extend(escaped_source[i:i+32] for i in range(len(escaped_source)-31))
+    raw_forms.append(escaped_source)
+    return raw_forms,hex_forms,base64_forms
+
+
+def contains_private(data,forms):
+    raw_forms,hex_forms,base64_forms=forms
+    lowered=data.lower()
+    return (any(form in data for form in raw_forms) or
+            any(form in lowered for form in hex_forms) or
+            any(form in data for form in base64_forms))
 
 
 def privacy_check(raw,pe):
     life.need(len(raw)<=300000,'compressed evidence size limit')
     forms=private_forms(pe)
-    life.need(not any(form in raw for form in forms),'private fragment in compressed evidence')
+    life.need(not contains_private(raw,forms),'private fragment in compressed evidence')
     with gzip.GzipFile(fileobj=io.BytesIO(raw)) as stream:expanded=stream.read(2000001)
     life.need(len(expanded)<=2000000,'expanded evidence size limit')
-    life.need(not any(form in expanded for form in forms),'private fragment in expanded evidence')
+    life.need(not contains_private(expanded,forms),'private fragment in expanded evidence')
     value=json.loads(expanded)
     life.need(life.pack(value)==raw,'noncanonical evidence gzip/JSON')
     return value
@@ -110,9 +122,17 @@ def main():
     for label,hidden_value in (('plain JSON',source.decode('ascii')),('hex',source.hex()),('base64',base64.b64encode(source).decode())):
         hidden=copy.deepcopy(value);hidden['private_source']=hidden_value
         probes.append(reject(label+' constructor source in expanded evidence','private fragment in expanded evidence',lambda:privacy_check(life.pack(hidden),pe)))
+    partial=source[8:40]
+    probes.append(reject('partial raw constructor source','private fragment in compressed evidence',lambda:privacy_check(retained+partial,pe)))
+    hidden=copy.deepcopy(value);hidden['private_source']=partial.decode('ascii')
+    probes.append(reject('partial JSON constructor source','private fragment in expanded evidence',lambda:privacy_check(life.pack(hidden),pe)))
+    for label,hidden_value in (('partial hex',partial.hex()),('uppercase hex',fragment.hex().upper()),
+                               ('mixed-case hex',''.join(c.upper() if i%2 else c for i,c in enumerate(fragment.hex())))):
+        hidden=copy.deepcopy(value);hidden['private_source']=hidden_value
+        probes.append(reject(label+' private fragment','private fragment in expanded evidence',lambda:privacy_check(life.pack(hidden),pe)))
     probes.append(reject('oversized expansion','expanded evidence size limit',lambda:privacy_check(life.pack({'padding':'X'*2000001}),pe)))
     forms=private_forms(pe)
-    for name in FILES:life.need(not any(form in Path(name).read_bytes() for form in forms),'private code/source in task file '+name)
+    for name in FILES:life.need(not contains_private(Path(name).read_bytes(),forms),'private code/source in task file '+name)
     result={'unit':'R36-C','status':'passed','specimen_sha256':life.SPECIMEN,'evidence_sha256':life.sha(retained),
         'expanded_canonical_sha256':life.sha(life.compact(value)+b'\n'),'compressed_bytes':len(retained),
         'expanded_canonical_bytes':len(life.compact(value))+1,'coverage':value['oracle']['coverage'],
@@ -120,7 +140,7 @@ def main():
         'native_operand_instructions':sum(r['instructions'] for r in sites['ranges'] if r['validation']=='PE/native operands'),
         'pe_only_instructions':sum(r['instructions'] for r in sites['ranges'] if r['validation']=='pinned PE decoding only'),
         'source_literal':{'address':'00a8278c','bytes':len(source),'sha256':life.sha(source)},
-        'negative_probes':probes,'privacy':'compressed and bounded expanded evidence plus task files scanned for overlapping 32-byte raw/hex and unpadded 30-byte base64 samples across each range and complete constructor source literal, including JSON-escaped source text',
+        'negative_probes':probes,'privacy':'compressed and bounded expanded evidence plus task files scanned for overlapping 32-byte raw/case-insensitive hex and unpadded 30-byte base64 samples across each code range and constructor source literal, including JSON-escaped source text',
         'limits':selector.SCOPE}
     a.receipt.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps({'unit':'R36-C','status':'passed','negative_probes':len(probes)}))
