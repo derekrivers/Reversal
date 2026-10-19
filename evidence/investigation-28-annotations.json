@@ -1,7 +1,7 @@
 {
   "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
   "investigation": 28,
-  "status": "transaction-applied; native save and independent reopen verification pending",
+  "status": "saved; independently reopened read-only without reanalysis",
   "scope": "Five reviewed working names only; six complete local static contracts and two bounded TypeScript entry domains. Existing allocator library names/comments preserved. No prototype, comment, body or data type applied.",
   "annotations": [
     [
