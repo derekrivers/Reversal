@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "unit": "R27-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "4acf11ca1ab79b275436c6365813904d87634436de1723ce24a2274f83a087c4",
+  "export_manifest_sha256": "bbd00280029a738f4f4dfa6462c7d34a4379887626749d9f20eef20873655f14",
+  "annotation_preflight_sha256": "fb1be5075c72e92045f4d802f649665801d8ebc85b049a25e0f652e282f6015d",
+  "proposal_type": "name only; coordinator review/application required",
+  "annotations": [
+    {
+      "address": "00945333",
+      "old_name": "FUN_00945333",
+      "new_name": "cm0102_sort_records_with_callback_candidate",
+      "body_addresses": 340,
+      "confidence": "high for complete local sort dispatch/control contract; helper/callback effects and caller ordering constraints are separate",
+      "evidence": ["132 matching PE/native instructions and 145 local CFG edges in league-sort-27-sites.json", "00682d27 caller passes 59-byte row width and comparator 006834f0"]
+    }
+  ],
+  "exclude": "00682b30 retains its already accepted R10-C name/comment and is not a new/upgraded static entry; helper/context names and prototypes are not proposed",
+  "comments": [],
+  "prototype_changes": [],
+  "body_changes": []
+}
