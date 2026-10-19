@@ -1,0 +1,24 @@
+{
+  "unit": "R30-C",
+  "status": "passed",
+  "oracle_sha256": "e0bf9f5d089597868ae05642fc45e5628f0f268b16a210979f2d299445fb6063",
+  "prefix_oracle_sha256": "08cd8c3725f98499b3fdaef8e42788c1f8ce80308616f881589042cc4d21ff4f",
+  "prefix_emulator_sha256": "9486fdba017157b918081023641a2360a392839c2339c287e2a8fa97d28cee32",
+  "prefix_sites_sha256": "6744c3025127c5ff5aef691f9aa0e3001a2858982ac1affcf6b22c5b9abe26c6",
+  "coverage": {
+    "cases": 160,
+    "selector_events": 11456,
+    "game_writes": 256,
+    "draws": 637
+  },
+  "normal_optimized": "both original-entry regenerations equal retained bytes",
+  "negative_checks": {
+    "changed_PE": "specimen size/SHA-256 mismatch",
+    "independent_native_operand": "native operand mismatch 006ce110",
+    "changed_native_file": "native file digest mismatch",
+    "appended_json_whitespace": "noncanonical public payload",
+    "alternate_gzip_envelope": "noncanonical gzip envelope"
+  },
+  "privacy": "fixed synthetic schedule, three allowed prior-producer byte locations and synthetic operand values; full regions retained only as digests",
+  "scope": "supplied original-produced 007022fd checkpoint through 007024b4; no full-entry, machine-stack or shot-result claim"
+}
