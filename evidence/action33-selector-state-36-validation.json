@@ -36,12 +36,15 @@
     "raw private fragment rejected",
     "hex private fragment rejected",
     "base64 private fragment rejected",
+    "later raw private fragment rejected",
+    "later hex private fragment rejected",
+    "later base64 private fragment rejected",
     "raw constructor source in container rejected",
     "plain JSON constructor source in expanded evidence rejected",
     "hex constructor source in expanded evidence rejected",
     "base64 constructor source in expanded evidence rejected",
     "oversized expansion rejected"
   ],
-  "privacy": "compressed and bounded expanded evidence plus task files scanned for raw/hex/base64 code samples and complete constructor source literal, including JSON-escaped source text",
+  "privacy": "compressed and bounded expanded evidence plus task files scanned for overlapping 32-byte raw/hex/base64 code samples across each range and complete constructor source literal, including JSON-escaped source text",
   "limits": "separate constructor entries, original flag-store window and caller allocation interiors; no initialized receiver, rows or selector join"
 }

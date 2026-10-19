@@ -29,8 +29,13 @@ def source_literal(pe):
 
 
 def private_forms(pe):
-    samples=[pe[life.offset(pe,start,min(32,end-start)):life.offset(pe,start,min(32,end-start))+min(32,end-start)]
-             for start,(end,_,_) in selector.RANGES.items()]
+    samples=[]
+    for start,(end,_,_) in selector.RANGES.items():
+        length=end-start
+        offset=life.offset(pe,start,length)
+        block=pe[offset:offset+length]
+        life.need(len(block)==length,'incomplete private range')
+        samples.extend(block[i:i+32] for i in range(max(1,length-31)))
     source=source_literal(pe);life.need(len(source)>=16,'incomplete constructor source literal')
     samples.append(source)
     forms=[form for sample in samples for form in (sample,sample.hex().encode(),base64.b64encode(sample))]
@@ -84,6 +89,11 @@ def main():
     for label,hidden_value in (('hex',fragment.hex()),('base64',base64.b64encode(fragment).decode())):
         hidden=copy.deepcopy(value);hidden['private_fragment']=hidden_value
         probes.append(reject(label+' private fragment','private fragment in expanded evidence',lambda:privacy_check(life.pack(hidden),pe)))
+    later=pe[life.offset(pe,0x84b9c0,32):life.offset(pe,0x84b9c0,32)+32]
+    probes.append(reject('later raw private fragment','private fragment in compressed evidence',lambda:privacy_check(retained+later,pe)))
+    for label,hidden_value in (('hex',later.hex()),('base64',base64.b64encode(later).decode())):
+        hidden=copy.deepcopy(value);hidden['private_fragment']=hidden_value
+        probes.append(reject('later '+label+' private fragment','private fragment in expanded evidence',lambda:privacy_check(life.pack(hidden),pe)))
     source=source_literal(pe)
     probes.append(reject('raw constructor source in container','private fragment in compressed evidence',lambda:privacy_check(retained+source,pe)))
     for label,hidden_value in (('plain JSON',source.decode('ascii')),('hex',source.hex()),('base64',base64.b64encode(source).decode())):
@@ -99,7 +109,7 @@ def main():
         'native_operand_instructions':sum(r['instructions'] for r in sites['ranges'] if r['validation']=='PE/native operands'),
         'pe_only_instructions':sum(r['instructions'] for r in sites['ranges'] if r['validation']=='pinned PE decoding only'),
         'source_literal':{'address':'00a8278c','bytes':len(source),'sha256':life.sha(source)},
-        'negative_probes':probes,'privacy':'compressed and bounded expanded evidence plus task files scanned for raw/hex/base64 code samples and complete constructor source literal, including JSON-escaped source text',
+        'negative_probes':probes,'privacy':'compressed and bounded expanded evidence plus task files scanned for overlapping 32-byte raw/hex/base64 code samples across each range and complete constructor source literal, including JSON-escaped source text',
         'limits':selector.SCOPE}
     a.receipt.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps({'unit':'R36-C','status':'passed','negative_probes':len(probes)}))
