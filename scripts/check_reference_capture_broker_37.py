@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Exercise broker framing, authentication and test-only capture rejection."""
+import csv
 import json
 from pathlib import Path
 import socket
 import subprocess
 import sys
+import tempfile
 import threading
 import time
 import uuid
@@ -23,8 +25,68 @@ def query(port, message):
         return broker.read_line(connection)
 
 
+def check_output_confinement():
+    original_root, original_results = broker.ROOT, broker.RESULTS
+    with tempfile.TemporaryDirectory(prefix="reference37-broker-guard-") as temporary:
+        root = Path(temporary) / "checkout"
+        outside = Path(temporary) / "outside"
+        results = root / "results"
+        results.mkdir(parents=True)
+        outside.mkdir()
+        broker.ROOT, broker.RESULTS = root, results
+        try:
+            path = results / "capture.json"
+            with broker.secure_new_result(path) as stream:
+                try:
+                    results.rename(root / "moved")
+                except OSError:
+                    pass
+                else:
+                    raise RuntimeError("results directory moved while private handle was open")
+                stream.write('{"private":true}\n')
+            check(json.loads(path.read_text(encoding="utf-8"))["private"],
+                  "guarded output was not valid JSON")
+            try:
+                with broker.secure_new_result(path):
+                    pass
+            except ValueError:
+                pass
+            else:
+                raise RuntimeError("existing private result was overwritten")
+            identity = subprocess.run([str(broker.SYSTEM32 / "whoami.exe"), "/user", "/fo", "csv", "/nh"],
+                                      check=True, capture_output=True, text=True)
+            sid = next(csv.reader(identity.stdout.splitlines()))[1]
+            session = results / "session.json"
+            with broker.session_security(sid) as security:
+                with broker.secure_new_result(session, security=security) as stream:
+                    acl = subprocess.run([str(broker.SYSTEM32 / "icacls.exe"), str(session)],
+                                         check=True, capture_output=True, text=True).stdout
+                    check("(I)" not in acl and "CodexSandboxUsers" not in acl,
+                          "session was readable through inherited ACL before token write")
+                    stream.write('{"token":"test"}\n')
+            session.unlink()
+            path.unlink()
+            results.rmdir()
+            junction = subprocess.run(["cmd", "/c", "mklink", "/J", str(results), str(outside)],
+                                      capture_output=True, text=True)
+            check(junction.returncode == 0 and results.is_junction(),
+                  "could not create disposable junction fixture")
+            try:
+                with broker.secure_new_result(results / "leak.json"):
+                    pass
+            except ValueError:
+                pass
+            else:
+                raise RuntimeError("junction result directory was accepted")
+            check(not (outside / "leak.json").exists(), "private output escaped through junction")
+            results.rmdir()
+        finally:
+            broker.ROOT, broker.RESULTS = original_root, original_results
+
+
 def main():
     check(broker.MAX_WIRE == 4096, "wire bound changed")
+    check_output_confinement()
     for value in ({"mode": "ping"}, {"token": "bad", "mode": "ping"}):
         try:
             broker.bounded_request(value, "a" * 64)

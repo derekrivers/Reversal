@@ -9,11 +9,14 @@ No raw register or memory content crosses this socket.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import csv
 import ctypes
+from ctypes import wintypes
 import hashlib
 import hmac
 import json
+import msvcrt
 import os
 from pathlib import Path
 import secrets
@@ -24,7 +27,7 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results"
 CAPTURE = ROOT / "scripts" / "reference_capture_37.py"
-CAPTURE_SHA = "26ba36928b8e5d35f3b3b9ff40043f661a0f8a64bd549cd8f0f98a80e1d15d80"
+CAPTURE_SHA = "c67a49ec38b812d31d44bc3fd4a1cb98f38662368a74beaecf35d6bd48d5639d"
 MAX_WIRE = 4096
 MAX_REQUESTS = 120
 LIFETIME_SECONDS = 7200
@@ -37,10 +40,136 @@ def need(condition: bool, message: str) -> None:
 
 
 def session_path(value: str) -> Path:
-    path = Path(value).resolve()
-    need(path.is_relative_to(RESULTS.resolve()) and path.suffix == ".json",
-         "session file must be a new .json beneath ignored results/")
+    path = Path(os.path.abspath(value))
+    need(path.parent == RESULTS and path.suffix == ".json" and
+         path.name.isascii() and all(ch.isalnum() or ch in "-_." for ch in path.name) and
+         ".." not in path.name,
+         "session file must be a new .json directly in ignored results/")
     return path
+
+
+FILE_READ_ATTRIBUTES = 0x80
+FILE_SHARE_READ = 1
+FILE_SHARE_WRITE = 2
+CREATE_NEW = 1
+OPEN_EXISTING = 3
+FILE_ATTRIBUTE_NORMAL = 0x80
+FILE_ATTRIBUTE_REPARSE_POINT = 0x400
+FILE_FLAG_BACKUP_SEMANTICS = 0x02000000
+FILE_FLAG_OPEN_REPARSE_POINT = 0x00200000
+GENERIC_WRITE = 0x40000000
+INVALID_HANDLE = ctypes.c_void_p(-1).value
+
+
+class FileAttributeTagInfo(ctypes.Structure):
+    _fields_ = [("FileAttributes", wintypes.DWORD), ("ReparseTag", wintypes.DWORD)]
+
+
+class SecurityAttributes(ctypes.Structure):
+    _fields_ = [("nLength", wintypes.DWORD), ("lpSecurityDescriptor", ctypes.c_void_p),
+                ("bInheritHandle", wintypes.BOOL)]
+
+
+@contextlib.contextmanager
+def session_security(user_sid: str):
+    """Provide a protected DACL before the bearer-secret file becomes visible."""
+    need(user_sid.startswith("S-1-5-21-") and
+         user_sid[len("S-1-5-21-"):].replace("-", "").isdigit(),
+         "unexpected user SID")
+    advapi = ctypes.WinDLL("advapi32", use_last_error=True)
+    advapi.ConvertStringSecurityDescriptorToSecurityDescriptorW.argtypes = [
+        wintypes.LPCWSTR, wintypes.DWORD, ctypes.POINTER(ctypes.c_void_p),
+        ctypes.POINTER(wintypes.DWORD)]
+    advapi.ConvertStringSecurityDescriptorToSecurityDescriptorW.restype = wintypes.BOOL
+    descriptor = ctypes.c_void_p()
+    sddl = f"D:P(A;;GA;;;SY)(A;;GA;;;BA)(A;;GA;;;{user_sid})"
+    need(advapi.ConvertStringSecurityDescriptorToSecurityDescriptorW(
+        sddl, 1, ctypes.byref(descriptor), None), "cannot build private session DACL")
+    try:
+        yield SecurityAttributes(ctypes.sizeof(SecurityAttributes), descriptor, False)
+    finally:
+        kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel.LocalFree.argtypes = [ctypes.c_void_p]
+        kernel.LocalFree.restype = ctypes.c_void_p
+        kernel.LocalFree(descriptor)
+
+
+def file_api():
+    api = ctypes.WinDLL("kernel32", use_last_error=True)
+    api.CreateFileW.argtypes = [wintypes.LPCWSTR, wintypes.DWORD, wintypes.DWORD,
+                                ctypes.c_void_p, wintypes.DWORD, wintypes.DWORD, wintypes.HANDLE]
+    api.CreateFileW.restype = wintypes.HANDLE
+    api.CloseHandle.argtypes = [wintypes.HANDLE]
+    api.CloseHandle.restype = wintypes.BOOL
+    api.GetFileInformationByHandleEx.argtypes = [wintypes.HANDLE, ctypes.c_int,
+                                                 ctypes.c_void_p, wintypes.DWORD]
+    api.GetFileInformationByHandleEx.restype = wintypes.BOOL
+    api.GetFinalPathNameByHandleW.argtypes = [wintypes.HANDLE, wintypes.LPWSTR,
+                                               wintypes.DWORD, wintypes.DWORD]
+    api.GetFinalPathNameByHandleW.restype = wintypes.DWORD
+    return api
+
+
+def final_path(api, handle) -> Path:
+    buffer = ctypes.create_unicode_buffer(32768)
+    length = api.GetFinalPathNameByHandleW(handle, buffer, len(buffer), 0)
+    need(0 < length < len(buffer), "cannot identify result handle path")
+    name = buffer.value
+    need(name.startswith("\\\\?\\") and not name.startswith("\\\\?\\UNC\\"),
+         "unexpected result handle path")
+    return Path(name[4:])
+
+
+@contextlib.contextmanager
+def guarded_result_directories():
+    """Reject directory reparses and retain handles without delete sharing."""
+    need(os.name == "nt", "Windows required")
+    api = file_api()
+    handles = []
+    try:
+        for directory in (ROOT, RESULTS):
+            handle = api.CreateFileW(str(directory), FILE_READ_ATTRIBUTES, FILE_SHARE_READ,
+                                     None, OPEN_EXISTING,
+                                     FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT,
+                                     None)
+            need(handle != INVALID_HANDLE, "cannot lock private result directory")
+            handles.append(handle)
+            info = FileAttributeTagInfo()
+            need(api.GetFileInformationByHandleEx(handle, 9, ctypes.byref(info),
+                                                  ctypes.sizeof(info)),
+                 "cannot inspect private result directory")
+            need(not info.FileAttributes & FILE_ATTRIBUTE_REPARSE_POINT,
+                 "private result directory is a reparse point")
+            need(os.path.normcase(str(final_path(api, handle))) ==
+                 os.path.normcase(str(directory)), "private result directory moved")
+        yield api
+    finally:
+        for handle in reversed(handles):
+            api.CloseHandle(handle)
+
+
+@contextlib.contextmanager
+def secure_new_result(path: Path, security: SecurityAttributes | None = None):
+    """Create and write through one handle while result directories are locked."""
+    need(path.parent == RESULTS and path.suffix == ".json",
+         "private result must be a direct JSON child of results")
+    need(path.name.isascii() and all(ch.isalnum() or ch in "-_." for ch in path.name)
+         and ".." not in path.name, "invalid private result filename")
+    with guarded_result_directories() as api:
+        handle = api.CreateFileW(str(path), GENERIC_WRITE,
+                                 FILE_SHARE_READ | FILE_SHARE_WRITE,
+                                 ctypes.byref(security) if security is not None else None, CREATE_NEW,
+                                 FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OPEN_REPARSE_POINT, None)
+        need(handle != INVALID_HANDLE, "private result already exists or cannot be created")
+        try:
+            need(os.path.normcase(str(final_path(api, handle))) ==
+                 os.path.normcase(str(path)), "private result escaped ignored results")
+            fd = msvcrt.open_osfhandle(handle, os.O_WRONLY)
+        except BaseException:
+            api.CloseHandle(handle)
+            raise
+        with os.fdopen(fd, "w", encoding="utf-8") as stream:
+            yield stream
 
 
 def read_line(sock: socket.socket, timeout: int = 10) -> dict:
@@ -96,23 +225,18 @@ def pinned_capture() -> dict:
 
 def private_session(path: Path, value: dict) -> None:
     """Restrict the empty file before writing the bearer secret into it."""
-    with path.open("x", encoding="utf-8"):
-        pass
-    try:
-        identity = subprocess.run([str(SYSTEM32 / "whoami.exe"), "/user", "/fo", "csv", "/nh"],
-                                  check=True, capture_output=True, text=True)
-        sid = next(csv.reader(identity.stdout.splitlines()))[1]
-        need(sid.startswith("S-1-5-21-"), "unexpected user SID")
-        acl = subprocess.run([str(SYSTEM32 / "icacls.exe"), str(path), "/inheritance:r",
-                              "/grant:r", f"*{sid}:(F)", "*S-1-5-32-544:(F)",
-                              "*S-1-5-18:(F)"], capture_output=True, text=True)
-        need(acl.returncode == 0, "could not restrict broker session ACL")
-        with path.open("w", encoding="utf-8") as stream:
+    identity = subprocess.run([str(SYSTEM32 / "whoami.exe"), "/user", "/fo", "csv", "/nh"],
+                              check=True, capture_output=True, text=True)
+    sid = next(csv.reader(identity.stdout.splitlines()))[1]
+    with session_security(sid) as security:
+        with secure_new_result(path, security=security) as stream:
+            acl = subprocess.run([str(SYSTEM32 / "icacls.exe"), str(path)],
+                                  capture_output=True, text=True)
+            need(acl.returncode == 0 and "(I)" not in acl.stdout and
+                 "CodexSandboxUsers" not in acl.stdout,
+                 "private session DACL was not applied at creation")
             json.dump(value, stream)
             stream.write("\n")
-    except BaseException:
-        path.unlink(missing_ok=True)
-        raise
 
 
 def capture_once(mode: str, pid: int, thread: int | None, exe: Path,
@@ -124,7 +248,7 @@ def capture_once(mode: str, pid: int, thread: int | None, exe: Path,
                                   thread=thread, region=[], samples=1000,
                                   seconds=30.0, interval_ms=10, boundary=0x7023E3,
                                   synthetic_sha256=None)
-    with output.open("x", encoding="utf-8") as stream:
+    with secure_new_result(output) as stream:
         try:
             result = implementation["capture"](settings)
             result["tool_sha256"] = CAPTURE_SHA  # executed bytes, not a later disk read
@@ -189,7 +313,8 @@ def serve(args: argparse.Namespace) -> int:
                         except OSError:
                             pass
         finally:
-            target.unlink(missing_ok=True)
+            with guarded_result_directories():
+                target.unlink(missing_ok=True)
     return 0
 
 

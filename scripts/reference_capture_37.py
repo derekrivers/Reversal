@@ -237,7 +237,8 @@ def capture(args):
     require(0 < args.pid <= 0xFFFFFFFF and args.pid != os.getpid(), "invalid/self target PID")
     require(1 <= args.samples <= 1000 and 0 <= args.interval_ms <= 1000
             and 0 < args.seconds <= 30, "capture bounds exceeded")
-    require(args.mode != "watch" or args.thread is not None, "watch requires a selected --thread")
+    require(args.mode not in ("snapshot", "watch") or args.thread is not None,
+            "snapshot/watch requires a selected --thread")
     require(len(args.region) <= 8 and sum(size for _, size in args.region)+128 <= MAX_BYTES,
             "requested memory exceeds capture budget")
     for address, size in args.region:

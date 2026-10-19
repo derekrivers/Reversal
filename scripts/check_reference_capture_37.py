@@ -118,6 +118,7 @@ def main():
         negative({"synthetic_sha256": tool.PINNED}, "cannot be labelled")
         negative({"thread": 0}, "not owned")
         negative({"thread": None}, "requires a selected")
+        negative({"mode": "snapshot", "thread": None}, "requires a selected")
         negative({"samples": 1001}, "bounds exceeded")
         negative({"seconds": 31}, "bounds exceeded")
         negative({"region": [(0, 4097)]}, "invalid region")
