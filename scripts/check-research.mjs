@@ -42,6 +42,11 @@ for(const args of checks){const r=spawnSync(process.execPath,args,{stdio:'inheri
  const r=spawnSync(process.execPath,['scripts/check-action33-prefix-30.mjs'],{stdio:'inherit'});
  if(r.status!==0)process.exit(r.status??1);
 }
+// R30-B checks the same-machine original continuation to a diagnostic boundary.
+{
+ const r=spawnSync(process.execPath,['scripts/check-action33-effect-30.mjs'],{stdio:'inherit'});
+ if(r.status!==0)process.exit(r.status??1);
+}
 const checkpoint=JSON.parse(readFileSync('checkpoints/latest.json','utf8')).path;
 const expected=JSON.parse(readFileSync(`${checkpoint}/expected-database.json`,'utf8'));
 const receipt=JSON.parse(readFileSync(`${checkpoint}/RESTORE-VERIFICATION.json`,'utf8'));
