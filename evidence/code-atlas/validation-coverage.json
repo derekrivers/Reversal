@@ -337,6 +337,14 @@
       "module": "reconstruction/action33-conversion-33.ts",
       "evidence": "evidence/action33-conversion-33-oracle.bin",
       "boundary": "280 synthetic cases: 232 clear entry paths to pre-00702222, 16 unchanged bit-04 stops to pre-0071614b and 32 separate original-produced conversion suffix probes; 99,787 original steps, 43,235 ordered events and no RNG; no hardware x87 exception/status equivalence, joined 007022fd interior, resolver return or shot outcome"
+    },
+    {
+      "function": "00702050",
+      "scope": "bounded-original-entry-adjustment-short-return",
+      "behavior": "Continue the clear action33 resolver through 00713e90 short return and caller effects on shared synthetic state, ending before the first RNG call at 00702241",
+      "module": "reconstruction/action33-adjustment-34.ts",
+      "evidence": "evidence/action33-adjustment-34-oracle.bin",
+      "boundary": "232 original-entry clear synthetic cases; 96,339 original steps, 41,891 ordered events and zero RNG; bit-04 path, RNG machine-state behavior, 007022fd interior join, resolver return and shot outcome excluded"
     }
   ]
 }
