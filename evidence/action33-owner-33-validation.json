@@ -1,0 +1,33 @@
+{
+  "unit": "R33-B",
+  "status": "passed",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "evidence_sha256": "f5dbbdff245eda8bbe946430461a93c76b8dd971e0d2d52e89d667c45681eafd",
+  "expanded_canonical_sha256": "3708e561fd9bfb9c0514b04a66620ff7d688e1421c14fb16f560d65c93bb5aaa",
+  "compressed_bytes": 77360,
+  "expanded_canonical_bytes": 1291907,
+  "normal_optimized_evidence": "byte-identical original-instruction regeneration",
+  "compared_instructions": 1035,
+  "coverage": {
+    "interior_fixture_producers": 80,
+    "interior_caller_bindings": 80,
+    "initializer_returns": 80,
+    "lookup_returns": 80,
+    "placement_frontiers": 80,
+    "instruction_steps": 25520
+  },
+  "negative_probes": [
+    "changed specimen rejected",
+    "changed owner manifest rejected",
+    "changed database manifest rejected",
+    "resealed owner-store width rejected",
+    "executed wrong owner-store field rejected",
+    "executed wrong club-pointer destination rejected",
+    "executed away-club read on home branch rejected",
+    "raw private fragment in container rejected",
+    "hex private fragment in expanded JSON rejected",
+    "oversized gzip expansion rejected"
+  ],
+  "privacy": "compressed and bounded expanded bytes plus authored files scanned for raw/hex/base64 code/source samples",
+  "limits": "synthetic interior producer windows and separate initializer/lookup/placement entries; no connected enclosing caller or live lifecycle"
+}
