@@ -8,6 +8,8 @@ import { createHash } from 'node:crypto';
 const root=fileURLToPath(new URL('../',import.meta.url));
 process.chdir(root);mkdirSync('results',{recursive:true});
 const checks=[
+ // R30-D validates retained static/synthetic-prefix evidence, without emulating private inputs.
+ ['scripts/check-action33-state-30.mjs'],
  ['reconstruction/check-descriptor-handle.ts','evidence/descriptor-handle-validation/oracle.json','results/descriptor-handle.json'],
  ['reconstruction/check-match-microhelpers.ts','evidence/match-microhelpers-validation','results/match-microhelpers.json'],
  ['reconstruction/check-match-scalar.ts','evidence/match-scalar-22-oracle.json'],
