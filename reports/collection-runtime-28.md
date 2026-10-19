@@ -19,10 +19,11 @@ The receiver is in ECX. Entry `[ESP+4]` is a DWORD source pointer. The low 16 bi
 The exact local order is:
 
 1. Read the length WORD, sign-extend it to a DWORD, and copy the receiver to EBX.
-2. Zero receiver DWORDs `+0xa` and `+6` in that order (`0068cfd0`, `0068cfd3`). These writes occur **before** the allocation call.
-3. Push the sign-extended length and call `00944cf1` at `0068cfd6`.
-4. Write the original low-16 length at receiver `+4`, read the source pointer from the original first argument, and write allocator EAX at receiver `+0` (`0068cfdb..0068cfe5`).
-5. For a nonnegative length and clear direction flag, `REP MOVSD` at `0068cfee` copies `length >> 2` DWORDs, followed by `REP MOVSB` at `0068cffa` copying `length & 3` bytes. The code adds 4 to ESP between the string operations to remove the allocation argument. It writes no terminator.
+2. Push the sign-extended length at `0068cfcf`.
+3. Zero receiver DWORDs `+0xa` and `+6` in that order (`0068cfd0`, `0068cfd3`). These writes occur **before** the allocation call.
+4. Call `00944cf1` at `0068cfd6` with the already-pushed length.
+5. Write the original low-16 length at receiver `+4`, read the source pointer from the original first argument, and write allocator EAX at receiver `+0` (`0068cfdb..0068cfe5`).
+6. For a nonnegative length and clear direction flag, `REP MOVSD` at `0068cfee` copies `length >> 2` DWORDs, followed by `REP MOVSB` at `0068cffa` copying `length & 3` bytes. The code adds 4 to ESP between the string operations to remove the allocation argument. It writes no terminator.
 
 The native pseudocode's `undefined4 *` source type does not imply a DWORD-aligned or DWORD-sized payload: the tail operation copies 1–3 bytes. The source, allocated payload and receiver are distinct roles in this function, but disjointness and valid ranges are **caller preconditions**, not checks in the body. The length parameter is signed16, yet the copy count uses logical `SHR`; a negative length becomes a very large unsigned allocation/copy request. There is no negative-length guard, no null allocator-result guard, and no local exception cleanup. DF is not cleared by this body; forward-copy interpretation requires DF=0. Aliasing may affect byte values and observation order.
 
