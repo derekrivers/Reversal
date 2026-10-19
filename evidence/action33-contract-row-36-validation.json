@@ -1,0 +1,37 @@
+{
+  "unit": "R36-B",
+  "status": "passed",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "evidence_sha256": "9c606eac088a3a6cdea2435a5bd6b3275b97452b81bf998177aaa410f39524a7",
+  "expanded_canonical_sha256": "7910cb0c6a73c6ced28fb261105ee23529ee96b9527540b89382b2767b8239b6",
+  "normal_optimized_evidence": "byte-identical original-instruction regeneration",
+  "native_compared_instructions": 446,
+  "pe_only_decoded_instructions": 98,
+  "coverage": {
+    "initializer_entries": 9,
+    "reserve_entries": 5,
+    "eligibility_windows": 512,
+    "eligible": 10,
+    "instruction_steps": 7466,
+    "allocator_calls_executed": 0,
+    "row_index_writes_executed": 0,
+    "row_returns": 0
+  },
+  "negative_probes": [
+    "changed specimen rejected",
+    "changed contracts manifest rejected",
+    "changed support manifest rejected",
+    "changed state manifest rejected",
+    "executed wrong row allocation stride rejected",
+    "executed wrong temporary store rejected",
+    "executed wrong reserve capacity rejected",
+    "executed wrong eligible class rejected",
+    "resealed row-index store width rejected",
+    "raw private fragment rejected",
+    "hex private fragment rejected",
+    "base64 private fragment rejected",
+    "excessive expansion rejected"
+  ],
+  "privacy": "compressed and bounded expanded evidence plus authored files scanned for raw/hex/base64 samples",
+  "scope": "synthetic initializer/reserve entries stop before allocators; separate exhaustive interior source-eligibility windows; no row/index write or lookup return executed"
+}

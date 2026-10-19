@@ -509,3 +509,9 @@ Baseline: reviewed and merged R35-A/B/C units establish three separate synthetic
 | ID | Specimen and precise scope | Owner / branch or worktree | Dependencies and exclusions | Review result |
 | --- | --- | --- | --- | --- |
 | R36-A-R | Pinned SHA-256 `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`; original-entry `0070230c -> 006ce110` selector and caller to pre-`007023e3` or pre-`00702332` | Independent read-only reviewer / `codex/action33-selector-36` at `5ddc775` | Check seven task files against R35-A, R30-C projections and original native selector/ABI. No shared or canonical native edits. | No actionable findings. Confirmed 232 cases, 159,771 original steps, 62,171 events, 58,328 new state snapshots, 224 R(2) and eight diagnostic stops; 125/155 selector starts, with reserve paths excluded. Normal/-O, 16 negatives, Node24 task/full checks and diff checks pass. Full R30-C join and outcome remain unproven. |
+
+### R36-B independent contract-row review
+
+| ID | Specimen and precise scope | Owner / branch or worktree | Dependencies and exclusions | Review result |
+| --- | --- | --- | --- | --- |
+| R36-B-R | Pinned SHA-256 `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`; original initializer and reserve allocator frontiers plus auxiliary/manager row eligibility | Independent read-only reviewer / `codex/action33-contract-row-36` at `00b7d27` | Check six task files against R35-B/R34-B and pinned native/PE evidence. No shared or canonical native edits. | No actionable findings. Confirmed 7,466 original steps across nine initializer entries, five reserve entries and 512 eligibility windows; 446 native-compared static vs 98 PE-only instructions. Stops pre-`004c75a4`/pre-`004c7a02` and eligibility windows pre-`004c786c`/pre-`004c7907`; no row/index write or lookup return. Normal/-O, 13 negatives, Node24 task/full and diff checks pass. |
