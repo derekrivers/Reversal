@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "unit": "R28-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "normal_and_optimized_integrity": "explicit gates, no assert",
+  "probes": [
+    {
+      "probe": "PE byte mutation",
+      "rejected": true,
+      "gate": "pinned specimen mismatch"
+    },
+    {
+      "probe": "unsealed native operand mutation",
+      "rejected": true,
+      "gate": "native export mismatch"
+    },
+    {
+      "probe": "manifest mutation",
+      "rejected": true,
+      "gate": "manifest/preflight SHA-256 mismatch"
+    },
+    {
+      "probe": "preflight mutation",
+      "rejected": true,
+      "gate": "manifest/preflight SHA-256 mismatch"
+    },
+    {
+      "probe": "resealed constructor operand mutation",
+      "rejected": true,
+      "gate": "PE/native opcode or operand mismatch"
+    },
+    {
+      "probe": "resealed operator-new callee mutation",
+      "rejected": true,
+      "gate": "PE/native opcode or operand mismatch"
+    },
+    {
+      "probe": "resealed library comment mutation",
+      "rejected": true,
+      "gate": "existing CRT library comment mismatch"
+    }
+  ]
+}

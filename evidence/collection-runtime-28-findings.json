@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "unit": "R28-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "d2836fd1b28d194dbfda32454106f9af23495809f09a408ed1ee072e6c4b7de1",
+  "address_kind": "virtual unless file_offset is explicit",
+  "static_contracts": [
+    {
+      "entry": "0068cfc0",
+      "status": "complete local static body, transitive allocator unresolved",
+      "abi": "ECX receiver; entry ESP+4 source DWORD; entry ESP+8 length whose low 16 bits are signed; RET 8; EAX returns receiver on ordinary completion; EBX/ESI/EDI saved and restored",
+      "allocation": "MOVSX sign-extends low 16-bit length to DWORD; pushes that value and calls operator_new at 00944cf1; no call-free entry path",
+      "ordered_direct_effects": [
+        "read signed16 length at entry ESP+8",
+        "write DWORD zero to receiver+0xa then receiver+6",
+        "call operator_new with sign-extended allocation size",
+        "write WORD low16 length to receiver+4",
+        "read source pointer at entry ESP+4",
+        "write allocator return DWORD to receiver+0",
+        "REP MOVSD copies length>>2 DWORDs, then REP MOVSB copies length&3 bytes, assuming DF=0 and nonnegative length"
+      ],
+      "ownership_hint": "receiver resembles a 14-byte node with data pointer +0, length +4, links +6/+0xa; its caller 0068d0d0 allocates 0xe bytes and invokes this constructor; no destructor or release path verified",
+      "limits": "signed-negative length, allocation failure/exception, DF=1, aliasing, bad addresses and whole collection lifecycle are not validated"
+    },
+    {
+      "entry": "00944cf1",
+      "status": "complete local static CRT wrapper; original library name and comment preserved",
+      "abi": "cdecl size DWORD at entry ESP+4; pushes constant 1 and size, calls __nh_malloc at 00944e58, removes both outgoing DWORDs with two POP ECX, returns plain RET with EAX from callee",
+      "direct_effects": "one DWORD stack-argument read and transient outgoing stack writes; no direct external heap read/write; allocation and retry behavior belong to __nh_malloc and its callees",
+      "limits": "no call-free entry; no claim that the wrapper itself guarantees a nonnull result, zero-size allocation, throwing behavior or release ownership"
+    }
+  ],
+  "context_only": {
+    "00944e58": "44-byte existing __nh_malloc local body verified to PE/native; unsigned size guard and calls to 00944e84 and 0094895b; excluded from new semantic count",
+    "0068d0d0": "read-only caller has 0xe-byte node allocation then two possible calls to 0068cfc0; transitive collection insertion remains R28-B"
+  },
+  "execution_validation": {
+    "admitted_domain": "none",
+    "original_entry_cases": 0,
+    "reason": "both target entries unconditionally invoke unresolved allocator code; even zero-length constructor input calls it, and any faithful return trace must model allocation state, EAX, exceptions and subsequent memory effects"
+  }
+}
