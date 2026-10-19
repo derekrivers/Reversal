@@ -32,6 +32,7 @@ flowchart LR
   f_00702050 -->|00702088 observed synthetic| f_006f09b0
   f_00702050 -->|0070210b observed synthetic| f_006d59b0
   f_00702050 -->|00702193 observed synthetic| f_00945640
+  f_00702050 -->|007021e5 observed synthetic| f_006f09b0
   f_007160f0 -->|0071614b static/unreached| f_005b58e0
   f_0084be20 -->|0084c3e8 observed synthetic| f_006b7f20
   f_006e0d00 -->|006e0dde observed synthetic| f_006eaea0

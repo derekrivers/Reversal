@@ -67,6 +67,7 @@ const pinnedOracle = (path, sha256) => {
 const prefixOracle = pinnedOracle('evidence/action33-prefix-30-oracle.bin', '08cd8c3725f98499b3fdaef8e42788c1f8ce80308616f881589042cc4d21ff4f');
 const effectOracle = pinnedOracle('evidence/action33-effect-30-oracle.bin', 'ddf4a92864ef02dd7027d9311e5e615b7b0c75a2625eb9cb87dd6e915bc21472');
 const ownerOracle = pinnedOracle('evidence/action33-owner-33-oracle.bin', 'f5dbbdff245eda8bbe946430461a93c76b8dd971e0d2d52e89d667c45681eafd');
+const conversionOracle = pinnedOracle('evidence/action33-conversion-33-oracle.bin', '1fc3bf7c687abec08597d8e9eb66d0abb3a871e7a156075d4b195ad8fa4b79ee');
 const bySite = new Map(map.ordered_constraints.map(row => [row.site, row]));
 const reached = new Set();
 const callTargets = new Map();
@@ -89,6 +90,17 @@ for (const specimenCase of ownerOracle.oracle.cases) {
     }
   }
 }
+let secondGridCalls = 0;
+for (const specimenCase of conversionOracle.cases) {
+  for (const call of specimenCase.calls) {
+    if (!bySite.has(call.site)) continue;
+    if (call.site === '007021e5') secondGridCalls++;
+    reached.add(call.site);
+    if (callTargets.has(call.site)) assert.equal(callTargets.get(call.site), call.target, `varying target ${call.site}`);
+    callTargets.set(call.site, call.target);
+  }
+}
+assert.equal(secondGridCalls, 232, 'R33-A clear cases must reach the second grid call');
 assert.deepEqual(new Set(observed), reached, 'observed sites must be reached in retained original traces');
 for (const [site, target] of callTargets) assert.equal(bySite.get(site).target, target, `wrong observed target ${site}`);
 for (const site of observed) if (!callTargets.has(site)) assert.equal(bySite.get(site).target, undefined, `draw cannot have a call target ${site}`);
@@ -167,8 +179,7 @@ assert.equal(continued.source, 'reports/action33-conversion-33.md');
 assert.match(continued.domain, /unjoined/);
 assert.match(continued.domain, /hardware x87 exception\/status equivalence excluded/);
 source(continued.source);
-const conversionOracle = readFileSync(new URL('../evidence/action33-conversion-33-oracle.bin', import.meta.url));
-assert.equal(createHash('sha256').update(conversionOracle).digest('hex'), conversion.oracle_sha256);
+assert.equal(conversion.oracle_sha256, '1fc3bf7c687abec08597d8e9eb66d0abb3a871e7a156075d4b195ad8fa4b79ee');
 assert.equal(map.typescript_composition.start, '007022fd');
 assert.equal(map.typescript_composition.stop_before, '007024b4');
 assert.equal(map.typescript_composition.first_full_entry_gap, '00702222 -> 00713e90 (clear); 0071614b -> 005b58e0 (bit-04 set)');

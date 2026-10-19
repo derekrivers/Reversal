@@ -68,6 +68,7 @@
     {"site": "00702088", "owner": "00702050", "target": "006f09b0", "event": "call distance-grid helper", "when": "before R09 RNG ledger; observed in R30-A prefix", "source": "reports/action33-prefix-30.md"},
     {"site": "0070210b", "owner": "00702050", "target": "006d59b0", "event": "call guarded opposing roster scan", "when": "before R09 RNG ledger; observed in R30-A prefix", "source": "reports/action33-prefix-30.md"},
     {"site": "00702193", "owner": "00702050", "target": "00945640", "event": "call x87 runtime conversion", "when": "R30-A original-only prefix reaches call; R32-A TypeScript clear branch stops before it with original-produced ST0", "source": "reports/action33-prefix-30.md"},
+    {"site": "007021e5", "owner": "00702050", "target": "006f09b0", "event": "call second distance-grid helper", "when": "R33-A clear path after x87 conversion; observed on 232 original-entry synthetic cases", "source": "reports/action33-conversion-33.md"},
     {"site": "0071614b", "owner": "007160f0", "target": "005b58e0", "event": "call tactical lookup", "when": "R32-A bit-04-set branch stops before call", "source": "reports/action33-opponent-32.md"},
     {"site": "0084c3e8", "owner": "0084be20", "target": "006b7f20", "event": "pass stack fixture to match-preparation receiver", "when": "R33-B original interior caller window; not a full 0084be20 entry", "source": "reports/action33-owner-33.md"},
     {"site": "006e0dde", "owner": "006e0d00", "target": "006eaea0", "event": "pass original-returned staff pointer to placement", "when": "R33-B separate synthetic placement entry", "source": "reports/action33-owner-33.md"},
@@ -86,7 +87,7 @@
     {"site": "00707dd6", "owner": "00702050", "event": "increment side-indexed tiebreak score byte", "when": "mode3/4 successful branch only", "source": "reports/shot-resolver-09.md"}
   ],
   "edge_observation": {
-    "original_instruction_synthetic_sites": ["00702088", "0070210b", "00702193", "00702222", "00702241", "0070230c", "007023e3", "00702416", "007024b4", "006cfec2", "0084c3e8", "006e0dde"],
+    "original_instruction_synthetic_sites": ["00702088", "0070210b", "00702193", "007021e5", "00702222", "00702241", "0070230c", "007023e3", "00702416", "007024b4", "006cfec2", "0084c3e8", "006e0dde"],
     "static_or_unreached_sites": ["006beaeb", "006bedb0", "0071614b", "006eafa0", "0062ed99", "0070387e", "00703e24", "00703ff2", "00707dd6"]
   },
   "state_requirements": [
