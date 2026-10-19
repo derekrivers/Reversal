@@ -1,0 +1,63 @@
+{
+  "unit": "R30-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual; file offsets labelled separately",
+  "baseline": "395823faae3c3e50427b2043749c3617bb93699f",
+  "segment": {
+    "start": "007022fd",
+    "file_offset": "003022fd",
+    "stop_before": "007024b4",
+    "entry_kind": "interior original-produced checkpoint; not resolver entry"
+  },
+  "first_missing_full_entry_typescript_callee": {
+    "site": "00702088",
+    "target": "006f09b0"
+  },
+  "next_unimplemented_effect_call": {
+    "site": "007024b4",
+    "target": "006cfe10",
+    "executed_by_composition": false
+  },
+  "existing_dependency_source_sha256": {
+    "reconstruction/keeper-selector-29.ts": "b71e35f788405dc435ddf03590836b6d8b1628e6f0d2d0703d341587f84c65d9",
+    "reconstruction/bounded-random.ts": "8918fb9a2ba9422079fbcb2c5972fd06820bd11fe3902594097a51ef1b600800",
+    "reconstruction/penalty-resolution.ts": "9d5af4f77db5c3cc779bbf5631dbd6ff828e38bf7ea92685bfacb536bcc3bbcd",
+    "reconstruction/keeper-response.ts": "80015c5f6abab87bcc59f9606e8566c08c124611a5c84f4f420348b0efb029a1",
+    "reconstruction/penalty-keeper-entry.ts": "6b27b7a2b0d1bd2fcf8c6dd186ab2dc7912ca4805d0066cf347fb9dcbdb3c5df",
+    "reconstruction/x87-finite.ts": "bafd16d1ca35e7a6af260fdcb2a47df8bac0f05516956fbff46230e840386722"
+  },
+  "comparison": {
+    "cases": 160,
+    "selector_events": 11456,
+    "game_writes": 256,
+    "draws": 637
+  },
+  "rng_edge_cases": {
+    "zero_bounds": 37,
+    "negative_bounds": 50,
+    "wraps": 54
+  },
+  "response_cases": {
+    "rejected": 64,
+    "retained": 65,
+    "weighted": 10,
+    "redrawn": 21
+  },
+  "full_compared_regions": [
+    "match 64 KiB",
+    "tactical tables 4 KiB",
+    "synthetic RNG table 204000 bytes",
+    "synthetic float32 grid 432 bytes"
+  ],
+  "prior_producer_byte_locations": [
+    "match+8d4c",
+    "match+8d4d",
+    "match+8d4e"
+  ],
+  "exclusions": [
+    "Full resolver-entry TypeScript execution; checkpoint fields are supplied by original execution.",
+    "Keeper operand-read order, stack memory/accesses, scratch registers, full EAX bits and x87 status/tag evolution.",
+    "General pointer safety, reserve reassignment in this composition corpus, live-match provenance or completed shot."
+  ],
+  "new_function_registry_entries": 0
+}
