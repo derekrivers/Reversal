@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "unit": "R27-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "baseline_commit": "495f3cbec7e95e3a7340fb75f5add400cf852396",
+  "address_kind": "virtual unless file_offset is explicit",
+  "status": "complete local static contract for 00945333; no new execution validation",
+  "existing_caller": {
+    "entry": "00682b30",
+    "state": "R10-C complete local static contract, revisited in place; no new/upgraded semantic entry",
+    "call": "00682d27: cdecl-style pushes comparator 006834f0, width 0x3b, signed16 receiver+0x3e sign-extended to DWORD, scratch base; then CALL 00945333 and ADD ESP,0x10",
+    "post_call": "00682d33..00682df5 searches the original borrowed rows by scratch key, writes low byte of bucket counter to first matching row+4, directly compares adjacent scratch rows, and frees scratch. A later caller may overwrite row+4.",
+    "callback": "006834f0, independently mapped and bounded original-entry validated in R26-C; reads global 00b679fc and external five-entry rule switch table",
+    "limits": "Allocation, comparator state stability, entire sort result and final standings are not established by this local caller contract."
+  },
+  "new_sort_contract": {
+    "entry": "00945333",
+    "body_bytes": 340,
+    "instruction_count": 132,
+    "abi": "cdecl-style four DWORD stack arguments at entry ESP+4 base, +8 count, +12 element width, +16 comparator address; plain RET, caller cleans 16 bytes; EBX/ESI/EDI/EBP preserved; EAX is not a semantic sorted-result value",
+    "early_return": "Unsigned count<2 or width=0 returns without invoking callback/helpers or dereferencing base. No comparator-null, base-null, overflow or mapped-memory guard on active path.",
+    "range_setup": "For active input, ESI=(count-1)*width modulo 2^32 plus base; computed end pointer is inclusive. EDI=width. Unsigned DIV at 0094537b computes (end-base)/width+1, with width already nonzero. Pointer multiplication/addition and unsigned order require a nonwrapping, mapped range for ordinary array interpretation.",
+    "small_partition": "For computed element count<=8, calls 00945487(base,end,width,comparator), then pops the next pending partition or returns. This helper contains another indirect comparator call and invokes 009454d5.",
+    "large_partition": "For count>8, chooses base+(count>>1)*width and calls 009454d5(mid,base,width). It scans from base+width while callback(scan,base)<=0, scans backward from end while callback(right,base)>=0, swaps the crossed pair or pivot through 009454d5, then processes the smaller residual interval first and saves the larger interval in two local DWORD arrays. Native pointer/range comparisons use unsigned conditions; callback outputs are tested signed.",
+    "direct_calls": ["00945389 -> 00945487", "009453bc -> 009454d5", "009453ff -> 009454d5", "0094540a -> 009454d5"],
+    "indirect_calls": ["009453d8 -> DWORD [EBP+0x14], arguments (scan,base)", "009453ea -> DWORD [EBP+0x14], arguments (right,base)"],
+    "direct_reads": "Only DWORD stack/frame operands in this body; no direct row-field reads. The helper/callback functions access records.",
+    "direct_writes": "DWORD local counter at EBP-4 and pivot/scan state at EBP-8; pending partitions in arrays starting EBP-0x80 and EBP-0xf8; outgoing argument slots EBP+8 and EBP+0xc are repurposed as local array cursors. No direct write to caller record buffer in this body; 009454d5 performs byte swaps.",
+    "memory_widths": "All explicit memory operands in this body are DWORD; call/push/pop/leave/ret add implicit stack traffic. Helper 009454d5 copies width bytes, while comparator field widths belong to 006834f0.",
+    "limits": "No execution oracle for the connected sort. Helper and comparator effects across full partitions, callback side effects, malformed pointers/counts/widths, stack capacity and stable strict ordering of real rows remain unvalidated."
+  },
+  "context_only": {
+    "00945487": "78-byte small-partition helper; PE bytes pinned, contains indirect comparator call and call to 009454d5. It is not a new R27-C static entry.",
+    "009454d5": "44-byte byte-swap helper; PE bytes pinned, no native export in this lane. It is not a new R27-C static entry.",
+    "006834f0": "R26-C comparator validated independently; zero-key rows can violate equality transitivity, so a valid strict weak ordering for all caller rows is not established."
+  },
+  "validation": {
+    "static": "PE32 hash, both private native exports and exact-old preflight pinned; all 215+132 instructions/operands and complete local CFG verified. Earlier R10-C 730-byte body hash unchanged.",
+    "execution": "none added; TypeScript not admitted because connected callback/helper execution and required caller row invariants have not been compared together to the original instructions",
+    "python_optimized_integrity": "extractor has explicit ValueError gates under normal and -O"
+  }
+}

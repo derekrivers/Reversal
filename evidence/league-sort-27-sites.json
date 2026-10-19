@@ -1,0 +1,1098 @@
+{
+  "schema_version": 1,
+  "unit": "R27-C",
+  "address_kind": "virtual unless file_offset is explicit",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "4acf11ca1ab79b275436c6365813904d87634436de1723ce24a2274f83a087c4",
+  "export_manifest_sha256": "bbd00280029a738f4f4dfa6462c7d34a4379887626749d9f20eef20873655f14",
+  "annotation_preflight_sha256": "fb1be5075c72e92045f4d802f649665801d8ebc85b049a25e0f652e282f6015d",
+  "scope": "complete local PE/native bodies; called helpers and callbacks are separate boundaries",
+  "python_optimized_integrity": "explicit ValueError gates, no assert",
+  "read_only_helper_spans": {
+    "00945487": {
+      "file_offset": "00545487",
+      "body_bytes": 78,
+      "body_sha256": "e9602fb435ba6e492a49997a9809e95763bc31dcb8f36acdd7a1bdd6620b72de",
+      "scope": "read-only dependency; no native export or complete R27-C contract"
+    },
+    "009454d5": {
+      "file_offset": "005454d5",
+      "body_bytes": 44,
+      "body_sha256": "8cc073e4161c512ba0dc2a7bb381d401f4f08e67cba8d2176b495fd552a36df1",
+      "scope": "read-only dependency; no native export or complete R27-C contract"
+    }
+  },
+  "bodies": {
+    "00682b30": {
+      "entry_va": "00682b30",
+      "file_offset": "00282b30",
+      "body_bytes": 730,
+      "body_sha256": "74f00180f47f39e48344b4192ffe22dbfe17e4e86d8eaa2ba9964ade4c1a8222",
+      "old_native_name": "cm0102_write_league_peer_bucket_bytes_candidate",
+      "instruction_count": 215,
+      "all_native_operands_match": true,
+      "all_instructions_reachable": true,
+      "instruction_starts_sha256": "01a8478316bc38f1fe569f5c0b1746cce39aa2930d9be13d6a1b630914a75415",
+      "local_edge_count": 230,
+      "branches": [
+        [
+          "00682b51",
+          "jne",
+          [
+            "00682bba",
+            "00682b53"
+          ]
+        ],
+        [
+          "00682bcd",
+          "jle",
+          [
+            "00682d1a",
+            "00682bd3"
+          ]
+        ],
+        [
+          "00682bf8",
+          "jle",
+          [
+            "00682d0b",
+            "00682bfe"
+          ]
+        ],
+        [
+          "00682c01",
+          "je",
+          [
+            "00682ced",
+            "00682c07"
+          ]
+        ],
+        [
+          "00682c24",
+          "jne",
+          [
+            "00682ced",
+            "00682c2a"
+          ]
+        ],
+        [
+          "00682c36",
+          "jle",
+          [
+            "00682ced",
+            "00682c3c"
+          ]
+        ],
+        [
+          "00682c50",
+          "je",
+          [
+            "00682c6a",
+            "00682c52"
+          ]
+        ],
+        [
+          "00682c5c",
+          "jl",
+          [
+            "00682c44",
+            "00682c5e"
+          ]
+        ],
+        [
+          "00682c65",
+          "jmp",
+          [
+            "00682ced"
+          ]
+        ],
+        [
+          "00682d05",
+          "jl",
+          [
+            "00682bfe",
+            "00682d0b"
+          ]
+        ],
+        [
+          "00682d14",
+          "jl",
+          [
+            "00682bd3",
+            "00682d1a"
+          ]
+        ],
+        [
+          "00682d40",
+          "jle",
+          [
+            "00682df4",
+            "00682d46"
+          ]
+        ],
+        [
+          "00682d4b",
+          "jle",
+          [
+            "00682d9c",
+            "00682d4d"
+          ]
+        ],
+        [
+          "00682d75",
+          "je",
+          [
+            "00682d7f",
+            "00682d77"
+          ]
+        ],
+        [
+          "00682d7b",
+          "jl",
+          [
+            "00682d61",
+            "00682d7d"
+          ]
+        ],
+        [
+          "00682d7d",
+          "jmp",
+          [
+            "00682d98"
+          ]
+        ],
+        [
+          "00682dac",
+          "jge",
+          [
+            "00682de2",
+            "00682dae"
+          ]
+        ],
+        [
+          "00682ddc",
+          "je",
+          [
+            "00682de2",
+            "00682dde"
+          ]
+        ],
+        [
+          "00682dee",
+          "jl",
+          [
+            "00682d46",
+            "00682df4"
+          ]
+        ]
+      ],
+      "direct_calls": [
+        [
+          "00682b45",
+          "00945501"
+        ],
+        [
+          "00682b67",
+          "00944cff"
+        ],
+        [
+          "00682b81",
+          "0090d130"
+        ],
+        [
+          "00682b91",
+          "00944c9f"
+        ],
+        [
+          "00682ba1",
+          "005e8290"
+        ],
+        [
+          "00682d27",
+          "00945333"
+        ],
+        [
+          "00682dd2",
+          "006834f0"
+        ],
+        [
+          "00682df5",
+          "009452ca"
+        ]
+      ],
+      "indirect_calls": [],
+      "returns": [
+        [
+          "00682bb7",
+          4
+        ],
+        [
+          "00682e07",
+          4
+        ]
+      ],
+      "explicit_memory_reads": [
+        [
+          "00682b3c",
+          2,
+          "eax, word ptr [ebx + 0x3e]"
+        ],
+        [
+          "00682bbd",
+          2,
+          "word ptr [ebx + 0x3e], dx"
+        ],
+        [
+          "00682bc1",
+          4,
+          "ebp, dword ptr [esp + 0x220]"
+        ],
+        [
+          "00682be5",
+          4,
+          "eax, dword ptr [ecx + ebp]"
+        ],
+        [
+          "00682beb",
+          2,
+          "di, word ptr [ebx + 0x3e]"
+        ],
+        [
+          "00682c1b",
+          2,
+          "dx, word ptr [ecx + ebp + 0x19]"
+        ],
+        [
+          "00682c20",
+          2,
+          "dx, word ptr [ebx + 0x19]"
+        ],
+        [
+          "00682c3c",
+          4,
+          "edi, dword ptr [ecx + ebp + 5]"
+        ],
+        [
+          "00682c40",
+          4,
+          "ebx, dword ptr [ebx]"
+        ],
+        [
+          "00682c4d",
+          4,
+          "dword ptr [edi + ebp*2], ebx"
+        ],
+        [
+          "00682c52",
+          4,
+          "ebp, dword ptr [esp + 0x1c]"
+        ],
+        [
+          "00682c5e",
+          4,
+          "ebp, dword ptr [esp + 0x224]"
+        ],
+        [
+          "00682c6d",
+          1,
+          "bl, byte ptr [ecx + esi + 0x11]"
+        ],
+        [
+          "00682c71",
+          4,
+          "ebp, dword ptr [esp + 0x224]"
+        ],
+        [
+          "00682c83",
+          1,
+          "dl, byte ptr [edi + eax + 4]"
+        ],
+        [
+          "00682c8d",
+          4,
+          "edx, dword ptr [ecx + ebp + 5]"
+        ],
+        [
+          "00682c91",
+          1,
+          "bl, byte ptr [ecx + esi + 0x12]"
+        ],
+        [
+          "00682c95",
+          1,
+          "dl, byte ptr [eax + edx + 5]"
+        ],
+        [
+          "00682c9f",
+          4,
+          "edx, dword ptr [ecx + ebp + 5]"
+        ],
+        [
+          "00682ca3",
+          1,
+          "bl, byte ptr [ecx + esi + 0x13]"
+        ],
+        [
+          "00682ca7",
+          1,
+          "dl, byte ptr [eax + edx + 6]"
+        ],
+        [
+          "00682cb1",
+          4,
+          "edx, dword ptr [ecx + ebp + 5]"
+        ],
+        [
+          "00682cb5",
+          1,
+          "bl, byte ptr [ecx + esi + 0x14]"
+        ],
+        [
+          "00682cb9",
+          1,
+          "dl, byte ptr [eax + edx + 7]"
+        ],
+        [
+          "00682cc3",
+          4,
+          "edx, dword ptr [ecx + ebp + 5]"
+        ],
+        [
+          "00682cc7",
+          2,
+          "dx, word ptr [eax + edx + 8]"
+        ],
+        [
+          "00682ccc",
+          2,
+          "word ptr [ecx + esi + 0x15], dx"
+        ],
+        [
+          "00682cd1",
+          4,
+          "edx, dword ptr [ecx + ebp + 5]"
+        ],
+        [
+          "00682cd5",
+          2,
+          "dx, word ptr [eax + edx + 0xa]"
+        ],
+        [
+          "00682cda",
+          2,
+          "word ptr [ecx + esi + 0x17], dx"
+        ],
+        [
+          "00682cdf",
+          4,
+          "edx, dword ptr [ecx + ebp + 5]"
+        ],
+        [
+          "00682ce3",
+          2,
+          "ax, word ptr [eax + edx + 0xc]"
+        ],
+        [
+          "00682ce8",
+          2,
+          "word ptr [ecx + esi + 0x19], ax"
+        ],
+        [
+          "00682ced",
+          4,
+          "ebx, dword ptr [esp + 0x18]"
+        ],
+        [
+          "00682cf1",
+          4,
+          "eax, dword ptr [esp + 0x14]"
+        ],
+        [
+          "00682cf5",
+          4,
+          "edx, dword ptr [esp + 0x10]"
+        ],
+        [
+          "00682cfa",
+          2,
+          "di, word ptr [ebx + 0x3e]"
+        ],
+        [
+          "00682d0c",
+          2,
+          "dx, word ptr [ebx + 0x3e]"
+        ],
+        [
+          "00682d1a",
+          2,
+          "ecx, word ptr [ebx + 0x3e]"
+        ],
+        [
+          "00682d2c",
+          2,
+          "dx, word ptr [ebx + 0x3e]"
+        ],
+        [
+          "00682d5e",
+          4,
+          "edi, dword ptr [eax + edi*2]"
+        ],
+        [
+          "00682d72",
+          4,
+          "edi, dword ptr [eax + ebx*2]"
+        ],
+        [
+          "00682d8e",
+          1,
+          "cl, byte ptr [esp + 0x14]"
+        ],
+        [
+          "00682d98",
+          4,
+          "edi, dword ptr [esp + 0x10]"
+        ],
+        [
+          "00682d9c",
+          4,
+          "ebx, dword ptr [esp + 0x18]"
+        ],
+        [
+          "00682da3",
+          2,
+          "edx, word ptr [ebx + 0x3e]"
+        ],
+        [
+          "00682dde",
+          4,
+          "dword ptr [esp + 0x14]"
+        ],
+        [
+          "00682de2",
+          2,
+          "dx, word ptr [ebx + 0x3e]"
+        ]
+      ],
+      "explicit_memory_writes": [
+        [
+          "00682b41",
+          4,
+          "dword ptr [esp + 0x18], ebx"
+        ],
+        [
+          "00682ba9",
+          4,
+          "dword ptr [0xb67a34], esi"
+        ],
+        [
+          "00682bc9",
+          4,
+          "dword ptr [esp + 0x10], edx"
+        ],
+        [
+          "00682be8",
+          4,
+          "dword ptr [ecx + esi], eax"
+        ],
+        [
+          "00682bf4",
+          4,
+          "dword ptr [esp + 0x14], eax"
+        ],
+        [
+          "00682c32",
+          4,
+          "dword ptr [esp + 0x1c], eax"
+        ],
+        [
+          "00682c89",
+          1,
+          "byte ptr [ecx + esi + 0x11], bl"
+        ],
+        [
+          "00682c9b",
+          1,
+          "byte ptr [ecx + esi + 0x12], bl"
+        ],
+        [
+          "00682cad",
+          1,
+          "byte ptr [ecx + esi + 0x13], bl"
+        ],
+        [
+          "00682cbf",
+          1,
+          "byte ptr [ecx + esi + 0x14], bl"
+        ],
+        [
+          "00682ccc",
+          2,
+          "word ptr [ecx + esi + 0x15], dx"
+        ],
+        [
+          "00682cda",
+          2,
+          "word ptr [ecx + esi + 0x17], dx"
+        ],
+        [
+          "00682ce8",
+          2,
+          "word ptr [ecx + esi + 0x19], ax"
+        ],
+        [
+          "00682cfe",
+          4,
+          "dword ptr [esp + 0x14], eax"
+        ],
+        [
+          "00682d10",
+          4,
+          "dword ptr [esp + 0x10], edx"
+        ],
+        [
+          "00682d35",
+          4,
+          "dword ptr [esp + 0x14], edx"
+        ],
+        [
+          "00682d3c",
+          4,
+          "dword ptr [esp + 0x10], edi"
+        ],
+        [
+          "00682d94",
+          1,
+          "byte ptr [eax + edx*2 + 4], cl"
+        ],
+        [
+          "00682dde",
+          4,
+          "dword ptr [esp + 0x14]"
+        ],
+        [
+          "00682dea",
+          4,
+          "dword ptr [esp + 0x10], edi"
+        ]
+      ],
+      "selected_instructions": {
+        "00682b3c": "movsx eax, word ptr [ebx + 0x3e]",
+        "00682b45": "call 0x945501",
+        "00682bc1": "mov ebp, dword ptr [esp + 0x220]",
+        "00682d1a": "movsx ecx, word ptr [ebx + 0x3e]",
+        "00682d1e": "push 0x6834f0",
+        "00682d23": "push 0x3b",
+        "00682d25": "push ecx",
+        "00682d26": "push esi",
+        "00682d27": "call 0x945333",
+        "00682d2c": "mov dx, word ptr [ebx + 0x3e]",
+        "00682dd2": "call 0x6834f0",
+        "00682df5": "call 0x9452ca",
+        "00682e07": "ret 4"
+      },
+      "native_export_hashes": {
+        "asm": "a17511b568544273076010a4a4b8d39a88990197883ebd0a230849568b0c1de0",
+        "c": "f8ca67bc8c3707e700a1fc18ab5aac743a6f850f8d124d8cb09018225b1ba8d2"
+      }
+    },
+    "00945333": {
+      "entry_va": "00945333",
+      "file_offset": "00545333",
+      "body_bytes": 340,
+      "body_sha256": "356fe0ff196d09bb788da5a1ff7eb17bedc6ccea9bce6e749175988e6483ca7f",
+      "old_native_name": "FUN_00945333",
+      "instruction_count": 132,
+      "all_native_operands_match": true,
+      "all_instructions_reachable": true,
+      "instruction_starts_sha256": "7b7340bfa8747f3e5faf607f48755668a13a7eb3285d52e6af1c100210ced8ae",
+      "local_edge_count": 145,
+      "branches": [
+        [
+          "00945345",
+          "jb",
+          [
+            "00945482",
+            "0094534b"
+          ]
+        ],
+        [
+          "0094534f",
+          "je",
+          [
+            "00945482",
+            "00945355"
+          ]
+        ],
+        [
+          "00945381",
+          "ja",
+          [
+            "009453b2",
+            "00945383"
+          ]
+        ],
+        [
+          "009453a0",
+          "jl",
+          [
+            "00945482",
+            "009453a6"
+          ]
+        ],
+        [
+          "009453b0",
+          "jmp",
+          [
+            "00945372"
+          ]
+        ],
+        [
+          "009453d4",
+          "ja",
+          [
+            "009453e1",
+            "009453d6"
+          ]
+        ],
+        [
+          "009453df",
+          "jle",
+          [
+            "009453c9",
+            "009453e1"
+          ]
+        ],
+        [
+          "009453e6",
+          "jbe",
+          [
+            "009453f3",
+            "009453e8"
+          ]
+        ],
+        [
+          "009453f1",
+          "jge",
+          [
+            "009453e1",
+            "009453f3"
+          ]
+        ],
+        [
+          "009453fa",
+          "jb",
+          [
+            "00945409",
+            "009453fc"
+          ]
+        ],
+        [
+          "00945407",
+          "jmp",
+          [
+            "009453c9"
+          ]
+        ],
+        [
+          "00945420",
+          "jl",
+          [
+            "00945452",
+            "00945422"
+          ]
+        ],
+        [
+          "0094542a",
+          "jae",
+          [
+            "00945443",
+            "0094542c"
+          ]
+        ],
+        [
+          "00945445",
+          "jae",
+          [
+            "00945391",
+            "0094544b"
+          ]
+        ],
+        [
+          "0094544d",
+          "jmp",
+          [
+            "00945372"
+          ]
+        ],
+        [
+          "00945454",
+          "jae",
+          [
+            "0094546b",
+            "00945456"
+          ]
+        ],
+        [
+          "00945472",
+          "jae",
+          [
+            "00945391",
+            "00945478"
+          ]
+        ],
+        [
+          "0094547d",
+          "jmp",
+          [
+            "00945372"
+          ]
+        ]
+      ],
+      "direct_calls": [
+        [
+          "00945389",
+          "00945487"
+        ],
+        [
+          "009453bc",
+          "009454d5"
+        ],
+        [
+          "009453ff",
+          "009454d5"
+        ],
+        [
+          "0094540a",
+          "009454d5"
+        ]
+      ],
+      "indirect_calls": [
+        [
+          "009453d8",
+          "dword ptr [ebp + 0x14]"
+        ],
+        [
+          "009453ea",
+          "dword ptr [ebp + 0x14]"
+        ]
+      ],
+      "returns": [
+        [
+          "00945486",
+          0
+        ]
+      ],
+      "explicit_memory_reads": [
+        [
+          "0094533e",
+          4,
+          "esi, dword ptr [ebp + 0xc]"
+        ],
+        [
+          "0094534b",
+          4,
+          "dword ptr [ebp + 0x10], 0"
+        ],
+        [
+          "00945355",
+          4,
+          "dword ptr [ebp - 4], 0"
+        ],
+        [
+          "0094535a",
+          4,
+          "esi, dword ptr [ebp + 0x10]"
+        ],
+        [
+          "0094535e",
+          4,
+          "ebx, dword ptr [ebp + 8]"
+        ],
+        [
+          "00945372",
+          4,
+          "edi, dword ptr [ebp + 0x10]"
+        ],
+        [
+          "00945383",
+          4,
+          "dword ptr [ebp + 0x14]"
+        ],
+        [
+          "00945391",
+          4,
+          "dword ptr [ebp - 4]"
+        ],
+        [
+          "00945394",
+          4,
+          "dword ptr [ebp + 0xc], 4"
+        ],
+        [
+          "00945398",
+          4,
+          "dword ptr [ebp + 8], 4"
+        ],
+        [
+          "0094539c",
+          4,
+          "dword ptr [ebp - 4], 0"
+        ],
+        [
+          "009453a6",
+          4,
+          "eax, dword ptr [ebp + 0xc]"
+        ],
+        [
+          "009453a9",
+          4,
+          "ebx, dword ptr [eax]"
+        ],
+        [
+          "009453ab",
+          4,
+          "eax, dword ptr [ebp + 8]"
+        ],
+        [
+          "009453ae",
+          4,
+          "esi, dword ptr [eax]"
+        ],
+        [
+          "009453c9",
+          4,
+          "eax, dword ptr [ebp - 8]"
+        ],
+        [
+          "009453cc",
+          4,
+          "eax, dword ptr [ebp + 0x10]"
+        ],
+        [
+          "009453d8",
+          4,
+          "dword ptr [ebp + 0x14]"
+        ],
+        [
+          "009453e1",
+          4,
+          "edi, dword ptr [ebp + 0x10]"
+        ],
+        [
+          "009453ea",
+          4,
+          "dword ptr [ebp + 0x14]"
+        ],
+        [
+          "009453f3",
+          4,
+          "dword ptr [ebp + 0x10]"
+        ],
+        [
+          "009453f6",
+          4,
+          "edi, dword ptr [ebp - 8]"
+        ],
+        [
+          "009453fc",
+          4,
+          "dword ptr [ebp - 8]"
+        ],
+        [
+          "0094540f",
+          4,
+          "eax, dword ptr [ebp - 8]"
+        ],
+        [
+          "00945422",
+          4,
+          "ecx, dword ptr [ebp + 0x10]"
+        ],
+        [
+          "0094542c",
+          4,
+          "edx, dword ptr [ebp + 0xc]"
+        ],
+        [
+          "0094542f",
+          4,
+          "dword ptr [ebp + 0xc], 4"
+        ],
+        [
+          "00945435",
+          4,
+          "ecx, dword ptr [ebp + 8]"
+        ],
+        [
+          "00945438",
+          4,
+          "dword ptr [ebp - 4]"
+        ],
+        [
+          "0094543b",
+          4,
+          "dword ptr [ebp + 8], 4"
+        ],
+        [
+          "00945456",
+          4,
+          "ecx, dword ptr [ebp + 0xc]"
+        ],
+        [
+          "00945459",
+          4,
+          "dword ptr [ebp - 4]"
+        ],
+        [
+          "0094545c",
+          4,
+          "dword ptr [ebp + 0xc], 4"
+        ],
+        [
+          "00945462",
+          4,
+          "eax, dword ptr [ebp + 8]"
+        ],
+        [
+          "00945465",
+          4,
+          "dword ptr [ebp + 8], 4"
+        ],
+        [
+          "0094546b",
+          4,
+          "eax, dword ptr [ebp + 0x10]"
+        ],
+        [
+          "00945478",
+          4,
+          "edi, dword ptr [ebp + 0x10]"
+        ]
+      ],
+      "explicit_memory_writes": [
+        [
+          "00945355",
+          4,
+          "dword ptr [ebp - 4], 0"
+        ],
+        [
+          "00945364",
+          4,
+          "dword ptr [ebp + 8], eax"
+        ],
+        [
+          "0094536f",
+          4,
+          "dword ptr [ebp + 0xc], eax"
+        ],
+        [
+          "00945391",
+          4,
+          "dword ptr [ebp - 4]"
+        ],
+        [
+          "00945394",
+          4,
+          "dword ptr [ebp + 0xc], 4"
+        ],
+        [
+          "00945398",
+          4,
+          "dword ptr [ebp + 8], 4"
+        ],
+        [
+          "009453c4",
+          4,
+          "dword ptr [ebp - 8], ebx"
+        ],
+        [
+          "009453d1",
+          4,
+          "dword ptr [ebp - 8], eax"
+        ],
+        [
+          "0094542f",
+          4,
+          "dword ptr [ebp + 0xc], 4"
+        ],
+        [
+          "00945438",
+          4,
+          "dword ptr [ebp - 4]"
+        ],
+        [
+          "0094543b",
+          4,
+          "dword ptr [ebp + 8], 4"
+        ],
+        [
+          "0094543f",
+          4,
+          "dword ptr [edx], ebx"
+        ],
+        [
+          "00945441",
+          4,
+          "dword ptr [ecx], edi"
+        ],
+        [
+          "00945459",
+          4,
+          "dword ptr [ebp - 4]"
+        ],
+        [
+          "0094545c",
+          4,
+          "dword ptr [ebp + 0xc], 4"
+        ],
+        [
+          "00945460",
+          4,
+          "dword ptr [ecx], eax"
+        ],
+        [
+          "00945465",
+          4,
+          "dword ptr [ebp + 8], 4"
+        ],
+        [
+          "00945469",
+          4,
+          "dword ptr [eax], esi"
+        ]
+      ],
+      "selected_instructions": {
+        "0094533e": "mov esi, dword ptr [ebp + 0xc]",
+        "00945342": "cmp esi, 2",
+        "0094534b": "cmp dword ptr [ebp + 0x10], 0",
+        "00945355": "and dword ptr [ebp - 4], 0",
+        "00945359": "dec esi",
+        "0094535a": "imul esi, dword ptr [ebp + 0x10]",
+        "00945367": "lea eax, [ebp - 0xf8]",
+        "00945372": "mov edi, dword ptr [ebp + 0x10]",
+        "0094537b": "div edi",
+        "00945383": "push dword ptr [ebp + 0x14]",
+        "00945389": "call 0x945487",
+        "00945391": "dec dword ptr [ebp - 4]",
+        "00945394": "sub dword ptr [ebp + 0xc], 4",
+        "00945398": "sub dword ptr [ebp + 8], 4",
+        "009453b2": "shr eax, 1",
+        "009453bc": "call 0x9454d5",
+        "009453d8": "call dword ptr [ebp + 0x14]",
+        "009453ea": "call dword ptr [ebp + 0x14]",
+        "009453ff": "call 0x9454d5",
+        "0094540a": "call 0x9454d5",
+        "0094543f": "mov dword ptr [edx], ebx",
+        "00945441": "mov dword ptr [ecx], edi",
+        "00945460": "mov dword ptr [ecx], eax",
+        "00945469": "mov dword ptr [eax], esi",
+        "00945482": "pop edi",
+        "00945486": "ret "
+      },
+      "native_export_hashes": {
+        "asm": "99fd36994ddcadc0ac35925cf12056a83d90932f3c1d66a7324ba6b38758e354",
+        "c": "1cc3a60cc1b9697a19a51650b455715f44bae69afe4ceac4fbc84361e7c8552f"
+      }
+    }
+  }
+}
