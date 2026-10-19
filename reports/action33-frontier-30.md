@@ -5,13 +5,17 @@ Arrows marked “observed synthetic” were reached by original instructions on 
 
 ```mermaid
 flowchart LR
+  f_004cf5f0["004cf5f0 contract lookup dependency"]
   f_005b58e0["005b58e0 bit-04 tactical lookup dependency"]
   f_0062ed70["0062ed70 participant-to-status lookup"]
+  f_006b7f20["006b7f20 candidate match preparation receiving fixture pointer"]
   f_006be710["006be710 tiebreak caller"]
   f_006ce110["006ce110 opposing keeper selector and cache writer"]
   f_006ce310["006ce310 context/output bytes before gate"]
   f_006cfe10["006cfe10 unconditional pre-shot participant effect"]
   f_006d59b0["006d59b0 opposing roster scan"]
+  f_006e0d00["006e0d00 slot-address and roster-reference producer"]
+  f_006eaea0["006eaea0 slot constructor storing roster and attribute pointers"]
   f_006f09b0["006f09b0 distance-grid float32 helper"]
   f_007002f0["007002f0 event wrapper"]
   f_00700420["00700420 keeper response"]
@@ -19,6 +23,7 @@ flowchart LR
   f_00702050["00702050 shot and outcome resolver"]
   f_00713e90["00713e90 action33 early adjustment"]
   f_007160f0["007160f0 opponent tactical/activity check"]
+  f_0084be20["0084be20 fixture and club-pointer producer caller"]
   f_0090cfc0["0090cfc0 bounded random draw"]
   f_00944cff["00944cff diagnostic path splitter"]
   f_00945640["00945640 x87 runtime conversion dependency"]
@@ -28,6 +33,9 @@ flowchart LR
   f_00702050 -->|0070210b observed synthetic| f_006d59b0
   f_00702050 -->|00702193 observed synthetic| f_00945640
   f_007160f0 -->|0071614b static/unreached| f_005b58e0
+  f_0084be20 -->|0084c3e8 observed synthetic| f_006b7f20
+  f_006e0d00 -->|006e0dde observed synthetic| f_006eaea0
+  f_006eaea0 -->|006eafa0 static/unreached| f_004cf5f0
   f_00702050 -->|00702222 observed synthetic| f_00713e90
   f_00702050 -->|00702241 observed synthetic| f_0090cfc0
   f_00702050 -->|0070230c observed synthetic| f_006ce110
@@ -44,15 +52,17 @@ Original resolver prefix: 160 cases and 158784 original steps, ending before 007
 Original effect continuation: 160 cases and 27390 additional steps, ending before 0062ed99.
 TypeScript entry prefix: 160 original-entry cases from 00702050 to before 0070210b, plus 590 standalone grid-helper cases.
 TypeScript guarded continuation: 220 original-entry cases, 204 clear and 16 bit-04-set, ending before 00702193 or 0071614b respectively.
-Separate TypeScript interior segment: 160 original-produced checkpoints from 007022fd to before 007024b4; first full-entry TypeScript gap 00702193 -> 00945640 (clear); 0071614b -> 005b58e0 (bit-04 set). These TypeScript paths are not joined.
+TypeScript conversion continuation: 280 cases (232 clear, 16 bit-04-set and 32 separate rounding probes), with clear path ending before 00702222; hardware x87 exception/status equivalence is excluded.
+Separate TypeScript interior segment: 160 original-produced checkpoints from 007022fd to before 007024b4; first full-entry TypeScript gap 00702222 -> 00713e90 (clear); 0071614b -> 005b58e0 (bit-04 set). These TypeScript paths are not joined.
 Separate original lifecycle fixtures: 160 lookup returns, 80 placement frontiers, 80 nonnull status frontiers, 80 null diagnostics and 8 constructor OS frontiers; no enclosing live game caller.
 Separate original slot fixtures: 80 initializer returns, 80 lookup returns, 80 placement frontiers and 80 nonnull status frontiers; first placement gap 006eaf8f.
+Separate original fixture producers: 80 interior club-pointer producers and 80 interior caller bindings, followed by separate original entries ending before 006eafa0; no enclosing live game caller.
 
 ## Evidence state
 
 - structural: partial caller, resolver and direct dependency map.
 - local static: partial resolver; bounded local contracts for selected helpers.
-- typescript: 00702050..pre-00702193 clear-path or pre-0071614b bit-04 guarded original-entry continuation and separate 007022fd..pre-007024b4 semantic segment; no joined TypeScript path.
+- typescript: 00702050..pre-00702222 clear-path or pre-0071614b bit-04 guarded original-entry continuation and separate 007022fd..pre-007024b4 semantic segment; no joined TypeScript path.
 - original instruction: 160 guarded synthetic resolver entries through pre-0062ed99.
 - connected execution: same original machine and RNG through participant-effect diagnostic boundary; effect does not return.
 - original game lifecycle: unobserved.
@@ -62,10 +72,10 @@ Separate original slot fixtures: 80 initializer returns, 80 lookup returns, 80 p
 
 | Dependency | First site | Required evidence | Assignment |
 | --- | --- | --- | --- |
-| typescript_prefix | 00702193 | admit 00945640 with original-produced x87 input, then continue caller toward the supplied 007022fd checkpoint | R33-A assigned |
-| early_guard | 0071614b | admit 005b58e0 tactical lookup on bit-04-set path | R33-A separate guard scope |
+| typescript_prefix | 00702222 | admit 00713e90 and following caller effects with shared state toward the supplied 007022fd checkpoint | R34-A proposed |
+| early_guard | 0071614b | admit 005b58e0 tactical lookup on bit-04-set path after 00ae23bc provenance and valid row lifetime | R34-A separate guard scope |
 | diagnostic_path | 0062ed99 | admit original 00944cff path split and its transitive string/diagnostic effects | unassigned |
-| normal_participant_state | 006eaf8f | prove match/context+0x4792 fixture pointer and fixture/owner+0x1c/+0x20 club state from enclosing original producers, then finish placement and initialize lookup object before resolver entry | R33-B assigned |
+| normal_participant_state | 006eafa0 | initialize 00ae1050 contract receiver and execute 004cf5f0 with original-produced staff/home club, then finish placement and lookup-object lifecycle before resolver entry | R34-B proposed |
 | event_stream | 0070387e | establish 007002f0/006d6f70 suppression, ordered draws and writes | unassigned |
 | other_slots | 00703e24 | prove distance-branch reachability or admit 007103e0 transitive effects | unassigned |
 | gate_context | 00703ff2 | establish 006ce310/004b0850 output and candidate state | unassigned |
