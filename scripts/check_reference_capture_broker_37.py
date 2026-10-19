@@ -65,6 +65,43 @@ def check_output_confinement():
                           "session was readable through inherited ACL before token write")
                     stream.write('{"token":"test"}\n')
             session.unlink()
+            failed_session = results / "failed-session.json"
+            try:
+                broker.private_session(failed_session, {"token": object()})
+            except TypeError:
+                pass
+            else:
+                raise RuntimeError("invalid session payload was accepted")
+            check(not failed_session.exists(), "failed session initialization left a partial file")
+            actual_fdopen = broker.os.fdopen
+            class FailedFlush:
+                def __init__(self, wrapped):
+                    self.wrapped = wrapped
+                def __enter__(self):
+                    return self
+                def __exit__(self, *arguments):
+                    return self.wrapped.__exit__(*arguments)
+                def write(self, value):
+                    return self.wrapped.write(value)
+                def fileno(self):
+                    return self.wrapped.fileno()
+                def flush(self):
+                    raise OSError("injected buffered-write failure")
+            broker.os.fdopen = lambda *arguments, **keywords: FailedFlush(
+                actual_fdopen(*arguments, **keywords))
+            buffered_session = results / "failed-buffered-session.json"
+            try:
+                try:
+                    with broker.secure_new_result(buffered_session, delete_on_failure=True) as stream:
+                        stream.write('{"token":"test"}\n')
+                except OSError as error:
+                    check("injected buffered-write failure" in str(error),
+                          "wrong buffered-write rejection")
+                else:
+                    raise RuntimeError("buffered-write failure was accepted")
+            finally:
+                broker.os.fdopen = actual_fdopen
+            check(not buffered_session.exists(), "buffered-write failure left a session file")
             path.unlink()
             results.rmdir()
             junction = subprocess.run(["cmd", "/c", "mklink", "/J", str(results), str(outside)],
@@ -138,7 +175,7 @@ def main():
                 try:
                     status = json.loads(session.read_text(encoding="utf-8"))
                     break
-                except json.JSONDecodeError:
+                except (json.JSONDecodeError, OSError):
                     pass
             if child.poll() is not None:
                 raise RuntimeError("broker test exited before ready: " +

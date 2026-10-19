@@ -58,6 +58,7 @@ FILE_ATTRIBUTE_REPARSE_POINT = 0x400
 FILE_FLAG_BACKUP_SEMANTICS = 0x02000000
 FILE_FLAG_OPEN_REPARSE_POINT = 0x00200000
 GENERIC_WRITE = 0x40000000
+DELETE = 0x00010000
 INVALID_HANDLE = ctypes.c_void_p(-1).value
 
 
@@ -68,6 +69,10 @@ class FileAttributeTagInfo(ctypes.Structure):
 class SecurityAttributes(ctypes.Structure):
     _fields_ = [("nLength", wintypes.DWORD), ("lpSecurityDescriptor", ctypes.c_void_p),
                 ("bInheritHandle", wintypes.BOOL)]
+
+
+class FileDispositionInfo(ctypes.Structure):
+    _fields_ = [("DeleteFile", wintypes.BOOL)]
 
 
 @contextlib.contextmanager
@@ -107,6 +112,9 @@ def file_api():
     api.GetFinalPathNameByHandleW.argtypes = [wintypes.HANDLE, wintypes.LPWSTR,
                                                wintypes.DWORD, wintypes.DWORD]
     api.GetFinalPathNameByHandleW.restype = wintypes.DWORD
+    api.SetFileInformationByHandle.argtypes = [wintypes.HANDLE, ctypes.c_int,
+                                               ctypes.c_void_p, wintypes.DWORD]
+    api.SetFileInformationByHandle.restype = wintypes.BOOL
     return api
 
 
@@ -118,6 +126,13 @@ def final_path(api, handle) -> Path:
     need(name.startswith("\\\\?\\") and not name.startswith("\\\\?\\UNC\\"),
          "unexpected result handle path")
     return Path(name[4:])
+
+
+def mark_delete(api, handle) -> None:
+    disposition = FileDispositionInfo(True)
+    need(api.SetFileInformationByHandle(handle, 4, ctypes.byref(disposition),
+                                        ctypes.sizeof(disposition)),
+         "cannot remove failed private output")
 
 
 @contextlib.contextmanager
@@ -149,14 +164,15 @@ def guarded_result_directories():
 
 
 @contextlib.contextmanager
-def secure_new_result(path: Path, security: SecurityAttributes | None = None):
+def secure_new_result(path: Path, security: SecurityAttributes | None = None,
+                      delete_on_failure: bool = False):
     """Create and write through one handle while result directories are locked."""
     need(path.parent == RESULTS and path.suffix == ".json",
          "private result must be a direct JSON child of results")
     need(path.name.isascii() and all(ch.isalnum() or ch in "-_." for ch in path.name)
          and ".." not in path.name, "invalid private result filename")
     with guarded_result_directories() as api:
-        handle = api.CreateFileW(str(path), GENERIC_WRITE,
+        handle = api.CreateFileW(str(path), GENERIC_WRITE | DELETE,
                                  FILE_SHARE_READ | FILE_SHARE_WRITE,
                                  ctypes.byref(security) if security is not None else None, CREATE_NEW,
                                  FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OPEN_REPARSE_POINT, None)
@@ -166,10 +182,19 @@ def secure_new_result(path: Path, security: SecurityAttributes | None = None):
                  os.path.normcase(str(path)), "private result escaped ignored results")
             fd = msvcrt.open_osfhandle(handle, os.O_WRONLY)
         except BaseException:
-            api.CloseHandle(handle)
+            try:
+                mark_delete(api, handle)
+            finally:
+                api.CloseHandle(handle)
             raise
         with os.fdopen(fd, "w", encoding="utf-8") as stream:
-            yield stream
+            try:
+                yield stream
+                stream.flush()  # Catch buffered write failures while deletion can use this handle.
+            except BaseException:
+                if delete_on_failure:
+                    mark_delete(api, msvcrt.get_osfhandle(stream.fileno()))
+                raise
 
 
 def read_line(sock: socket.socket, timeout: int = 10) -> dict:
@@ -229,7 +254,7 @@ def private_session(path: Path, value: dict) -> None:
                               check=True, capture_output=True, text=True)
     sid = next(csv.reader(identity.stdout.splitlines()))[1]
     with session_security(sid) as security:
-        with secure_new_result(path, security=security) as stream:
+        with secure_new_result(path, security=security, delete_on_failure=True) as stream:
             acl = subprocess.run([str(SYSTEM32 / "icacls.exe"), str(path)],
                                   capture_output=True, text=True)
             need(acl.returncode == 0 and "(I)" not in acl.stdout and
