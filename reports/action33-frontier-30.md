@@ -37,13 +37,15 @@ flowchart LR
 
 Original resolver prefix: 160 cases and 158784 original steps, ending before 007024b4.
 Original effect continuation: 160 cases and 27390 additional steps, ending before 0062ed99.
-TypeScript segment: 160 original-produced checkpoints from 007022fd to before 007024b4; first full-entry TypeScript gap 00702088 -> 006f09b0.
+TypeScript entry prefix: 160 original-entry cases from 00702050 to before 0070210b, plus 590 standalone grid-helper cases.
+Separate TypeScript interior segment: 160 original-produced checkpoints from 007022fd to before 007024b4; first full-entry TypeScript gap 0070210b -> 006d59b0. These TypeScript paths are not joined.
+Separate original lifecycle fixtures: 160 lookup returns, 80 placement frontiers, 80 nonnull status frontiers, 80 null diagnostics and 8 constructor OS frontiers; no enclosing live game caller.
 
 ## Evidence state
 
 - structural: partial caller, resolver and direct dependency map.
 - local static: partial resolver; bounded local contracts for selected helpers.
-- typescript: 007022fd..007024b4 semantic segment only.
+- typescript: 00702050..pre-0070210b original-entry prefix and separate 007022fd..pre-007024b4 semantic segment; no joined TypeScript path.
 - original instruction: 160 guarded synthetic resolver entries through pre-0062ed99.
 - connected execution: same original machine and RNG through participant-effect diagnostic boundary; effect does not return.
 - original game lifecycle: unobserved.
@@ -53,10 +55,10 @@ TypeScript segment: 160 original-produced checkpoints from 007022fd to before 00
 
 | Dependency | First site | Required evidence | Assignment |
 | --- | --- | --- | --- |
-| typescript_prefix | 00702088 | compose original distance-grid float32 helper, then opponent scan and caller calculations before the supplied 007022fd checkpoint | R31-A in progress |
-| early_guard | 00716125 | admit tactical bit-04-set opponent path through 007160f0 and its new callee | unassigned |
+| typescript_prefix | 0070210b | compose original opposing roster scan and following caller calculations before the supplied 007022fd checkpoint | R32-A assigned |
+| early_guard | 00716125 | admit tactical bit-04-set opponent path through 007160f0 and its new callee | R32-A bounded guard |
 | diagnostic_path | 0062ed99 | admit original 00944cff path split and its transitive string/diagnostic effects | unassigned |
-| normal_participant_state | 006cfeb8 | produce staff/attribute pointer and initialized lookup object through original setup before resolver entry; then admit 006cfe10 return and 006d0980 | R31-B in progress |
+| normal_participant_state | 006eaf77 | produce slot side byte and staff/attribute lifetime through original placement; initialize lookup object before resolver entry, then admit 006cfe10 return and 006d0980 | R32-B assigned |
 | event_stream | 0070387e | establish 007002f0/006d6f70 suppression, ordered draws and writes | unassigned |
 | other_slots | 00703e24 | prove distance-branch reachability or admit 007103e0 transitive effects | unassigned |
 | gate_context | 00703ff2 | establish 006ce310/004b0850 output and candidate state | unassigned |
