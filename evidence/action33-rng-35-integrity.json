@@ -1,0 +1,33 @@
+{
+  "unit": "R35-A",
+  "status": "passed",
+  "oracle_sha256": "edb057f22e3b5eec75ca0583a03f0b1c291e2ec96403cbf7efb61bf8d31f3a32",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "coverage": {
+    "cases": 232,
+    "instructions": 101443,
+    "events": 45139,
+    "rng_calls": 232,
+    "suffix_states": 5104,
+    "r30c_projections": 160
+  },
+  "normal_optimized": "byte-identical original instruction regeneration",
+  "negative_checks": {
+    "changed_PE": "specimen SHA-256/size mismatch",
+    "native_rng_operand": "native operand mismatch 0090cfc2",
+    "changed_native_rng": "native file digest mismatch 0090cfc0.asm",
+    "changed_synthetic_table": "synthetic random table mismatch",
+    "nonzero_actual_bound": "unsupported boundary 0090cfcf",
+    "contact_branch": "unsupported boundary 0070226b",
+    "mutated_rng_state": "zero-bound RNG state changed",
+    "appended_json_whitespace": "noncanonical public payload",
+    "alternate_gzip_envelope": "noncanonical gzip envelope",
+    "oversized_expansion": "oversized public payload",
+    "changed_suffix_register": "oracle digest mismatch",
+    "private_raw_fragment": "private original fragment",
+    "private_hex_fragment": "private original fragment",
+    "compressed_private_fragment": "private original fragment"
+  },
+  "privacy": "bounded canonical gzip, fixed synthetic schedule and raw/hex/expanded original-code scans",
+  "scope": "clear original-entry R(0) and caller through pre-0070230c; R30-C input projection only; no full machine-state join or outcome"
+}

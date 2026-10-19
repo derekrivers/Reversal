@@ -345,6 +345,14 @@
       "module": "reconstruction/action33-adjustment-34.ts",
       "evidence": "evidence/action33-adjustment-34-oracle.bin",
       "boundary": "232 original-entry clear synthetic cases; 96,339 original steps, 41,891 ordered events and zero RNG; bit-04 path, RNG machine-state behavior, 007022fd interior join, resolver return and shot outcome excluded"
+    },
+    {
+      "function": "00702050",
+      "scope": "bounded-original-entry-zero-bound-rng-continuation",
+      "behavior": "Continue the clear action33 resolver through the actual zero-bound 0090cfc0 call and caller effects on shared synthetic machine and RNG state, ending before the 0070230c keeper-selector call",
+      "module": "reconstruction/action33-rng-35.ts",
+      "evidence": "evidence/action33-rng-35-oracle.bin",
+      "boundary": "232 original-entry clear synthetic cases; 101,443 original steps, 45,139 ordered events, 232 zero-bound RNG calls and 5,104 new full represented snapshots; 160 R30-C input projections match but full machine-state join, selector call, bit-04 path, resolver return and shot outcome remain excluded"
     }
   ]
 }
