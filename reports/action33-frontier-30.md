@@ -23,7 +23,7 @@ flowchart LR
   f_00702050["00702050 shot and outcome resolver"]
   f_00713e90["00713e90 action33 early adjustment"]
   f_007160f0["007160f0 opponent tactical/activity check"]
-  f_0084be20["0084be20 fixture and club-pointer producer caller"]
+  f_0084be20["0084be20 fixture selector and club-pointer producer caller"]
   f_0090cfc0["0090cfc0 bounded random draw"]
   f_00944cff["00944cff diagnostic path splitter"]
   f_00945640["00945640 x87 runtime conversion dependency"]
@@ -36,7 +36,7 @@ flowchart LR
   f_007160f0 -->|0071614b static/unreached| f_005b58e0
   f_0084be20 -->|0084c3e8 observed synthetic| f_006b7f20
   f_006e0d00 -->|006e0dde observed synthetic| f_006eaea0
-  f_006eaea0 -->|006eafa0 static/unreached| f_004cf5f0
+  f_006eaea0 -->|006eafa0 observed synthetic| f_004cf5f0
   f_00702050 -->|00702222 observed synthetic| f_00713e90
   f_00702050 -->|00702241 observed synthetic| f_0090cfc0
   f_00702050 -->|0070230c observed synthetic| f_006ce110
@@ -54,16 +54,21 @@ Original effect continuation: 160 cases and 27390 additional steps, ending befor
 TypeScript entry prefix: 160 original-entry cases from 00702050 to before 0070210b, plus 590 standalone grid-helper cases.
 TypeScript guarded continuation: 220 original-entry cases, 204 clear and 16 bit-04-set, ending before 00702193 or 0071614b respectively.
 TypeScript conversion continuation: 280 cases (232 clear, 16 bit-04-set and 32 separate rounding probes), with clear path ending before 00702222; hardware x87 exception/status equivalence is excluded.
-Separate TypeScript interior segment: 160 original-produced checkpoints from 007022fd to before 007024b4; first full-entry TypeScript gap 00702222 -> 00713e90 (clear); 0071614b -> 005b58e0 (bit-04 set). These TypeScript paths are not joined.
+TypeScript adjustment continuation: 232 original-entry clear cases and 96339 original steps through the 00713e90 short return and caller, ending before 00702241; no RNG call or interior TypeScript join.
+TypeScript zero-bound RNG continuation: 232 original-entry clear cases, 101443 original steps and 232 actual zero-bound calls, ending before 0070230c; 160 R30-C input projections match without a full machine-state join.
+Separate TypeScript interior segment: 160 original-produced checkpoints from 007022fd to before 007024b4; first full-entry TypeScript gap 0070230c -> 006ce110 (clear); 0071614b -> 005b58e0 (bit-04 set). These TypeScript paths are not joined.
 Separate original lifecycle fixtures: 160 lookup returns, 80 placement frontiers, 80 nonnull status frontiers, 80 null diagnostics and 8 constructor OS frontiers; no enclosing live game caller.
 Separate original slot fixtures: 80 initializer returns, 80 lookup returns, 80 placement frontiers and 80 nonnull status frontiers; first placement gap 006eaf8f.
 Separate original fixture producers: 80 interior club-pointer producers and 80 interior caller bindings, followed by separate original entries ending before 006eafa0; no enclosing live game caller.
+Separate original contract lookup: 80 placement call prefixes enter 004cf5f0 and stop before 004cf62b; 8 separate constructor entries stop before 004c7073. No auxiliary row read, lookup return or live setup.
+Separate auxiliary allocation requests: 18 original interior windows and 99 steps stop before allocator calls 008284ad or 0082af61; no allocated or populated table.
+Separate selector entries: 8 original entries and 8520 steps produce 320 date initializers and stop before 0094bf49 imported HeapSize; no fixture selection or connection to later interior windows.
 
 ## Evidence state
 
 - structural: partial caller, resolver and direct dependency map.
 - local static: partial resolver; bounded local contracts for selected helpers.
-- typescript: 00702050..pre-00702222 clear-path or pre-0071614b bit-04 guarded original-entry continuation and separate 007022fd..pre-007024b4 semantic segment; no joined TypeScript path.
+- typescript: 00702050..pre-0070230c clear-path or pre-0071614b bit-04 guarded original-entry continuation and separate 007022fd..pre-007024b4 semantic segment; only 160 R30-C input projections match, no full machine-state join.
 - original instruction: 160 guarded synthetic resolver entries through pre-0062ed99.
 - connected execution: same original machine and RNG through participant-effect diagnostic boundary; effect does not return.
 - original game lifecycle: unobserved.
@@ -73,10 +78,11 @@ Separate original fixture producers: 80 interior club-pointer producers and 80 i
 
 | Dependency | First site | Required evidence | Assignment |
 | --- | --- | --- | --- |
-| typescript_prefix | 00702222 | admit 00713e90 and following caller effects with shared state toward the supplied 007022fd checkpoint | R34-A proposed |
-| early_guard | 0071614b | admit 005b58e0 tactical lookup on bit-04-set path after 00ae23bc provenance and valid row lifetime | R34-A separate guard scope |
+| typescript_prefix | 0070230c | admit 006ce110 selector call with full shared machine, memory and RNG effects; establish full-state join to separate R30-C segment before reusing it | R36-A bounded selector continuation; full R30-C join still open |
+| early_guard | 0071614b | admit 005b58e0 tactical lookup on bit-04-set path after 00ae23bc provenance and valid row lifetime | unassigned |
 | diagnostic_path | 0062ed99 | admit original 00944cff path split and its transitive string/diagnostic effects | unassigned |
-| normal_participant_state | 006eafa0 | initialize 00ae1050 contract receiver and execute 004cf5f0 with original-produced staff/home club, then finish placement and lookup-object lifecycle before resolver entry | R34-B proposed |
+| normal_participant_state | 004cf62b | complete auxiliary allocation and row population plus 00ae1050 manager setup through original calls, then execute valid record read and contract lookup/placement | R36-B bounded row/index provenance; allocation and complete placement still open |
+| fixture_selector_lifecycle | 0094bf49 | establish CRT heap/exit-list and initialized selector rows, then execute original fixture selection from 0084be20 entry to the separate R33-B interior window | R36-C bounded receiver construction; CRT and fixture selection still open |
 | event_stream | 0070387e | establish 007002f0/006d6f70 suppression, ordered draws and writes | unassigned |
 | other_slots | 00703e24 | prove distance-branch reachability or admit 007103e0 transitive effects | unassigned |
 | gate_context | 00703ff2 | establish 006ce310/004b0850 output and candidate state | unassigned |
