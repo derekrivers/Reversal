@@ -1,0 +1,29 @@
+{
+  "unit": "R34-A",
+  "status": "passed",
+  "oracle_sha256": "b18307489d5adeaa2026ad17f214404b5ac43a400bcecfd0fab6665713511e30",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "coverage": {
+    "cases": 232,
+    "instructions": 96339,
+    "events": 41891,
+    "rng_calls": 0
+  },
+  "normal_optimized": "byte-identical original instruction regeneration",
+  "negative_checks": {
+    "changed_PE": "specimen SHA-256/size mismatch",
+    "native_helper_operand": "native operand mismatch 00713ea4",
+    "changed_native_helper": "native helper mismatch",
+    "other_action": "unsupported adjustment action route",
+    "corrupt_actual_output_word": "helper contract mismatch",
+    "appended_json_whitespace": "noncanonical public payload",
+    "alternate_gzip_envelope": "noncanonical gzip envelope",
+    "oversized_expansion": "oversized public payload",
+    "changed_oracle_result": "oracle digest mismatch",
+    "private_raw_fragment": "private original fragment",
+    "private_hex_fragment": "private original fragment",
+    "compressed_private_fragment": "private original fragment"
+  },
+  "privacy": "bounded gzip expansion, fixed synthetic schedule and original code fragment scans",
+  "scope": "clear original-entry action33 adjustment and caller through pre-00702241 RNG; bit04, RNG body and 007022fd join remain separate"
+}
