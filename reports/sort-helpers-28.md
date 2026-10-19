@@ -39,4 +39,4 @@ node reconstruction/check-sort-swap-28.ts
 npm run check
 ```
 
-Normal and `python -O` extractor outputs match byte-for-byte. Normal and `-O` oracle outputs also match byte-for-byte. The negative script rejects three mutated input classes in both modes; the TypeScript checker rejects tampered result/effect controls and malformed domains. Node 24 repository checks do not reopen native Ghidra, nor do these cases prove a complete sort.
+Normal and `python -O` extractor outputs match byte-for-byte. Normal and `-O` oracle outputs also match byte-for-byte. The negative script rejects three mutated input classes in both modes; the TypeScript checker rejects tampered result/effect controls and malformed domains. Node 24 `npm run check` runs the retained swap oracle and does not reopen native Ghidra. These cases do not prove a complete sort.
