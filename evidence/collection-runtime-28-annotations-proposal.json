@@ -1,0 +1,24 @@
+{
+  "work_unit": "R28-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "d2836fd1b28d194dbfda32454106f9af23495809f09a408ed1ee072e6c4b7de1",
+  "export_manifest_sha256": "058514c602952b66abeade64ba9a28bbab3873c16503af4ca0f834fb2a6d2ddc",
+  "annotation_preflight_sha256": "9f9e52088fc32356aebecb6fc39ba78fea96e14f359383afb01362287409fbb2",
+  "proposal_type": "name only; coordinator review/application required",
+  "exact_old_source": "read-only checkpoint-27 annotation preflight pinned above",
+  "annotations": [
+    {
+      "address": "0068cfc0",
+      "old_name": "FUN_0068cfc0",
+      "new_name": "cm0102_construct_collection_node_copy_candidate",
+      "body_addresses": 66,
+      "confidence": "high for complete local ABI and effect order; allocator, failure and ownership paths unresolved",
+      "evidence": ["0068cfc0..0068cfff complete PE/native body", "0068d0d0 allocates 0xe-byte receiver then calls it", "receiver +0/+4/+6/+0xa field writes"]
+    }
+  ],
+  "preserve_existing": [
+    {"address": "00944cf1", "name": "operator_new", "function_comment_sha256": "aa1dbd012687974b618276ce4a3c81e94797a98d65c33e3009c1ca5af47aa4ae"},
+    {"address": "00944e58", "name": "__nh_malloc", "function_comment_sha256": "71fa27df189212a459164fc5aa234432af2733ed2d1634ee704aa17208606296"}
+  ],
+  "function_comments": "none proposed; preserve all old comments, prototypes, structures and bodies"
+}

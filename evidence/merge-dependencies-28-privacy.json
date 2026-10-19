@@ -2,6 +2,14 @@
   "work_unit": "R28-B",
   "status": "passed",
   "synthetic_cases": 256,
-  "retained_memory": "two SHA-256 digests per case; no memory pages or PE bytes",
-  "oracle_compressed_bytes": 19028
+  "retained_memory": "two verified SHA-256 digests per case; no memory pages or PE bytes",
+  "oracle_compressed_bytes": 19028,
+  "negative_mutations": [
+    "raw page in initial register rejected",
+    "raw page in final register rejected",
+    "wrong synthetic offset rejected",
+    "raw page in ordered event rejected",
+    "raw page in memory digest rejected",
+    "wrong 64-hex memory digest rejected"
+  ]
 }
