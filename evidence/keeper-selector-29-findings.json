@@ -1,0 +1,24 @@
+{
+  "unit": "R29-A",
+  "address_kind": "virtual unless file_offset specified",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "entry_va": "006ce110",
+  "file_offset": "002ce110",
+  "body_bytes": 500,
+  "body_sha256": "660d12df39b311406471ada13e890b66a43cf89a66285a69a5b605d03fa81b4d",
+  "local_contract": {
+    "abi": "ECX match pointer, low byte of one four-byte stack argument as selector, EAX pointer or zero, RET4; EBX/EBP/ESI/EDI preserved",
+    "side_order": [0, 1],
+    "cache_offsets": [62878, 62882],
+    "slot_base_offsets": [18326, 27246],
+    "slots_per_side": 20,
+    "slot_stride": 446,
+    "direct_writes": ["match+f59e", "match+f5a2", "selected reserve slot+1a", "fallback active slot+19"],
+    "call_count": 0,
+    "return_selector": "low8(argument)==1 selects match+f5a2; all other byte values select match+f59e"
+  },
+  "static_coverage": {"matched_instructions": 155, "instruction_starts": 155, "local_cfg_edges": 190},
+  "original_entry_validation": {"cases": 315, "instruction_steps": 154779, "covered_instruction_starts": 155, "covered_local_cfg_edges": 190, "ordered_match_and_table_memory_effects": 37269, "full_match_table_and_stack_memory": "SHA-256 per mapped region and case"},
+  "semantic_registry_proposal": {"address": "006ce110", "old_state": "boundary-mapped", "new_state": "contract-supported", "old_source": "R09-B", "new_source": "R29-A", "new_entry": false},
+  "limits": ["Synthetic mapped states do not establish live-match keeper validity or cache provenance.", "Cached pointer ownership and validity beyond readable +19 are unchecked by this body.", "Signed slot+27 can index a tactical pointer outside the two nominal side entries; only mapped synthetic indices were executed."]
+}

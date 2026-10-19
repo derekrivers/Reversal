@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "unit": "R29-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "optimized_integrity": "explicit gates; no assert",
+  "probes": [
+    {
+      "probe": "PE byte",
+      "rejected": true,
+      "gate": "pinned specimen mismatch"
+    },
+    {
+      "probe": "unsealed native operand",
+      "rejected": true,
+      "gate": "native export mismatch"
+    },
+    {
+      "probe": "manifest",
+      "rejected": true,
+      "gate": "manifest/preflight SHA-256 mismatch"
+    },
+    {
+      "probe": "preflight",
+      "rejected": true,
+      "gate": "manifest/preflight SHA-256 mismatch"
+    },
+    {
+      "probe": "getter pointer operand",
+      "rejected": true,
+      "gate": "PE/native opcode or operand mismatch"
+    },
+    {
+      "probe": "remove-node return cleanup",
+      "rejected": true,
+      "gate": "PE/native opcode or operand mismatch"
+    },
+    {
+      "probe": "clear release target",
+      "rejected": true,
+      "gate": "PE/native opcode or operand mismatch"
+    },
+    {
+      "probe": "copy append target",
+      "rejected": true,
+      "gate": "PE/native opcode or operand mismatch"
+    },
+    {
+      "probe": "copy pointer operand",
+      "rejected": true,
+      "gate": "PE/native opcode or operand mismatch"
+    },
+    {
+      "probe": "exact-old name",
+      "rejected": true,
+      "gate": "exact-old native name/body mismatch"
+    }
+  ]
+}

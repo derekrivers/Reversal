@@ -1,0 +1,13 @@
+{
+  "work_unit": "R29-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "preflight_sha256": "cee6d3c36808bd69afb14796fa22314a8900909e3b59e08544e5bdfe58063a0c",
+  "proposal_type": "name only; coordinator review/application required",
+  "annotations": [
+    {"address":"0068d080","old_name":"FUN_0068d080","new_name":"cm0102_clear_collection_nodes_candidate","body_addresses":77,"confidence":"high for local loop, resets and call order; release effects external"},
+    {"address":"0068d280","old_name":"FUN_0068d280","new_name":"cm0102_remove_collection_node_candidate","body_addresses":96,"confidence":"high for local link/count/current updates; release effects external"},
+    {"address":"0068d2e0","old_name":"FUN_0068d2e0","new_name":"cm0102_read_current_collection_payload_candidate","body_addresses":13,"confidence":"high for local body and bounded original-entry behavior"},
+    {"address":"0068d2f0","old_name":"FUN_0068d2f0","new_name":"cm0102_clear_and_append_collection_prefix_candidate","body_addresses":128,"confidence":"high for local order and stop condition; append/allocator/release effects external"}
+  ],
+  "function_comments": "none proposed; preserve all old comments, prototypes, structures and bodies"
+}

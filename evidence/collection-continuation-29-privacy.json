@@ -1,0 +1,16 @@
+{
+  "unit": "R29-C",
+  "status": "passed",
+  "synthetic_cases": 1024,
+  "retained_memory": "two full-page SHA-256 digests per case; no page bytes or PE instructions",
+  "oracle_bytes": 683956,
+  "negative_mutations": [
+    "nested raw page rejected",
+    "text register rejected",
+    "wrong offset rejected",
+    "hidden event rejected",
+    "wrong memory digest rejected",
+    "raw domain rejected",
+    "raw coverage rejected"
+  ]
+}

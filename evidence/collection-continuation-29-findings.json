@@ -1,0 +1,10 @@
+{
+  "work_unit": "R29-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "address_kind": "virtual unless explicitly labelled file offset",
+  "complete_local_static_bodies": ["0068d080", "0068d280", "0068d2e0", "0068d2f0"],
+  "original_entry_validated": {"0068d2e0":{"cases":1024,"instruction_steps":5120,"domain":"synthetic mapped memory; null, self-alias and separate cursor; normal returns"}},
+  "context_only": ["0068d010", "0068d0d0", "00944c94"],
+  "unresolved_transitive_boundaries": ["0068d010 payload cleanup", "00944c94 node release", "0068d0d0 append-copy including allocator and constructor"],
+  "connected_collection_lifecycle_validated": false
+}
