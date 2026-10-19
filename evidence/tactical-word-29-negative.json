@@ -1,0 +1,18 @@
+{
+  "work_unit": "R29-B",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "status": "passed",
+  "count": 10,
+  "checks": [
+    "normal Python exact regeneration",
+    "optimized Python exact regeneration",
+    "changed PE rejected",
+    "changed native export rejected",
+    "changed manifest rejected",
+    "changed preflight rejected",
+    "resealed wrong native operand rejected by instruction comparator",
+    "changed oracle rejected",
+    "--mutate-result rejected",
+    "--mutate-effect rejected"
+  ]
+}

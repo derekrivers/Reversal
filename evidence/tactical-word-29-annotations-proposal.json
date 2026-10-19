@@ -1,0 +1,26 @@
+{
+  "work_unit": "R29-B",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "export_manifest_sha256": "ced03a8f3d9da3cc61fcb9d63e0be55cb1cc39776615c038e0320836a526c0da",
+  "preflight_sha256": "cee6d3c36808bd69afb14796fa22314a8900909e3b59e08544e5bdfe58063a0c",
+  "proposal_type": "one exact-old name/comment/return-width proposal; coordinator review/application required",
+  "annotations": [
+    {
+      "address": "006c38f0",
+      "old_name": "FUN_006c38f0",
+      "new_name": "cm0102_lookup_tactical_offset8ec4_word",
+      "old_comment": null,
+      "new_comment": "CM0102 investigation29: Reads signed8 slot+19. Only 0..10 indexes a 16-bit word through the DWORD pointer at match+8ec4+4*signed8(slot+27). Invalid index returns AX=0 without reading side/table; upper EAX retains incoming bits 16..31. Valid path zeroes upper EAX before loading AX. ECX=match, one stack slot argument, RET4. Side and table pointers must be mapped; no local side-range check. Validated for 305 synthetic original-entry cases; connected match callers remain static.",
+      "old_return_width_bytes": null,
+      "new_return_width_bytes": 2,
+      "body_addresses": 42,
+      "confidence": "high for complete local contract and bounded original-entry behavior; caller validity unresolved"
+    }
+  ],
+  "preserve_existing": {
+    "address": "006c38c0",
+    "name": "cm0102_lookup_tactical_position_word",
+    "comment": "exact-old native preflight preserved",
+    "return_width_bytes": 2
+  }
+}
