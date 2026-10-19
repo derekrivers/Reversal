@@ -17,13 +17,16 @@ flowchart LR
   f_00700bd0["00700bd0 quality and event-code producer"]
   f_00702050["00702050 shot and outcome resolver"]
   f_00713e90["00713e90 action33 early adjustment"]
+  f_0090cfc0["0090cfc0 bounded random draw"]
   f_00944cff["00944cff diagnostic path splitter"]
   f_006be710 -->|006beaeb static/unreached| f_00700bd0
   f_006be710 -->|006bedb0 static/unreached| f_00702050
   f_00702050 -->|00702088 observed synthetic| f_006f09b0
   f_00702050 -->|0070210b observed synthetic| f_006d59b0
   f_00702050 -->|00702222 observed synthetic| f_00713e90
+  f_00702050 -->|00702241 observed synthetic| f_0090cfc0
   f_00702050 -->|0070230c observed synthetic| f_006ce110
+  f_00702050 -->|007023e3 observed synthetic| f_0090cfc0
   f_00702050 -->|00702416 observed synthetic| f_00700420
   f_00702050 -->|007024b4 observed synthetic| f_006cfe10
   f_006cfe10 -->|006cfec2 observed synthetic| f_0062ed70

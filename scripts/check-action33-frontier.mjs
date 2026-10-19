@@ -4,7 +4,9 @@
 import {strict as assert} from 'node:assert';
 import {readFileSync, existsSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
+import {gunzipSync} from 'node:zlib';
 
 const read = path => JSON.parse(readFileSync(new URL(`../${path}`, import.meta.url), 'utf8'));
 const present = path => existsSync(new URL(`../${path}`, import.meta.url));
@@ -56,6 +58,28 @@ const classified = [...observed, ...staticOrUnreached];
 unique(classified.map(site => ({site})), 'site');
 assert.deepEqual(new Set(classified), new Set(map.ordered_constraints.map(row => row.site)));
 assert.ok(staticOrUnreached.includes('0062ed99'), 'diagnostic call must remain unreached');
+const pinnedOracle = (path, sha256) => {
+  const bytes = readFileSync(new URL(`../${path}`, import.meta.url));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), sha256, `changed ${path}`);
+  return JSON.parse(gunzipSync(bytes));
+};
+const prefixOracle = pinnedOracle('evidence/action33-prefix-30-oracle.bin', '08cd8c3725f98499b3fdaef8e42788c1f8ce80308616f881589042cc4d21ff4f');
+const effectOracle = pinnedOracle('evidence/action33-effect-30-oracle.bin', 'ddf4a92864ef02dd7027d9311e5e615b7b0c75a2625eb9cb87dd6e915bc21472');
+const bySite = new Map(map.ordered_constraints.map(row => [row.site, row]));
+const reached = new Set();
+const callTargets = new Map();
+for (const trace of [...prefixOracle.cases, ...effectOracle.cases]) {
+  for (const call of trace.call_trace) {
+    if (!bySite.has(call.site)) continue;
+    reached.add(call.site);
+    if (callTargets.has(call.site)) assert.equal(callTargets.get(call.site), call.target, `varying target ${call.site}`);
+    callTargets.set(call.site, call.target);
+  }
+  for (const draw of trace.rng) if (bySite.has(draw.site)) reached.add(draw.site);
+}
+assert.deepEqual(new Set(observed), reached, 'observed sites must be reached in retained original traces');
+for (const [site, target] of callTargets) assert.equal(bySite.get(site).target, target, `wrong observed target ${site}`);
+for (const site of observed) if (!callTargets.has(site)) assert.equal(bySite.get(site).target, undefined, `draw cannot have a call target ${site}`);
 assert.ok(Array.isArray(map.state_requirements) && map.state_requirements.length > 0);
 unique(map.state_requirements, 'field');
 for (const row of map.state_requirements)
@@ -99,5 +123,5 @@ for (const row of map.frontier) {
   assert.ok(nonempty(row.requirement) && nonempty(row.next_assignment));
 }
 const rendered = execFileSync(process.execPath, [fileURLToPath(new URL('./render-action33-frontier.mjs', import.meta.url))], {encoding: 'utf8'});
-assert.equal(readFileSync(new URL('../reports/action33-frontier-30.md', import.meta.url), 'utf8'), rendered, 'stale generated frontier report');
+assert.equal(readFileSync(new URL('../reports/action33-frontier-30.md', import.meta.url), 'utf8').replace(/\r\n/g, '\n'), rendered, 'stale generated frontier report');
 process.stdout.write(`Action33 frontier: ${map.functions.length} functions, ${map.ordered_constraints.length} ordered constraints, ${map.frontier.length} unresolved dependencies; synthetic prefix only.\n`);
