@@ -2,11 +2,11 @@
 
 The native database is the ongoing working checkpoint. Keep `cm0102.gpr` beside the complete `cm0102.rep` directory. Open the existing `cm0102.exe` program in that project; importing the executable into a new project does not recover the annotations.
 
-The [current checkpoint](../checkpoints/2026-10-19-investigation-27/) records:
+The [current checkpoint](../checkpoints/2026-10-19-investigation-28/) records:
 
-- 156 named functions; 16 global labels.
+- 161 named functions; 16 global labels.
 - 9 recovered structures with 93 named fields under `/CM0102/Recovered`.
-- 233 original code samples and 76 code comments.
+- 238 original code samples and 76 code comments.
 - 10 canonical project files, each with SHA-256 and byte length.
 
 `checkpoints/latest.json` identifies the current dated checkpoint. Earlier dated metadata and separately saved archives remain historical. This checkpoint records the canonical files retained by Ghidra after saving the current project.
@@ -51,7 +51,9 @@ Use a **new isolated output directory**, the hash-pinned executable and Ghidra 1
 25. `CM0102AnnotateInvestigation26.java /new/investigation-26-annotations.json /path/investigation-26-exact-old-preflight.json /path/match-dependencies-26-annotations-proposal.json /path/league-comparator-26-annotations.json`
 26. `CM0102AnnotateInvestigation27.java /new/investigation-27-annotations.json /path/investigation-27-exact-old-preflight.json /path/iterator-helpers-27-annotations-proposal.json /path/league-sort-27-annotations-proposal.json`
 
-The investigation-27 script requires the preserved checkpoint-26 project and private exact-old preflight/proposal files with pinned hashes; it intentionally refuses an unrelated fresh import. Use the saved checkpoint-27 archive for direct recovery.
+27. `CM0102AnnotateInvestigation28.java /new/investigation-28-annotations.json /path/investigation-28-exact-old-preflight.json /path/sort-helpers-28-annotations-proposal.json /path/merge-dependencies-28-annotations-proposal.json /path/collection-runtime-28-annotations-proposal.json`
+
+The investigation-28 script requires the preserved checkpoint-27 project and private exact-old preflight/proposal files with pinned hashes; it intentionally refuses an unrelated fresh import. Use the saved checkpoint-28 archive for direct recovery.
 
 Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original project. Then reopen the rebuilt project read-only and execute:
 
@@ -60,7 +62,7 @@ Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original p
   -process cm0102.exe -noanalysis -readOnly \
   -scriptPath /absolute/path/to/Reversal/scripts \
   -postScript CM0102VerifyCheckpoint.java \
-  /absolute/path/to/Reversal/checkpoints/2026-10-19-investigation-27/expected-database.json \
+  /absolute/path/to/Reversal/checkpoints/2026-10-19-investigation-28/expected-database.json \
   /new/rebuilt-verification.json
 ```
 

@@ -1,0 +1,42 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 28,
+  "status": "saved; independently reopened read-only without reanalysis",
+  "scope": "Five reviewed working names only; six complete local static contracts and two bounded TypeScript entry domains. Existing allocator library names/comments preserved. No prototype, comment, body or data type applied.",
+  "annotations": [
+    [
+      "00945487",
+      "FUN_00945487",
+      "cm0102_select_tail_record_with_callback_candidate"
+    ],
+    [
+      "009454d5",
+      "FUN_009454d5",
+      "cm0102_swap_record_bytes_candidate"
+    ],
+    [
+      "0068d020",
+      "FUN_0068d020",
+      "cm0102_zero_14_byte_collection_header"
+    ],
+    [
+      "0068d0d0",
+      "FUN_0068d0d0",
+      "cm0102_append_copied_record_to_collection"
+    ],
+    [
+      "0068cfc0",
+      "FUN_0068cfc0",
+      "cm0102_construct_collection_node_copy_candidate"
+    ]
+  ],
+  "function_comments": [],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "sort-helpers-28-annotations-proposal.json",
+    "merge-dependencies-28-annotations-proposal.json",
+    "collection-runtime-28-annotations-proposal.json"
+  ]
+}
