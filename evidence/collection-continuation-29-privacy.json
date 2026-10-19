@@ -6,6 +6,7 @@
   "oracle_bytes": 683956,
   "negative_mutations": [
     "nested raw page rejected",
+    "text register rejected",
     "wrong offset rejected",
     "hidden event rejected",
     "wrong memory digest rejected"

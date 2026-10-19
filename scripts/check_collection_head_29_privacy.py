@@ -33,6 +33,10 @@ def validate(raw, oracle):
             raise ValueError("synthetic row/schema mismatch")
         if set(row["initial"]) != REGS or set(row["final"]) != REGS:
             raise ValueError("register schema mismatch")
+        for registers in (row["initial"],row["final"]):
+            if any(type(value) is not int or not 0 <= value <= 0xffffffff
+                   for value in registers.values()):
+                raise ValueError("register value is not a synthetic uint32")
         data = bytearray((i*29+seed*17+mode*11+3)&255 for i in range(4096))
         stack = bytearray((i*19+seed*13+5)&255 for i in range(4096))
         data[offset+10:offset+14] = cursor.to_bytes(4,"little")
@@ -40,6 +44,15 @@ def validate(raw, oracle):
             value = (seed*0x10203041+mode*0x80000001+offset)&0xffffffff
             data[cursor-0x200000:cursor-0x200000+4] = value.to_bytes(4,"little")
         stack[0x800:0x804] = (0x700000).to_bytes(4,"little")
+        initial = {"eax":(0xdeadbeef+seed*0x10101+offset)&0xffffffff,
+                   "ebx":0x87654321^seed,"ecx":receiver,"edx":0x12345678^offset,
+                   "esi":0x01020304^seed,"edi":0xfeedface^offset,
+                   "ebp":0xcafef00d^mode,"esp":0x400800,"eip":0x68d2e0}
+        final = dict(initial)
+        final.update(eax=int.from_bytes(data[cursor-0x200000:cursor-0x200000+4],"little")
+                     if cursor else 0,esp=0x400804,eip=0x700000)
+        if row["initial"] != initial or row["final"] != final:
+            raise ValueError("synthetic register state mismatch")
         expected_events = [["read",f"{receiver+10:08x}",4]]
         if cursor:
             expected_events.append(["read",f"{cursor:08x}",4])
@@ -63,6 +76,7 @@ def run(sites_path, oracle_path):
     mutations=[]
     for label, change in (
         ("nested raw page",lambda row: row["initial"].update(page="00"*4096)),
+        ("text register",lambda row: row["initial"].update(eax="private raw text")),
         ("wrong offset",lambda row: row["input"].update(offset=17)),
         ("hidden event",lambda row: row["events"].append(["page","00"*4096])),
         ("wrong memory digest",lambda row: row["memory_sha256"].__setitem__(0,"0"*64))):
