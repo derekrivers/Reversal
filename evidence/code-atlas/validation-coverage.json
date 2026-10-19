@@ -257,6 +257,22 @@
       "module": "reconstruction/strlen-runtime-27.ts",
       "evidence": "evidence/strlen-runtime-27-oracle.json.gz",
       "boundary": "576 original-entry synthetic cases, 58,526 x86 steps, all 44 instruction starts and 48 local edges; mapped stable strings, four-byte reads up to three bytes past NUL, no faults, source/stack aliasing or caller output"
+    },
+    {
+      "function": "009454d5",
+      "scope": "bounded-forward-byte-swap-entry-to-return",
+      "behavior": "Forward interleaved byte swap, including overlapping ranges, ordered reads/writes, all return registers and full data/stack memory digests",
+      "module": "reconstruction/sort-swap-28.ts",
+      "evidence": "evidence/sort-helpers-28-swap-oracle.json.gz",
+      "boundary": "640 original-entry synthetic cases, 47,768 x86 steps, all 23 instruction starts and 25 local edges; both ranges inside one 4 KiB synthetic data page, widths 0..31, no stack/code alias or connected comparator/sort behavior"
+    },
+    {
+      "function": "0068d020",
+      "scope": "bounded-collection-header-zero-entry-to-return",
+      "behavior": "Four ordered stores zeroing a packed 14-byte header, with register, return and full receiver/stack memory effects",
+      "module": "reconstruction/merge-initializer-28.ts",
+      "evidence": "evidence/merge-initializer-28-oracle.json.gz",
+      "boundary": "256 original-entry synthetic cases, 1,792 x86 steps, all seven instruction starts and six local edges; stable mapped receiver inside a 4 KiB synthetic page, no caller collection invariants or connected append behavior"
     }
   ]
 }

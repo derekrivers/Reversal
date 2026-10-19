@@ -6,7 +6,7 @@ The goal is a browser game whose chosen compatibility behavior is backed by evid
 
 | Component | Responsibility | Evidence / status |
 | --- | --- | --- |
-| Simulation core (TypeScript) | Match state, player calculations, rules, explicit RNG and ordered transitions | Four narrow reconstruction modules exist; full engine remains open |
+| Simulation core (TypeScript) | Match state, player calculations, rules, explicit RNG and ordered transitions | Bounded reconstruction modules cover selected primitives; the full engine remains open |
 | Event pipeline (TypeScript) | Select event variants at the original point in the random stream; emit stable event records | Layouts/mapping recovered; full pipeline not implemented |
 | Data adapters | Convert locally acquired game data into stable IDs and typed records; preserve raw-width fields where needed | Layout fragments exist; complete database/save formats open |
 | Worker host | Run simulation away from the UI thread; accept commands and publish snapshots/events | Proposed boundary; no worker implementation yet |

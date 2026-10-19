@@ -53,11 +53,11 @@ def stage():
     names.update({row[0]:row[1] for row in annotations['annotations']})
     types={t['path']:t for t in annotations['partial_data_types']}
     comments_by_address={}
-    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json','investigation-19-annotations.json','investigation-21-annotations.json','investigation-22-annotations.json','investigation-23-annotations.json','investigation-24-annotations.json','investigation-25-annotations.json','investigation-26-annotations.json','investigation-27-annotations.json']:
+    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json','investigation-19-annotations.json','investigation-21-annotations.json','investigation-22-annotations.json','investigation-23-annotations.json','investigation-24-annotations.json','investigation-25-annotations.json','investigation-26-annotations.json','investigation-27-annotations.json','investigation-28-annotations.json']:
       event_receipt=ROOT/'evidence'/receipt_name
       if event_receipt.exists():
         event_annotations=json.loads(event_receipt.read_text())
-        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json','investigation-19-annotations.json','investigation-21-annotations.json','investigation-22-annotations.json','investigation-23-annotations.json','investigation-24-annotations.json','investigation-25-annotations.json','investigation-26-annotations.json','investigation-27-annotations.json') else row[1])
+        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json','investigation-19-annotations.json','investigation-21-annotations.json','investigation-22-annotations.json','investigation-23-annotations.json','investigation-24-annotations.json','investigation-25-annotations.json','investigation-26-annotations.json','investigation-27-annotations.json','investigation-28-annotations.json') else row[1])
                       for row in event_annotations['annotations']})
         labels.update(dict(event_annotations['global_labels']))
         types.update({t['path']:t for t in event_annotations['partial_data_types']})
@@ -108,6 +108,9 @@ def stage():
     r27=json.loads((ROOT/'evidence/investigation-27-annotations.json').read_text())
     r27_names={row[0] for row in r27['annotations']}
     assert not r27['function_comments'] and not r27['code_comments'] and not r27['global_labels'] and not r27['partial_data_types']
+    r28=json.loads((ROOT/'evidence/investigation-28-annotations.json').read_text())
+    r28_names={row[0] for row in r28['annotations']}
+    assert len(r28_names)==5 and not r28['function_comments'] and not r28['code_comments'] and not r28['global_labels'] and not r28['partial_data_types']
     r10=json.loads((ROOT/'evidence/investigation-10-annotations.json').read_text())
     historical_comments={row[0]:'CM0102 investigation10 (2026-10-18): '+row[2]
                          for row in r10['annotations'] if row[0] in ('0062c680','0062ed70','006d0980')}
@@ -132,6 +135,7 @@ def stage():
       if a in r25_names:row['comment']=r25_notes.get(a)
       if a in r26_names:row['comment']=None
       if a in r27_names:row['comment']=None
+      if a in r28_names:row['comment']=None
       if a in historical_comments:row['comment']=historical_comments[a]
       functions.append(row)
     pe=struct.unpack_from('<I',data,0x3c)[0];optional=pe+24

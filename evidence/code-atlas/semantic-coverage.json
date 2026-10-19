@@ -218,6 +218,18 @@
     "R27-C": {
       "report": "reports/league-sort-27.md",
       "evidence": "evidence/league-sort-27-sites.json"
+    },
+    "R28-A": {
+      "report": "reports/sort-helpers-28.md",
+      "evidence": "evidence/sort-helpers-28-sites.json"
+    },
+    "R28-B": {
+      "report": "reports/merge-dependencies-28.md",
+      "evidence": "evidence/merge-dependencies-28-sites.json"
+    },
+    "R28-C": {
+      "report": "reports/collection-runtime-28.md",
+      "evidence": "evidence/collection-runtime-28-sites.json"
     }
   },
   "functions": [
@@ -910,6 +922,36 @@
       "address": "00945333",
       "state": "contract-supported",
       "source": "R27-C"
+    },
+    {
+      "address": "00945487",
+      "state": "contract-supported",
+      "source": "R28-A"
+    },
+    {
+      "address": "009454d5",
+      "state": "contract-supported",
+      "source": "R28-A"
+    },
+    {
+      "address": "0068d020",
+      "state": "contract-supported",
+      "source": "R28-B"
+    },
+    {
+      "address": "0068d0d0",
+      "state": "contract-supported",
+      "source": "R28-B"
+    },
+    {
+      "address": "0068cfc0",
+      "state": "contract-supported",
+      "source": "R28-C"
+    },
+    {
+      "address": "00944cf1",
+      "state": "contract-supported",
+      "source": "R28-C"
     }
   ]
 }
