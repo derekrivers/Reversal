@@ -86,6 +86,13 @@ public class CM0102AnnotateInvestigation29 extends GhidraScript {
   JsonObject t=tacticalRows.get(0).getAsJsonObject();
   need(t.get("old_comment").isJsonNull()&&t.get("new_return_width_bytes").getAsInt()==2&&
    t.get("body_addresses").getAsLong()==42,"tactical comment/return proposal");
+  // Checkpoint 28's untyped return is /undefined, one byte, DEFAULT source.
+  // The proposal's null old width is not a substitute for this native check.
+  Function tacticalOld=function("006c38f0");
+  need(t.get("old_return_width_bytes").isJsonNull()&&
+   "/undefined".equals(tacticalOld.getReturnType().getPathName())&&
+   tacticalOld.getReturnType().getLength()==1&&
+   tacticalOld.getSignatureSource()==SourceType.DEFAULT,"exact-old tactical return type/source");
   rows.add(nameRow(t.get("address").getAsString(),t.get("old_name").getAsString(),
    t.get("new_name").getAsString(),t.get("body_addresses").getAsLong(),seen));
   String tacticalComment=t.get("new_comment").getAsString();
@@ -108,22 +115,25 @@ public class CM0102AnnotateInvestigation29 extends GhidraScript {
   Path output=Paths.get(args[0]).toAbsolutePath();need(!Files.exists(output),"new output path");
   Path temporary=Files.createTempFile(output.getParent(),"investigation-29-",".json.tmp");
   Files.writeString(temporary,new GsonBuilder().setPrettyPrinting().create().toJson(receipt)+"\n",StandardCharsets.UTF_8);
-  boolean published=false;int tx=currentProgram.startTransaction("Investigation 29 reviewed annotations");boolean apply=false;
+  boolean published=false;
   try {
-   for(JsonElement item:rows){JsonArray row=item.getAsJsonArray();
-    function(row.get(0).getAsString()).setName(row.get(2).getAsString(),SourceType.USER_DEFINED);}
-   k.setComment(keeperComment);Function tacticalFunction=function("006c38f0");
-   tacticalFunction.setComment(tacticalComment);
-   tacticalFunction.setReturnType(UnsignedShortDataType.dataType,SourceType.USER_DEFINED);
-   for(JsonElement item:rows){JsonArray row=item.getAsJsonArray();
-    need(function(row.get(0).getAsString()).getName().equals(row.get(2).getAsString()),"applied name "+row.get(0));}
-   need(keeperComment.equals(k.getComment())&&tacticalComment.equals(tacticalFunction.getComment())&&
-    tacticalFunction.getReturnType().getLength()==2,"applied comments/return width");
-   Files.move(temporary,output);published=true;apply=true;
-  } finally {
-   currentProgram.endTransaction(tx,apply);Files.deleteIfExists(temporary);
-   if(published&&!apply)Files.deleteIfExists(output);
-  }
+   int tx=currentProgram.startTransaction("Investigation 29 reviewed annotations");boolean apply=false;
+   try {
+    for(JsonElement item:rows){JsonArray row=item.getAsJsonArray();
+     function(row.get(0).getAsString()).setName(row.get(2).getAsString(),SourceType.USER_DEFINED);}
+    k.setComment(keeperComment);Function tacticalFunction=function("006c38f0");
+    tacticalFunction.setComment(tacticalComment);
+    tacticalFunction.setReturnType(UnsignedShortDataType.dataType,SourceType.USER_DEFINED);
+    for(JsonElement item:rows){JsonArray row=item.getAsJsonArray();
+     need(function(row.get(0).getAsString()).getName().equals(row.get(2).getAsString()),"applied name "+row.get(0));}
+    need(keeperComment.equals(k.getComment())&&tacticalComment.equals(tacticalFunction.getComment())&&
+     tacticalFunction.getReturnType().getLength()==2,"applied comments/return width");
+    Files.move(temporary,output);published=true;apply=true;
+   } finally {currentProgram.endTransaction(tx,apply);}
+  } catch(Exception|Error failure) {
+   if(published)Files.deleteIfExists(output);
+   throw failure;
+  } finally {Files.deleteIfExists(temporary);}
   println("Applied investigation 29 in memory; native save and independent reopen still required");
  }
 }
