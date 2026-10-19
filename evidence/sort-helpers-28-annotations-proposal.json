@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "unit": "R28-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "native_checkpoint_archive_sha256": "d2836fd1b28d194dbfda32454106f9af23495809f09a408ed1ee072e6c4b7de1",
+  "exact_old_preflight_sha256": "9f9e52088fc32356aebecb6fc39ba78fea96e14f359383afb01362287409fbb2",
+  "proposals": [
+    {
+      "entry_va": "00945487",
+      "old_name": "FUN_00945487",
+      "old_body_addresses": 78,
+      "new_name": "cm0102_select_tail_record_with_callback_candidate",
+      "change": "name only",
+      "confidence": "medium: full local instructions and call order; comparator behavior is a boundary"
+    },
+    {
+      "entry_va": "009454d5",
+      "old_name": "FUN_009454d5",
+      "old_body_addresses": 44,
+      "new_name": "cm0102_swap_record_bytes_candidate",
+      "change": "name only",
+      "confidence": "high within complete local body and 640 validated original-entry synthetic cases"
+    }
+  ],
+  "unchanged": ["comments", "prototypes", "structures", "existing R27 sort and R26 comparator annotations"]
+}

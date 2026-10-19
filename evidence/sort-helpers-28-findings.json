@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "unit": "R28-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "static_contracts": [
+    {
+      "entry_va": "00945487",
+      "scope": "complete local body",
+      "status": "static",
+      "body_bytes": 78,
+      "instruction_count": 39,
+      "local_cfg_edges": 42,
+      "abi": "cdecl-like four DWORD arguments: base, inclusive end, width, comparator pointer; plain RET; caller removes 16 bytes",
+      "behavior": "unsigned end>base guard, repeated linear scan; comparator(candidate,current-best) signed positive selects later candidate; swaps best with end through 009454d5; decrements end by width",
+      "limits": ["comparator effects and invariants unresolved", "width zero and pointer wrap are not admitted", "connected sort and standings unvalidated"]
+    },
+    {
+      "entry_va": "009454d5",
+      "scope": "complete local body",
+      "status": "static and bounded original-entry execution validated",
+      "body_bytes": 44,
+      "instruction_count": 23,
+      "local_cfg_edges": 25,
+      "abi": "cdecl-like three DWORD arguments: first pointer, second pointer, byte width; plain RET; caller removes 12 bytes; EBX and ESI preserved",
+      "behavior": "equal pointers or zero width return without data access; otherwise bytewise exchange in forward order, including overlapping ranges",
+      "execution_cases": 640,
+      "execution_steps": 47768,
+      "covered_instruction_starts": 23,
+      "covered_cfg_edges": 25,
+      "limits": ["synthetic mapped memory", "width at most 31 bytes", "no full sorter execution claim"]
+    }
+  ]
+}
