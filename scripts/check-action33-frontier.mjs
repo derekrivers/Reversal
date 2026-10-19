@@ -40,7 +40,7 @@ for (const row of map.functions) {
   assert.ok(hex(row.address) && nonempty(row.role));
   assert.ok(nonempty(row.local_status) && nonempty(row.execution_status));
 }
-for (const address of ['006be710', '00700bd0', '00702050', '006ce110', '006cfe10', '0062ed70'])
+for (const address of ['006be710', '00700bd0', '00702050', '006ce110', '006cfe10', '0062ed70', '0084be20', '006b7f20', '004cf5f0'])
   assert.ok(functions.has(address), `missing dependency ${address}`);
 
 assert.ok(Array.isArray(map.ordered_constraints) && map.ordered_constraints.length > 0);
@@ -58,6 +58,7 @@ const classified = [...observed, ...staticOrUnreached];
 unique(classified.map(site => ({site})), 'site');
 assert.deepEqual(new Set(classified), new Set(map.ordered_constraints.map(row => row.site)));
 assert.ok(staticOrUnreached.includes('0062ed99'), 'diagnostic call must remain unreached');
+assert.ok(staticOrUnreached.includes('006eafa0'), 'contract call must remain unreached');
 const pinnedOracle = (path, sha256) => {
   const bytes = readFileSync(new URL(`../${path}`, import.meta.url));
   assert.equal(createHash('sha256').update(bytes).digest('hex'), sha256, `changed ${path}`);
@@ -65,6 +66,8 @@ const pinnedOracle = (path, sha256) => {
 };
 const prefixOracle = pinnedOracle('evidence/action33-prefix-30-oracle.bin', '08cd8c3725f98499b3fdaef8e42788c1f8ce80308616f881589042cc4d21ff4f');
 const effectOracle = pinnedOracle('evidence/action33-effect-30-oracle.bin', 'ddf4a92864ef02dd7027d9311e5e615b7b0c75a2625eb9cb87dd6e915bc21472');
+const ownerOracle = pinnedOracle('evidence/action33-owner-33-oracle.bin', 'f5dbbdff245eda8bbe946430461a93c76b8dd971e0d2d52e89d667c45681eafd');
+const conversionOracle = pinnedOracle('evidence/action33-conversion-33-oracle.bin', '1fc3bf7c687abec08597d8e9eb66d0abb3a871e7a156075d4b195ad8fa4b79ee');
 const bySite = new Map(map.ordered_constraints.map(row => [row.site, row]));
 const reached = new Set();
 const callTargets = new Map();
@@ -77,6 +80,27 @@ for (const trace of [...prefixOracle.cases, ...effectOracle.cases]) {
   }
   for (const draw of trace.rng) if (bySite.has(draw.site)) reached.add(draw.site);
 }
+for (const specimenCase of ownerOracle.oracle.cases) {
+  for (const stage of [specimenCase.binding, specimenCase.placement]) {
+    for (const [site,target] of stage.calls) {
+      if (!bySite.has(site)) continue;
+      reached.add(site);
+      if (callTargets.has(site)) assert.equal(callTargets.get(site), target, `varying target ${site}`);
+      callTargets.set(site,target);
+    }
+  }
+}
+let secondGridCalls = 0;
+for (const specimenCase of conversionOracle.cases) {
+  for (const call of specimenCase.calls) {
+    if (!bySite.has(call.site)) continue;
+    if (call.site === '007021e5') secondGridCalls++;
+    reached.add(call.site);
+    if (callTargets.has(call.site)) assert.equal(callTargets.get(call.site), call.target, `varying target ${call.site}`);
+    callTargets.set(call.site, call.target);
+  }
+}
+assert.equal(secondGridCalls, 232, 'R33-A clear cases must reach the second grid call');
 assert.deepEqual(new Set(observed), reached, 'observed sites must be reached in retained original traces');
 for (const [site, target] of callTargets) assert.equal(bySite.get(site).target, target, `wrong observed target ${site}`);
 for (const site of observed) if (!callTargets.has(site)) assert.equal(bySite.get(site).target, undefined, `draw cannot have a call target ${site}`);
@@ -86,7 +110,7 @@ for (const row of map.state_requirements)
   assert.ok(nonempty(row.field) && nonempty(row.producer) && nonempty(row.gap));
 const fixturePointer = map.state_requirements.find(row => row.field === 'match/context+0x4792 fixture pointer -> fixture/owner+0x1c/+0x20 club state');
 assert.ok(fixturePointer, 'fixture pointer and club fields must retain distinct bases');
-assert.match(fixturePointer.producer, /006b7f41\/45\/4e/);
+assert.match(fixturePointer.producer, /0084c266.*0084c3e8.*006b7f20/);
 assert.doesNotMatch(JSON.stringify(map), /owner\+0x4792/, 'owner is not the base of the +0x4792 field');
 
 const prefix = read('evidence/action33-prefix-30-integrity.json');
@@ -96,12 +120,16 @@ const grid = read('evidence/action33-grid-31-integrity.json');
 const lifecycle = read('evidence/action33-lifecycle-31-validation.json');
 const opponent = read('evidence/action33-opponent-32-integrity.json');
 const slot = read('evidence/action33-slot-32-validation.json');
+const conversion = read('evidence/action33-conversion-33-integrity.json');
+const owner = read('evidence/action33-owner-33-validation.json');
 assert.equal(prefix.specimen_sha256, specimen);
 assert.equal(effect.specimen_sha256, specimen);
 assert.equal(grid.specimen_sha256, specimen);
 assert.equal(lifecycle.specimen_sha256, specimen);
 assert.equal(opponent.specimen_sha256, specimen);
 assert.equal(slot.specimen_sha256, specimen);
+assert.equal(conversion.specimen_sha256, specimen);
+assert.equal(owner.specimen_sha256, specimen);
 assert.equal(map.completed_prefix.entry, '00702050');
 assert.equal(map.completed_prefix.stop_before, '007024b4');
 assert.equal(map.completed_prefix.cases, prefix.cases);
@@ -141,13 +169,24 @@ assert.match(guarded.domain, /unjoined/);
 source(guarded.source);
 const opponentOracle = readFileSync(new URL('../evidence/action33-opponent-32-oracle.bin', import.meta.url));
 assert.equal(createHash('sha256').update(opponentOracle).digest('hex'), opponent.oracle_sha256);
+const continued = map.typescript_conversion_continuation;
+assert.equal(continued.entry, '00702050');
+assert.equal(continued.clear_stop_before, '00702222');
+assert.equal(continued.guard_set_stop_before, '0071614b');
+for (const [field, receiptField] of [['cases','cases'], ['guard_clear','guard_clear'], ['guard_set','guard_set'], ['separate_rounding_probes','rounding_probes'], ['original_instruction_steps','instructions'], ['ordered_data_events','events'], ['rng_calls','rng_calls']])
+  assert.equal(continued[field], conversion.coverage[receiptField]);
+assert.equal(continued.source, 'reports/action33-conversion-33.md');
+assert.match(continued.domain, /unjoined/);
+assert.match(continued.domain, /hardware x87 exception\/status equivalence excluded/);
+source(continued.source);
+assert.equal(conversion.oracle_sha256, '1fc3bf7c687abec08597d8e9eb66d0abb3a871e7a156075d4b195ad8fa4b79ee');
 assert.equal(map.typescript_composition.start, '007022fd');
 assert.equal(map.typescript_composition.stop_before, '007024b4');
-assert.equal(map.typescript_composition.first_full_entry_gap, '00702193 -> 00945640 (clear); 0071614b -> 005b58e0 (bit-04 set)');
-assert.equal(map.typescript_composition.first_full_entry_gap_source, 'reports/action33-opponent-32.md');
+assert.equal(map.typescript_composition.first_full_entry_gap, '00702222 -> 00713e90 (clear); 0071614b -> 005b58e0 (bit-04 set)');
+assert.equal(map.typescript_composition.first_full_entry_gap_source, 'reports/action33-conversion-33.md');
 source(map.typescript_composition.first_full_entry_gap_source);
 const gapReport = readFileSync(new URL(`../${map.typescript_composition.first_full_entry_gap_source}`, import.meta.url), 'utf8');
-assert.match(gapReport, /00702193.*00945640/);
+assert.match(gapReport, /00702222.*00713e90/);
 assert.match(gapReport, /0071614b.*005b58e0/);
 assert.equal(map.typescript_composition.cases, composition.coverage.cases);
 assert.equal(map.typescript_composition.selector_events, composition.coverage.selector_events);
@@ -176,9 +215,18 @@ assert.match(slotFixture.domain, /separate.*synthetic/);
 source(slotFixture.source);
 const slotOracle = readFileSync(new URL('../evidence/action33-slot-32-oracle.bin', import.meta.url));
 assert.equal(createHash('sha256').update(slotOracle).digest('hex'), slot.evidence_sha256);
-assert.equal(map.frontier.find(row => row.id === 'typescript_prefix')?.first_site, '00702193');
+const producer = map.fixture_producer_continuation;
+for (const field of ['interior_fixture_producers', 'interior_caller_bindings', 'initializer_returns', 'lookup_returns', 'placement_frontiers'])
+  assert.equal(producer[field], owner.coverage[field]);
+assert.equal(producer.original_instruction_steps, owner.coverage.instruction_steps);
+assert.equal(producer.first_placement_gap, '006eafa0');
+assert.equal(producer.source, 'reports/action33-owner-33.md');
+assert.match(producer.domain, /interior.*separate.*synthetic/);
+source(producer.source);
+assert.equal(owner.evidence_sha256, 'f5dbbdff245eda8bbe946430461a93c76b8dd971e0d2d52e89d667c45681eafd');
+assert.equal(map.frontier.find(row => row.id === 'typescript_prefix')?.first_site, '00702222');
 assert.equal(map.frontier.find(row => row.id === 'early_guard')?.first_site, '0071614b');
-assert.equal(map.frontier.find(row => row.id === 'normal_participant_state')?.first_site, '006eaf8f');
+assert.equal(map.frontier.find(row => row.id === 'normal_participant_state')?.first_site, '006eafa0');
 
 assert.ok(Array.isArray(map.frontier) && map.frontier.length > 0);
 unique(map.frontier, 'id');
