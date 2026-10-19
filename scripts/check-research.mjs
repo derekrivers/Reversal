@@ -21,6 +21,7 @@ const checks=[
  ['reconstruction/check-slot-effect-severe.ts','evidence/slot-effect-25-oracle.json'],
  ['reconstruction/check-match-dependencies-26.ts','evidence/match-dependencies-26-oracle.json'],
  ['reconstruction/check-league-comparator-26.ts','evidence/league-comparator-26-oracle.json.gz'],
+ ['reconstruction/check-iterator-helpers-27.ts','evidence/iterator-helpers-27-oracle.json.gz'],
  ['reconstruction/check-random.ts','evidence/random-validation/x86-oracle.json','evidence/random-validation/random-table.bin','results/random.json'],
  ['reconstruction/check-clock.ts','evidence/clock-validation/clock-oracle.json','evidence/clock-validation/clock-oracle.bin','results/clock.json'],
  ['reconstruction/check-event-rules.ts','evidence/event-rule-validation','results/event-rules.json'],

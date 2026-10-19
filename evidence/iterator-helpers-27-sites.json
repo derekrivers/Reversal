@@ -1,0 +1,158 @@
+{
+  "work_unit": "R27-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "4acf11ca1ab79b275436c6365813904d87634436de1723ce24a2274f83a087c4",
+  "export_manifest_sha256": "bbd00280029a738f4f4dfa6462c7d34a4379887626749d9f20eef20873655f14",
+  "preflight_sha256": "fb1be5075c72e92045f4d802f649665801d8ebc85b049a25e0f652e282f6015d",
+  "method": "Capstone 5.0.7 exact complete PE/native instruction, operand, byte, CFG and preflight comparison",
+  "functions": [
+    {
+      "entry_va": "0068d1b0",
+      "file_offset": "0x28d1b0",
+      "body_bytes": 19,
+      "body_sha256": "304cc009924e6e880ecd3cb397b656811410758fa0426e307b131baa8c4564f7",
+      "native_export_sha256": {
+        "asm": "fca1dc4f6a959e247f6f53940dfda34273adf881a57546950ff4e84db713a257",
+        "c": "a8b2a19771b01f45e57fcdc2eeb498a8ec61f3d473b91cd4d8eb3bb898a4c664"
+      },
+      "instruction_count": 9,
+      "matched_native_instructions": 9,
+      "reachable_instruction_starts": 9,
+      "edges": [
+        [
+          "0068d1b0",
+          "0068d1b3"
+        ],
+        [
+          "0068d1b3",
+          "0068d1b5"
+        ],
+        [
+          "0068d1b5",
+          "0068d1c0"
+        ],
+        [
+          "0068d1b5",
+          "0068d1b7"
+        ],
+        [
+          "0068d1b7",
+          "0068d1b9"
+        ],
+        [
+          "0068d1b9",
+          "0068d1bc"
+        ],
+        [
+          "0068d1bc",
+          "0068d1bf"
+        ],
+        [
+          "0068d1c0",
+          "0068d1c2"
+        ]
+      ],
+      "return_sites": [
+        "0068d1bf",
+        "0068d1c2"
+      ],
+      "link_offset": 6,
+      "memory_operands": [
+        [
+          "0068d1b0",
+          "mov",
+          "edx, dword ptr [ecx + 0xa]"
+        ],
+        [
+          "0068d1b7",
+          "mov",
+          "eax, dword ptr [edx]"
+        ],
+        [
+          "0068d1b9",
+          "mov",
+          "edx, dword ptr [edx + 6]"
+        ],
+        [
+          "0068d1bc",
+          "mov",
+          "dword ptr [ecx + 0xa], edx"
+        ]
+      ]
+    },
+    {
+      "entry_va": "0068d1d0",
+      "file_offset": "0x28d1d0",
+      "body_bytes": 19,
+      "body_sha256": "043ebe61e1eeefc99c08fe6fe9f13f547165f66586a99358120e3610720496c2",
+      "native_export_sha256": {
+        "asm": "bc6b6149590a3fc666ab30640ab673e76291ba3324c8f068c97b63f637b806df",
+        "c": "50d8f18919116602b3b63e7ee698064370e4e2f3bd526014525c58c1927402a4"
+      },
+      "instruction_count": 9,
+      "matched_native_instructions": 9,
+      "reachable_instruction_starts": 9,
+      "edges": [
+        [
+          "0068d1d0",
+          "0068d1d3"
+        ],
+        [
+          "0068d1d3",
+          "0068d1d5"
+        ],
+        [
+          "0068d1d5",
+          "0068d1e0"
+        ],
+        [
+          "0068d1d5",
+          "0068d1d7"
+        ],
+        [
+          "0068d1d7",
+          "0068d1d9"
+        ],
+        [
+          "0068d1d9",
+          "0068d1dc"
+        ],
+        [
+          "0068d1dc",
+          "0068d1df"
+        ],
+        [
+          "0068d1e0",
+          "0068d1e2"
+        ]
+      ],
+      "return_sites": [
+        "0068d1df",
+        "0068d1e2"
+      ],
+      "link_offset": 10,
+      "memory_operands": [
+        [
+          "0068d1d0",
+          "mov",
+          "edx, dword ptr [ecx + 0xa]"
+        ],
+        [
+          "0068d1d7",
+          "mov",
+          "eax, dword ptr [edx]"
+        ],
+        [
+          "0068d1d9",
+          "mov",
+          "edx, dword ptr [edx + 0xa]"
+        ],
+        [
+          "0068d1dc",
+          "mov",
+          "dword ptr [ecx + 0xa], edx"
+        ]
+      ]
+    }
+  ]
+}
