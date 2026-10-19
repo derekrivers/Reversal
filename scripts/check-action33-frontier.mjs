@@ -84,6 +84,10 @@ assert.ok(Array.isArray(map.state_requirements) && map.state_requirements.length
 unique(map.state_requirements, 'field');
 for (const row of map.state_requirements)
   assert.ok(nonempty(row.field) && nonempty(row.producer) && nonempty(row.gap));
+const fixturePointer = map.state_requirements.find(row => row.field === 'match/context+0x4792 fixture pointer -> fixture/owner+0x1c/+0x20 club state');
+assert.ok(fixturePointer, 'fixture pointer and club fields must retain distinct bases');
+assert.match(fixturePointer.producer, /006b7f41\/45\/4e/);
+assert.doesNotMatch(JSON.stringify(map), /owner\+0x4792/, 'owner is not the base of the +0x4792 field');
 
 const prefix = read('evidence/action33-prefix-30-integrity.json');
 const effect = read('evidence/action33-effect-30-integrity.json');

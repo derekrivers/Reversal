@@ -65,7 +65,7 @@ Separate original slot fixtures: 80 initializer returns, 80 lookup returns, 80 p
 | typescript_prefix | 00702193 | admit 00945640 with original-produced x87 input, then continue caller toward the supplied 007022fd checkpoint | R33-A assigned |
 | early_guard | 0071614b | admit 005b58e0 tactical lookup on bit-04-set path | R33-A separate guard scope |
 | diagnostic_path | 0062ed99 | admit original 00944cff path split and its transitive string/diagnostic effects | unassigned |
-| normal_participant_state | 006eaf8f | prove owner+0x4792 and club state from enclosing original producers, then finish placement and initialize lookup object before resolver entry | R33-B assigned |
+| normal_participant_state | 006eaf8f | prove match/context+0x4792 fixture pointer and fixture/owner+0x1c/+0x20 club state from enclosing original producers, then finish placement and initialize lookup object before resolver entry | R33-B assigned |
 | event_stream | 0070387e | establish 007002f0/006d6f70 suppression, ordered draws and writes | unassigned |
 | other_slots | 00703e24 | prove distance-branch reachability or admit 007103e0 transitive effects | unassigned |
 | gate_context | 00703ff2 | establish 006ce310/004b0850 output and candidate state | unassigned |
