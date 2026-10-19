@@ -9,7 +9,7 @@ export function initializeMergeHeader(receiver:number,esp:number,memory:MergeIni
   {eax:number;ecx:number;esp:number;eip:number} {
   if(!Number.isInteger(receiver)||receiver<0||receiver>0xffffffff-13)
     throw new RangeError('receiver must address 14 bytes');
-  if(!Number.isInteger(esp)||esp<0||esp>0xffffffff-4)
+  if(!Number.isInteger(esp)||esp<0||esp>0xffffffff-3)
     throw new RangeError('stack pointer must address a return DWORD');
   // MOV EAX,ECX; XOR ECX,ECX; preserve the original store order and widths.
   memory.write32(receiver+2,0);
@@ -17,5 +17,5 @@ export function initializeMergeHeader(receiver:number,esp:number,memory:MergeIni
   memory.write32(receiver+10,0);
   memory.write16(receiver,0);
   const eip=memory.read32(esp)>>>0;
-  return {eax:receiver,ecx:0,esp:esp+4,eip};
+  return {eax:receiver,ecx:0,esp:(esp+4)>>>0,eip};
 }

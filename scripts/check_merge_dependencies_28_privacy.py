@@ -93,15 +93,23 @@ def validate(sites_raw, oracle):
             raise ValueError(f"synthetic full-memory digest mismatch {index}")
 
 
-def check(sites_path, oracle_path):
-    sites_raw = sites_path.read_bytes()
-    compressed = oracle_path.read_bytes()
+def parse_canonical(compressed):
     if len(compressed) > 250000:
         raise ValueError("unexpected compressed oracle size")
     decompressed = gzip.decompress(compressed)
     if len(decompressed) > 250000:
         raise ValueError("unexpected expanded oracle size")
     oracle = json.loads(decompressed)
+    canonical = gzip.compress((json.dumps(oracle, separators=(",", ":")) + "\n").encode(), mtime=0)
+    if compressed != canonical:
+        raise ValueError("noncanonical JSON or gzip envelope")
+    return oracle
+
+
+def check(sites_path, oracle_path):
+    sites_raw = sites_path.read_bytes()
+    compressed = oracle_path.read_bytes()
+    oracle = parse_canonical(compressed)
     validate(sites_raw, oracle)
     mutations = []
     for label, mutate in (
@@ -120,6 +128,21 @@ def check(sites_path, oracle_path):
             mutations.append(label + " rejected")
         else:
             raise ValueError("privacy mutation admitted: " + label)
+    expanded = gzip.decompress(compressed)
+    header_payload = bytearray(compressed)
+    header_payload[3] |= 0x08  # FNAME: valid optional gzip header field.
+    header_payload = header_payload[:10] + b"hidden-name\0" + header_payload[10:]
+    for label, changed in (
+        ("appended JSON whitespace", gzip.compress(expanded + b" ", mtime=0)),
+        ("embedded JSON tab", gzip.compress(expanded.replace(b'{"work_unit"', b'{\t"work_unit"', 1), mtime=0)),
+        ("optional gzip header payload", bytes(header_payload)),
+    ):
+        try:
+            parse_canonical(changed)
+        except ValueError:
+            mutations.append(label + " rejected")
+        else:
+            raise ValueError("privacy envelope mutation admitted: " + label)
     return {"work_unit": "R28-B", "status": "passed", "synthetic_cases": 256,
             "retained_memory": "two verified SHA-256 digests per case; no memory pages or PE bytes",
             "oracle_compressed_bytes": len(compressed), "negative_mutations": mutations}

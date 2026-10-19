@@ -94,5 +94,24 @@ for(const bad of [-1,0xfffffff3,0x100000000]){
   catch(e){rejected=e instanceof RangeError;}
   if(!rejected)throw new Error('invalid receiver accepted');
 }
+const boundaryEvents:(string|number)[][]=[];
+const boundary=initializeMergeHeader(0x200100,0xfffffffc,{
+  read32(address:number){boundaryEvents.push(['read',address,4]);
+    if(address!==0xfffffffc)throw new Error('wrong boundary stack read');
+    return 0x12345678;},
+  write32(address:number,value:number){boundaryEvents.push(['write',address,4,value]);},
+  write16(address:number,value:number){boundaryEvents.push(['write',address,2,value]);}
+});
+if(boundary.eax!==0x200100||boundary.ecx!==0||boundary.esp!==0||
+   boundary.eip!==0x12345678||JSON.stringify(boundaryEvents)!==JSON.stringify([
+     ['write',0x200102,4,0],['write',0x200106,4,0],['write',0x20010a,4,0],
+     ['write',0x200100,2,0],['read',0xfffffffc,4]]))
+  throw new Error('mapped upper-address return boundary mismatch');
+for(const bad of [-1,0xfffffffd,0x100000000]){
+  let rejected=false;
+  try{initializeMergeHeader(0x200100,bad,{read32:()=>0,write32:()=>{},write16:()=>{}});}
+  catch(e){rejected=e instanceof RangeError;}
+  if(!rejected)throw new Error('invalid stack DWORD accepted');
+}
 console.log(JSON.stringify({checked_cases:256,executed_instruction_steps:steps,
   covered_instruction_starts:starts.size,covered_edges:edgeSet.size,synthetic_only:true}));

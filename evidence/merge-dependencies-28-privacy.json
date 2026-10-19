@@ -10,6 +10,9 @@
     "wrong synthetic offset rejected",
     "raw page in ordered event rejected",
     "raw page in memory digest rejected",
-    "wrong 64-hex memory digest rejected"
+    "wrong 64-hex memory digest rejected",
+    "appended JSON whitespace rejected",
+    "embedded JSON tab rejected",
+    "optional gzip header payload rejected"
   ]
 }
