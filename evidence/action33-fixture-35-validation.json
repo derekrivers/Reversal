@@ -1,0 +1,35 @@
+{
+  "unit": "R35-C",
+  "status": "passed",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "evidence_sha256": "85625c272b1c8383805a8a1169ab2e4fc5eb12f541a5ac370ae06774b906a53a",
+  "expanded_canonical_sha256": "64416c53c1238d7265a8368a248515e11fc689c889a97499c1f6eb1e24781e04",
+  "compressed_bytes": 7940,
+  "expanded_canonical_bytes": 108717,
+  "coverage": {
+    "selector_entries": 8,
+    "caller_interior_windows": 4,
+    "produced_date_initializers": 320,
+    "instruction_steps": 8520
+  },
+  "normal_optimized_evidence": "byte-identical original-instruction regeneration",
+  "native_operand_instructions": 590,
+  "pe_only_instructions": 79,
+  "negative_probes": [
+    "changed specimen rejected",
+    "changed focused manifest rejected",
+    "changed slot manifest rejected",
+    "changed support manifest rejected",
+    "changed state manifest rejected",
+    "executed wrong date value rejected",
+    "executed missing callback rejected",
+    "executed wrong heap flags rejected",
+    "resealed date store width rejected",
+    "raw private fragment rejected",
+    "hex private fragment rejected",
+    "base64 private fragment rejected",
+    "oversized expansion rejected"
+  ],
+  "privacy": "compressed and bounded expanded evidence plus task files scanned for raw/hex/base64 code/source samples",
+  "limits": "original selector entry to pending HeapSize import; no selection, RNG, fixture or prepare-match execution"
+}
