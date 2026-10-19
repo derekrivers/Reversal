@@ -1,0 +1,14 @@
+{
+  "artifacts": [
+    {
+      "filename": "cm0102-ghidra-database.zip",
+      "bytes": 69799359,
+      "git_tracked": false,
+      "sha256": "f787a4dd87cb0efc9d7b270f8be0656e49d0f5f64738f1d19aab759540936bdd"
+    }
+  ],
+  "date": "2026-10-19",
+  "retention": "Native checkpoint 29 and earlier archives are preserved separately; canonical project was saved by Ghidra, then restored independently read-only.",
+  "input_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "canonical_annotation_receipt_sha256": "f96dc6fac6390c3af2111651a5c061c25ea1e45489741dc4bfaf755dcfcb81c4"
+}

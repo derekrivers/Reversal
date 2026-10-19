@@ -230,6 +230,18 @@
     "R28-C": {
       "report": "reports/collection-runtime-28.md",
       "evidence": "evidence/collection-runtime-28-sites.json"
+    },
+    "R29-A": {
+      "report": "reports/keeper-selector-29.md",
+      "evidence": "evidence/keeper-selector-29-sites.json"
+    },
+    "R29-B": {
+      "report": "reports/tactical-word-29.md",
+      "evidence": "evidence/tactical-word-29-sites.json"
+    },
+    "R29-C": {
+      "report": "reports/collection-continuation-29.md",
+      "evidence": "evidence/collection-continuation-29-sites.json"
     }
   },
   "functions": [
@@ -250,8 +262,8 @@
     },
     {
       "address": "006ce110",
-      "state": "boundary-mapped",
-      "source": "R09-B"
+      "state": "contract-supported",
+      "source": "R29-A"
     },
     {
       "address": "0054d5e0",
@@ -952,6 +964,31 @@
       "address": "00944cf1",
       "state": "contract-supported",
       "source": "R28-C"
+    },
+    {
+      "address": "006c38f0",
+      "state": "contract-supported",
+      "source": "R29-B"
+    },
+    {
+      "address": "0068d080",
+      "state": "contract-supported",
+      "source": "R29-C"
+    },
+    {
+      "address": "0068d280",
+      "state": "contract-supported",
+      "source": "R29-C"
+    },
+    {
+      "address": "0068d2e0",
+      "state": "contract-supported",
+      "source": "R29-C"
+    },
+    {
+      "address": "0068d2f0",
+      "state": "contract-supported",
+      "source": "R29-C"
     }
   ]
 }

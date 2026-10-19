@@ -96,7 +96,7 @@ assert.equal(functions.filter(f=>f.working_research_name).length,atlas.counts.fu
 assert.equal(functions.reduce((n,f)=>n+f.call_instruction_count,0),atlas.counts.call_instructions);
 assert.equal(functions.reduce((n,f)=>n+f.unresolved_indirect_call_sites.length,0),atlas.counts.unresolved_indirect_call_instructions);
 const coverage=JSON.parse(readFileSync('evidence/code-atlas/validation-coverage.json','utf8'));
-assert.equal(coverage.entries.length,34);
+assert.equal(coverage.entries.length,37);
 for(const entry of coverage.entries)assert.ok(functions.some(f=>f.entry===entry.function),entry.function);
 const semantic=JSON.parse(readFileSync('evidence/code-atlas/semantic-coverage.json','utf8'));
 assert.equal(semantic.specimen_sha256,expected.sha256);
@@ -141,8 +141,8 @@ for(const row of importRows){
   assert.ok(!mappedAddresses.has(row.entry)&&!unwindAddresses.has(row.entry)&&!wrapperAddresses.has(row.entry)&&!cleanupAddresses.has(row.entry),row.entry);
   importAddresses.add(row.entry);
 }
-assert.equal(functions.length-mappedAddresses.size-unwindAddresses.size-wrapperAddresses.size-cleanupAddresses.size-importAddresses.size,4866);
-const overlayReceipts=['09','10','11','12','13','14','15','16','17','18','19','21','22','23','24','25','26','27','28'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
+assert.equal(functions.length-mappedAddresses.size-unwindAddresses.size-wrapperAddresses.size-cleanupAddresses.size-importAddresses.size,4861);
+const overlayReceipts=['09','10','11','12','13','14','15','16','17','18','19','21','22','23','24','25','26','27','28','29'].map(n=>JSON.parse(readFileSync(`evidence/investigation-${n}-annotations.json`,'utf8')));
 for(const receipt of overlayReceipts)assert.equal(receipt.sha256,expected.sha256);
 const overlayRows=overlayReceipts.flatMap(receipt=>receipt.annotations.map(row=>[row[0],receipt.investigation>=12?row[2]:row[1]]));
 const nameOverlay=new Map(overlayRows);
@@ -153,9 +153,12 @@ for(const annotationReceipt of overlayReceipts.filter(r=>r.investigation>=12)){
  const notes=new Map(annotationReceipt.function_comments);
  for(const [address] of annotationReceipt.annotations){
   const actual=expected.functions.find(f=>f.address===address)?.comment;
-  assert.equal(actual,notes.has(address)?`CM0102 investigation${annotationReceipt.investigation} (${annotationReceipt.investigation===26?'2026-10-19':'2026-10-18'}): ${notes.get(address)}`:null);
+  assert.equal(actual,notes.has(address)?(annotationReceipt.investigation===29?notes.get(address):`CM0102 investigation${annotationReceipt.investigation} (${annotationReceipt.investigation===26?'2026-10-19':'2026-10-18'}): ${notes.get(address)}`):null);
  }
 }
+const r29=overlayReceipts.find(r=>r.investigation===29);
+assert.equal(expected.functions.find(f=>f.address==='006ce110')?.comment,new Map(r29.function_comments).get('006ce110'));
+assert.equal(expected.functions.find(f=>f.address==='006c38f0')?.return_bytes,2);
 const workstreams=JSON.parse(readFileSync('evidence/code-atlas/workstreams.json','utf8'));
 const groups=Object.values(workstreams.groups);
 assert.equal(groups.reduce((n,g)=>n+g.source_units.length,0),units.length);

@@ -273,6 +273,30 @@
       "module": "reconstruction/merge-initializer-28.ts",
       "evidence": "evidence/merge-initializer-28-oracle.json.gz",
       "boundary": "256 original-entry synthetic cases, 1,792 x86 steps, all seven instruction starts and six local edges; stable mapped receiver inside a 4 KiB synthetic page, no caller collection invariants or connected append behavior"
+    },
+    {
+      "function": "006ce110",
+      "scope": "bounded-keeper-selector-entry-to-return",
+      "behavior": "Processes both side caches in order, scans for a keeper, and performs reserve and fallback reassignment with ordered match/table effects",
+      "module": "reconstruction/keeper-selector-29.ts",
+      "evidence": "evidence/keeper-selector-29-oracle.json.gz",
+      "boundary": "315 original-entry synthetic cases, all 155 instruction starts and 190 local edges; mapped match/table/stack memory and local ABI only, without live roster initialization or match reachability"
+    },
+    {
+      "function": "006c38f0",
+      "scope": "bounded-tactical-word-entry-to-return",
+      "behavior": "Signed slot index and side-selected tactical table word lookup, including invalid-index upper-EAX preservation",
+      "module": "reconstruction/tactical-word-29.ts",
+      "evidence": "evidence/tactical-word-29-oracle.json.gz",
+      "boundary": "305 original-entry synthetic cases for this new body; complete mapped regions, ordered reads and ABI; no connected caller or live tactical-table validity"
+    },
+    {
+      "function": "0068d2e0",
+      "scope": "bounded-collection-payload-getter-entry-to-return",
+      "behavior": "Reads receiver current node and returns its payload or zero with ordered receiver/cursor/stack effects",
+      "module": "reconstruction/collection-head-29.ts",
+      "evidence": "evidence/collection-continuation-29-oracle.json",
+      "boundary": "1,024 original-entry synthetic cases, all seven instruction starts and six local edges; valid mapped receiver/cursor/return memory, no collection lifecycle or invalid-pointer behavior"
     }
   ]
 }

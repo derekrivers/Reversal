@@ -39,7 +39,8 @@ def archive():
                 z.write(p,'cm0102-ghidra-database/'+str(p.relative_to(STAGE)))
 
 def stage():
-    data=(ROOT/'downloads/cm0102.exe').read_bytes()
+    binary_source=Path(os.environ.get('CM0102_BINARY_SOURCE',str(ROOT/'downloads/cm0102.exe')))
+    data=binary_source.read_bytes()
     assert hashlib.sha256(data).hexdigest()==EXPECTED
     for p in [STAGE,RESTORED]:remove_stage_tree(p)
     STAGE.mkdir(); RESTORED.mkdir()
@@ -53,11 +54,11 @@ def stage():
     names.update({row[0]:row[1] for row in annotations['annotations']})
     types={t['path']:t for t in annotations['partial_data_types']}
     comments_by_address={}
-    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json','investigation-19-annotations.json','investigation-21-annotations.json','investigation-22-annotations.json','investigation-23-annotations.json','investigation-24-annotations.json','investigation-25-annotations.json','investigation-26-annotations.json','investigation-27-annotations.json','investigation-28-annotations.json']:
+    for receipt_name in ['event-annotations.json','penalty-annotations.json','shot-resolution-annotations.json','keeper-response-annotations.json','keeper-entry-annotations.json','investigation-09-annotations.json','investigation-10-annotations.json','investigation-11-annotations.json','investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json','investigation-19-annotations.json','investigation-21-annotations.json','investigation-22-annotations.json','investigation-23-annotations.json','investigation-24-annotations.json','investigation-25-annotations.json','investigation-26-annotations.json','investigation-27-annotations.json','investigation-28-annotations.json','investigation-29-annotations.json']:
       event_receipt=ROOT/'evidence'/receipt_name
       if event_receipt.exists():
         event_annotations=json.loads(event_receipt.read_text())
-        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json','investigation-19-annotations.json','investigation-21-annotations.json','investigation-22-annotations.json','investigation-23-annotations.json','investigation-24-annotations.json','investigation-25-annotations.json','investigation-26-annotations.json','investigation-27-annotations.json','investigation-28-annotations.json') else row[1])
+        names.update({row[0]:(row[2] if receipt_name in ('investigation-12-annotations.json','investigation-13-annotations.json','investigation-14-annotations.json','investigation-15-annotations.json','investigation-16-annotations.json','investigation-17-annotations.json','investigation-18-annotations.json','investigation-19-annotations.json','investigation-21-annotations.json','investigation-22-annotations.json','investigation-23-annotations.json','investigation-24-annotations.json','investigation-25-annotations.json','investigation-26-annotations.json','investigation-27-annotations.json','investigation-28-annotations.json','investigation-29-annotations.json') else row[1])
                       for row in event_annotations['annotations']})
         labels.update(dict(event_annotations['global_labels']))
         types.update({t['path']:t for t in event_annotations['partial_data_types']})
@@ -111,6 +112,11 @@ def stage():
     r28=json.loads((ROOT/'evidence/investigation-28-annotations.json').read_text())
     r28_names={row[0] for row in r28['annotations']}
     assert len(r28_names)==5 and not r28['function_comments'] and not r28['code_comments'] and not r28['global_labels'] and not r28['partial_data_types']
+    r29=json.loads((ROOT/'evidence/investigation-29-annotations.json').read_text())
+    r29_names={row[0] for row in r29['annotations']}
+    r29_notes=dict(r29['function_comments'])
+    assert len(r29_names)==5 and set(r29_notes)=={'006ce110','006c38f0'}
+    assert not r29['code_comments'] and not r29['global_labels'] and not r29['partial_data_types']
     r10=json.loads((ROOT/'evidence/investigation-10-annotations.json').read_text())
     historical_comments={row[0]:'CM0102 investigation10 (2026-10-18): '+row[2]
                          for row in r10['annotations'] if row[0] in ('0062c680','0062ed70','006d0980')}
@@ -119,7 +125,7 @@ def stage():
     for a,n in sorted(names.items()):
       row={'address':a,'name':n}
       if a in ['006b98c0','006bd930']:row['return_bytes']=1
-      elif a=='006c38c0':row['return_bytes']=2
+      elif a in ('006c38c0','006c38f0'):row['return_bytes']=2
       if a in r12_names:row['comment']=r12_notes.get(a)
       if a in r13_names:row['comment']=r13_notes.get(a)
       if a in r14_names:row['comment']=r14_notes.get(a)
@@ -136,6 +142,8 @@ def stage():
       if a in r26_names:row['comment']=None
       if a in r27_names:row['comment']=None
       if a in r28_names:row['comment']=None
+      if a in r29_names:row['comment']=None
+      if a in r29_notes:row['comment']=r29_notes[a]
       if a in historical_comments:row['comment']=historical_comments[a]
       functions.append(row)
     pe=struct.unpack_from('<I',data,0x3c)[0];optional=pe+24
