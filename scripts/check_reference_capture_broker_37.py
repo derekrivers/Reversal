@@ -102,6 +102,43 @@ def check_output_confinement():
             finally:
                 broker.os.fdopen = actual_fdopen
             check(not buffered_session.exists(), "buffered-write failure left a session file")
+            broken = {"CaptureError": RuntimeError,
+                      "capture": lambda _settings: {"profile": "pinned-game",
+                                                     "stop_reason": "inventory-only",
+                                                     "boundary_observed": False,
+                                                     "probe_count": 0, "bad": object()}}
+            try:
+                broker.capture_once("inventory", 1, None, Path(sys.executable), 777, broken)
+            except TypeError:
+                pass
+            else:
+                raise RuntimeError("unserializable capture was accepted")
+            check(not list(results.glob("reference37-auto-*-777.json")),
+                  "failed capture serialization left a partial output")
+            circular = []
+            circular.append(circular)
+            broken["capture"] = lambda _settings: {"profile": "pinned-game",
+                                                   "stop_reason": "inventory-only",
+                                                   "boundary_observed": False,
+                                                   "probe_count": 0, "bad": circular}
+            try:
+                broker.capture_once("inventory", 1, None, Path(sys.executable), 779, broken)
+            except ValueError as error:
+                check("Circular reference" in str(error), "wrong circular-data rejection")
+            else:
+                raise RuntimeError("circular capture was accepted")
+            check(not list(results.glob("reference37-auto-*-779.json")),
+                  "circular capture left invalid JSON")
+            def rejected_capture(_settings):
+                raise RuntimeError("synthetic capture refusal")
+            rejected = broker.capture_once("inventory", 1, None, Path(sys.executable), 778,
+                                           {"CaptureError": RuntimeError,
+                                            "capture": rejected_capture})
+            check(not rejected["ok"] and
+                  json.loads(Path(rejected["private_output"]).read_text(encoding="utf-8"))
+                  ["capture_accepted"] is False,
+                  "ordinary capture refusal did not leave a labelled private record")
+            Path(rejected["private_output"]).unlink()
             path.unlink()
             results.rmdir()
             junction = subprocess.run(["cmd", "/c", "mklink", "/J", str(results), str(outside)],

@@ -273,18 +273,18 @@ def capture_once(mode: str, pid: int, thread: int | None, exe: Path,
                                   thread=thread, region=[], samples=1000,
                                   seconds=30.0, interval_ms=10, boundary=0x7023E3,
                                   synthetic_sha256=None)
-    with secure_new_result(output) as stream:
+    with secure_new_result(output, delete_on_failure=True) as stream:
         try:
             result = implementation["capture"](settings)
-            result["tool_sha256"] = CAPTURE_SHA  # executed bytes, not a later disk read
-            json.dump(result, stream, indent=2)
-            stream.write("\n")
         except (implementation["CaptureError"], OSError, ValueError) as error:
             json.dump({"private": True, "capture_accepted": False,
                        "error": str(error)}, stream)
             stream.write("\n")
             return {"ok": False, "error": "bounded capture failed",
                     "private_output": str(output)}
+        result["tool_sha256"] = CAPTURE_SHA  # executed bytes, not a later disk read
+        json.dump(result, stream, indent=2)
+        stream.write("\n")
     return {"ok": True,
             "summary": {"profile": result["profile"], "stop_reason": result["stop_reason"],
                         "boundary_observed": result["boundary_observed"],
