@@ -11,6 +11,8 @@ import re
 
 PINNED = "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86"
 SITE_SHA256 = "a89054f25cd4c6ca54ad10b5d3c193a25b41fc858b56d32048a3d3209617c2a5"
+ORACLE_SHA256 = "b8b7bd2c391875b67acb74477ae4632674d3a84a5bb16a7a9e7aa75fba183457"
+ORACLE_GZIP_HEADER = bytes.fromhex("1f8b08000000000002ff")
 OFFSETS = (0, 1, 2, 3, 4, 5, 7, 8, 15, 16, 31, 63, 127, 255, 511, 0x7f0)
 TRACE = ("0068d020", "0068d022", "0068d024", "0068d027", "0068d02a", "0068d02d", "0068d030")
 REGISTERS = ("eax", "ebx", "ecx", "edx", "esi", "edi", "ebp", "esp", "eip")
@@ -100,9 +102,13 @@ def parse_canonical(compressed):
     if len(decompressed) > 250000:
         raise ValueError("unexpected expanded oracle size")
     oracle = json.loads(decompressed)
-    canonical = gzip.compress((json.dumps(oracle, separators=(",", ":")) + "\n").encode(), mtime=0)
-    if compressed != canonical:
-        raise ValueError("noncanonical JSON or gzip envelope")
+    canonical_json = (json.dumps(oracle, separators=(",", ":")) + "\n").encode()
+    if decompressed != canonical_json:
+        raise ValueError("noncanonical compact JSON serialization")
+    # Python 3.12 may generate OS=0x03 with mtime=0; 3.13 generates 0xff.
+    # Check the retained FF envelope directly instead of recompressing it.
+    if compressed[:10] != ORACLE_GZIP_HEADER or sha(compressed) != ORACLE_SHA256:
+        raise ValueError("noncanonical retained gzip envelope")
     return oracle
 
 
@@ -129,12 +135,19 @@ def check(sites_path, oracle_path):
         else:
             raise ValueError("privacy mutation admitted: " + label)
     expanded = gzip.decompress(compressed)
+    os3_payload = bytearray(compressed)
+    os3_payload[9] = 0x03
+    if compressed[9] != 0xff or gzip.decompress(os3_payload) != expanded:
+        raise ValueError("gzip OS-byte variant regression setup failed")
+    if parse_canonical(compressed) != oracle:
+        raise ValueError("retained OS=0xff gzip variant rejected")
     header_payload = bytearray(compressed)
     header_payload[3] |= 0x08  # FNAME: valid optional gzip header field.
     header_payload = header_payload[:10] + b"hidden-name\0" + header_payload[10:]
     for label, changed in (
         ("appended JSON whitespace", gzip.compress(expanded + b" ", mtime=0)),
         ("embedded JSON tab", gzip.compress(expanded.replace(b'{"work_unit"', b'{\t"work_unit"', 1), mtime=0)),
+        ("Python 3.12 OS=0x03 header variant", bytes(os3_payload)),
         ("optional gzip header payload", bytes(header_payload)),
     ):
         try:

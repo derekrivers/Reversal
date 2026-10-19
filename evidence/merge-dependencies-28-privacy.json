@@ -13,6 +13,7 @@
     "wrong 64-hex memory digest rejected",
     "appended JSON whitespace rejected",
     "embedded JSON tab rejected",
+    "Python 3.12 OS=0x03 header variant rejected",
     "optional gzip header payload rejected"
   ]
 }
