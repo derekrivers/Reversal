@@ -45,4 +45,4 @@ node reconstruction/check-action33-rng-35.ts
 npm run check
 ```
 
-Python 3.13.7, Capstone 5.0.7, Unicorn 2.1.4 and Node 24.19.0 were used. The normal and optimized verification receipts are byte-identical. The task checker and full repository check pass. The shared runner, registry, queue and frontier are coordinator-owned and unchanged here; register the new checker during integration. Original PE bytes, native export bodies and full private memory images remain outside Git.
+Python 3.13.7, Capstone 5.0.7, Unicorn 2.1.4 and Node 24.19.0 were used. The normal and optimized verification receipts are byte-identical. The task checker and full repository check pass. This integration registers the checker, validation scope and queue assignment; the shared frontier follows in a separate update. Original PE bytes, native export bodies and full private memory images remain outside Git.
