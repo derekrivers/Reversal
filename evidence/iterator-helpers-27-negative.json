@@ -1,0 +1,19 @@
+{
+  "work_unit": "R27-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checks": [
+    "normal exact sites and oracle",
+    "normal/-O exact sites and oracle",
+    "mutated specimen rejected normal and -O",
+    "mutated native export rejected",
+    "mutated manifest rejected under -O",
+    "mutated preflight rejected",
+    "resealed native link-offset operand rejected by PE/native comparator",
+    "resealed PE link-offset operand rejected by PE/native comparator",
+    "mutated retained oracle rejected",
+    "--mutate-result rejected",
+    "--mutate-effect rejected"
+  ],
+  "count": 11,
+  "status": "passed"
+}
