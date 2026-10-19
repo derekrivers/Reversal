@@ -40,7 +40,7 @@ for (const row of map.functions) {
   assert.ok(hex(row.address) && nonempty(row.role));
   assert.ok(nonempty(row.local_status) && nonempty(row.execution_status));
 }
-for (const address of ['006be710', '00700bd0', '00702050', '006ce110', '006cfe10', '0062ed70', '0084be20', '006b7f20', '004cf5f0'])
+for (const address of ['006be710', '00700bd0', '00702050', '006ce110', '006cfe10', '0062ed70', '0084be20', '0094bef1', '006b7f20', '004cf5f0', '004c7040'])
   assert.ok(functions.has(address), `missing dependency ${address}`);
 
 assert.ok(Array.isArray(map.ordered_constraints) && map.ordered_constraints.length > 0);
@@ -58,7 +58,10 @@ const classified = [...observed, ...staticOrUnreached];
 unique(classified.map(site => ({site})), 'site');
 assert.deepEqual(new Set(classified), new Set(map.ordered_constraints.map(row => row.site)));
 assert.ok(staticOrUnreached.includes('0062ed99'), 'diagnostic call must remain unreached');
-assert.ok(staticOrUnreached.includes('006eafa0'), 'contract call must remain unreached');
+assert.ok(observed.includes('006eafa0'), 'R34-B entered the contract call');
+assert.ok(staticOrUnreached.includes('004cf62b'), 'auxiliary row read remains unreached');
+assert.ok(staticOrUnreached.includes('004c7073'), 'constructor OS call remains unreached');
+assert.ok(staticOrUnreached.includes('0094bf49'), 'selector CRT HeapSize remains unreached');
 const pinnedOracle = (path, sha256) => {
   const bytes = readFileSync(new URL(`../${path}`, import.meta.url));
   assert.equal(createHash('sha256').update(bytes).digest('hex'), sha256, `changed ${path}`);
@@ -68,6 +71,11 @@ const prefixOracle = pinnedOracle('evidence/action33-prefix-30-oracle.bin', '08c
 const effectOracle = pinnedOracle('evidence/action33-effect-30-oracle.bin', 'ddf4a92864ef02dd7027d9311e5e615b7b0c75a2625eb9cb87dd6e915bc21472');
 const ownerOracle = pinnedOracle('evidence/action33-owner-33-oracle.bin', 'f5dbbdff245eda8bbe946430461a93c76b8dd971e0d2d52e89d667c45681eafd');
 const conversionOracle = pinnedOracle('evidence/action33-conversion-33-oracle.bin', '1fc3bf7c687abec08597d8e9eb66d0abb3a871e7a156075d4b195ad8fa4b79ee');
+const adjustmentOracle = pinnedOracle('evidence/action33-adjustment-34-oracle.bin', 'b18307489d5adeaa2026ad17f214404b5ac43a400bcecfd0fab6665713511e30');
+const contractOracle = pinnedOracle('evidence/action33-contract-34-oracle.bin', '82e51c46fe98ba06551c184d2d3e811ffdb67dde9aad171c8a7ef05f68f344e5');
+const rngOracle = pinnedOracle('evidence/action33-rng-35-oracle.bin', 'edb057f22e3b5eec75ca0583a03f0b1c291e2ec96403cbf7efb61bf8d31f3a32');
+const auxOracle = pinnedOracle('evidence/action33-aux-35-oracle.bin', 'bfd41a4760cd2f1b32e83a48c03a37e298f2e9de2448b425c12d1d23863d3d43');
+const selectorOracle = pinnedOracle('evidence/action33-fixture-35-oracle.bin', '85625c272b1c8383805a8a1169ab2e4fc5eb12f541a5ac370ae06774b906a53a');
 const bySite = new Map(map.ordered_constraints.map(row => [row.site, row]));
 const reached = new Set();
 const callTargets = new Map();
@@ -101,6 +109,46 @@ for (const specimenCase of conversionOracle.cases) {
   }
 }
 assert.equal(secondGridCalls, 232, 'R33-A clear cases must reach the second grid call');
+let adjustmentCalls = 0;
+for (const specimenCase of adjustmentOracle.cases) {
+  for (const call of specimenCase.calls) {
+    if (call.site === '00702222') adjustmentCalls++;
+    if (!bySite.has(call.site)) continue;
+    reached.add(call.site);
+    if (callTargets.has(call.site)) assert.equal(callTargets.get(call.site), call.target, `varying target ${call.site}`);
+    callTargets.set(call.site, call.target);
+  }
+}
+assert.equal(adjustmentCalls, 232, 'R34-A clear cases must enter the early adjustment');
+let contractCalls = 0;
+for (const specimenCase of contractOracle.oracle.placement_calls) {
+  for (const [site, target] of specimenCase.continuation.calls) {
+    if (site === '006eafa0') contractCalls++;
+    if (!bySite.has(site)) continue;
+    reached.add(site);
+    if (callTargets.has(site)) assert.equal(callTargets.get(site), target, `varying target ${site}`);
+    callTargets.set(site, target);
+  }
+}
+assert.equal(contractCalls, 80, 'R34-B placement must enter the contract lookup');
+let zeroBoundCalls = 0;
+for (const specimenCase of rngOracle.cases) {
+  for (const call of specimenCase.calls) {
+    if (call.site === '00702241') zeroBoundCalls++;
+    if (!bySite.has(call.site)) continue;
+    reached.add(call.site);
+    if (callTargets.has(call.site)) assert.equal(callTargets.get(call.site), call.target, `varying target ${call.site}`);
+    callTargets.set(call.site, call.target);
+  }
+}
+assert.equal(zeroBoundCalls, 232, 'R35-A clear cases must execute zero-bound RNG');
+assert.equal(selectorOracle.oracle.cases.length, 8);
+for (const specimenCase of selectorOracle.oracle.cases) {
+  assert.equal(specimenCase.next_call.site, '0094bf49');
+  assert.equal(specimenCase.next_call.symbol, 'HeapSize');
+  assert.equal(specimenCase.next_call.executed, false);
+}
+assert.equal(auxOracle.oracle.unit, 'R35-B');
 assert.deepEqual(new Set(observed), reached, 'observed sites must be reached in retained original traces');
 for (const [site, target] of callTargets) assert.equal(bySite.get(site).target, target, `wrong observed target ${site}`);
 for (const site of observed) if (!callTargets.has(site)) assert.equal(bySite.get(site).target, undefined, `draw cannot have a call target ${site}`);
@@ -122,6 +170,11 @@ const opponent = read('evidence/action33-opponent-32-integrity.json');
 const slot = read('evidence/action33-slot-32-validation.json');
 const conversion = read('evidence/action33-conversion-33-integrity.json');
 const owner = read('evidence/action33-owner-33-validation.json');
+const adjustment = read('evidence/action33-adjustment-34-integrity.json');
+const contract = read('evidence/action33-contract-34-validation.json');
+const rng = read('evidence/action33-rng-35-integrity.json');
+const aux = read('evidence/action33-aux-35-validation.json');
+const selector = read('evidence/action33-fixture-35-validation.json');
 assert.equal(prefix.specimen_sha256, specimen);
 assert.equal(effect.specimen_sha256, specimen);
 assert.equal(grid.specimen_sha256, specimen);
@@ -130,6 +183,11 @@ assert.equal(opponent.specimen_sha256, specimen);
 assert.equal(slot.specimen_sha256, specimen);
 assert.equal(conversion.specimen_sha256, specimen);
 assert.equal(owner.specimen_sha256, specimen);
+assert.equal(adjustment.specimen_sha256, specimen);
+assert.equal(contract.specimen_sha256, specimen);
+assert.equal(rng.specimen_sha256, specimen);
+assert.equal(aux.specimen_sha256, specimen);
+assert.equal(selector.specimen_sha256, specimen);
 assert.equal(map.completed_prefix.entry, '00702050');
 assert.equal(map.completed_prefix.stop_before, '007024b4');
 assert.equal(map.completed_prefix.cases, prefix.cases);
@@ -180,13 +238,31 @@ assert.match(continued.domain, /unjoined/);
 assert.match(continued.domain, /hardware x87 exception\/status equivalence excluded/);
 source(continued.source);
 assert.equal(conversion.oracle_sha256, '1fc3bf7c687abec08597d8e9eb66d0abb3a871e7a156075d4b195ad8fa4b79ee');
+assert.equal(adjustment.oracle_sha256, 'b18307489d5adeaa2026ad17f214404b5ac43a400bcecfd0fab6665713511e30');
+const adjusted = map.typescript_adjustment_continuation;
+assert.equal(adjusted.entry, '00702050');
+assert.equal(adjusted.clear_stop_before, '00702241');
+for (const [field, receiptField] of [['cases','cases'], ['original_instruction_steps','instructions'], ['ordered_data_events','events'], ['rng_calls','rng_calls']])
+  assert.equal(adjusted[field], adjustment.coverage[receiptField]);
+assert.equal(adjusted.source, 'reports/action33-adjustment-34.md');
+assert.match(adjusted.domain, /unjoined/);
+source(adjusted.source);
+assert.equal(rng.oracle_sha256, 'edb057f22e3b5eec75ca0583a03f0b1c291e2ec96403cbf7efb61bf8d31f3a32');
+const drawn = map.typescript_rng_continuation;
+assert.equal(drawn.entry, '00702050');
+assert.equal(drawn.clear_stop_before, '0070230c');
+for (const [field, receiptField] of [['cases','cases'], ['original_instruction_steps','instructions'], ['ordered_data_events','events'], ['rng_calls','rng_calls'], ['suffix_states','suffix_states'], ['r30c_input_projections','r30c_projections']])
+  assert.equal(drawn[field], rng.coverage[receiptField]);
+assert.equal(drawn.source, 'reports/action33-rng-35.md');
+assert.match(drawn.domain, /full machine-state join.*unproven/);
+source(drawn.source);
 assert.equal(map.typescript_composition.start, '007022fd');
 assert.equal(map.typescript_composition.stop_before, '007024b4');
-assert.equal(map.typescript_composition.first_full_entry_gap, '00702222 -> 00713e90 (clear); 0071614b -> 005b58e0 (bit-04 set)');
-assert.equal(map.typescript_composition.first_full_entry_gap_source, 'reports/action33-conversion-33.md');
+assert.equal(map.typescript_composition.first_full_entry_gap, '0070230c -> 006ce110 (clear); 0071614b -> 005b58e0 (bit-04 set)');
+assert.equal(map.typescript_composition.first_full_entry_gap_source, 'reports/action33-rng-35.md');
 source(map.typescript_composition.first_full_entry_gap_source);
 const gapReport = readFileSync(new URL(`../${map.typescript_composition.first_full_entry_gap_source}`, import.meta.url), 'utf8');
-assert.match(gapReport, /00702222.*00713e90/);
+assert.match(gapReport, /0070230c.*006ce110/);
 assert.match(gapReport, /0071614b.*005b58e0/);
 assert.equal(map.typescript_composition.cases, composition.coverage.cases);
 assert.equal(map.typescript_composition.selector_events, composition.coverage.selector_events);
@@ -224,9 +300,41 @@ assert.equal(producer.source, 'reports/action33-owner-33.md');
 assert.match(producer.domain, /interior.*separate.*synthetic/);
 source(producer.source);
 assert.equal(owner.evidence_sha256, 'f5dbbdff245eda8bbe946430461a93c76b8dd971e0d2d52e89d667c45681eafd');
-assert.equal(map.frontier.find(row => row.id === 'typescript_prefix')?.first_site, '00702222');
+assert.equal(contract.evidence_sha256, '82e51c46fe98ba06551c184d2d3e811ffdb67dde9aad171c8a7ef05f68f344e5');
+const lookup = map.contract_lookup_continuation;
+for (const [field, receiptField] of [['placement_call_prefixes','placement_call_prefixes'], ['constructor_os_frontiers','constructor_os_frontiers'], ['original_instruction_steps','instruction_steps']])
+  assert.equal(lookup[field], contract.coverage[receiptField]);
+assert.equal(lookup.first_lookup_gap, '004cf62b');
+assert.match(bySite.get('004cf62b').event, /signed primary row index.*auxiliary record\+0/);
+assert.equal(lookup.constructor_os_gap, '004c7073');
+assert.equal(lookup.source, 'reports/action33-contract-34.md');
+assert.match(lookup.domain, /separate constructor entry/);
+source(lookup.source);
+assert.equal(aux.evidence_sha256, 'bfd41a4760cd2f1b32e83a48c03a37e298f2e9de2448b425c12d1d23863d3d43');
+const allocation = map.auxiliary_allocation_frontier;
+assert.equal(allocation.allocation_request_windows, aux.coverage.allocation_request_windows);
+assert.equal(allocation.original_instruction_steps, aux.coverage.instruction_steps);
+assert.equal(allocation.native_compared_instructions, aux.native_compared_instructions);
+assert.equal(allocation.pe_only_decoded_instructions, aux.pe_only_decoded_instructions);
+assert.equal(allocation.new_setup_gap, '008284ad');
+assert.equal(allocation.save_load_gap, '0082af61');
+assert.match(map.state_requirements.find(row => row.field === 'global 00ae2d0c auxiliary record base')?.producer ?? '', new RegExp(auxOracle.sites.static_lifecycle.load_publish));
+assert.equal(allocation.source, 'reports/action33-aux-35.md');
+source(allocation.source);
+assert.equal(selector.evidence_sha256, '85625c272b1c8383805a8a1169ab2e4fc5eb12f541a5ac370ae06774b906a53a');
+const selecting = map.fixture_selector_entry;
+for (const [field, receiptField] of [['selector_entries','selector_entries'], ['caller_interior_windows','caller_interior_windows'], ['produced_date_initializers','produced_date_initializers'], ['original_instruction_steps','instruction_steps']])
+  assert.equal(selecting[field], selector.coverage[receiptField]);
+assert.equal(selecting.native_operand_instructions, selector.native_operand_instructions);
+assert.equal(selecting.pe_only_instructions, selector.pe_only_instructions);
+assert.equal(selecting.first_os_gap, '0094bf49');
+assert.equal(selecting.source, 'reports/action33-fixture-35.md');
+assert.match(selecting.domain, /no selection.*entry-to-R33-B interior connection/);
+source(selecting.source);
+assert.equal(map.frontier.find(row => row.id === 'typescript_prefix')?.first_site, '0070230c');
 assert.equal(map.frontier.find(row => row.id === 'early_guard')?.first_site, '0071614b');
-assert.equal(map.frontier.find(row => row.id === 'normal_participant_state')?.first_site, '006eafa0');
+assert.equal(map.frontier.find(row => row.id === 'normal_participant_state')?.first_site, '004cf62b');
+assert.equal(map.frontier.find(row => row.id === 'fixture_selector_lifecycle')?.first_site, '0094bf49');
 
 assert.ok(Array.isArray(map.frontier) && map.frontier.length > 0);
 unique(map.frontier, 'id');
