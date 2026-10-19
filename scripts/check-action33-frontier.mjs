@@ -342,6 +342,11 @@ for (const row of map.frontier) {
   assert.ok(nonempty(row.id) && hex(row.first_site));
   assert.ok(nonempty(row.requirement) && nonempty(row.next_assignment));
 }
+const queue = readFileSync(new URL('../coordination/QUEUE.md', import.meta.url), 'utf8');
+for (const [id, assignment] of [['typescript_prefix', 'R36-A'], ['normal_participant_state', 'R36-B'], ['fixture_selector_lifecycle', 'R36-C']]) {
+  assert.match(queue, new RegExp(`\\| ${assignment} \\|`), `missing queue assignment ${assignment}`);
+  assert.match(map.frontier.find(row => row.id === id)?.next_assignment ?? '', new RegExp(`^${assignment}\\b`), `stale frontier assignment ${id}`);
+}
 const rendered = execFileSync(process.execPath, [fileURLToPath(new URL('./render-action33-frontier.mjs', import.meta.url))], {encoding: 'utf8'});
 assert.equal(readFileSync(new URL('../reports/action33-frontier-30.md', import.meta.url), 'utf8').replace(/\r\n/g, '\n'), rendered, 'stale generated frontier report');
 process.stdout.write(`Action33 frontier: ${map.functions.length} functions, ${map.ordered_constraints.length} ordered constraints, ${map.frontier.length} unresolved dependencies; synthetic prefix only.\n`);

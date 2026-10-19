@@ -78,11 +78,11 @@ Separate selector entries: 8 original entries and 8520 steps produce 320 date in
 
 | Dependency | First site | Required evidence | Assignment |
 | --- | --- | --- | --- |
-| typescript_prefix | 0070230c | admit 006ce110 selector call with full shared machine, memory and RNG effects; establish full-state join to separate R30-C segment before reusing it | unassigned |
+| typescript_prefix | 0070230c | admit 006ce110 selector call with full shared machine, memory and RNG effects; establish full-state join to separate R30-C segment before reusing it | R36-A bounded selector continuation; full R30-C join still open |
 | early_guard | 0071614b | admit 005b58e0 tactical lookup on bit-04-set path after 00ae23bc provenance and valid row lifetime | unassigned |
 | diagnostic_path | 0062ed99 | admit original 00944cff path split and its transitive string/diagnostic effects | unassigned |
-| normal_participant_state | 004cf62b | complete auxiliary allocation and row population plus 00ae1050 manager setup through original calls, then execute valid record read and contract lookup/placement | unassigned |
-| fixture_selector_lifecycle | 0094bf49 | establish CRT heap/exit-list and initialized selector rows, then execute original fixture selection from 0084be20 entry to the separate R33-B interior window | unassigned |
+| normal_participant_state | 004cf62b | complete auxiliary allocation and row population plus 00ae1050 manager setup through original calls, then execute valid record read and contract lookup/placement | R36-B bounded row/index provenance; allocation and complete placement still open |
+| fixture_selector_lifecycle | 0094bf49 | establish CRT heap/exit-list and initialized selector rows, then execute original fixture selection from 0084be20 entry to the separate R33-B interior window | R36-C bounded receiver construction; CRT and fixture selection still open |
 | event_stream | 0070387e | establish 007002f0/006d6f70 suppression, ordered draws and writes | unassigned |
 | other_slots | 00703e24 | prove distance-branch reachability or admit 007103e0 transitive effects | unassigned |
 | gate_context | 00703ff2 | establish 006ce310/004b0850 output and candidate state | unassigned |
