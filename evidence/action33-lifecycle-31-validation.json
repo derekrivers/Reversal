@@ -1,0 +1,33 @@
+{
+  "unit": "R31-B",
+  "status": "passed",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "evidence_sha256": "ecb4bcc534d285a6b5a28653fe8575795ca981363846c6b3576563237ca24dd9",
+  "expanded_canonical_sha256": "531ddf94fc0ab3db9c17c0b3056af9cac56789651cd04e5a91eb2b0b3fcb3c2a",
+  "compressed_bytes": 85079,
+  "expanded_canonical_bytes": 1318574,
+  "normal_optimized_evidence": "byte-identical original-instruction regeneration",
+  "compared_instructions": 729,
+  "coverage": {
+    "lookup_returns": 160,
+    "nonnull_returns": 80,
+    "null_attribute_returns": 80,
+    "placement_frontiers": 80,
+    "normal_status_frontiers": 80,
+    "null_diagnostic_frontiers": 80,
+    "constructor_os_frontiers": 8,
+    "instruction_steps": 29800
+  },
+  "negative_probes": [
+    "changed specimen rejected",
+    "changed native manifest rejected",
+    "resealed roster-ID operand rejected",
+    "executed wrong returned staff base rejected",
+    "executed wrong slot context store rejected",
+    "raw private fragment in compressed container rejected",
+    "hex private fragment in expanded JSON rejected",
+    "oversized gzip expansion rejected"
+  ],
+  "privacy": "compressed and bounded expanded bytes scanned for original code/source in raw, hex and base64; no original pages retained",
+  "limits": "synthetic function-entry fixture kernels; no game caller, loaded database, lookup-object initialization or normal effect return"
+}
