@@ -26,6 +26,7 @@ const checks=[
  ['reconstruction/check-merge-initializer-28.ts','evidence/merge-initializer-28-oracle.json.gz'],
  ['reconstruction/check-sort-swap-28.ts','evidence/sort-helpers-28-swap-oracle.json.gz'],
  ['reconstruction/check-collection-head-29.ts','evidence/collection-continuation-29-oracle.json'],
+ ['reconstruction/check-keeper-selector-29.ts','evidence/keeper-selector-29-oracle.json.gz'],
  ['reconstruction/check-tactical-word-29.ts','evidence/tactical-word-29-oracle.json.gz'],
  ['reconstruction/check-random.ts','evidence/random-validation/x86-oracle.json','evidence/random-validation/random-table.bin','results/random.json'],
  ['reconstruction/check-clock.ts','evidence/clock-validation/clock-oracle.json','evidence/clock-validation/clock-oracle.bin','results/clock.json'],

@@ -1,0 +1,13 @@
+{
+  "unit": "R29-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "sites_sha256": "4692c12744e771684bc947871927ff47be2e26aeb3e25d0e0424243aeba13703",
+  "oracle_sha256": "17c7fd897a832ceb746931870949ad6deb277129c5f87c418609a4229a690ea5",
+  "checks": [
+    "normal/-O static and oracle bytes identical",
+    "gzip OS bytes 03/0a normalize to retained FF oracle",
+    "changed PE rejected",
+    "resealed native operand rejected",
+    "resealed exact-old annotation rejected"
+  ]
+}
