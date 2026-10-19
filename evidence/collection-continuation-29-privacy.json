@@ -9,6 +9,8 @@
     "text register rejected",
     "wrong offset rejected",
     "hidden event rejected",
-    "wrong memory digest rejected"
+    "wrong memory digest rejected",
+    "raw domain rejected",
+    "raw coverage rejected"
   ]
 }

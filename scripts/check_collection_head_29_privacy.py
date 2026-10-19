@@ -8,6 +8,8 @@ from pathlib import Path
 
 SITE = "7df90b7f1fa9cbe246e85d6b2d829098c7f7ddaf9350a2801ca88d8ec2aa820b"
 ORACLE = "61ad24b654668d3b9a7f9c797fc5a7315d9d8068c09316b9834329b21553b3eb"
+SPECIMEN = "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86"
+DOMAIN = "1024 original-entry mapped synthetic inputs; null, receiver-alias and separate cursor cases"
 OFFSETS = (0,1,2,3,7,15,31,63,127,255,511,1023,1535,2047,3071,4082)
 REGS = {"eax","ebx","ecx","edx","esi","edi","ebp","esp","eip"}
 
@@ -22,8 +24,11 @@ def validate(raw, oracle):
     if set(oracle) != {"work_unit","specimen_sha256","sites_sha256","domain","cases_count",
                        "executed_instruction_steps","covered_instruction_starts","covered_edges","cases"}:
         raise ValueError("oracle schema mismatch")
+    if oracle["work_unit"] != "R29-C" or oracle["specimen_sha256"] != SPECIMEN or oracle["domain"] != DOMAIN:
+        raise ValueError("oracle provenance/domain mismatch")
     if len(oracle["cases"]) != 1024 or oracle["executed_instruction_steps"] != 5120:
         raise ValueError("oracle coverage count mismatch")
+    seen, edges = set(), set()
     for index, row in enumerate(oracle["cases"]):
         mode, seed, offset = index//256, (index//16)%16, OFFSETS[index%16]
         receiver = 0x200000 + offset
@@ -59,10 +64,15 @@ def validate(raw, oracle):
         expected_events.append(["read","00400800",4])
         expected_trace = ["0068d2e0","0068d2e3","0068d2e5"] + \
             (["0068d2e7","0068d2e9"] if cursor else ["0068d2ea","0068d2ec"])
+        seen.update(expected_trace)
+        edges.update(zip(expected_trace,expected_trace[1:]))
         if row["events"] != expected_events or row["trace"] != expected_trace:
             raise ValueError("ordered synthetic evidence mismatch")
         if row["memory_sha256"] != [sha(data),sha(stack)]:
             raise ValueError("full synthetic memory mismatch")
+    if oracle["covered_instruction_starts"] != sorted(seen) or \
+            oracle["covered_edges"] != [list(edge) for edge in sorted(edges)]:
+        raise ValueError("synthetic instruction coverage mismatch")
 
 
 def run(sites_path, oracle_path):
@@ -82,6 +92,16 @@ def run(sites_path, oracle_path):
         ("wrong memory digest",lambda row: row["memory_sha256"].__setitem__(0,"0"*64))):
         changed=copy.deepcopy(oracle)
         change(changed["cases"][0])
+        try:
+            validate(sites_raw,changed)
+        except ValueError:
+            mutations.append(label+" rejected")
+        else:
+            raise ValueError("privacy mutation admitted: "+label)
+    for label, key, value in (("raw domain","domain","PRIVATE RAW"),
+                              ("raw coverage","covered_instruction_starts",["PRIVATE RAW"])):
+        changed=copy.deepcopy(oracle)
+        changed[key]=value
         try:
             validate(sites_raw,changed)
         except ValueError:
