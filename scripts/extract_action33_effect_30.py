@@ -79,7 +79,7 @@ def extract(binary,exports09,exports10,runtime):
     a=0x62ed99;off=pe_offset(data,a,5);stop=list(md.disasm(data[off:off+5],a))
     need(len(stop)==1 and stop[0].mnemonic=='call' and stop[0].operands[0].imm==0x944cff,'diagnostic target changed')
     compare({a:stop[0]},native)
-    return {'unit':'R30-B','specimen_sha256':EXPECTED,'prefix_baseline':'ee9420aa2e6fd50ff59a8b9b7de0fafca2ea7fbb',
+    return {'unit':'R30-B','specimen_sha256':EXPECTED,'prefix_baseline':'2d947281a9c94620cb1927960b2075c47f644fff',
       'prefix_oracle_sha256':PREFIX_ORACLE,'prefix_emulator_sha256':PREFIX_SCRIPT,
       'native_export_sha256':HASHES,'caller_native_sha256':CALLER_HASH,'runtime_manifest_sha256':RUNTIME_MANIFEST,
       'admitted_ranges':ranges,'admitted_instruction_count':len(insns)+rng_instruction_count,

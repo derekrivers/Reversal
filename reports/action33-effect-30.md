@@ -4,7 +4,7 @@ All 160 R30-A cases execute the original call at `007024b4`, continue through bo
 
 This is useful original-execution evidence of the first unsupported dependency, not a successful participant-effect implementation. The retained R30-A state is insufficient for a normal effect path: shooter dword `+69` is zero, and the lookup-object global `00b63d28` remains zero in the mapped image. No player pointer, lookup object, return value, instruction or argument is repaired to force continuation. There is no new TypeScript model, effect-return equivalence or shot outcome claim.
 
-The specimen SHA-256 is `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`. The branch starts at R30-A adoption commit `ee9420aa2e6fd50ff59a8b9b7de0fafca2ea7fbb`. Addresses are virtual; [site evidence](../evidence/action33-effect-30-sites.json) labels file offsets separately.
+The specimen SHA-256 is `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`. The retained R30-A baseline was adopted in merged commit `2d947281a9c94620cb1927960b2075c47f644fff`. Addresses are virtual; [site evidence](../evidence/action33-effect-30-sites.json) labels file offsets separately.
 
 ## Connection to the actual R30-A frame
 
@@ -73,7 +73,7 @@ All checks passed using Python 3.13.7, Capstone 5.0.7, Unicorn 2.1.4 and Node 24
 
 ### Review regression checks
 
-Independent review found that the native-export mutation check assumed ignored `results/` already existed, and that the Node checker did not read the retained integrity receipt. The verifier now creates that directory before allocating its temporary export folder. The receipt remains byte-identical, SHA-256 `41f0a30117a36b5879c3a23523364e10b539b34007026b43adcc0ec577480401`.
+Independent review found that the native-export mutation check assumed ignored `results/` already existed, and that the Node checker did not read the retained integrity receipt. The verifier now creates that directory before allocating its temporary export folder. The current receipt SHA-256 is `7e62d1eb3a03eaa689c45abf2d46c4bdb3977c6556ccc54b28ca854d8e7205f0`; normal and optimized regeneration match it byte for byte.
 
 The [review regression script](../scripts/test_action33_effect_30_review.py) archives the staged Git tree into two separate temporary checkouts and explicitly verifies that neither contains `results/` before running normal Python or `python -O`. Both regenerate the retained receipt exactly and pass the Node checker. In a copied receipt, changing `status` to `failed` and independently replacing `negative_checks` with an empty object both fail specifically at the receipt SHA-256 gate. After restoring the receipt, the complete Node 24 research runner passes in the archive. No private input is copied into the archive or retained evidence.
 

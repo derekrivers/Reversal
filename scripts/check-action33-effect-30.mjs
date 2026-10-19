@@ -6,7 +6,7 @@ import {gunzipSync} from 'node:zlib';
 import {strict as assert} from 'node:assert';
 const root=new URL('../',import.meta.url),hash=b=>createHash('sha256').update(b).digest('hex');
 const blob=readFileSync(new URL('evidence/action33-effect-30-oracle.bin',root));
-assert.equal(hash(blob),'6d6e2cc15ec23077ecc1bb2a199fa37b5ebbe05c4465f3e2a1ad08ec5630c0fc');
+assert.equal(hash(blob),'ddf4a92864ef02dd7027d9311e5e615b7b0c75a2625eb9cb87dd6e915bc21472');
 assert.equal(blob.subarray(0,10).toString('hex'),'1f8b08000000000002ff');
 const raw=gunzipSync(blob),o=JSON.parse(raw);assert.ok(raw.toString()===JSON.stringify(o)+'\n','canonical JSON payload');
 const prefixBlob=readFileSync(new URL('evidence/action33-prefix-30-oracle.bin',root));
@@ -21,6 +21,7 @@ function snapshot(v){keys(v,'registers fpcw fpsw fptag eflags rng cells memory_s
  keys(v.memory_sha256,'match positions stack random_table grid');Object.values(v.memory_sha256).forEach(x=>hex(x,64));}
 keys(o,'schema_version unit specimen_sha256 prefix_baseline prefix_oracle_sha256 scope start stop_before unsupported_callee lookup_global_initialization cases coverage');
 assert.equal(o.unit,'R30-B');assert.equal(o.start,'007024b4');assert.equal(o.stop_before,'0062ed99');assert.equal(o.unsupported_callee,'00944cff');
+assert.equal(o.prefix_baseline,'2d947281a9c94620cb1927960b2075c47f644fff','merged R30-A adoption commit');
 assert.equal(o.specimen_sha256,baseline.specimen_sha256);assert.equal(o.cases.length,160);
 let steps=0,events=0,draws=0;
 const siteCounts={};
@@ -66,10 +67,11 @@ for(const [n,r] of o.cases.entries()){
 assert.deepEqual([steps,events,draws],[27390,13793,764]);
 assert.equal(o.coverage.covered_instruction_starts.length,101);assert.equal(o.coverage.covered_edges.length,115);assert.equal(o.coverage.effect_returns,0);
 for(const site of ['006cfe35','006cfe3b','006cfe74','006cfe7a'])assert.equal(siteCounts[site],160);
-const sites=readFileSync(new URL('evidence/action33-effect-30-sites.json',root));assert.equal(hash(sites),'e72a4d4747f6171f08620c83b9fdb6465427c5e9a72936107174981161172c1d');
+const sites=readFileSync(new URL('evidence/action33-effect-30-sites.json',root));assert.equal(hash(sites),'8bcdbc6ff539a3e04ddd5e443df39d746f8886384cc527c596bc92d564e365bd');
 assert.equal(JSON.parse(sites).admitted_instruction_count,115);
+assert.equal(JSON.parse(sites).prefix_baseline,o.prefix_baseline);
 const receiptBytes=readFileSync(new URL('evidence/action33-effect-30-integrity.json',root));
-assert.equal(hash(receiptBytes),'41f0a30117a36b5879c3a23523364e10b539b34007026b43adcc0ec577480401','integrity receipt SHA-256');
+assert.equal(hash(receiptBytes),'7e62d1eb3a03eaa689c45abf2d46c4bdb3977c6556ccc54b28ca854d8e7205f0','integrity receipt SHA-256');
 const receipt=JSON.parse(receiptBytes);
 keys(receipt,'unit status specimen_sha256 sites_sha256 oracle_sha256 cases effect_returns diagnostic_stops integrity negative_checks privacy scope');
 assert.equal(receipt.unit,'R30-B');assert.equal(receipt.status,'passed');
