@@ -1,0 +1,51 @@
+{
+  "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "investigation": 29,
+  "status": "saved; independently reopened read-only without reanalysis",
+  "scope": "Five reviewed working names, two function comments and one 16-bit return type. No body, code comment, global label or structure changed.",
+  "annotations": [
+    [
+      "006c38f0",
+      "FUN_006c38f0",
+      "cm0102_lookup_tactical_offset8ec4_word"
+    ],
+    [
+      "0068d080",
+      "FUN_0068d080",
+      "cm0102_clear_collection_nodes_candidate"
+    ],
+    [
+      "0068d280",
+      "FUN_0068d280",
+      "cm0102_remove_collection_node_candidate"
+    ],
+    [
+      "0068d2e0",
+      "FUN_0068d2e0",
+      "cm0102_read_current_collection_payload_candidate"
+    ],
+    [
+      "0068d2f0",
+      "FUN_0068d2f0",
+      "cm0102_clear_and_append_collection_prefix_candidate"
+    ]
+  ],
+  "function_comments": [
+    [
+      "006ce110",
+      "CM0102 investigation06 (2026-10-18): Returns cached side0/side1 slot from match+f59e/+f5a2. Searches20 slots per side using tactical position value1, invalidates negative slot status, includes fallback/reassignment paths. Selected opposite side by tiebreak and shot callers. Static identification; complete selection behavior has not been reconstructed or tested.\n\nCM0102 investigation09 (2026-10-18): Investigation09 static refinement: mutates both caches match+f59e/+f5a2;20 slots/side at+4796/+6a6e stride1be. Invalidates cached negative tactical index; first0..10 tactical-word1 slot otherwise; active-slot fallback may modify+19/+1a. No activity+2b guard here. Input ECX match and side stack byte; selector1 returns+f5a2 otherwise+f59e, pointer EAX, RET4; may return null.\n\nInvestigation29 complete local body: 500 PE/native bytes, 155 instructions and 190 local CFG edges verified. Both side caches are processed in order before low8(selector)==1 returns +f5a2 (otherwise +f59e). Each stale cached pointer is cleared only when signed slot+19 is negative; nonnegative caches bypass scan. Empty cache scans 20 slots at stride 1be, taking the first +19 index 0..10 whose signed slot+27-selected tactical word is 1. A reserve candidate is the last qualifying +1a index 0..10 with tactical word 1, +19=fe and +20=ff. Without a direct selection, first nonnegative +19 slot is cached; if a reserve exists its +1a is overwritten with the active index before an independent tactical-word test conditionally rewrites active +19 to the reserve's old +1a. No activity+2b check or calls. ECX match, stack byte selector, pointer/null EAX, RET4; EBX/EBP/ESI/EDI preserved. Bounded synthetic original-entry TypeScript/oracle covers all local edges; live-match validity remains unproved."
+    ],
+    [
+      "006c38f0",
+      "CM0102 investigation29: Reads signed8 slot+19. Only 0..10 indexes a 16-bit word through the DWORD pointer at match+8ec4+4*signed8(slot+27). Invalid index returns AX=0 without reading side/table; upper EAX retains incoming bits 16..31. Valid path zeroes upper EAX before loading AX. ECX=match, one stack slot argument, RET4. Side and table pointers must be mapped; no local side-range check. Validated for 305 synthetic original-entry cases; connected match callers remain static."
+    ]
+  ],
+  "code_comments": [],
+  "global_labels": [],
+  "partial_data_types": [],
+  "proposal_files": [
+    "keeper-selector-29-annotations-proposal.json",
+    "tactical-word-29-annotations-proposal.json",
+    "collection-continuation-29-annotations-proposal.json"
+  ]
+}

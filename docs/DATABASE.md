@@ -2,11 +2,11 @@
 
 The native database is the ongoing working checkpoint. Keep `cm0102.gpr` beside the complete `cm0102.rep` directory. Open the existing `cm0102.exe` program in that project; importing the executable into a new project does not recover the annotations.
 
-The [current checkpoint](../checkpoints/2026-10-19-investigation-28/) records:
+The [current checkpoint](../checkpoints/2026-10-19-investigation-29/) records:
 
-- 161 named functions; 16 global labels.
+- 166 named functions; 16 global labels.
 - 9 recovered structures with 93 named fields under `/CM0102/Recovered`.
-- 238 original code samples and 76 code comments.
+- 243 original code samples and 76 code comments.
 - 10 canonical project files, each with SHA-256 and byte length.
 
 `checkpoints/latest.json` identifies the current dated checkpoint. Earlier dated metadata and separately saved archives remain historical. This checkpoint records the canonical files retained by Ghidra after saving the current project.
@@ -55,6 +55,10 @@ Use a **new isolated output directory**, the hash-pinned executable and Ghidra 1
 
 The investigation-28 script requires the preserved checkpoint-27 project and private exact-old preflight/proposal files with pinned hashes; it intentionally refuses an unrelated fresh import. Use the saved checkpoint-28 archive for direct recovery.
 
+28. `CM0102AnnotateInvestigation29.java /new/investigation-29-annotations.json /path/preflight-29.json /path/keeper-selector-29-annotations-proposal.json /path/tactical-word-29-annotations-proposal.json /path/collection-continuation-29-annotations-proposal.json`
+
+The investigation-29 script requires the saved checkpoint-28 project and pinned exact-old preflight. It applies five working names, appends the complete bounded keeper selector comment, records the tactical-word comment and two-byte return width, and preserves all bodies, structures and globals. The disposable and canonical annotation receipts matched byte for byte before the canonical project was saved. A fresh extraction of checkpoint 29 reopened read-only without reanalysis and passed the semantic/code verifier.
+
 Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original project. Then reopen the rebuilt project read-only and execute:
 
 ```sh
@@ -62,7 +66,7 @@ Use `-scriptPath /absolute/path/to/Reversal/scripts` and preserve the original p
   -process cm0102.exe -noanalysis -readOnly \
   -scriptPath /absolute/path/to/Reversal/scripts \
   -postScript CM0102VerifyCheckpoint.java \
-  /absolute/path/to/Reversal/checkpoints/2026-10-19-investigation-28/expected-database.json \
+  /absolute/path/to/Reversal/checkpoints/2026-10-19-investigation-29/expected-database.json \
   /new/rebuilt-verification.json
 ```
 
