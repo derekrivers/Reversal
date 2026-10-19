@@ -5,12 +5,12 @@
   "extractor": {
     "normal": "passed",
     "optimized": "passed",
-    "byte_identical_output_sha256": "0c6b48108f1ca4326683d5dfff7a869b8d8409d3ec7a3b00959d196d1d55eb78"
+    "byte_identical_output_sha256": "908dd523f85e9e92da8a745a4e241f1cd0143ee379dec48061d0d9cd5d4b42e7"
   },
   "negative_probes": {
-    "normal": "7 of 7 rejected",
-    "optimized": "7 of 7 rejected",
-    "byte_identical_output_sha256": "a8aa1449bf7a0889c959060d4f1944e17b7458b966d64b81c42e51cbd1c1554e"
+    "normal": "8 of 8 rejected",
+    "optimized": "8 of 8 rejected",
+    "byte_identical_output_sha256": "6285813f166085816e49ffe74ce7026ae8647df6fb5b1486af7d023ea044617e"
   },
   "repository_check": {
     "command": "Node 24.19.0 npm run check",

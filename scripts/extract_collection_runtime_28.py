@@ -14,8 +14,14 @@ MANIFEST = "058514c602952b66abeade64ba9a28bbab3873c16503af4ca0f834fb2a6d2ddc"
 PREFLIGHT = "9f9e52088fc32356aebecb6fc39ba78fea96e14f359383afb01362287409fbb2"
 CHECKPOINT = "d2836fd1b28d194dbfda32454106f9af23495809f09a408ed1ee072e6c4b7de1"
 BODIES = {0x68cfc0: (66, "FUN_0068cfc0"), 0x944cf1: (14, "operator_new")}
-CONTEXT = {0x944e58: (44, "__nh_malloc")}
-CALLS = {0x68cfc0: {0x68cfd6: 0x944cf1}, 0x944cf1: {0x944cf7: 0x944e58}}
+CONTEXT = {0x68d0d0: (221, "FUN_0068d0d0"), 0x944e58: (44, "__nh_malloc")}
+CALLS = {0x68cfc0: {0x68cfd6: 0x944cf1},
+         0x944cf1: {0x944cf7: 0x944e58},
+         0x68d0d0: {0x68d0f1: 0x944cf1, 0x68d115: 0x68cfc0,
+                    0x68d137: 0x944cf1, 0x68d15b: 0x68cfc0},
+         0x944e58: {0x944e63: 0x944e84, 0x944e77: 0x94895b}}
+SELECTED = {0x68d0e9, 0x68d0ef, 0x68d0f1, 0x68d0fd, 0x68d113, 0x68d115,
+            0x68d137, 0x68d143, 0x68d159, 0x68d15b, 0x68d164, 0x68d167}
 LIBRARY_COMMENTS = {0x944cf1: "aa1dbd012687974b618276ce4a3c81e94797a98d65c33e3009c1ca5af47aa4ae",
                     0x944e58: "71fa27df189212a459164fc5aa234432af2733ed2d1634ee704aa17208606296"}
 
@@ -35,6 +41,7 @@ def hx(n):
 
 def normalized(s):
     s = s.lower().strip().replace("float ptr", "dword ptr").replace("double ptr", "qword ptr")
+    s = s.replace("dword ptr fs:", "fs:")
     for width in ("d", "b"):
         if s == f"movs{width}.rep es:edi,esi":
             ptr = "dword" if width == "d" else "byte"
@@ -135,7 +142,7 @@ def extract(binary, exports, preflight):
                 reached.add(a)
                 pending.extend(edges[a])
         need(reached == starts, "unreachable local instruction: " + name)
-        if entry in BODIES:
+        if entry in CALLS:
             need({int(a, 16): int(b, 16) for a, b in calls} == CALLS[entry],
                  "direct call set changed: " + name)
         result[name] = {
@@ -147,6 +154,8 @@ def extract(binary, exports, preflight):
             "instruction_starts_sha256": sha(("\n".join(hx(i.address) for i in ins) + "\n").encode()),
             "local_edge_count": sum(len(v) for v in edges.values()), "branches": branches,
             "direct_calls": calls,
+            "selected_instructions": {hx(i.address): i.mnemonic + " " + i.op_str for i in ins
+                                      if i.address in SELECTED},
             "returns": [[hx(i.address), int(i.op_str or "0", 0)] for i in ins if i.mnemonic == "ret"],
             "explicit_memory_reads": reads, "explicit_memory_writes": writes,
             "implicit_string_memory": [[hx(i.address), i.mnemonic, i.op_str] for i in ins

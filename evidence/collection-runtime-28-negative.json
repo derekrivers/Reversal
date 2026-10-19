@@ -35,6 +35,11 @@
       "gate": "PE/native opcode or operand mismatch"
     },
     {
+      "probe": "resealed caller node-size mutation",
+      "rejected": true,
+      "gate": "PE/native opcode or operand mismatch"
+    },
+    {
       "probe": "resealed library comment mutation",
       "rejected": true,
       "gate": "existing CRT library comment mismatch"

@@ -32,7 +32,7 @@
   ],
   "context_only": {
     "00944e58": "44-byte existing __nh_malloc local body verified to PE/native; unsigned size guard and calls to 00944e84 and 0094895b; excluded from new semantic count",
-    "0068d0d0": "read-only caller has 0xe-byte node allocation then two possible calls to 0068cfc0; transitive collection insertion remains R28-B"
+    "0068d0d0": "221-byte complete read-only caller span verified against pinned PE/native (71 instructions, 73 local CFG edges); PUSH 0xe at 0068d0e9 precedes the branch, each arm calls operator_new, tests its returned pointer, and conditionally calls 0068cfc0 at 0068d115 or 0068d15b; transitive collection insertion remains R28-B"
   },
   "execution_validation": {
     "admitted_domain": "none",

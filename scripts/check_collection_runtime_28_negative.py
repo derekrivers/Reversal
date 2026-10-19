@@ -66,6 +66,8 @@ def run(module, exe, exports, preflight):
              b"MOV DI,word ptr [ESP + 0x18]"),
             ("resealed operator-new callee mutation", "00944cf1.asm", b"CALL 0x00944e58",
              b"CALL 0x00944e59"),
+            ("resealed caller node-size mutation", "0068d0d0.asm", b"0068d0e9  PUSH 0xe",
+             b"0068d0e9  PUSH 0xf"),
         ):
             shutil.rmtree(copied)
             shutil.copytree(exports, copied)
