@@ -1,7 +1,7 @@
 {
   "unit": "R30-D",
   "status": "passed",
-  "evidence_sha256": "fc1a86fa0e4cd9c0e3221ad562dcbe5411bae1c6b546d0d61181cfa261e58798",
+  "evidence_sha256": "55a778ce3c28ed8c3047b4c71572699e1004797a3bfcf141d574b3063302a23c",
   "normal_optimized_evidence": "byte-identical; all fields regenerated from pinned inputs and synthetic schedule",
   "selected_ranges": 25,
   "compared_instructions": 538,
@@ -11,7 +11,8 @@
     "changed PE rejected",
     "changed export manifest rejected",
     "resealed producer operand rejected",
-    "executed wrong producer store rejected"
+    "executed wrong producer store rejected",
+    "swapped third/fifth producer arguments rejected"
   ],
   "privacy": "no original diagnostic path in raw/hex/base64; no original PE bytes or page dumps retained",
   "limits": "static provenance plus synthetic slot-producer prefix; no initialized live match or returned diagnostic"

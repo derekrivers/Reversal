@@ -10,9 +10,16 @@ const keys=(value,names)=>assert.deepEqual(Object.keys(value).sort(),names.split
 const hex=(value,length=8)=>assert.match(value,new RegExp(`^[0-9a-f]{${length}}$`));
 const uint=value=>assert.ok(Number.isInteger(value)&&value>=0&&value<=0xffffffff);
 
+export function checkProducerCall(c){
+ const third=0x89abcd00+c.seed,fifth=0x89abcd80+c.seed;
+ assert.notEqual(third&255,fifth&255,'synthetic argument bytes must differ');
+ assert.deepEqual(c.call,{site:'006e0dde',target:'006eaea0',ecx:0x210000+0x1be*c.index,
+  arguments:[0x220000,0x230000+0x80*c.seed,third,0xa5a50000+c.index,fifth]},'producer call ABI provenance');
+}
+
 export function checkRetained(evidenceBytes,receiptBytes){
- assert.equal(hash(evidenceBytes),'fc1a86fa0e4cd9c0e3221ad562dcbe5411bae1c6b546d0d61181cfa261e58798','R30-D evidence SHA-256');
- assert.equal(hash(receiptBytes),'0ffdda7af23a92146054a9505c793911155a630eeee45f61c33fa4137d699094','R30-D validation receipt SHA-256');
+ assert.equal(hash(evidenceBytes),'55a778ce3c28ed8c3047b4c71572699e1004797a3bfcf141d574b3063302a23c','R30-D evidence SHA-256');
+ assert.equal(hash(receiptBytes),'46add78271383409a934ae9043be454ad74fec7357801c3d0bf5c630490804c9','R30-D validation receipt SHA-256');
  const evidence=JSON.parse(evidenceBytes),receipt=JSON.parse(receiptBytes);
  keys(evidence,'sites producer_oracle integrity');
  const s=evidence.sites,o=evidence.producer_oracle;
@@ -56,11 +63,13 @@ export function checkRetained(evidenceBytes,receiptBytes){
   assert.equal(c.seed,Math.floor(n/20));assert.equal(c.index,n%20);
   assert.equal(c.slot,0x210000+0x1be*c.index);assert.equal(c.staff,0x230000+0x80*c.seed);assert.equal(c.attribute_record,0x240000+0x80*c.seed);
   assert.equal(c.stop_before,'006eaf46');assert.equal(c.function_returned,false);
-  assert.deepEqual(c.call,{site:'006e0dde',target:'006eaea0',ecx:c.slot,
-   arguments:[0x220000,c.staff,0x89abcd00+c.seed,0xa5a50000+c.index,0x89abcd00+c.seed]});
+  checkProducerCall(c);
   assert.equal(c.instruction_steps,46);assert.equal(c.ordered_event_count,28);steps+=c.instruction_steps;
   hex(c.trace_sha256,64);hex(c.events_sha256,64);assert.equal(c.full_memory_sha256.length,6);c.full_memory_sha256.forEach(value=>hex(value,64));
  }
+ const swapped=structuredClone(o.cases[0]),args=swapped.call.arguments;
+ [args[2],args[4]]=[args[4],args[2]];
+ assert.throws(()=>checkProducerCall(swapped),/producer call ABI provenance/);
  assert.equal(steps,3680);assert.equal(o.instruction_steps,steps);
  keys(evidence.integrity,'optimized_python negative_probes privacy');
  assert.equal(evidence.integrity.optimized_python,'explicit ValueError gates; no assert');
@@ -71,7 +80,8 @@ export function checkRetained(evidenceBytes,receiptBytes){
  assert.equal(receipt.normal_optimized_evidence,'byte-identical; all fields regenerated from pinned inputs and synthetic schedule');
  assert.deepEqual([receipt.selected_ranges,receipt.compared_instructions,receipt.producer_cases,receipt.producer_instruction_steps],
   [s.ranges.length,instructions,o.case_count,steps]);
- assert.deepEqual(receipt.negative_probes,['changed PE rejected','changed export manifest rejected','resealed producer operand rejected','executed wrong producer store rejected']);
+ assert.deepEqual(receipt.negative_probes,['changed PE rejected','changed export manifest rejected','resealed producer operand rejected','executed wrong producer store rejected',
+  'swapped third/fifth producer arguments rejected']);
  assert.equal(receipt.privacy,'no original diagnostic path in raw/hex/base64; no original PE bytes or page dumps retained');
  assert.equal(receipt.limits,'static provenance plus synthetic slot-producer prefix; no initialized live match or returned diagnostic');
  return {unit:'R30-D',status:'passed',node:process.version,selected_ranges:s.ranges.length,compared_instructions:instructions,

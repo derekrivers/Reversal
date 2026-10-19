@@ -202,6 +202,13 @@ def extract(binary,exports,exports09,exports24,exports25,staff_exports,lifecycle
     return pe,decoded,native,evidence
 
 
+def check_producer_call(call,seed,index):
+    staff=0x230000+seed*0x80;extra=0x89abcd80|seed
+    need(call=={'site':'006e0dde','target':'006eaea0','ecx':0x210000+0x1be*index,
+          'arguments':[0x220000,staff,(extra&0xffffff00)|seed,0xa5a50000|index,extra]},
+         'producer call ABI mismatch')
+
+
 def emulate_producer(pe,decoded):
     need(unicorn.__version__=='2.1.4','requires Unicorn 2.1.4')
     cases=[]
@@ -220,7 +227,8 @@ def emulate_producer(pe,decoded):
             def set32(a,value): uc.mem_write(a,struct.pack('<I',value&0xffffffff))
             set32(0x200023,0x210000);set32(0x200012,0x220000);uc.mem_write(0x200018,bytes([seed]))
             set32(staff+0x61,player)
-            raw_index=0xa5a50000|index;extra=0x89abcd00|seed
+            raw_index=0xa5a50000|index;extra=0x89abcd80|seed
+            need(extra&255!=seed,'synthetic argument bytes must differ')
             for k,value in enumerate((0x700000,raw_index,staff,extra)): set32(sp+4*k,value)
             initial={'eax':0xdeadbeef,'ebx':0x12345678,'ecx':0x200000,'edx':0x87654321,
                      'esi':0x01020304,'edi':0xfeedface,'ebp':0xcafef00d,'esp':sp,'eip':0x6e0d00}
@@ -245,7 +253,7 @@ def emulate_producer(pe,decoded):
             d=slot-0x210000
             for at,value in ((0x19e,0x220000),(0x69,staff),(0x6d,player)):
                 expected[1][d+at:d+at+4]=struct.pack('<I',value)
-            expected[1][d]=index;expected[1][d+0x2e]=seed
+            expected[1][d]=index;expected[1][d+0x2e]=extra&255
             # Explicit stack effects of the original wrapper CALL and prefix PUSH/local stores.
             for at,value in ((sp-516,initial['esi']),(sp-520,extra),(sp-524,raw_index),
                 (sp-528,(extra&0xffffff00)|seed),(sp-532,staff),(sp-536,0x220000),
@@ -255,8 +263,8 @@ def emulate_producer(pe,decoded):
             expected[5][sp-561-0x300000]=0
             after=[bytes(uc.mem_read(a,n)) for a,n in regions]
             need(after==list(map(bytes,expected)),'producer full-memory mismatch')
-            need(calls==[{'site':'006e0dde','target':'006eaea0','ecx':slot,
-                  'arguments':[0x220000,staff,(extra&0xffffff00)|seed,raw_index,extra]}],'producer call ABI mismatch')
+            need(len(calls)==1,'producer call count mismatch')
+            check_producer_call(calls[0],seed,index)
             cases.append({'seed':seed,'index':index,'slot':slot,'staff':staff,'attribute_record':player,
                           'stop_before':'006eaf46','function_returned':False,'call':calls[0],
                           'instruction_steps':len(trace),'ordered_event_count':len(events),

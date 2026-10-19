@@ -65,11 +65,17 @@ def main():
     changed=bytearray(pe);changed[state.offset(pe,0x6eaecb,3)+2]=0x6d
     probes.append(reject('executed wrong producer store','producer full-memory mismatch',
                          lambda:state.emulate_producer(bytes(changed),decoded)))
+    first=json.loads(expected)['producer_oracle']['cases'][0]
+    swapped=copy.deepcopy(first['call'])
+    swapped['arguments'][2],swapped['arguments'][4]=swapped['arguments'][4],swapped['arguments'][2]
+    probes.append(reject('swapped third/fifth producer arguments','producer call ABI mismatch',
+                         lambda:state.check_producer_call(swapped,first['seed'],first['index'])))
     source_off=state.offset(pe,0x9e7f28,1)
     private_source=pe[source_off:pe.index(b'\0',source_off)]
     # The independent full regeneration above constrains every retained field and value.
     # Also check raw, hex and base64 representations of the original diagnostic source.
-    public_files=[a.evidence,Path(state.__file__),Path(__file__),Path('reports/action33-state-30.md')]
+    public_files=[a.evidence,Path(state.__file__),Path(__file__),Path('reports/action33-state-30.md'),
+                  Path('scripts/check-action33-state-30.mjs')]
     for path in public_files:
         raw=path.read_bytes()
         state.need(not any(value in raw for value in (private_source,private_source.hex().encode(),
