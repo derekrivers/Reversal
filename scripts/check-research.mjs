@@ -20,6 +20,8 @@ const checks=[
  ['reconstruction/check-action33-adjustment-34.ts'],
  // R35-A compares the actual zero-bound RNG call and caller to pre-selector.
  ['reconstruction/check-action33-rng-35.ts'],
+ // R36-A compares the original keeper selector and caller to the next RNG or diagnostic call.
+ ['reconstruction/check-action33-selector-36.ts'],
  // R31-B checks original synthetic fixture-entry lifecycle traces and stop boundaries.
  ['scripts/check-action33-lifecycle-31.mjs'],
  // R32-B verifies the original slot initializer and next owner boundary on synthetic state.
@@ -120,7 +122,7 @@ assert.equal(functions.filter(f=>f.working_research_name).length,atlas.counts.fu
 assert.equal(functions.reduce((n,f)=>n+f.call_instruction_count,0),atlas.counts.call_instructions);
 assert.equal(functions.reduce((n,f)=>n+f.unresolved_indirect_call_sites.length,0),atlas.counts.unresolved_indirect_call_instructions);
 const coverage=JSON.parse(readFileSync('evidence/code-atlas/validation-coverage.json','utf8'));
-assert.equal(coverage.entries.length,44);
+assert.equal(coverage.entries.length,45);
 for(const entry of coverage.entries)assert.ok(functions.some(f=>f.entry===entry.function),entry.function);
 const semantic=JSON.parse(readFileSync('evidence/code-atlas/semantic-coverage.json','utf8'));
 assert.equal(semantic.specimen_sha256,expected.sha256);

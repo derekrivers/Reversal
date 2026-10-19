@@ -1,0 +1,39 @@
+{
+  "unit": "R36-A",
+  "status": "passed",
+  "oracle_sha256": "f019948252ce992d2fd43d5ddf9a51b0646c3fb8fe1837ca4ef009f4dd63d3ce",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "coverage": {
+    "cases": 232,
+    "nonnull": 224,
+    "null": 8,
+    "instructions": 159771,
+    "events": 62171,
+    "suffix_states": 58328,
+    "rng_calls": 232,
+    "selector_events": 13312,
+    "r30c_selector_projections": 160,
+    "selector_instruction_starts": 125
+  },
+  "normal_optimized": "byte-identical original instruction regeneration",
+  "negative_checks": {
+    "changed_PE": "specimen SHA-256/size mismatch",
+    "native_selector_operand": "native operand mismatch 006ce2e6",
+    "changed_native_selector": "native file digest mismatch 006ce110.asm",
+    "changed_synthetic_table": "synthetic random table mismatch",
+    "actual_preserved_register": "selector preserved register changed esi",
+    "actual_return_cleanup": "selector RET 4 ABI mismatch",
+    "actual_rng_cell": "selector advanced RNG",
+    "unsupported_reserve_branch": "unsupported reserve branch 006ce17e",
+    "actual_dispatch_byte": "unadmitted data access 0070a5a0",
+    "appended_json_whitespace": "noncanonical public payload",
+    "alternate_gzip_envelope": "noncanonical gzip envelope",
+    "oversized_expansion": "oversized public payload",
+    "changed_state_digest": "oracle digest mismatch",
+    "private_raw_fragment": "private original fragment",
+    "private_hex_fragment": "private original fragment",
+    "compressed_private_fragment": "private original fragment"
+  },
+  "privacy": "bounded canonical gzip, fixed synthetic schedule and raw/hex/expanded original-code scans",
+  "scope": "original-entry selector and caller to pre-variant RNG or null diagnostic; reserve branches and full R30-C state join remain open"
+}
