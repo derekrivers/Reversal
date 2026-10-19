@@ -1,0 +1,29 @@
+{
+  "unit": "R34-B",
+  "status": "passed",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "evidence_sha256": "82e51c46fe98ba06551c184d2d3e811ffdb67dde9aad171c8a7ef05f68f344e5",
+  "expanded_canonical_sha256": "7bc673b9a3e30f9124998ce43419a6075e0c73aafc686d36b67f96950e1c1f5c",
+  "compressed_bytes": 36148,
+  "expanded_canonical_bytes": 316676,
+  "normal_optimized_evidence": "byte-identical original-instruction regeneration",
+  "compared_instructions": 61,
+  "coverage": {
+    "placement_call_prefixes": 80,
+    "constructor_os_frontiers": 8,
+    "instruction_steps": 1728,
+    "next_unresolved": "004cf62b reads auxiliary base 00ae2d0c=0; 004c7073 indirect GetLogicalDriveStringsA blocks receiver constructor"
+  },
+  "negative_probes": [
+    "changed specimen rejected",
+    "changed state manifest rejected",
+    "changed contract export rejected",
+    "changed setup global store rejected",
+    "executed wrong auxiliary stride rejected",
+    "raw private fragment rejected",
+    "hex private fragment rejected",
+    "excessive expansion rejected"
+  ],
+  "privacy": "compressed and bounded expanded bytes plus authored files scanned for raw/hex/base64 code samples",
+  "limits": "R33-B original-produced synthetic placement state enters the actual contract call through pre-004cf62b; independent constructor entry stops before GetLogicalDriveStringsA; no receiver initialization, row lookup, enclosing setup caller, or live lifecycle"
+}
