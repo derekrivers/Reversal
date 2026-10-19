@@ -1,0 +1,33 @@
+{
+  "work_unit": "R29-B",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "ab4bf204a86776c1a2e34caa6db9eb330665078446c5a7738e0d403fb415fb2a",
+  "export_manifest_sha256": "ced03a8f3d9da3cc61fcb9d63e0be55cb1cc39776615c038e0320836a526c0da",
+  "preflight_sha256": "cee6d3c36808bd69afb14796fa22314a8900909e3b59e08544e5bdfe58063a0c",
+  "new_contract": {
+    "address": "006c38f0",
+    "body_bytes": 42,
+    "abi": "ECX receiver; one DWORD stack argument at entry ESP+4; RET 4; low AX is unsigned 16-bit return",
+    "index": "signed byte slot+0x19; only 0..10 accepted",
+    "side": "signed byte slot+0x27, multiplied by 4 without a local side-range guard",
+    "pointer": "DWORD at receiver+0x8ec4+4*signed_side",
+    "lookup": "WORD at pointer+2*index; no write",
+    "invalid_index": "AX=0, upper EAX retains entry bits 16..31; side and table not read",
+    "valid_index": "EAX is zero-extended 16-bit table word because MOVSX EAX,AL precedes MOV AX",
+    "register_effects": "EDX first receives slot pointer and on valid index signed side; ECX receives table pointer on valid index; EBX/ESI/EDI/EBP preserved; ESP advances 8 bytes and EIP becomes caller return address",
+    "flags": "changed by TEST/CMP or XOR; not in TypeScript comparison",
+    "evidence": ["complete PE/native 13-instruction body", "610 original-entry synthetic cases across both comparison bodies", "all 26 instruction starts and 26 local CFG edges executed"]
+  },
+  "existing_context": {
+    "address": "006c38c0",
+    "name": "cm0102_lookup_tactical_position_word",
+    "pointer_offset": "0x8ebc",
+    "native_name_comment_return_width": "preserved; not a new semantic entry"
+  },
+  "caller_context": {
+    "source": "R16 match-core direct-call inventory and R17 match-dispatch boundary",
+    "known_direct_sites": ["00712464", "00712ad8", "0071319a"],
+    "observed_consumer": "low AX tactical word or mask; connected caller behavior not executed here"
+  },
+  "limits": ["synthetic mapped memory only", "no live match-frame validity", "no side 0/1 invariant inferred from this callee", "no full match or tactical-plan equivalence"]
+}

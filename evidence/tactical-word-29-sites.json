@@ -1,0 +1,208 @@
+{
+  "work_unit": "R29-B",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "ab4bf204a86776c1a2e34caa6db9eb330665078446c5a7738e0d403fb415fb2a",
+  "export_manifest_sha256": "ced03a8f3d9da3cc61fcb9d63e0be55cb1cc39776615c038e0320836a526c0da",
+  "preflight_sha256": "cee6d3c36808bd69afb14796fa22314a8900909e3b59e08544e5bdfe58063a0c",
+  "method": "Capstone 5.0.7 complete PE/native instruction, operand and local CFG comparison",
+  "functions": [
+    {
+      "entry_va": "006c38c0",
+      "file_offset": "0x2c38c0",
+      "body_bytes": 42,
+      "body_sha256": "8a67168d71316ba0081c6e36fec066a22b93af0813b0cb125afe5a96d78fa0bd",
+      "native_export_sha256": {
+        "asm": "c9a105384308f631ac403dbf7a8ebc478c23d24b1ea0919f1e0fe9d12206a015",
+        "c": "a7e6f51666ceeae5356bb8987fd6b830a3853c45057e4dace5f4b4214ae44599"
+      },
+      "instruction_count": 13,
+      "matched_native_instructions": 13,
+      "reachable_instruction_starts": 13,
+      "edges": [
+        [
+          "006c38c0",
+          "006c38c4"
+        ],
+        [
+          "006c38c4",
+          "006c38c7"
+        ],
+        [
+          "006c38c7",
+          "006c38c9"
+        ],
+        [
+          "006c38c9",
+          "006c38e4"
+        ],
+        [
+          "006c38c9",
+          "006c38cb"
+        ],
+        [
+          "006c38cb",
+          "006c38cd"
+        ],
+        [
+          "006c38cd",
+          "006c38e4"
+        ],
+        [
+          "006c38cd",
+          "006c38cf"
+        ],
+        [
+          "006c38cf",
+          "006c38d3"
+        ],
+        [
+          "006c38d3",
+          "006c38d6"
+        ],
+        [
+          "006c38d6",
+          "006c38dd"
+        ],
+        [
+          "006c38dd",
+          "006c38e1"
+        ],
+        [
+          "006c38e4",
+          "006c38e7"
+        ]
+      ],
+      "return_sites": [
+        "006c38e1",
+        "006c38e7"
+      ],
+      "table_pointer_offset": 36540,
+      "memory_operands": [
+        [
+          "006c38c0",
+          "mov",
+          "edx, dword ptr [esp + 4]"
+        ],
+        [
+          "006c38c4",
+          "mov",
+          "al, byte ptr [edx + 0x19]"
+        ],
+        [
+          "006c38cf",
+          "movsx",
+          "edx, byte ptr [edx + 0x27]"
+        ],
+        [
+          "006c38d6",
+          "mov",
+          "ecx, dword ptr [ecx + edx*4 + 0x8ebc]"
+        ],
+        [
+          "006c38dd",
+          "mov",
+          "ax, word ptr [ecx + eax*2]"
+        ]
+      ]
+    },
+    {
+      "entry_va": "006c38f0",
+      "file_offset": "0x2c38f0",
+      "body_bytes": 42,
+      "body_sha256": "216dd8316e84bd6768cdc9d4d0ed61b9e85626ab2a0d10fc4d887b112d29d852",
+      "native_export_sha256": {
+        "asm": "07ef8649d2149f41fc012743f59bcd715261e9cdb651396aeaa3edc7e1a83c0e",
+        "c": "e1b421be61d4e7d477b5d48762a14cb2c606964ebc066a2c555f042c2bf65a67"
+      },
+      "instruction_count": 13,
+      "matched_native_instructions": 13,
+      "reachable_instruction_starts": 13,
+      "edges": [
+        [
+          "006c38f0",
+          "006c38f4"
+        ],
+        [
+          "006c38f4",
+          "006c38f7"
+        ],
+        [
+          "006c38f7",
+          "006c38f9"
+        ],
+        [
+          "006c38f9",
+          "006c3914"
+        ],
+        [
+          "006c38f9",
+          "006c38fb"
+        ],
+        [
+          "006c38fb",
+          "006c38fd"
+        ],
+        [
+          "006c38fd",
+          "006c3914"
+        ],
+        [
+          "006c38fd",
+          "006c38ff"
+        ],
+        [
+          "006c38ff",
+          "006c3903"
+        ],
+        [
+          "006c3903",
+          "006c3906"
+        ],
+        [
+          "006c3906",
+          "006c390d"
+        ],
+        [
+          "006c390d",
+          "006c3911"
+        ],
+        [
+          "006c3914",
+          "006c3917"
+        ]
+      ],
+      "return_sites": [
+        "006c3911",
+        "006c3917"
+      ],
+      "table_pointer_offset": 36548,
+      "memory_operands": [
+        [
+          "006c38f0",
+          "mov",
+          "edx, dword ptr [esp + 4]"
+        ],
+        [
+          "006c38f4",
+          "mov",
+          "al, byte ptr [edx + 0x19]"
+        ],
+        [
+          "006c38ff",
+          "movsx",
+          "edx, byte ptr [edx + 0x27]"
+        ],
+        [
+          "006c3906",
+          "mov",
+          "ecx, dword ptr [ecx + edx*4 + 0x8ec4]"
+        ],
+        [
+          "006c390d",
+          "mov",
+          "ax, word ptr [ecx + eax*2]"
+        ]
+      ]
+    }
+  ]
+}
