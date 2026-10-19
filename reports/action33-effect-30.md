@@ -69,7 +69,7 @@ node scripts/check-action33-effect-30.mjs
 npm run check
 ```
 
-All checks passed using Python 3.13.7, Capstone 5.0.7, Unicorn 2.1.4 and Node 24.22.0. The normal/optimized receipts match. The existing research suite also passes, including its registered R30-A checker. The coordinator can register the new R30-B checker on adoption; this branch does not edit the shared runner, queue, atlas or checkpoint files. A successful effect return, TypeScript composition and live-game participant validity remain open.
+All checks passed using Python 3.13.7, Capstone 5.0.7, Unicorn 2.1.4 and Node 24.22.0. The normal/optimized receipts match. The shared research runner registers both R30-A and R30-B evidence checkers, and `npm run check` passes with them. The queue, atlas and checkpoint files were not changed. A successful effect return, TypeScript composition and live-game participant validity remain open.
 
 ### Review regression checks
 
