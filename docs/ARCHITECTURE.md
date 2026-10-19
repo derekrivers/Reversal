@@ -1,6 +1,6 @@
 # TypeScript reconstruction and React presentation
 
-The goal is a browser game whose chosen compatibility behavior is backed by evidence from the original executable. The code atlas maps the native program; implementation grows through verified subsystem contracts. Recovering every original class, function name or line of C++ is not assumed possible.
+The goal is a faithful game whose compatibility behavior is backed by evidence from the original executable. Build the headless game core and its state lifecycle as verified paths become available; substantial browser presentation comes later. The code atlas maps the native program, and connected implementation grows through verified subsystem contracts. Recovering every original class, function name or line of C++ is not assumed possible.
 
 ## Boundaries
 
