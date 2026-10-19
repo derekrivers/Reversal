@@ -329,6 +329,14 @@
       "module": "reconstruction/action33-opponent-32.ts",
       "evidence": "evidence/action33-opponent-32-oracle.bin",
       "boundary": "220 original-entry synthetic cases: 204 bit-04-clear paths to pre-00702193 and 16 bit-04-set paths to pre-0071614b; 63,587 original steps, 26,821 ordered events and no RNG; first 160 grid-prefix checkpoints match R31-A; no join to 007022fd interior, resolver return or shot outcome"
+    },
+    {
+      "function": "00702050",
+      "scope": "bounded-original-entry-x87-conversion-continuation",
+      "behavior": "Continue the original resolver through 00945640 x87 truncation, signed-byte quantization and the second grid call on shared synthetic memory; compare separate conversion-rounding suffixes",
+      "module": "reconstruction/action33-conversion-33.ts",
+      "evidence": "evidence/action33-conversion-33-oracle.bin",
+      "boundary": "280 synthetic cases: 232 clear entry paths to pre-00702222, 16 unchanged bit-04 stops to pre-0071614b and 32 separate original-produced conversion suffix probes; 99,787 original steps, 43,235 ordered events and no RNG; no hardware x87 exception/status equivalence, joined 007022fd interior, resolver return or shot outcome"
     }
   ]
 }
