@@ -361,3 +361,9 @@ The coordinator retains shared dependency-frontier, integration and checkpoint o
 | ID | Specimen and scope | Owner / branch / worktree | Dependencies, owned files and exclusions | Acceptance |
 | --- | --- | --- | --- | --- |
 | R29-BR | SHA-256 `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`; privacy scanning for the `006c38c0`/`006c38f0` original-entry oracle | Independent Sol High reviewer / `codex/tactical-word-29-review-fix` / `review-tactical-29` | Review PR #106 final repair diff and evidence receipts; read-only private input paths `Reversal/downloads/cm0102.exe`, `private-native-verify/exports-29`, `private-native-verify/preflight-29.json`. Coordinator owns all edits; reviewer owns no files or native state. Exclude unrelated R29-A/C changes and gameplay equivalence claims. | Confirm bounded gzip expansion scans compressed and expanded bytes, raw/hex negative probes actually reject injected fragments, normal/-O integrity and privacy receipts are supported, and report actionable findings before coordinator pushes the final head. |
+
+### R29 checkpoint independent review
+
+| ID | Specimen and scope | Owner / branch or worktree | Dependencies, owned files and exclusions | Acceptance |
+| --- | --- | --- | --- | --- |
+| R29-D-R | Pinned PE SHA-256 `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`; investigation 29 native checkpoint and coverage | Independent read-only reviewer / `codex/checkpoint-29` PR #114 | Review only the public checkpoint 29 diff and private restore/hash receipts. No edits, canonical native writes, shared state writes or claims of full gameplay coverage. | Check exact-old proposal guard, accepted sites and width, canonical/disposable/restore parity, private archive preservation, registry and validation-domain counts, and public metadata/privacy. Report actionable findings or none before merge. |
