@@ -14,6 +14,8 @@ const checks=[
  ['reconstruction/check-action33-grid-31.ts'],
  // R32-A compares the guarded original opponent scan and resolver caller continuation.
  ['reconstruction/check-action33-opponent-32.ts'],
+ // R33-A compares bounded original x87 conversion and caller continuation.
+ ['reconstruction/check-action33-conversion-33.ts'],
  // R31-B checks original synthetic fixture-entry lifecycle traces and stop boundaries.
  ['scripts/check-action33-lifecycle-31.mjs'],
  // R32-B verifies the original slot initializer and next owner boundary on synthetic state.
@@ -108,7 +110,7 @@ assert.equal(functions.filter(f=>f.working_research_name).length,atlas.counts.fu
 assert.equal(functions.reduce((n,f)=>n+f.call_instruction_count,0),atlas.counts.call_instructions);
 assert.equal(functions.reduce((n,f)=>n+f.unresolved_indirect_call_sites.length,0),atlas.counts.unresolved_indirect_call_instructions);
 const coverage=JSON.parse(readFileSync('evidence/code-atlas/validation-coverage.json','utf8'));
-assert.equal(coverage.entries.length,41);
+assert.equal(coverage.entries.length,42);
 for(const entry of coverage.entries)assert.ok(functions.some(f=>f.entry===entry.function),entry.function);
 const semantic=JSON.parse(readFileSync('evidence/code-atlas/semantic-coverage.json','utf8'));
 assert.equal(semantic.specimen_sha256,expected.sha256);

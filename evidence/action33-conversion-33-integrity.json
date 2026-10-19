@@ -1,0 +1,38 @@
+{
+  "unit": "R33-A",
+  "status": "passed",
+  "oracle_sha256": "1fc3bf7c687abec08597d8e9eb66d0abb3a871e7a156075d4b195ad8fa4b79ee",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "coverage": {
+    "cases": 280,
+    "guard_clear": 232,
+    "guard_set": 16,
+    "rounding_probes": 32,
+    "instructions": 99787,
+    "events": 43235,
+    "rng_calls": 0
+  },
+  "normal_optimized": "byte-identical original instruction regeneration; all integrity gates use explicit exceptions",
+  "negative_checks": {
+    "changed_PE": "specimen SHA-256/size mismatch",
+    "independent_native_operand": "native operand mismatch 00945659",
+    "independent_bit04_operand": "native operand mismatch 005b58e5",
+    "changed_native_file": "native file mismatch",
+    "changed_manifest": "native manifest mismatch",
+    "changed_conversion_export": "conversion native file mismatch",
+    "changed_focused_export": "focused file mismatch",
+    "changed_focused_manifest": "focused manifest mismatch",
+    "unannounced_bit04_path": "unexpected stop",
+    "original_out_of_grid_read": "unadmitted data access",
+    "appended_json_whitespace": "noncanonical public payload",
+    "alternate_gzip_envelope": "noncanonical gzip envelope",
+    "oversized_expansion": "oversized public payload",
+    "changed_oracle_result": "oracle digest mismatch",
+    "changed_conversion_rounding": "conversion CW save/truncate/restore mismatch",
+    "private_raw_fragment": "private original fragment",
+    "private_hex_fragment": "private original fragment",
+    "compressed_private_fragment": "private original fragment"
+  },
+  "privacy": "fixed synthetic schedules; bounded gzip expansion; raw/hex original code and grid fragment scans on task files and expanded oracle; original inputs absent",
+  "scope": "synthetic entry to pre-00702222; separate conversion checkpoints and bit04 static scope; hardware x87 exception/status equivalence, original-game observation and shot outcomes not established"
+}
