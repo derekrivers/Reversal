@@ -1,0 +1,28 @@
+{
+  "work_unit": "R27-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "4acf11ca1ab79b275436c6365813904d87634436de1723ce24a2274f83a087c4",
+  "export_manifest_sha256": "bbd00280029a738f4f4dfa6462c7d34a4379887626749d9f20eef20873655f14",
+  "annotation_preflight_sha256": "fb1be5075c72e92045f4d802f649665801d8ebc85b049a25e0f652e282f6015d",
+  "proposal_type": "name only; coordinator review/application required",
+  "exact_old_source": "read-only checkpoint-26 annotation preflight pinned above",
+  "annotations": [
+    {
+      "address": "0068d1b0",
+      "old_name": "FUN_0068d1b0",
+      "new_name": "cm0102_advance_cursor_link6_candidate",
+      "body_addresses": 19,
+      "confidence": "high for complete local behavior; collection invariant unresolved",
+      "evidence": ["0068d1b0..0068d1c2 complete body", "400 original-entry synthetic cases", "R26-A 0062be00 normal-path callee"]
+    },
+    {
+      "address": "0068d1d0",
+      "old_name": "FUN_0068d1d0",
+      "new_name": "cm0102_advance_cursor_linka_candidate",
+      "body_addresses": 19,
+      "confidence": "high for complete local behavior; collection invariant unresolved",
+      "evidence": ["0068d1d0..0068d1e2 complete body", "400 original-entry synthetic cases", "node +0xa link read"]
+    }
+  ],
+  "function_comments": "not proposed; exact-old preflight contains names and body sizes only"
+}

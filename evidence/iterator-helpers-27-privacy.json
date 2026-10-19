@@ -1,0 +1,26 @@
+{
+  "work_unit": "R27-A",
+  "status": "passed",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "authored_files_scanned": 13,
+  "files": [
+    "evidence/iterator-helpers-27-sites.json",
+    "evidence/iterator-helpers-27-oracle.json.gz",
+    "evidence/iterator-helpers-27-negative.json",
+    "evidence/iterator-helpers-27-findings.json",
+    "evidence/iterator-helpers-27-annotations-proposal.json",
+    "evidence/iterator-helpers-27-privacy.json",
+    "reports/iterator-helpers-27.md",
+    "reconstruction/iterator-helpers-27.ts",
+    "reconstruction/check-iterator-helpers-27.ts",
+    "scripts/extract_iterator_helpers_27.py",
+    "scripts/emulate_iterator_helpers_27.py",
+    "scripts/check_iterator_helpers_27_negative.py",
+    "scripts/check_iterator_helpers_27_privacy.py"
+  ],
+  "checks": [
+    "task-specific authored paths and allowed extensions",
+    "no raw or contiguous hex-encoded 16-byte fragment from either 19-byte original body"
+  ],
+  "limitation": "Scoped code-fragment scan supplements review; it is not a general secret detector."
+}

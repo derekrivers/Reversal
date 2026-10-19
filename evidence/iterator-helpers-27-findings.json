@@ -1,0 +1,45 @@
+{
+  "work_unit": "R27-A",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "checkpoint_archive_sha256": "4acf11ca1ab79b275436c6365813904d87634436de1723ce24a2274f83a087c4",
+  "export_manifest_sha256": "bbd00280029a738f4f4dfa6462c7d34a4379887626749d9f20eef20873655f14",
+  "preflight_sha256": "fb1be5075c72e92045f4d802f649665801d8ebc85b049a25e0f652e282f6015d",
+  "state": "two complete local static contracts and two bounded original-entry validated behaviors",
+  "functions": [
+    {
+      "address": "0068d1b0",
+      "file_offset": "0x28d1b0",
+      "body_bytes": 19,
+      "body_sha256": "304cc009924e6e880ecd3cb397b656811410758fa0426e307b131baa8c4564f7",
+      "abi": "ECX receiver; no stack parameters; RET 4-byte return address only; ECX/EBX/ESI/EDI/EBP unchanged; EAX result, EDX cursor/next clobbered",
+      "contract": "Read DWORD receiver+0xa. Null returns EAX=0 and EDX=0 without a write. Otherwise read DWORD node+0 as EAX, then DWORD node+6 as EDX, then write EDX to receiver+0xa and return.",
+      "body_instruction_starts": 9,
+      "body_edges": 8,
+      "validated_cases": 400
+    },
+    {
+      "address": "0068d1d0",
+      "file_offset": "0x28d1d0",
+      "body_bytes": 19,
+      "body_sha256": "043ebe61e1eeefc99c08fe6fe9f13f547165f66586a99358120e3610720496c2",
+      "abi": "ECX receiver; no stack parameters; RET 4-byte return address only; ECX/EBX/ESI/EDI/EBP unchanged; EAX result, EDX cursor/next clobbered",
+      "contract": "Read DWORD receiver+0xa. Null returns EAX=0 and EDX=0 without a write. Otherwise read DWORD node+0 as EAX, then DWORD node+0xa as EDX, then write EDX to receiver+0xa and return.",
+      "body_instruction_starts": 9,
+      "body_edges": 8,
+      "validated_cases": 400
+    }
+  ],
+  "execution": {
+    "oracle": "evidence/iterator-helpers-27-oracle.json.gz",
+    "cases": 800,
+    "null_cursor_cases": 32,
+    "nonnull_cursor_cases": 768,
+    "instruction_steps": 5536,
+    "covered_instruction_starts": 18,
+    "covered_cfg_edges": 16,
+    "compared": ["EAX/ECX/EDX", "ordered external DWORD reads/writes", "full receiver and node region digests", "RET EIP/ESP", "preserved EBX/ESI/EDI/EBP"],
+    "synthetic_only": true,
+    "excluded": ["EFLAGS", "real caller loop reachability", "aliased receiver/node memory", "invalid pointers and faults", "concurrent mutation", "transitive caller behavior"]
+  },
+  "context": "R26-A 0062be00 resets its collection cursor then calls 0068d1b0 on every normal route. R27-A validates this callee locally, not the whole merge loop. 0068d1f0 reads link +6 and +0xa in node unlinking, consistent with linked nodes; ownership and invariants remain caller questions."
+}
