@@ -1,0 +1,31 @@
+{
+  "unit": "R32-B",
+  "status": "passed",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "evidence_sha256": "8c0ed7d1f2d662ca7d7bc597373371b16f136ea86ec9d080f366a61cfefdcded",
+  "expanded_canonical_sha256": "48b1bf9580811ca017d0a311c166e4f21d0206baa299e7b6b592694724800a64",
+  "compressed_bytes": 72611,
+  "expanded_canonical_bytes": 1056306,
+  "normal_optimized_evidence": "byte-identical original-instruction regeneration",
+  "compared_instructions": 875,
+  "coverage": {
+    "initializer_returns": 80,
+    "lookup_returns": 80,
+    "placement_frontiers": 80,
+    "normal_status_frontiers": 80,
+    "instruction_steps": 25280
+  },
+  "negative_probes": [
+    "changed specimen rejected",
+    "changed slot manifest rejected",
+    "resealed initializer width operand rejected",
+    "executed wrong initializer side field rejected",
+    "executed wrong prior-side read rejected",
+    "executed wrong slot context store rejected",
+    "raw private fragment in container rejected",
+    "hex private fragment in expanded JSON rejected",
+    "oversized gzip expansion rejected"
+  ],
+  "privacy": "compressed and bounded expanded bytes plus authored files scanned for raw/hex/base64 code/source samples",
+  "limits": "separate synthetic original entries; no enclosing caller, loaded game, complete slot, lookup object or normal effect return"
+}
