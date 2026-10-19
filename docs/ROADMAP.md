@@ -10,7 +10,7 @@ The TypeScript modules now cover the small-bound random helper/CRT generator, ev
 
 The [code atlas](../evidence/code-atlas/README.md) inventories all 9,241 currently inferred internal functions. The [workstream index](../evidence/code-atlas/WORKSTREAMS.md) groups direct source-path anchors for match simulation, data/storage, tactics/training, transfers/contracts/scouting, competitions, managers/news/finance and UI screens. These are research navigation groups, not completed modules.
 
-For each workstream, recover state ownership and a bounded function contract, record dependencies and unresolved effects, and continue mapping unanchored functions through callers, callees and data references. In parallel, implement tractable supported contracts in headless TypeScript and compare them with original-instruction execution over an explicit domain. [`semantic-coverage.json`](../evidence/code-atlas/semantic-coverage.json) tracks reviewed static contracts separately from the structural inventory and execution validation. Game and UI construction remains deferred.
+For each workstream, recover state ownership and a bounded function contract, record dependencies and unresolved effects, and continue mapping unanchored functions through callers, callees and data references. In parallel, implement tractable supported contracts in headless TypeScript and compare them with original-instruction execution over an explicit domain. Connect admitted contracts through original state producers, call order and shared RNG, then compare the same bounded entry-to-exit path against original instructions. [`semantic-coverage.json`](../evidence/code-atlas/semantic-coverage.json) tracks reviewed static contracts separately from the structural inventory and execution validation. Substantial browser UI construction remains deferred.
 
 ## Next: map connected dependencies across workstreams
 
@@ -24,6 +24,6 @@ Investigation 08 adds 9,056 original-entry public cases and a separately retaine
 
 Additional leads are the event token formatter, the weather logic that selects the pitch-abandonment threshold, the large-bound x87 RNG path and RNG save/load restoration.
 
-## Deferred: browser simulation
+## Build a connected headless game
 
-Game construction and UI work are deferred while function mapping and headless validated reconstruction advance. [ARCHITECTURE.md](ARCHITECTURE.md) retains earlier design notes for a future phase. No complete React app or playable match exists yet.
+Build headless state initialization, scheduling, match stepping and result application incrementally from verified original paths. Begin with a bounded action `0x33` penalty attempt and keep its unresolved transitive calls, state producers, numeric conditions and outcome effects visible. A provisional composition with supplied intermediate state is useful for interface checks but does not prove a connected original-game path. Preserve the original executable, native project and bulk evidence outside Git, retain original-instruction oracles, and apply the existing review and checkpoint safeguards. [ARCHITECTURE.md](ARCHITECTURE.md) records the simulation boundary. Substantial browser UI and presentation remain deferred; no complete match or playable browser game exists yet.

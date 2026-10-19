@@ -326,3 +326,9 @@ Baseline: saved checkpoint 28 from the pinned PE32 SHA-256 `0c78e7da6d0bcb4603fa
 | R29-D | Coordinator / `codex/checkpoint-29` | Independently review each lane, require exact-final-head GitHub review and CI, integrate accepted entries and serial native changes. | Sole canonical Ghidra/checkpoint writer; preserve checkpoint 28 and independently restore-test any new archive. Keep reviewed static contracts distinct from executed TypeScript domains. |
 
 The R29 queue names one existing partial scope, one new tactical body, and four new collection bodies. It reserves no game or UI implementation.
+
+### R29-B review repair (PR #106)
+
+| ID | Specimen and scope | Owner / branch / worktree | Dependencies, owned files and exclusions | Acceptance |
+| --- | --- | --- | --- | --- |
+| R29-BR | SHA-256 `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`; privacy scanning for the `006c38c0`/`006c38f0` original-entry oracle | Independent Sol High reviewer / `codex/tactical-word-29-review-fix` / `review-tactical-29` | Review PR #106 final repair diff and evidence receipts; read-only private input paths `Reversal/downloads/cm0102.exe`, `private-native-verify/exports-29`, `private-native-verify/preflight-29.json`. Coordinator owns all edits; reviewer owns no files or native state. Exclude unrelated R29-A/C changes and gameplay equivalence claims. | Confirm bounded gzip expansion scans compressed and expanded bytes, raw/hex negative probes actually reject injected fragments, normal/-O integrity and privacy receipts are supported, and report actionable findings before coordinator pushes the final head. |
