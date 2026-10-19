@@ -23,6 +23,7 @@ const checks=[
  ['reconstruction/check-league-comparator-26.ts','evidence/league-comparator-26-oracle.json.gz'],
  ['reconstruction/check-iterator-helpers-27.ts','evidence/iterator-helpers-27-oracle.json.gz'],
  ['reconstruction/check-strlen-runtime-27.ts','evidence/strlen-runtime-27-oracle.json.gz'],
+ ['reconstruction/check-merge-initializer-28.ts','evidence/merge-initializer-28-oracle.json.gz'],
  ['reconstruction/check-sort-swap-28.ts','evidence/sort-helpers-28-swap-oracle.json.gz'],
  ['reconstruction/check-random.ts','evidence/random-validation/x86-oracle.json','evidence/random-validation/random-table.bin','results/random.json'],
  ['reconstruction/check-clock.ts','evidence/clock-validation/clock-oracle.json','evidence/clock-validation/clock-oracle.bin','results/clock.json'],

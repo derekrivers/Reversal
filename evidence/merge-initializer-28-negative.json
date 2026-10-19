@@ -1,0 +1,18 @@
+{
+  "work_unit": "R28-B",
+  "node_version": "v24.19.0",
+  "baseline": {
+    "checked_cases": 256,
+    "executed_instruction_steps": 1792,
+    "covered_instruction_starts": 7,
+    "covered_edges": 6,
+    "synthetic_only": true
+  },
+  "negative_checks": [
+    "--mutate-result rejected",
+    "--mutate-effect rejected",
+    "--mutate-memory rejected",
+    "--mutate-abi rejected",
+    "altered oracle rejected before decode"
+  ]
+}

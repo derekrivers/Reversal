@@ -1,0 +1,12 @@
+{
+  "work_unit": "R28-B",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "static_sha256": "a89054f25cd4c6ca54ad10b5d3c193a25b41fc858b56d32048a3d3209617c2a5",
+  "oracle_sha256": "b8b7bd2c391875b67acb74477ae4632674d3a84a5bb16a7a9e7aa75fba183457",
+  "negative_checks": [
+    "normal/-O static and original-entry oracle identical",
+    "changed PE rejected",
+    "resealed native operand rejected by complete instruction comparator",
+    "resealed exact-old native identity rejected"
+  ]
+}
