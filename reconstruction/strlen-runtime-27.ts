@@ -5,7 +5,10 @@ export type Read27 = ['read', 'source'|'stack', number, 1|4, number];
 export function strlenRuntime27(source: Uint8Array, address: number,
   initial: Registers27, stackBefore: Uint8Array) {
   const u32 = (v: number) => Number.isInteger(v) && v >= 0 && v <= 0xffffffff;
-  if (!(source instanceof Uint8Array) || ![address, ...Object.values(initial)].every(u32) ||
+  const registers = ['eax','ecx','edx','esp','ebx','ebp','esi','edi'] as const;
+  if (!(source instanceof Uint8Array) || !u32(address) ||
+      !initial || typeof initial !== 'object' ||
+      registers.some(key => !Object.hasOwn(initial,key) || !u32(initial[key])) ||
       !(stackBefore instanceof Uint8Array) || stackBefore.length !== 36 ||
       source.length < 4 || source.length > 256 || source.indexOf(0) < 0 ||
       address + source.length > 0x100000000 || initial.esp < 16 ||

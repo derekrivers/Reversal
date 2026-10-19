@@ -64,10 +64,11 @@ function rejected(f:()=>unknown) {
 }
 rejected(()=>strlenRuntime27(src,0x200f00,row.initial,st.slice(1)));
 rejected(()=>strlenRuntime27(src,0x200f00,{...row.initial,edx:NaN},st));
+rejected(()=>strlenRuntime27(src,0x200f00,{} as Registers27,st));
 rejected(()=>strlenRuntime27(src,0x200f00,{...row.initial,esp:0},st));
 rejected(()=>strlenRuntime27(src.fill(1),0x200f00,row.initial,st));
 rejected(()=>strlenRuntime27(Uint8Array.of(0),0x200f00,row.initial,st));
 rejected(()=>strlenRuntime27(Uint8Array.from(row.source),0xfffffff0,row.initial,st));
 rejected(()=>strlenRuntime27(Uint8Array.from(row.source),0x100007ff,row.initial,st));
 rejected(()=>strlenRuntime27(Uint8Array.from(row.source),0x200f01,row.initial,st));
-console.log('R27-B: 576 original-entry cases; 58526 x86 steps; 44 instructions / 48 CFG edges; length, stack, eight registers, return PC and ordered reads match. Eight unsupported-input checks pass.');
+console.log('R27-B: 576 original-entry cases; 58526 x86 steps; 44 instructions / 48 CFG edges; length, stack, eight registers, return PC and ordered reads match. Nine unsupported-input checks pass.');
