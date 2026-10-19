@@ -515,3 +515,9 @@ Baseline: reviewed and merged R35-A/B/C units establish three separate synthetic
 | ID | Specimen and precise scope | Owner / branch or worktree | Dependencies and exclusions | Review result |
 | --- | --- | --- | --- | --- |
 | R36-B-R | Pinned SHA-256 `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`; original initializer and reserve allocator frontiers plus auxiliary/manager row eligibility | Independent read-only reviewer / `codex/action33-contract-row-36` at `00b7d27` | Check six task files against R35-B/R34-B and pinned native/PE evidence. No shared or canonical native edits. | No actionable findings. Confirmed 7,466 original steps across nine initializer entries, five reserve entries and 512 eligibility windows; 446 native-compared static vs 98 PE-only instructions. Stops pre-`004c75a4`/pre-`004c7a02` and eligibility windows pre-`004c786c`/pre-`004c7907`; no row/index write or lookup return. Normal/-O, 13 negatives, Node24 task/full and diff checks pass. |
+
+### R36-C independent selector-state review
+
+| ID | Specimen and precise scope | Owner / branch or worktree | Dependencies and exclusions | Review result |
+| --- | --- | --- | --- | --- |
+| R36-C-R | Pinned SHA-256 `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`; `0084b940` receiver constructor, three callers and `0081ba8d` flag-store windows | Independent read-only reviewer / `codex/action33-selector-state-36` at `bed0e63` | Check six task files and focused read-only native export against R35-C/R33-B. No shared or canonical native edits. | Privacy review found one evidence-scan gap; fixed at `bed0e63` and re-reviewed clean. Confirmed 48 separate cases/1,168 original steps, constructor pre-`0084b970` drive query and caller pre-`00944ef0` HeapAlloc(0,0,16), plus 535 native-compared vs 95 PE-only static instructions. Normal/-O, 17 negatives, Node24 task/full and diff checks pass. No receiver, row, selector join or live lifecycle produced. |
