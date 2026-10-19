@@ -70,16 +70,25 @@ class Memory implements KeeperMemory29 {
   }
 }
 
-const oracle=JSON.parse(gunzipSync(readFileSync('evidence/keeper-selector-29-oracle.json.gz')).toString());
+const oracleFile=process.argv[2]??'evidence/keeper-selector-29-oracle.json.gz';
+assert.ok(process.argv.length<=3,'expected at most one oracle path');
+const oracle=JSON.parse(gunzipSync(readFileSync(oracleFile)).toString());
 const sites=JSON.parse(readFileSync('evidence/keeper-selector-29-sites.json','utf8'));
 assert.equal(oracle.specimen_sha256,sites.specimen_sha256);
 assert.equal(oracle.body_sha256,sites.body_sha256);
 assert.equal(oracle.function_cases,315);
+assert.ok(Array.isArray(oracle.cases),'case array required');
+assert.equal(oracle.cases.length,315,'all retained cases must be compared');
 assert.equal(oracle.covered_instruction_starts.length,sites.instruction_count);
 assert.deepEqual(oracle.covered_local_edges.map((row:string[])=>row.join(':')).sort(),
   sites.edges.map((row:string[])=>row.join(':')).sort());
 let effects=0;
-for(const row of oracle.cases){
+for(let index=0;index<oracle.cases.length;index++){
+  const row=oracle.cases[index];
+  const expected=index<300
+    ? [Math.floor(index/30),Math.floor(index%30/3),index%3]
+    : [10+Math.floor((index-300)/3),10+Math.floor((index-300)/3),(index-300)%3];
+  assert.deepEqual(row.input,expected,`case schedule ${index}`);
   const [left,right,selector]=row.input as number[];
   const memory=new Memory();memory.seed([left,right]);
   const result=selectKeeperSlot29(MATCH,selector,memory);
