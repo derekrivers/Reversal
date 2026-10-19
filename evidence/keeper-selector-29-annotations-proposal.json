@@ -1,0 +1,11 @@
+{
+  "unit": "R29-A",
+  "status": "proposal only; coordinator owns canonical Ghidra and shared registries",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "function_va": "006ce110",
+  "old_name": "cm0102_select_goalkeeper_slot_candidate",
+  "new_name": "cm0102_select_goalkeeper_slot_candidate",
+  "old_comment_end": "pointer EAX, RET4; may return null.",
+  "proposed_appended_comment": "Investigation29 complete local body: 500 PE/native bytes, 155 instructions and 190 local CFG edges verified. Both side caches are processed in order before low8(selector)==1 returns +f5a2 (otherwise +f59e). Each stale cached pointer is cleared only when signed slot+19 is negative; nonnegative caches bypass scan. Empty cache scans 20 slots at stride 1be, taking the first +19 index 0..10 whose signed slot+27-selected tactical word is 1. A reserve candidate is the last qualifying +1a index 0..10 with tactical word 1, +19=fe and +20=ff. Without a direct selection, first nonnegative +19 slot is cached; if a reserve exists its +1a is overwritten with the active index before an independent tactical-word test conditionally rewrites active +19 to the reserve's old +1a. No activity+2b check or calls. ECX match, stack byte selector, pointer/null EAX, RET4; EBX/EBP/ESI/EDI preserved. Bounded synthetic original-entry TypeScript/oracle covers all local edges; live-match validity remains unproved.",
+  "confidence": "high for local body, ABI and admitted synthetic behavior; no claim about live-match state"
+}
