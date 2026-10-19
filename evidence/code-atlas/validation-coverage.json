@@ -297,6 +297,30 @@
       "module": "reconstruction/collection-head-29.ts",
       "evidence": "evidence/collection-continuation-29-oracle.json",
       "boundary": "1,024 original-entry synthetic cases, all seven instruction starts and six local edges; valid mapped receiver/cursor/return memory, no collection lifecycle or invalid-pointer behavior"
+    },
+    {
+      "function": "00702050",
+      "scope": "bounded-original-produced-interior-action33-segment",
+      "behavior": "Compose selector, variant draw and keeper response on one shared RNG from the original-produced 007022fd checkpoint to before 007024b4",
+      "module": "reconstruction/action33-composition-30.ts",
+      "evidence": "evidence/action33-composition-30-oracle.bin",
+      "boundary": "160 synthetic cases; 11,456 selector operand events, 256 game stores and 637 RNG calls; earlier resolver prefix, CPU stack, full keeper read order, effect call and shot outcome excluded"
+    },
+    {
+      "function": "006f09b0",
+      "scope": "bounded-grid-float32-entry-to-return",
+      "behavior": "Signed-byte coordinate narrowing and float32 table load to x87 ST0 with original RET8 stack effects",
+      "module": "reconstruction/action33-grid-31.ts",
+      "evidence": "evidence/action33-grid-31-oracle.bin",
+      "boundary": "590 synthetic helper cases; all 108 grid indices, finite normal float32 and signed zero under explicit 53/64-bit precision; no original grid data lifetime or live match"
+    },
+    {
+      "function": "00702050",
+      "scope": "bounded-original-entry-grid-prefix",
+      "behavior": "Execute original resolver entry and composed grid helper to the first unsupported opposing-roster call at 0070210b",
+      "module": "reconstruction/action33-grid-31.ts",
+      "evidence": "evidence/action33-grid-31-oracle.bin",
+      "boundary": "160 guarded synthetic original-entry cases; complete admitted stack/game/grid reads and writes, GPR/flags, active x87 and unchanged RNG; no opposing scan, later interior composition connection, effect return or shot outcome"
     }
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "unit": "R31-A",
+  "status": "passed",
+  "oracle_sha256": "9967372e29685c49dc6da1663c5eb4fdd1a5347a846a41b211ce7bbc64dfac07",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "coverage": {
+    "prefix_cases": 160,
+    "helper_cases": 590,
+    "instructions": 21960,
+    "events": 11920,
+    "rng_calls": 0
+  },
+  "normal_optimized": "byte-identical original instruction regeneration and explicit exception gates",
+  "negative_checks": {
+    "changed_PE": "specimen SHA-256/size mismatch",
+    "independent_native_operand": "native operand mismatch 006f09b0",
+    "changed_native_file": "native file mismatch",
+    "changed_manifest": "native manifest mismatch",
+    "original_out_of_grid_read": "unadmitted data access",
+    "appended_json_whitespace": "noncanonical public payload",
+    "alternate_gzip_envelope": "noncanonical gzip envelope"
+  },
+  "privacy": "fixed synthetic schedules/grids; all retained operands are synthetic data or code addresses; original grid/PE/native inputs retained only as hashes",
+  "scope": "helper returns and resolver entry to pre-0070210b; empty x87 payloads excluded; no resolver or shot completion"
+}

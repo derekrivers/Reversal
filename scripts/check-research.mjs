@@ -10,6 +10,8 @@ process.chdir(root);mkdirSync('results',{recursive:true});
 const checks=[
  // Shared action33 call/state frontier and generated scoped diagram.
  ['scripts/check-action33-frontier.mjs'],
+ // R31-A compares the original distance-grid helper and resolver-entry prefix.
+ ['reconstruction/check-action33-grid-31.ts'],
  // R30-D validates retained static/synthetic-prefix evidence, without emulating private inputs.
  ['scripts/check-action33-state-30.mjs'],
  ['reconstruction/check-descriptor-handle.ts','evidence/descriptor-handle-validation/oracle.json','results/descriptor-handle.json'],
@@ -98,7 +100,7 @@ assert.equal(functions.filter(f=>f.working_research_name).length,atlas.counts.fu
 assert.equal(functions.reduce((n,f)=>n+f.call_instruction_count,0),atlas.counts.call_instructions);
 assert.equal(functions.reduce((n,f)=>n+f.unresolved_indirect_call_sites.length,0),atlas.counts.unresolved_indirect_call_instructions);
 const coverage=JSON.parse(readFileSync('evidence/code-atlas/validation-coverage.json','utf8'));
-assert.equal(coverage.entries.length,37);
+assert.equal(coverage.entries.length,40);
 for(const entry of coverage.entries)assert.ok(functions.some(f=>f.entry===entry.function),entry.function);
 const semantic=JSON.parse(readFileSync('evidence/code-atlas/semantic-coverage.json','utf8'));
 assert.equal(semantic.specimen_sha256,expected.sha256);
