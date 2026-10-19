@@ -206,6 +206,18 @@
     "R26-C": {
       "report": "reports/league-comparator-26.md",
       "evidence": "evidence/league-comparator-26-sites.json"
+    },
+    "R27-A": {
+      "report": "reports/iterator-helpers-27.md",
+      "evidence": "evidence/iterator-helpers-27-sites.json"
+    },
+    "R27-B": {
+      "report": "reports/strlen-runtime-27.md",
+      "evidence": "evidence/strlen-runtime-27-sites.json"
+    },
+    "R27-C": {
+      "report": "reports/league-sort-27.md",
+      "evidence": "evidence/league-sort-27-sites.json"
     }
   },
   "functions": [
@@ -878,6 +890,26 @@
       "address": "006834f0",
       "state": "contract-supported",
       "source": "R26-C"
+    },
+    {
+      "address": "0068d1b0",
+      "state": "contract-supported",
+      "source": "R27-A"
+    },
+    {
+      "address": "0068d1d0",
+      "state": "contract-supported",
+      "source": "R27-A"
+    },
+    {
+      "address": "009488e0",
+      "state": "contract-supported",
+      "source": "R27-B"
+    },
+    {
+      "address": "00945333",
+      "state": "contract-supported",
+      "source": "R27-C"
     }
   ]
 }

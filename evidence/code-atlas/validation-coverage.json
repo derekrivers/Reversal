@@ -233,6 +233,30 @@
       "module": "reconstruction/league-comparator-26.ts",
       "evidence": "evidence/league-comparator-26-oracle.json.gz",
       "boundary": "840 original-entry synthetic cases, 40,128 x86 steps, all 67 starts and 79 in-body edges; stable valid rows/shared pointer, no sort caller or final standings"
+    },
+    {
+      "function": "0068d1b0",
+      "scope": "bounded-link6-cursor-entry-to-return",
+      "behavior": "Read cursor node value and +6 next link, then advance the receiver cursor with ordered DWORD events and ABI effects",
+      "module": "reconstruction/iterator-helpers-27.ts",
+      "evidence": "evidence/iterator-helpers-27-oracle.json.gz",
+      "boundary": "400 original-entry synthetic cases; stable disjoint valid nodes or null cursor, no caller loop invariant, aliasing or invalid-pointer behavior"
+    },
+    {
+      "function": "0068d1d0",
+      "scope": "bounded-linka-cursor-entry-to-return",
+      "behavior": "Read cursor node value and +0xa next link, then advance the receiver cursor with ordered DWORD events and ABI effects",
+      "module": "reconstruction/iterator-helpers-27.ts",
+      "evidence": "evidence/iterator-helpers-27-oracle.json.gz",
+      "boundary": "400 original-entry synthetic cases; stable disjoint valid nodes or null cursor, no caller loop invariant, aliasing or invalid-pointer behavior"
+    },
+    {
+      "function": "009488e0",
+      "scope": "bounded-strlen-entry-to-return",
+      "behavior": "Aligned word scanning and first-NUL byte distance with ordered mapped reads, register, stack and return effects",
+      "module": "reconstruction/strlen-runtime-27.ts",
+      "evidence": "evidence/strlen-runtime-27-oracle.json.gz",
+      "boundary": "576 original-entry synthetic cases, 58,526 x86 steps, all 44 instruction starts and 48 local edges; mapped stable strings, four-byte reads up to three bytes past NUL, no faults, source/stack aliasing or caller output"
     }
   ]
 }
