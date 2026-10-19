@@ -26,6 +26,8 @@ const checks=[
  ['scripts/check-action33-owner-33.mjs'],
  // R34-B checks the contract call and separate constructor OS boundary on synthetic state.
  ['scripts/check-action33-contract-34.mjs'],
+ // R35-B checks bounded auxiliary allocation requests and static table lifecycle evidence.
+ ['scripts/check-action33-aux-35.mjs'],
  // R30-D validates retained static/synthetic-prefix evidence, without emulating private inputs.
  ['scripts/check-action33-state-30.mjs'],
  ['reconstruction/check-descriptor-handle.ts','evidence/descriptor-handle-validation/oracle.json','results/descriptor-handle.json'],

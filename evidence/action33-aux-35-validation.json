@@ -1,0 +1,29 @@
+{
+  "unit": "R35-B",
+  "status": "passed",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "evidence_sha256": "bfd41a4760cd2f1b32e83a48c03a37e298f2e9de2448b425c12d1d23863d3d43",
+  "expanded_canonical_sha256": "23a8908b0425c2c145e16eddbd9d8b41a3b0a61c80e837a852cce7d0c7138310",
+  "normal_optimized_evidence": "byte-identical original-instruction regeneration",
+  "native_compared_instructions": 300,
+  "pe_only_decoded_instructions": 350,
+  "coverage": {
+    "allocation_request_windows": 18,
+    "instruction_steps": 99,
+    "allocators_executed": 0,
+    "records_produced": 0,
+    "contract_lookup_advanced": false
+  },
+  "negative_probes": [
+    "changed specimen rejected",
+    "changed state manifest rejected",
+    "executed wrong allocation stride rejected",
+    "resealed sentinel store width rejected",
+    "raw private fragment rejected",
+    "hex private fragment rejected",
+    "base64 private fragment rejected",
+    "excessive expansion rejected"
+  ],
+  "privacy": "compressed and bounded expanded evidence plus authored files scanned for raw/hex/base64 samples",
+  "scope": "synthetic interior allocation-request windows only; no allocator return, auxiliary table, receiver, contract row or live lifecycle produced"
+}
