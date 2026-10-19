@@ -34,6 +34,7 @@ def verify(a):
     failures={'changed_specimen':rejected(lambda:decode(bytes(bad)),'specimen size/SHA-256 mismatch')}
     native=rows(a.fresh/'005b57c0.asm');native[0x5b57c5]=native[0x5b57c5].replace('0x5b4','0x5b5')
     failures['resealed_operand']=rejected(lambda:compare({k:v for k,v in insns.items() if 0x5b57c0<=k<0x5b57cf},native),'native operand mismatch 005b57c5')
+    (root/'results').mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='action33-negative-',dir=root/'results') as tmp:
         temp=Path(tmp);copy=temp/'exports';shutil.copytree(a.fresh,copy)
         path=copy/'005b57c0.asm';path.write_bytes(path.read_bytes()+b'\n')

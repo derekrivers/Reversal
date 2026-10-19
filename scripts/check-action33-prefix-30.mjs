@@ -66,5 +66,15 @@ for(const e of o.coverage.covered_edges){assert.equal(e.length,2);e.forEach(a=>h
 const sites=readFileSync(new URL('evidence/action33-prefix-30-sites.json',root));
 assert.equal(digest(sites),'6744c3025127c5ff5aef691f9aa0e3001a2858982ac1affcf6b22c5b9abe26c6');
 const s=JSON.parse(sites);assert.equal(s.admitted_instruction_count,808);assert.equal(s.all_admitted_native_operands_match,true);
+const receipt=readFileSync(new URL('evidence/action33-prefix-30-integrity.json',root));
+assert.equal(digest(receipt),'12b3ab313b50ef9bb99bea4021386ecca36bac021037d4eafae1bbf479041eda');
+const check=JSON.parse(receipt);
+keys(check,'unit status integrity specimen_sha256 sites_sha256 oracle_sha256 cases original_instruction_steps rejections privacy scope');
+assert.equal(check.unit,'R30-A');assert.equal(check.status,'passed');
+assert.equal(check.specimen_sha256,o.specimen_sha256);
+assert.equal(check.sites_sha256,digest(sites));assert.equal(check.oracle_sha256,digest(zipped));
+assert.equal(check.cases,o.cases.length);assert.equal(check.original_instruction_steps,steps);
+keys(check.rejections,'changed_specimen resealed_operand changed_native_file changed_table tactical_bit04_set');
+for(const value of Object.values(check.rejections))assert.ok(typeof value==='string'&&value.length>0);
 console.log(JSON.stringify({status:'passed',node:process.version,cases:160,original_instruction_steps:steps,ordered_memory_events:events,rng_calls:rngCalls,
  scope:'retained original-entry prefix evidence and schema/privacy integrity; no TypeScript implementation comparison'}));
