@@ -1,0 +1,19 @@
+{
+  "work_unit": "R29-C",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "site_sha256": "7df90b7f1fa9cbe246e85d6b2d829098c7f7ddaf9350a2801ca88d8ec2aa820b",
+  "oracle_sha256": "61ad24b654668d3b9a7f9c797fc5a7315d9d8068c09316b9834329b21553b3eb",
+  "optimized_python": "normal and -O site/oracle/negative/privacy receipts byte-identical",
+  "node_version": "24.19.0",
+  "getter_original_entry_cases": 1024,
+  "getter_instruction_steps": 5120,
+  "getter_covered_instruction_starts": 7,
+  "getter_covered_local_edges": 6,
+  "typescript_negative_mutations": [
+    "return EAX changed: final ABI mismatch",
+    "ordered reads reversed: ordered effects mismatch",
+    "full page changed: complete memory mismatch",
+    "preserved EBX changed: final ABI mismatch"
+  ],
+  "repository_check": "npm run check passed under Node 24.19.0"
+}
