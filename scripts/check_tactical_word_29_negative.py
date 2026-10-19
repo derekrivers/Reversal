@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Regenerate R29-B evidence and test sealed-integrity and model mutations."""
 import argparse
+import gzip
 import importlib.util
 import json
 from pathlib import Path
@@ -10,6 +11,7 @@ import sys
 import tempfile
 
 from extract_tactical_word_29 import extract, sha
+from check_tactical_word_29_privacy import scan_authored
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "evidence/tactical-word-29-sites.json"
@@ -92,6 +94,30 @@ def run(exe, exports, preflight, node):
         for mutation in ("--mutate-result", "--mutate-effect"):
             command([node, ROOT / "reconstruction/check-tactical-word-29.ts", ORACLE, mutation], False)
             checks.append(mutation + " rejected")
+        specimen = exe.read_bytes()
+        bodies = [specimen[int(f["file_offset"], 16):int(f["file_offset"], 16) + 42]
+                  for f in json.loads(original_sites)["functions"]]
+        for label, injected in (("raw", bodies[0][:16]), ("hex", bodies[0][:16].hex().encode())):
+            probe = temp / ("private-" + label + ".gz")
+            probe.write_bytes(gzip.compress(b"synthetic-prefix:" + injected, mtime=0))
+            try:
+                scan_authored(probe, bodies)
+            except ValueError as error:
+                if "original PE fragment" not in str(error):
+                    raise
+            else:
+                raise ValueError("expanded gzip " + label + " private fragment accepted")
+            checks.append("expanded gzip " + label + " fragment rejected")
+        oversized = temp / "oversized.gz"
+        oversized.write_bytes(gzip.compress(b"X" * 33, mtime=0))
+        try:
+            scan_authored(oversized, bodies, max_expanded_bytes=32)
+        except ValueError as error:
+            if "privacy scan limit" not in str(error):
+                raise
+        else:
+            raise ValueError("oversized expanded gzip accepted")
+        checks.append("expanded gzip size limit enforced")
         command([node, ROOT / "reconstruction/check-tactical-word-29.ts"], True)
     return {"work_unit": "R29-B", "specimen_sha256": json.loads(original_sites)["specimen_sha256"],
             "status": "passed", "count": len(checks), "checks": checks}

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Reject private inputs and original instruction fragments in R29-B authored files."""
 import argparse
+import gzip
 import json
 from pathlib import Path
 
@@ -22,6 +23,26 @@ FILES = [
     "scripts/check_tactical_word_29_privacy.py",
 ]
 
+MAX_EXPANDED_BYTES = 16 * 1024 * 1024
+
+
+def scan_authored(path, bodies, max_expanded_bytes=MAX_EXPANDED_BYTES):
+    authored = path.read_bytes()
+    payloads = [authored]
+    if path.suffix.lower() == ".gz":
+        with gzip.open(path, "rb") as stream:
+            expanded = stream.read(max_expanded_bytes + 1)
+        if len(expanded) > max_expanded_bytes:
+            raise ValueError("expanded authored file exceeds privacy scan limit: " + str(path))
+        payloads.append(expanded)
+    for payload in payloads:
+        lower = payload.lower()
+        for body in bodies:
+            for at in range(len(body) - 15):
+                fragment = body[at:at + 16]
+                if fragment in payload or fragment.hex().encode() in lower:
+                    raise ValueError("original PE fragment in " + str(path))
+
 
 def run(exe, exports, preflight):
     root = Path(__file__).resolve().parents[1]
@@ -33,17 +54,12 @@ def run(exe, exports, preflight):
         path = root / name
         if not path.is_file() or path.suffix.lower() in (".exe", ".asm", ".c", ".gpr", ".zip", ".rep"):
             raise ValueError("missing or forbidden authored path " + name)
-        authored = path.read_bytes()
-        lower = authored.lower()
-        for body in bodies:
-            for at in range(len(body)-15):
-                fragment = body[at:at+16]
-                if fragment in authored or fragment.hex().encode() in lower:
-                    raise ValueError("original PE fragment in " + name)
+        scan_authored(path, bodies)
     return {"work_unit": "R29-B", "status": "passed", "specimen_sha256": sites["specimen_sha256"],
             "authored_files_scanned": len(FILES), "files": FILES,
             "checks": ["task-specific authored paths and extensions",
-                       "no raw or contiguous hex-encoded 16-byte fragment of either original body"],
+                       "bounded gzip expansion for compressed authored files",
+                       "no raw or contiguous hex-encoded 16-byte fragment of either original body in stored or expanded bytes"],
             "limitation": "Scoped code-fragment scan supplements staged-content review; it is not a general secret detector."}
 
 

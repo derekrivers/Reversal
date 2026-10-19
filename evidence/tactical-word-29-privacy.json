@@ -20,7 +20,8 @@
   ],
   "checks": [
     "task-specific authored paths and extensions",
-    "no raw or contiguous hex-encoded 16-byte fragment of either original body"
+    "bounded gzip expansion for compressed authored files",
+    "no raw or contiguous hex-encoded 16-byte fragment of either original body in stored or expanded bytes"
   ],
   "limitation": "Scoped code-fragment scan supplements staged-content review; it is not a general secret detector."
 }
