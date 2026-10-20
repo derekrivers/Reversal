@@ -103,6 +103,10 @@ def lookup_closure(dbg, process, ctx, loaded_base):
     staff = u32(stack, 0x264)
     receiver = read("lookup_receiver", ctx.Ecx, 0x2C) if ctx.Ecx else None
     record = read("staff_record", staff, 0x6E) if staff else None
+    # R41-B effect consumer uses ESI for the slot at the actual lookup CALL.
+    # A different caller may supply an unrelated ESI: record bytes, but assert
+    # no slot semantics unless both caller provenance and pointer equalities hold.
+    slot = read("effect_esi_candidate_slot", ctx.Esi, 0x1BE) if ctx.Esi else None
     index = struct.unpack_from("<i", record)[0] if record else None
     row_base = u32(receiver)
     if row_base and index is not None and count is not None and 0 <= index < count:
@@ -115,6 +119,10 @@ def lookup_closure(dbg, process, ctx, loaded_base):
                 read("selected_cache_record", cache + 48 * mapped, 48)
     return {"memory": reads, "all_requested_reads_complete": all(r["complete"] for r in reads),
             "staff": staff, "index": index, "count": count,
+            "effect_return_address_matches": u32(stack, 0x260) == 0x6CF8F7 + delta,
+            "slot_staff_pointer_matches": u32(slot, 0x69) == staff if slot and staff else None,
+            "slot_attribute_pointer_matches": u32(slot, 0x6D) == u32(record, 0x61)
+                if slot and record else None,
             "flags": flags.hex() if flags else None,
             "missing": ["staff attributes referent", "refresh-path closure",
                         "RNG table", "return and ordered effects"]}
