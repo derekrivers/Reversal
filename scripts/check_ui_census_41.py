@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '612436acac356b734636c3d3b174342b9deb32f2b5abbd5813762e9580962bb3'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'd27c9ac284747e32f91215c967c5651fb9be6d80013d86bd92f5a4424d6ba193'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -172,7 +172,7 @@ def render_for_privacy(source):
     html_view.close()
     rendered = render_inline_links(''.join(html_view.parts))
     fold_ref = lambda value: unicodedata.normalize('NFC', re.sub(r'\s+', ' ', value.strip())).casefold()
-    references = {fold_ref(match.group(1)) for match in re.finditer(r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*\S+', rendered)}
+    references = {fold_ref(match.group(1)) for match in re.finditer(r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]{0,3})?\S+', rendered)}
     rendered = re.sub(r'!?\[([^\]\r\n]*)\]\[([^\]]{0,999})\]', lambda match: match.group(1) if fold_ref(match.group(2) or match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_ref(match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'\\[ \t]*\r?\n', ' ', rendered)
@@ -727,11 +727,12 @@ def main():
         b'\nC:[][ref\none]\\Users\\operator\\private\\capture.png\n\n[ref one]: target',
         b'\nC:[][ref one]\\Users\\operator\\private\\capture.png\n\n[ref\none]: target',
     )
+    next_line_reference_report_leaks = (b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]:\n target',)
     unicode_boundary_report_leaks = (
         '\nlocation—\\Users\\operator\\private\\capture.png'.encode('utf-8'),
         '\n“\\Users\\operator\\private\\capture.png'.encode('utf-8'),
     )
-    for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks + whitespace_reference_report_leaks + unicode_boundary_report_leaks:
+    for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks + whitespace_reference_report_leaks + next_line_reference_report_leaks + unicode_boundary_report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
         except ValueError as exc:
@@ -783,6 +784,8 @@ def main():
             name_head + ' [][ref\tone]' + name_tail + '\n\n[ref one]: target',
             name_head + ' [][ref\none]' + name_tail + '\n\n[ref one]: target',
             name_head + ' [][ref one]' + name_tail + '\n\n[ref\none]: target',
+            name_head + ' [][ref]' + name_tail + '\n\n[ref]:\n target',
+            name_head + ' ![][ref]' + name_tail + '\n\n[ref]:\n target',
             name_head + ' ![' + name_tail + '](https://example.invalid/image.png)',
             name_head + ' [' + name_tail + '](https://example.invalid/a(b(c)))',
             name_head + ' [' + name_tail + '][reference]\n[reference]: https://example.invalid',
@@ -824,6 +827,7 @@ def main():
             attribute['label'] + ': ' + attribute['value'][0] + '[][ref one]' + attribute['value'][1:] + '\n\n[ref  one]: target',
             attribute['label'] + ': ' + attribute['value'][0] + '[][ref\tone]' + attribute['value'][1:] + '\n\n[ref one]: target',
             attribute['label'] + ': ' + attribute['value'][0] + '[][ref one]' + attribute['value'][1:] + '\n\n[ref\none]: target',
+            attribute['label'] + ': ' + attribute['value'][0] + '[][ref]' + attribute['value'][1:] + '\n\n[ref]:\n target',
             attribute['label'] + ': ![' + attribute['value'] + '](https://example.invalid/image.png)',
             attribute['label'] + ': [' + attribute['value'] + '][reference]\n[reference]: https://example.invalid',
             attribute['label'] + '<br>' + attribute['value'],
@@ -864,6 +868,7 @@ def main():
         expression_near_miss = attribute['label'] + ': `' + attribute['value'][0] + '*' + attribute['value'][1:] + '`'
         check_private_display(snapshot, public + '\n' + expression_near_miss)
         check_private_display(snapshot, public + '\n' + name_head + '[][other]' + name_tail + '\n\n[ref one]: target')
+        check_private_display(snapshot, public + '\n' + name_head + '[][ref]' + name_tail + '\n\n[ref]:\n\n target')
         synthetic = copy.deepcopy(snapshot)
         synthetic['squad']['clubLabel'] = 'Synthetic "Club"'
         try:
@@ -905,9 +910,9 @@ def main():
             raise ValueError('Unicode case-folded private label accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 5
+        result['private_near_miss_probes'] = 6
         result['private_escape_probes'] = 5
-    result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(unicode_boundary_report_leaks)
+    result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 9
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     result['public_report_checks'] = 'LF/CRLF match; changed coverage total rejected'
