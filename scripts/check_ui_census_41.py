@@ -306,7 +306,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
     require(all(denominator[k] == v for k,v in expected_sets.items()), 'denominator membership mismatch')
     require(denominator['counts'] == {k:len(v) for k,v in expected_sets.items()}, 'denominator count mismatch')
     public = list(text_values(data)) + [report_reader().decode('utf-8')]
-    require(not any(re.search(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b',part) for part in public), 'private path/payload in census')
+    require(not any(re.search(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b',part,re.IGNORECASE) for part in public), 'private path/payload in census')
     require(not any(re.search(r'\b\d{1,2}(?:-\d{1,2}){3,}\b|[£$€]\d',part) for part in public), 'captured display value in census')
     return {'states':len(states),'screenshots':sum(e['kind']=='screenshot' for e in evidence.values()), 'denominator':denominator['counts'], 'engine_bindings':0}
 
@@ -357,13 +357,14 @@ def check_private_display(snapshot, public):
     row_fields = ('picked', 'info', 'name', 'position', 'form', 'morale', 'condition', 'apps', 'averageRating', 'value')
     for row in snapshot['squad']['rows']:
         for key in row_fields:
-            add(key, row[key])
+            add(key, row[key], generic=(key in ('info', 'position', 'morale')))
     for key in ('title', 'bio', 'role', 'preferredFoot', 'form', 'morale', 'condition'):
         add(key, snapshot['profile'][key], generic=(key == 'role'))
     for column in snapshot['profile']['attributeColumns']:
         for attribute in column:
             add(attribute['label'], attribute['value'], generic=True)
-    require(not any(value in public for value in exact), 'private captured display string present in public catalogue/report')
+    folded_public = public.casefold()
+    require(not any(value.casefold() in folded_public for value in exact), 'private captured display string present in public catalogue/report')
     def labelled_leak(label, value):
         key, val = re.escape(label), re.escape(value)
         boundary = r'(?!\w|\.[A-Za-z0-9])'
@@ -375,7 +376,7 @@ def check_private_display(snapshot, public):
     require(not any(labelled_leak(label, value) for label,value in labelled), 'private captured labelled value present in public catalogue/report')
     # Parse JSON from its original escaped text. Decoding the whole file first
     # can corrupt valid objects when a separate property contains quotes/braces.
-    pairs = {(label.casefold(), value) for label,value in labelled}
+    pairs = {(label.casefold(), value.casefold()) for label,value in labelled}
     decoder = json.JSONDecoder(object_pairs_hook=unique_json_pairs)
     def inspect_value(value, depth):
         require(depth < 32, 'excessively nested structured display text')
@@ -386,7 +387,7 @@ def check_private_display(snapshot, public):
             elif isinstance(displayed, float):
                 displayed = str(int(displayed)) if math.isfinite(displayed) and displayed.is_integer() else str(displayed)
             if isinstance(value.get('label'), str) and isinstance(displayed, str):
-                require((value['label'].casefold(), displayed) not in pairs, 'private captured structured value present in public catalogue/report')
+                require((value['label'].casefold(), displayed.casefold()) not in pairs, 'private captured structured value present in public catalogue/report')
             for child in value.values():
                 inspect_value(child, depth + 1)
         elif isinstance(value, list):
@@ -546,6 +547,8 @@ def main():
         lambda d:d.update(private_payload='/home/operator/private/capture.png'),
         lambda d:d.update(private_payload='/tmp/capture.jpg'),
         lambda d:d.update(private_payload='results/private-capture.json'),
+        lambda d:d.update(private_payload='Results/private-capture.json'),
+        lambda d:d.update(private_payload='DATA:IMAGE/JPEG;BASE64,AAAA'),
         lambda d:d.update(private_payload='runtime-capture-41/results/private-capture.json'),
         lambda d:d['states'][0].update(notes='line\n/tmp/capture.jpg'),
         lambda d:d['states'][0].update(notes='tab\t/home/operator/private/capture.png'),
@@ -575,7 +578,7 @@ def main():
     else:
         raise ValueError('altered public source accepted')
     report = public_report_bytes()
-    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\n\\\\server\\share\\private\\capture.png')
+    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png')
     for leaked in report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
@@ -601,6 +604,7 @@ def main():
         public = (ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8') + (ROOT/'reports/ui-map-41.md').read_text(encoding='utf-8')
         check_private_display(snapshot, public)
         private_leaks = [snapshot['squad']['clubLabel'], snapshot['squad']['dateLabel'], snapshot['profile']['bio']]
+        private_leaks.append(snapshot['squad']['rows'][0]['name'].swapcase())
         picked = next(row['picked'] for row in snapshot['squad']['rows'] if row['picked'])
         info = next(row['info'] for row in snapshot['squad']['rows'] if row['info'])
         attribute = snapshot['profile']['attributeColumns'][0][0]
