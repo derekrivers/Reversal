@@ -112,7 +112,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'a18d4c57147801fd94652e10bc7663650970b158d63ec8cc848e67cfcb549025'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'b2d28a0904ad0852fbb6a424597086ad478c8dff62ccad673b280157e9b4580e'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -436,18 +436,19 @@ def check_private_display(snapshot, public):
         chunks.append(source[pos:])
         return ''.join(chunks)
     class RenderedHTML(HTMLParser):
+        BLOCK_TAGS = frozenset(('address', 'article', 'aside', 'blockquote', 'br', 'canvas', 'dd', 'details', 'dialog', 'div', 'dl', 'dt', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'legend', 'li', 'main', 'nav', 'ol', 'p', 'pre', 'section', 'summary', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'ul'))
         def __init__(self):
             super().__init__(convert_charrefs=True)
             self.parts = []
         def handle_starttag(self, tag, attrs):
-            if tag in ('br', 'p', 'div', 'li', 'tr', 'td', 'th', 'hr'):
+            if tag in self.BLOCK_TAGS:
                 self.parts.append(' ')
             if tag == 'img':
                 self.parts.extend(value for key,value in attrs if key == 'alt' and value)
         def handle_startendtag(self, tag, attrs):
             self.handle_starttag(tag, attrs)
         def handle_endtag(self, tag):
-            if tag in ('p', 'div', 'li', 'tr', 'td', 'th'):
+            if tag in self.BLOCK_TAGS:
                 self.parts.append(' ')
         def handle_data(self, data):
             self.parts.append(data)
@@ -759,6 +760,8 @@ def main():
             name_head + ' <span>' + name_tail + '</span>',
             name_head + '<br>' + name_tail,
             '<p>' + name_head + '</p><p>' + name_tail + '</p>',
+            '<h1>' + name_head + '</h1><h1>' + name_tail + '</h1>',
+            '<blockquote>' + name_head + '</blockquote><blockquote>' + name_tail + '</blockquote>',
             name_head + ' <!-- note -->' + name_tail,
             name_head + ' <span title=">">' + name_tail + '</span>',
             name_head + ' <img alt="' + name_tail + '">',
@@ -788,6 +791,8 @@ def main():
             attribute['label'] + ': ![' + attribute['value'] + '](https://example.invalid/image.png)',
             attribute['label'] + ': [' + attribute['value'] + '][reference]\n[reference]: https://example.invalid',
             attribute['label'] + '<br>' + attribute['value'],
+            '<h3>' + attribute['label'] + '</h3>' + attribute['value'],
+            '<section>' + attribute['label'] + '</section>' + attribute['value'],
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
