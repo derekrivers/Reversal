@@ -96,10 +96,17 @@ REVIEWED_STATE_IDS = frozenset({
 # and encoded as canonical UTF-8 JSON. Extending the census requires a fresh
 # visual review and an intentional update of this batch pin.
 REVIEWED_ROUTE_SHA256 = 'ec9061bf37e9952998d52693b911e5f8c4c92a50d17947f24dc981dd3b06819f'
+REVIEWED_STATE_CLAIMS_SHA256 = '6fd5b4125eed1b07d95fdaf8c7c4ac276d8323bfbed6a1cb164aec89669e9a06'
 
 
 def route_digest(rows):
     canonical = json.dumps(sorted(rows, key=lambda row: row['id']), sort_keys=True, separators=(',', ':'), ensure_ascii=False)
+    return hashlib.sha256(canonical.encode('utf-8')).hexdigest()
+
+
+def state_claims_digest(rows):
+    claims = [{'id': row['id'], 'kind': row['kind'], 'layout_id': row['layout_id'], 'evidence_ids': row['evidence_ids']} for row in rows]
+    canonical = json.dumps(sorted(claims, key=lambda row: row['id']), sort_keys=True, separators=(',', ':'), ensure_ascii=False)
     return hashlib.sha256(canonical.encode('utf-8')).hexdigest()
 
 
@@ -151,6 +158,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
     layouts = indexed(data['layouts'], 'layout')
     states = indexed(data['states'], 'state')
     require(set(states) == REVIEWED_STATE_IDS, 'unreviewed state catalogue')
+    require(state_claims_digest(data['states']) == REVIEWED_STATE_CLAIMS_SHA256, 'unreviewed state evidence or kind')
     edges = indexed(data['transitions'], 'transition')
     require(set(edges) == set(REVIEWED_EDGE_TOPOLOGY), 'unreviewed transition set')
     routes = indexed(data['discovered_routes'], 'route')
@@ -207,11 +215,17 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
             require(bool(reports) and set(edge['context_ids']).issubset(claimed_contexts), 'action context without operator claim')
         else:
             require(any(i in states[edge['from']]['evidence_ids'] for i in images) and any(i in states[edge['to']]['evidence_ids'] for i in images), 'screenshot sequence without endpoint images')
+    image_owners = {}
     for state in states.values():
         refs(state['evidence_ids'], evidence)
         require(bool(state['evidence_ids']), 'state without evidence')
         require(state['layout_id'] is None or state['layout_id'] in layouts, 'unknown layout')
         screen = any(evidence[i]['kind'] == 'screenshot' for i in state['evidence_ids'])
+        for evidence_id in state['evidence_ids']:
+            if evidence[evidence_id]['kind'] == 'screenshot':
+                digest = evidence[evidence_id]['sha256']
+                require(digest not in image_owners or image_owners[digest] == state['id'], 'screenshot reused across states')
+                image_owners[digest] = state['id']
         require(state['kind'] in ['screen', 'modal', 'native-dialog', 'operator-only', 'terminal'], 'unknown state kind')
         if state['kind'] in ['operator-only', 'terminal']:
             require(not screen and any(evidence[i]['kind'] == 'operator-report' for i in state['evidence_ids']), 'unconfirmed nonvisual state')
@@ -328,6 +342,17 @@ def main():
         d['discovered_routes'].append(invented)
         d['denominator']['discovered_uncaptured_route_ids'].append(invented['id'])
         d['denominator']['counts']['discovered_uncaptured_route_ids'] += 1
+    def promote_existing_operator(d):
+        state = next(state for state in d['states'] if state['id'] == 'ui41.game.options')
+        state['kind'] = 'screen'
+        state['evidence_ids'].append('r41-ui-01-menu')
+        state['coverage']['screenshot'] = True
+        d['denominator']['operator_only_state_ids'].remove(state['id'])
+        d['denominator']['counts']['operator_only_state_ids'] -= 1
+        d['denominator']['screenshot_confirmed_state_ids'].append(state['id'])
+        d['denominator']['counts']['screenshot_confirmed_state_ids'] += 1
+    def reuse_visual_image(d):
+        next(state for state in d['states'] if state['id'] == 'ui41.player.profile')['evidence_ids'].append('r41-ui-01-menu')
     mutations = [
         lambda d:d['transitions'][0].update(to='ui41.unmapped'),
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(evidence_ids=['r41-a4-operator-notes'], context_ids=['gdi-A4-failed-launch']),
@@ -337,6 +362,8 @@ def main():
         promote_cd_gap,
         clone_visual_state,
         invent_control_route,
+        promote_existing_operator,
+        reuse_visual_image,
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.running-sequence').update(evidence_ids=['r41-ui-09-match-before-kickoff-A']),
         lambda d:d['evidence'].append(d['evidence'][0]),
         lambda d:d['states'][0]['coverage'].update(engine_binding=True),
