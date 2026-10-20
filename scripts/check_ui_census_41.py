@@ -98,6 +98,14 @@ REVIEWED_STATE_IDS = frozenset({
 REVIEWED_ROUTE_SHA256 = 'ec9061bf37e9952998d52693b911e5f8c4c92a50d17947f24dc981dd3b06819f'
 REVIEWED_STATE_CLAIMS_SHA256 = '6fd5b4125eed1b07d95fdaf8c7c4ac276d8323bfbed6a1cb164aec89669e9a06'
 REVIEWED_UNKNOWN_SECTIONS_SHA256 = 'ef594ff35e5a3add0543db42260213d285774a5c5878cbe319963b37dcc93f6a'
+REVIEWED_BATCH_SECTION_SHA256 = {
+    'contexts': 'c732d0015cb29c35ab2ddbe83adc056e63689d2abd4fc8097ac1c0af19a22778',
+    'evidence': '0b0c8f118e218fccd1a0488541a7f677eba15056040dec62c698522b19a87858',
+    'layouts': 'b243b6201fcda8d5c3763688044d9d062dfcf5d9a127f2888c783dc276e44118',
+    'transitions': 'e994cec077e8c69334a299a1733c36b86e2863ea4d1f55c42c893b3d6439adf1',
+    'capture_requests': '2a1ef2b0ebaa83b5a3c108b121b23c953f42ab025a28fe1313d92460265b34d8',
+}
+REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5eaf0a0d1560300fa7a'
 
 
 def route_digest(rows):
@@ -113,6 +121,11 @@ def state_claims_digest(rows):
 
 def unknown_sections_digest(rows):
     canonical = json.dumps(sorted(rows, key=lambda row: row['id']), sort_keys=True, separators=(',', ':'), ensure_ascii=False)
+    return hashlib.sha256(canonical.encode('utf-8')).hexdigest()
+
+
+def batch_section_digest(rows):
+    canonical = json.dumps(sorted(rows, key=lambda row: row.get('id', row.get('owner', ''))), sort_keys=True, separators=(',', ':'), ensure_ascii=False)
     return hashlib.sha256(canonical.encode('utf-8')).hexdigest()
 
 
@@ -159,6 +172,10 @@ def text_values(value):
 
 def validate(data, assets, source_reader=tracked_source_bytes, report_reader=public_report_bytes):
     require(data['schema'] == 'reversal.ui-screen-census-41.v1', 'unsupported schema')
+    for section, digest in REVIEWED_BATCH_SECTION_SHA256.items():
+        require(batch_section_digest(data[section]) == digest, f'unreviewed {section} batch claims')
+    alias_bytes = json.dumps(data['state_aliases'], sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8')
+    require(hashlib.sha256(alias_bytes).hexdigest() == REVIEWED_STATE_ALIASES_SHA256, 'unreviewed state aliases')
     contexts = indexed(data['contexts'], 'context')
     evidence = indexed(data['evidence'], 'evidence')
     layouts = indexed(data['layouts'], 'layout')
@@ -387,6 +404,10 @@ def main():
         reuse_visual_image,
         invent_unknown_section,
         append_unowned_screenshot,
+        lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(sha256='1'*64),
+        lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(capture_pixels=[1,1]),
+        lambda d:next(item for item in d['contexts'] if item['id'] == 'gdi-A').update(executable_sha256='1'*64),
+        lambda d:d['layouts'][0]['regions'][0].update(bounds=[0,0,1,1]),
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.running-sequence').update(evidence_ids=['r41-ui-09-match-before-kickoff-A']),
         lambda d:d['evidence'].append(d['evidence'][0]),
         lambda d:d['states'][0]['coverage'].update(engine_binding=True),
