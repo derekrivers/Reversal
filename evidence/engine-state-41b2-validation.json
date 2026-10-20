@@ -1,0 +1,146 @@
+{
+  "schema": "reversal.engine-state-41b2.validation.v1",
+  "specimens": {
+    "pinned": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+    "gdi": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b"
+  },
+  "normal_optimized_identical": true,
+  "positive_inputs": [
+    {
+      "name": "runtime-capture",
+      "input_sha256": "5359421a6164e301f32a4f406cbebdbe9458d4fcede5fa259c7e977066e90271",
+      "evidence_kind": "runtime-capture",
+      "comparison": {
+        "original_steps": 85,
+        "memory_events": 19,
+        "call_boundaries": 2,
+        "returned_null": true
+      },
+      "altered_results_rejected": 6,
+      "stdout_sha256": "4a8c33f5146731d4af17997666380efeec5720c3aeca0128e32f9720d894ef09"
+    },
+    {
+      "name": "metadata-reduced-capture",
+      "input_sha256": "12a12def7459de06ba13d16c4f14c40bc04e8e7012659f555ecde89c8ea4f129",
+      "evidence_kind": "sanitized-capture",
+      "comparison": {
+        "original_steps": 85,
+        "memory_events": 19,
+        "call_boundaries": 2,
+        "returned_null": true
+      },
+      "altered_results_rejected": 6,
+      "stdout_sha256": "bdcf61e7e8e882a4c392e4def6283abd7313623fe26da85c77d8d4f885abd716"
+    },
+    {
+      "name": "synthetic-null",
+      "input_sha256": "abf8b0cd2bc89f1db781690444ef3d9864e6949677dd52c87c9b2aa2c5eddd39",
+      "evidence_kind": "synthetic",
+      "comparison": {
+        "original_steps": 85,
+        "memory_events": 19,
+        "call_boundaries": 2,
+        "returned_null": true
+      },
+      "altered_results_rejected": 6,
+      "stdout_sha256": "df224527547ffe4923f9408f042c50696a0b56b131309d33490659641a6f7401"
+    },
+    {
+      "name": "synthetic-nonnull",
+      "input_sha256": "f63e858edebd5e9476cbe3198298709ab2a86feff014c772274deb9c4b6c44cb",
+      "evidence_kind": "synthetic",
+      "comparison": {
+        "original_steps": 88,
+        "memory_events": 20,
+        "call_boundaries": 2,
+        "returned_null": false
+      },
+      "altered_results_rejected": 6,
+      "stdout_sha256": "3f251157af4b8280d5ef3d3b6277528605542cd80ab5ac546853b32a51deb98e"
+    },
+    {
+      "name": "additional-runtime-capture-1",
+      "input_sha256": "174988ab0a5da960a4fc4e1d9e6c02f6616522f3a3b65ee0313578bf0e2e2289",
+      "evidence_kind": "runtime-capture",
+      "comparison": {
+        "original_steps": 85,
+        "memory_events": 19,
+        "call_boundaries": 2,
+        "returned_null": true
+      },
+      "altered_results_rejected": 6,
+      "stdout_sha256": "c86fa99959b9fa63a89f2beaa8757747ba7ef93228069ae8b2647451c9cba6ee"
+    }
+  ],
+  "negative_inputs": [
+    {
+      "name": "resealed-stale-row",
+      "code": "REFRESH_UPDATE_REQUIRED"
+    },
+    {
+      "name": "resealed-uninitialized-flags",
+      "code": "REFRESH_INITIALIZATION_REQUIRED"
+    },
+    {
+      "name": "resealed-lookup-alias",
+      "code": "LOOKUP_ALIAS_MISMATCH"
+    },
+    {
+      "name": "resealed-rng-cursor",
+      "code": "RNG_STATE_OUTSIDE_DOMAIN"
+    },
+    {
+      "name": "missing-cache-referent",
+      "code": "CACHE_REFERENT_MISSING"
+    },
+    {
+      "name": "missing-fs",
+      "code": "FS_STATE_MISSING"
+    },
+    {
+      "name": "invalid-hex",
+      "code": "REGION_ENCODING"
+    },
+    {
+      "name": "unclaimed-input-kind",
+      "code": "INVALID_EVIDENCE_KIND"
+    },
+    {
+      "name": "wrapper-cannot-declare-raw-capture",
+      "code": "INVALID_EVIDENCE_KIND"
+    },
+    {
+      "name": "wrapper-extra-trust-field",
+      "code": "INVALID_WRAPPER"
+    },
+    {
+      "name": "malformed-register-object",
+      "code": "REGISTER_SHAPE"
+    },
+    {
+      "name": "missed-breakpoint",
+      "code": "CAPTURE_OUTSIDE_CACHED_LOOKUP_DOMAIN"
+    },
+    {
+      "name": "existing-private-output",
+      "code": "PRIVATE_OUTPUT_EXISTS"
+    },
+    {
+      "name": "public-private-output",
+      "code": "PRIVATE_OUTPUT_LOCATION"
+    },
+    {
+      "name": "standalone-altered-original-return",
+      "code": "COMPARISON_REJECTED"
+    }
+  ],
+  "capture_hash_is_runner_allowlist": false,
+  "source_sha256": {
+    "scripts/check_engine_state_41b2.py": "7c3831ea0f0e825bb7f61e5d46b4184cc2ae71dc6043e8e29c0818a4a196a77b",
+    "scripts/verify_engine_state_41b2.py": "ec850eda2ba142620ed39d0cc50f1e00b133be1a85f96585c2f70f76e01c55fe",
+    "reconstruction/compare-state-41b2.ts": "9f863a00435fd456db8c87d058daced2a561656fc3dbf432c221f2e596ab7879",
+    "reports/engine-state-41b2.md": "792126544154efc0047a33d0c334b6515614eb884dba7573adadd2446d2b4377"
+  },
+  "privacy": "public files and CLI stdout scanned for selected original code and captured memory excerpts",
+  "scope": "reusable admitted cached GDI lookup comparison; capture provenance is declared metadata; no live return or executed RNG draw"
+}
