@@ -1,0 +1,35 @@
+{
+  "unit": "R39-B",
+  "status": "passed",
+  "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "oracle_sha256": "840645b6471b3c528354ff90e81be1f4b2258aad78537358ecf69a05437dbf68",
+  "expanded_sha256": "1ae59801b1b4d3a3c2e8a269c5eed944d5526440562e638ec01e743cad2e576f",
+  "normal_optimized_regeneration": "byte-identical",
+  "coverage": {
+    "cases": 80,
+    "prefix_instruction_steps": 25280,
+    "new_instruction_steps": 1120,
+    "new_memory_events": 880
+  },
+  "native_compared_instructions": 875,
+  "pe_only_instructions": 819,
+  "privacy_windows": 4984,
+  "privacy_forms": 19970,
+  "negative_probes": [
+    "changed specimen",
+    "changed inherited native manifest",
+    "changed authored heap operand",
+    "executed wrong heap global",
+    "executed wrong heap mode source",
+    "executed wrong original participant store",
+    "resealed inherited native width",
+    "late raw private excerpt",
+    "late lowercase hex",
+    "late uppercase hex",
+    "embedded base64 alignment zero",
+    "embedded base64 alignment one",
+    "embedded base64 alignment two",
+    "excessive gzip expansion"
+  ],
+  "limits": "separate synthetic entries; no resolver, Windows calls, initialized lookup object, TypeScript or live claim"
+}
