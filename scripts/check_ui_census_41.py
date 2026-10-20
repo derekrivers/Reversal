@@ -106,6 +106,7 @@ REVIEWED_BATCH_SECTION_SHA256 = {
     'capture_requests': '2a1ef2b0ebaa83b5a3c108b121b23c953f42ab025a28fe1313d92460265b34d8',
 }
 REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5eaf0a0d1560300fa7a'
+REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 
 
 def route_digest(rows):
@@ -171,6 +172,9 @@ def text_values(value):
 
 def validate(data, assets, source_reader=tracked_source_bytes, report_reader=public_report_bytes):
     require(data['schema'] == 'reversal.ui-screen-census-41.v1', 'unsupported schema')
+    claims = {key:data[key] for key in ('cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol')}
+    claim_bytes = json.dumps(claims, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8')
+    require(hashlib.sha256(claim_bytes).hexdigest() == REVIEWED_TOP_LEVEL_CLAIMS_SHA256, 'unreviewed top-level coverage claims')
     for section, digest in REVIEWED_BATCH_SECTION_SHA256.items():
         require(batch_section_digest(data[section]) == digest, f'unreviewed {section} batch claims')
     alias_bytes = json.dumps(data['state_aliases'], sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8')
@@ -353,6 +357,16 @@ def check_private_display(snapshot, public):
         object_pair = rf'["\x27]label["\x27]\s*:\s*["\x27]{key}["\x27]\s*,\s*["\x27]value["\x27]\s*:\s*{value_token}'
         return any(re.search(pattern, public, re.IGNORECASE) for pattern in (direct, prose, object_pair))
     require(not any(labelled_leak(label, value) for label,value in labelled), 'private captured labelled value present in public catalogue/report')
+    # Parse small flat JSON objects as data, so key order and intervening
+    # properties cannot conceal a captured label/value pair.
+    pairs = {(label.casefold(), value) for label,value in labelled}
+    for match in re.finditer(r'\{[^{}]{0,2048}\}', public):
+        try:
+            obj = json.loads(match.group())
+        except json.JSONDecodeError:
+            continue
+        if isinstance(obj, dict) and isinstance(obj.get('label'), str) and isinstance(obj.get('value'), str):
+            require((obj['label'].casefold(), obj['value']) not in pairs, 'private captured structured value present in public catalogue/report')
 
 
 def main():
@@ -437,6 +451,10 @@ def main():
             'target_state_id': 'ui41.squad.prematch',
             'evidence_ids': ['r41-operator-route-report'],
         }
+    def claim_whole_ui_complete(d):
+        d['completion_claim'] = 'Complete application UI coverage established'
+    def redefine_screenshot_coverage(d):
+        d['coverage_definitions']['screenshot'] = 'Screenshot proves observed action behavior'
     mutations = [
         lambda d:d['transitions'][0].update(to='ui41.unmapped'),
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(evidence_ids=['r41-a4-operator-notes'], context_ids=['gdi-A4-failed-launch']),
@@ -451,6 +469,8 @@ def main():
         invent_unknown_section,
         append_unowned_screenshot,
         mislabel_continue_as_back,
+        claim_whole_ui_complete,
+        redefine_screenshot_coverage,
         lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(sha256='1'*64),
         lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(capture_pixels=[1,1]),
         lambda d:next(item for item in d['contexts'] if item['id'] == 'gdi-A').update(executable_sha256='1'*64),
@@ -543,6 +563,8 @@ def main():
             '| ' + attribute['label'] + ' | ' + attribute['value'] + ' |',
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
+            '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
+            '{"value":"' + attribute['value'] + '","source":"capture","label":"' + attribute['label'] + '"}',
         ])
         escaped_name = next(row['name'] for row in snapshot['squad']['rows'] if any(ord(ch) > 127 for ch in row['name']))
         private_leaks.append(json.dumps({'name': escaped_name}))
