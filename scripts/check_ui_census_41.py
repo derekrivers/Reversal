@@ -110,7 +110,7 @@ REVIEWED_BATCH_SECTION_SHA256 = {
 REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5eaf0a0d1560300fa7a'
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
-REVIEWED_UI_REPORT_SHA256 = '9ea290b63d45768e999b160c56488dfa9f9efbcd969721fd034bf48afd4e33fb'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'ce23b1786ccdb6bf1a3076176f3f7bc5a0429a24ee58cb260ead0a96adb8b0ea'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -399,15 +399,24 @@ def check_private_display(snapshot, public):
             add(attribute['label'], attribute['value'], generic=True)
     folded_public = fold_display(public)
     require(not any(fold_display(value) in folded_public for value in exact), 'private captured display string present in public catalogue/report')
+    tokens = sorted({token for label,value in labelled for token in (label,value)}, key=len, reverse=True)
+    token_pattern = '|'.join(re.escape(token) for token in tokens)
+    wrappers = [re.compile(re.escape(marker) + rf'({token_pattern})' + re.escape(marker), re.IGNORECASE) for marker in ('**', '__', '~~', '``', '*', '_', '`')]
+    plain_public = public
+    while True:
+        previous = plain_public
+        for wrapper in wrappers:
+            plain_public = wrapper.sub(lambda match: match.group(1), plain_public)
+        if plain_public == previous:
+            break
     def labelled_leak(label, value):
         key, val = re.escape(label), re.escape(value)
         boundary = r'(?!\w|\.[A-Za-z0-9])'
-        wrapped = '|'.join(re.escape(marker) + val + re.escape(marker) + boundary for marker in ('**', '*', '__', '_', '~~', '``', '`'))
-        value_token = rf'(?:["\x27]{val}["\x27]|{val}{boundary}|{wrapped})'
+        value_token = rf'(?:["\x27]{val}["\x27]|{val}{boundary})'
         direct = rf'(?<!\w)["\x27]?{key}["\x27]?\s*(?::|\|)\s*{value_token}'
         prose = rf'(?<!\w){key}\s+{value_token}'
         object_pair = rf'["\x27]label["\x27]\s*:\s*["\x27]{key}["\x27]\s*,\s*["\x27]value["\x27]\s*:\s*{value_token}'
-        return any(re.search(pattern, public, re.IGNORECASE) for pattern in (direct, prose, object_pair))
+        return any(re.search(pattern, plain_public, re.IGNORECASE) for pattern in (direct, prose, object_pair))
     require(not any(labelled_leak(label, value) for label,value in labelled), 'private captured labelled value present in public catalogue/report')
     # Parse JSON from its original escaped text. Decoding the whole file first
     # can corrupt valid objects when a separate property contains quotes/braces.
@@ -691,6 +700,9 @@ def main():
             attribute['label'] + ': _' + attribute['value'] + '_',
             attribute['label'] + ': ~~' + attribute['value'] + '~~',
             '| ' + attribute['label'] + ' | **' + attribute['value'] + '** |',
+            '| **' + attribute['label'] + '** | `' + attribute['value'] + '` |',
+            '**' + attribute['label'] + '**: ' + attribute['value'],
+            attribute['label'] + ': **`' + attribute['value'] + '`**',
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
