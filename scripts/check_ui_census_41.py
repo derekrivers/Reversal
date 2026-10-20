@@ -96,7 +96,7 @@ REVIEWED_STATE_IDS = frozenset({
 # and encoded as canonical UTF-8 JSON. Extending the census requires a fresh
 # visual review and an intentional update of this batch pin.
 REVIEWED_ROUTE_SHA256 = 'ec9061bf37e9952998d52693b911e5f8c4c92a50d17947f24dc981dd3b06819f'
-REVIEWED_STATE_CLAIMS_SHA256 = '6fd5b4125eed1b07d95fdaf8c7c4ac276d8323bfbed6a1cb164aec89669e9a06'
+REVIEWED_STATE_CLAIMS_SHA256 = 'ae9000b3478513d3911f1a97fdc611f768bb81c8f587827443d51f7834ff33ef'
 REVIEWED_UNKNOWN_SECTIONS_SHA256 = 'ef594ff35e5a3add0543db42260213d285774a5c5878cbe319963b37dcc93f6a'
 REVIEWED_BATCH_SECTION_SHA256 = {
     'contexts': 'c732d0015cb29c35ab2ddbe83adc056e63689d2abd4fc8097ac1c0af19a22778',
@@ -114,8 +114,7 @@ def route_digest(rows):
 
 
 def state_claims_digest(rows):
-    claims = [{'id': row['id'], 'kind': row['kind'], 'layout_id': row['layout_id'], 'evidence_ids': row['evidence_ids']} for row in rows]
-    canonical = json.dumps(sorted(claims, key=lambda row: row['id']), sort_keys=True, separators=(',', ':'), ensure_ascii=False)
+    canonical = json.dumps(sorted(rows, key=lambda row: row['id']), sort_keys=True, separators=(',', ':'), ensure_ascii=False)
     return hashlib.sha256(canonical.encode('utf-8')).hexdigest()
 
 
@@ -391,6 +390,12 @@ def main():
         invented['id'] = 'r41-ui-invented-unowned'
         invented['sha256'] = '1' * 64
         d['evidence'].append(invented)
+    def mislabel_continue_as_back(d):
+        next(state for state in d['states'] if state['id'] == 'ui41.squad.selection')['back'] = {
+            'status': 'observed',
+            'target_state_id': 'ui41.squad.prematch',
+            'evidence_ids': ['r41-operator-route-report'],
+        }
     mutations = [
         lambda d:d['transitions'][0].update(to='ui41.unmapped'),
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(evidence_ids=['r41-a4-operator-notes'], context_ids=['gdi-A4-failed-launch']),
@@ -404,6 +409,7 @@ def main():
         reuse_visual_image,
         invent_unknown_section,
         append_unowned_screenshot,
+        mislabel_continue_as_back,
         lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(sha256='1'*64),
         lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(capture_pixels=[1,1]),
         lambda d:next(item for item in d['contexts'] if item['id'] == 'gdi-A').update(executable_sha256='1'*64),
