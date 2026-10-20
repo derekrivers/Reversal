@@ -151,7 +151,7 @@ for(const mode of ['participant','lookup','shooter','x87']){
  assert.throws(()=>runAction33EffectSuffix39(m),mode==='x87'?/effect requires empty x87/:/effect requires unchanged nonnull shooter/);
 }
 const receiptBytes=readFileSync(new URL('evidence/action33-effect-39-integrity.json',root));
-assert.equal(hash(receiptBytes),'13b034ad68ad3cc103e36f7cb7dc91d4afd2a260eb0c633d0baef3f411eb6c7e');const receipt=JSON.parse(receiptBytes);
+assert.equal(hash(receiptBytes),'2f2d97669679faa616c2849ac10f78eb1996abd07aedbd85a2902192dc92b252');const receipt=JSON.parse(receiptBytes);
 assert.equal(receipt.unit,'R39-A');assert.equal(receipt.status,'passed');assert.equal(receipt.oracle_sha256,hash(blob));assert.deepEqual(receipt.coverage,oracle.coverage);
 for(const [name,digest] of Object.entries(receipt.verifier_dependency_hashes))assert.equal(hash(readFileSync(new URL(name,root))),digest);
 assert.equal(Object.keys(receipt.negative_checks).length,77);
