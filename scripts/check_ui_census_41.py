@@ -110,6 +110,7 @@ REVIEWED_BATCH_SECTION_SHA256 = {
 REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5eaf0a0d1560300fa7a'
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
+REVIEWED_UI_REPORT_SHA256 = '9ea290b63d45768e999b160c56488dfa9f9efbcd969721fd034bf48afd4e33fb'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -333,9 +334,11 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
         'discovered_uncaptured_route_ids':list(routes), 'unknown_unbounded_section_ids':list(domains)}
     require(all(denominator[k] == v for k,v in expected_sets.items()), 'denominator membership mismatch')
     require(denominator['counts'] == {k:len(v) for k,v in expected_sets.items()}, 'denominator count mismatch')
-    public = list(text_values(data)) + [report_reader().decode('utf-8')]
+    report_bytes = report_reader()
+    public = list(text_values(data)) + [report_bytes.decode('utf-8')]
     require(not any(has_private_path_or_payload(part) for part in public), 'private path/payload in census')
     require(not any(re.search(r'\b\d{1,2}(?:-\d{1,2}){3,}\b|[£$€]\d',part) for part in public), 'captured display value in census')
+    require(hashlib.sha256(report_bytes.replace(b'\r\n', b'\n')).hexdigest() == REVIEWED_UI_REPORT_SHA256, 'public UI report digest mismatch')
     return {'states':len(states),'screenshots':sum(e['kind']=='screenshot' for e in evidence.values()), 'denominator':denominator['counts'], 'engine_bindings':0}
 
 
@@ -396,15 +399,15 @@ def check_private_display(snapshot, public):
             add(attribute['label'], attribute['value'], generic=True)
     folded_public = fold_display(public)
     require(not any(fold_display(value) in folded_public for value in exact), 'private captured display string present in public catalogue/report')
-    markdown_plain = public.translate(str.maketrans('', '', '*_~`'))
     def labelled_leak(label, value):
         key, val = re.escape(label), re.escape(value)
         boundary = r'(?!\w|\.[A-Za-z0-9])'
-        value_token = rf'(?:["\x27]{val}["\x27]|{val}{boundary})'
+        wrapped = '|'.join(re.escape(marker) + val + re.escape(marker) + boundary for marker in ('**', '*', '__', '_', '~~', '``', '`'))
+        value_token = rf'(?:["\x27]{val}["\x27]|{val}{boundary}|{wrapped})'
         direct = rf'(?<!\w)["\x27]?{key}["\x27]?\s*(?::|\|)\s*{value_token}'
-        prose = rf'(?<!\w){key}\s+{val}{boundary}'
+        prose = rf'(?<!\w){key}\s+{value_token}'
         object_pair = rf'["\x27]label["\x27]\s*:\s*["\x27]{key}["\x27]\s*,\s*["\x27]value["\x27]\s*:\s*{value_token}'
-        return any(re.search(pattern, source, re.IGNORECASE) for source in (public, markdown_plain) for pattern in (direct, prose, object_pair))
+        return any(re.search(pattern, public, re.IGNORECASE) for pattern in (direct, prose, object_pair))
     require(not any(labelled_leak(label, value) for label,value in labelled), 'private captured labelled value present in public catalogue/report')
     # Parse JSON from its original escaped text. Decoding the whole file first
     # can corrupt valid objects when a separate property contains quotes/braces.
@@ -625,6 +628,15 @@ def main():
     else:
         raise ValueError('altered public source accepted')
     report = public_report_bytes()
+    validate(data, assets, report_reader=lambda: report.replace(b'\r\n', b'\n').replace(b'\n', b'\r\n'))
+    changed_count = report.replace(b'| Screenshot-confirmed screen/state IDs | 17 |', b'| Screenshot-confirmed screen/state IDs | 99 |', 1)
+    require(changed_count != report, 'missing reviewed public screenshot total')
+    try:
+        validate(data, assets, report_reader=lambda: changed_count)
+    except ValueError as exc:
+        require(str(exc) == 'public UI report digest mismatch', 'changed public total rejected for unrelated reason')
+    else:
+        raise ValueError('changed public coverage total accepted')
     report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'), b'\n\\My Documents\\capture.png', b'\n\\My capture.png', b'\n`\\UI\\capture.png`', b'\n**\\UI\\capture.png**', b'\n_\\UI\\capture.png_', b'\n__\\UI\\capture.png__', b'\n~~\\UI\\capture.png~~', b'\n__private _\\UI\\capture.png_ location__', b'\n~~private _\\UI\\capture.png_ location~~')
     for leaked in report_leaks:
         try:
@@ -709,6 +721,9 @@ def main():
         decimal_near_miss = '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '.5"}'
         check_private_display(snapshot, public + '\n' + decimal_near_miss)
         check_private_display(snapshot, public + '\nGeneric description: ' + snapshot['profile']['morale'].swapcase() + '.')
+        require(len(attribute['value']) >= 2, 'private expression near-miss fixture too short')
+        expression_near_miss = attribute['label'] + ': `' + attribute['value'][0] + '*' + attribute['value'][1:] + '`'
+        check_private_display(snapshot, public + '\n' + expression_near_miss)
         synthetic = copy.deepcopy(snapshot)
         synthetic['squad']['clubLabel'] = 'Synthetic "Club"'
         try:
@@ -727,11 +742,12 @@ def main():
             raise ValueError('Unicode-equivalent structured display leak probe accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 3
+        result['private_near_miss_probes'] = 4
         result['private_escape_probes'] = 2
-    result['negative_probes'] = len(mutations) + 15 + len(report_leaks)
+    result['negative_probes'] = len(mutations) + 16 + len(report_leaks)
     result['public_path_near_miss_probes'] = 9
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
+    result['public_report_checks'] = 'LF/CRLF match; changed coverage total rejected'
     print(json.dumps(result,sort_keys=True))
 
 
