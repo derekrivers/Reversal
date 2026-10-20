@@ -139,6 +139,7 @@ def lookup_closure(dbg, process, ctx, loaded_base):
 
 
 def run(args, *, owned_test_child=None):
+    paired = getattr(args, "paired_return", False)
     base.require(0 < args.seconds <= 60, "deadline must be within 60 seconds")
     base.require(len(args.region) <= 8 and sum(size for _, size in args.region) <= 15872,
                  "region budget exceeded")
@@ -157,12 +158,19 @@ def run(args, *, owned_test_child=None):
         base.require(args.synthetic_address is not None, "synthetic function address required")
         address = args.synthetic_address
         base.require(0 < address < 2**32, "invalid synthetic address")
+        return_address = getattr(args, "synthetic_return_address", None) if paired else None
+        if paired:
+            base.require(isinstance(return_address, int) and 0 < return_address < 2**32
+                         and return_address != address, "invalid synthetic return address")
     else:
         base.require(args.synthetic_address is None, "synthetic address forbidden for game")
         # Reviewed R40 entry anchors; additional entries require a source change/review.
         base.require(args.boundary in (0x701A80, 0x6FFe50, 0x6CF840, 0x90C860, 0x6B92F0, 0x62E6E0),
                      "unreviewed GDI boundary")
         address = boundary["runtime_va"]
+        base.require(not paired or args.boundary == 0x62E6E0,
+                     "paired capture requires the reviewed lookup entry")
+        return_address = 0x6CF8F7 + info["module"]["base"] - pe["preferred_base"] if paired else None
     dbg = Debugger()
     result = {"schema": "reversal.runtime-capture-41.v1", "private": True,
         "profile": args.profile, "exe_sha256": info["exe_sha256"],
@@ -173,6 +181,12 @@ def run(args, *, owned_test_child=None):
         "instrumentation": "DR0 execute breakpoint on each debug-event thread; process stopped at event",
         "missing_state": ["return effects", "ordered RNG draws", "object lifetime", "complete pointer closure"],
         "tool_sha256": base.sha256_file(Path(__file__))}
+    if paired:
+        result.update({"paired_return": True, "return_observed": False, "return_sample": None,
+                       "return_runtime_va": return_address, "pairing": None,
+                       "stop_reason": "entry_not_observed",
+                       "instrumentation": "DR0 entry on existing/new threads; after accepted entry, "
+                           "DR0 return on selected thread only; all saved debug registers restored"})
     # CREATE_THREAD | VM_OPERATION | VM_READ | VM_WRITE | QUERY_INFORMATION:
     # DebugBreakProcess needs remote-break thread rights. No target memory writes
     # are exposed or issued by this tool.
@@ -186,6 +200,17 @@ def run(args, *, owned_test_child=None):
             base.require(live["complete"] and bytes.fromhex(live["hex"]) == original,
                          "live boundary bytes differ from identified disk")
             result["boundary_code_sha256"] = live["sha256"]
+            if paired:
+                return_boundary = base.map_boundary(pe, info["module"]["base"], 0x6CF8F7)
+                base.require(return_boundary["file_offset"] is not None, "return not file backed")
+                with args.exe.open("rb") as source:
+                    source.seek(return_boundary["file_offset"])
+                    original = source.read(16)
+                live = dbg.read(process, return_address, 16)
+                base.require(live["complete"] and bytes.fromhex(live["hex"]) == original,
+                             "live return bytes differ from identified disk")
+                result["return_boundary"] = return_boundary
+                result["return_code_sha256"] = live["sha256"]
         threads = {}
         armed = {}
         pending = None
@@ -195,6 +220,26 @@ def run(args, *, owned_test_child=None):
         shutdown_requested = False
         thread_starts = {}
         bootstrap_break = None
+        pair_thread = None
+        pair_esp = None
+
+        def snapshot(tid, ctx):
+            sample = base.context_record(ctx)
+            sample["captured_utc"] = base.datetime.now(base.timezone.utc).isoformat()
+            sample["thread"] = tid
+            descriptor = (C.c_ubyte * 8)()
+            fs_ok = dbg.api.Wow64GetThreadSelectorEntry(threads[tid], ctx.SegFs, C.byref(descriptor))
+            sample["fs"] = {"selector": ctx.SegFs, "complete": bool(fs_ok),
+                            "winerror": 0 if fs_ok else C.get_last_error()}
+            if fs_ok:
+                raw = bytes(descriptor)
+                fs_base = struct.unpack_from("<H", raw, 2)[0] | raw[4] << 16 | raw[7] << 24
+                sample["fs"]["base"] = fs_base
+                sample["fs"]["head"] = dbg.read(process, fs_base, 4)
+                sample["fs"]["complete"] = sample["fs"]["head"]["complete"]
+            sample["memory"] = [dbg.read(process, ctx.Esp, 512)] + [
+                dbg.read(process, addr, size) for addr, size in args.region]
+            return sample
 
         def arm(tid, handle):
             ctx = dbg.context(handle, 0x10010)
@@ -251,15 +296,20 @@ def run(args, *, owned_test_child=None):
                         file_handle = struct.unpack_from("<Q", data)[0]
                         if file_handle:
                             dbg.api.CloseHandle(file_handle)
-                    if ready and not shutdown_requested:
+                    if ready and not shutdown_requested and pair_thread is None:
                         arm(event.tid, threads[event.tid])
                 elif event.code == 4:
                     threads.pop(event.tid, None)
                     thread_starts.pop(event.tid, None)
                     armed.pop(event.tid, None)
+                    if event.tid == pair_thread:
+                        result["stop_reason"] = "entry_thread_exited"
+                        break
                 elif event.code == 5:
                     armed.clear()
                     result["process_exited"] = True
+                    if paired:
+                        result["stop_reason"] = "process_exited"
                     break
                 elif event.code == 6:
                     file_handle = struct.unpack_from("<Q", data)[0]
@@ -270,31 +320,69 @@ def run(args, *, owned_test_child=None):
                     result["events"][-1]["exception"] = exception
                     if exception in (0x80000004, 0x4000001E) and event.tid in armed:
                         ctx = dbg.context(threads[event.tid])
-                        if ctx.Eip == address and ctx.Dr6 & 1:
-                            sample = base.context_record(ctx)
-                            sample["captured_utc"] = base.datetime.now(base.timezone.utc).isoformat()
-                            sample["thread"] = event.tid
-                            descriptor = (C.c_ubyte * 8)()
-                            fs_ok = dbg.api.Wow64GetThreadSelectorEntry(
-                                threads[event.tid], ctx.SegFs, C.byref(descriptor))
-                            sample["fs"] = {"selector": ctx.SegFs, "complete": bool(fs_ok),
-                                            "winerror": 0 if fs_ok else C.get_last_error()}
-                            if fs_ok:
-                                raw = bytes(descriptor)
-                                fs_base = struct.unpack_from("<H", raw, 2)[0] | raw[4] << 16 | raw[7] << 24
-                                sample["fs"]["base"] = fs_base
-                                sample["fs"]["head"] = dbg.read(process, fs_base, 4)
-                                sample["fs"]["complete"] = sample["fs"]["head"]["complete"]
-                            sample["memory"] = [dbg.read(process, ctx.Esp, 512)] + [
-                                dbg.read(process, addr, size) for addr, size in args.region]
+                        owned_entry = pair_thread is None and ctx.Eip == address and ctx.Dr6 & 1
+                        owned_return = (pair_thread == event.tid and
+                                        ctx.Eip == return_address and ctx.Dr6 & 1)
+                        if owned_entry:
+                            # Recognized owned exception stays handled even if a later read fails.
+                            pending_status = 0x10002
+                            sample = snapshot(event.tid, ctx)
                             result["sample"], result["hit"] = sample, True
                             result["memory_complete"] = all(x["complete"] for x in sample["memory"])
                             if args.profile == "gdi" and args.boundary == 0x62E6E0:
                                 sample["lookup_closure"] = lookup_closure(
                                     dbg, process, ctx, info["module"]["base"])
+                            if not paired:
+                                break
+                            stack = sample["memory"][0]
+                            caller = (struct.unpack_from("<I", bytes.fromhex(stack["hex"]))[0]
+                                      if stack["complete"] else None)
+                            if caller != return_address or ctx.Esp + 8 >= 2**32:
+                                result["stop_reason"] = "entry_caller_or_stack_mismatch"
+                                break
+                            pair_thread, pair_esp = event.tid, ctx.Esp + 8
+                            result["stop_reason"] = "return_not_observed"
+                            # Keep the original registers for every thread until final cleanup.
+                            # Only the selected thread receives a return breakpoint. No other
+                            # thread or nested-entry event can replace the selected invocation.
+                            for tid, old in armed.items():
+                                dbg.set_debug(threads[tid], (
+                                    return_address if tid == pair_thread else old[0],
+                                    old[1], old[2], old[3], 0,
+                                    (old[5] & ~0xF0003) | 1 if tid == pair_thread else old[5]))
+                        elif owned_return:
                             pending_status = 0x10002
+                            # A recursive/nested visit to the same caller address is insufficient.
+                            # Stop safely on ambiguity instead of single-stepping or retrying.
+                            if ctx.Esp != pair_esp:
+                                result["stop_reason"] = "return_stack_mismatch"
+                                break
+                            after = snapshot(event.tid, ctx)
+                            before = result["sample"]
+                            regions = before["memory"] + before.get("lookup_closure", {}).get("memory", [])
+                            after["entry_regions_after"] = []
+                            for region in regions:
+                                if region["address"] + region["requested"] > 2**32:
+                                    continue  # Optional invalid ESI was already labelled missing.
+                                read = dbg.read(process, region["address"], region["requested"])
+                                read["label"] = region.get("label")
+                                read["unchanged"] = (read["sha256"] == region["sha256"]
+                                                     if read["complete"] and region["complete"] else None)
+                                after["entry_regions_after"].append(read)
+                            result["return_sample"] = after
+                            result["return_observed"] = True
+                            result["stop_reason"] = "paired_return"
+                            result["pairing"] = {
+                                "thread_matches": after["thread"] == before["thread"],
+                                "caller_matches": True, "return_address_matches": True,
+                                "stack_matches_ret4": ctx.Esp == pair_esp,
+                                "nonvolatile_matches": {name: before["registers"][name] ==
+                                    after["registers"][name] for name in ("ebx", "esi", "edi", "ebp")},
+                                "entry_esp": before["registers"]["esp"], "expected_return_esp": pair_esp,
+                                "scope": "two boundary observations; intervening instructions and effects not traced"}
                             break
-                        status = 0x80010001
+                        else:
+                            status = 0x80010001
                     elif exception in (0x80000003, 0x4000001F):
                         identity = (struct.unpack_from("<Q", data, 16)[0],
                                     thread_starts.get(event.tid))
@@ -348,6 +436,8 @@ def main():
     p.add_argument("--boundary", type=lambda s: int(s, 0), default=0x90C860)
     p.add_argument("--seconds", type=float, default=20)
     p.add_argument("--region", type=base.region, action="append", default=[])
+    p.add_argument("--paired-return", action="store_true",
+                   help="lookup entry and same-thread RET4 caller boundary; no instruction trace")
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
     args.profile, args.synthetic_address = "gdi", None
