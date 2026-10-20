@@ -1,11 +1,68 @@
-# R41-B: cached participant lookup and the GDI capture boundary
+# R41-B: genuine GDI lookup capture and cached-status replay
 
-The bounded TypeScript implementation now runs `0062ed70 -> 0062c680 -> RET 4`
-when the participant's status row already has the current date. It matches
-**18 separate synthetic original entries, 1,566 instructions**, across the
-pinned and GDI executables. A runtime capture has not been admitted to this
-comparison. The R39 resolver still stops at its null participant diagnostic;
-this unit does not change that fixture or connect a fabricated pointer to it.
+The bounded TypeScript implementation now matches **one genuine GDI
+lookup-entry capture through the original cached-refresh call and return**:
+85 original instructions, 19 ordered nonstack memory effects and two nested
+call boundaries. The returned status pointer is null because the captured
+row's mapping is `-1`. The actual lookup entry was intercepted in the game;
+the subsequent return was reproduced with original-instruction emulation.
+No live return was captured.
+
+The earlier **18 separate synthetic entries, 1,566 instructions**, remain
+unchanged. They compare `0062ed70 -> 0062c680 -> RET 4` and its GDI counterpart
+when the status row has the current date. The R39 pinned resolver still stops
+at its null participant diagnostic. This unit does not alter that fixture,
+claim a completed effect, or join the GDI capture to pinned resolver entry.
+
+## Captured boundary admitted in the continuation
+
+R41-A's private lookup capture has SHA-256
+`5359421a6164e301f32a4f406cbebdbe9458d4fcede5fa259c7e977066e90271`.
+It records the GDI executable identity below, preferred/loaded base `00400000`,
+a hardware execution-breakpoint hit at `0062e6e0`, restored thread debug state
+and successful detach. Its original return address is `006cf8f7`, immediately
+after the mapped effect CALL at `006cf8f2`. The capture authenticated the
+first 16 live entry bytes against disk. Remaining replay instructions come
+from the hash-identified disk image; this is not a full runtime-code audit.
+
+The [capture adapter](../scripts/capture_engine_state_41.py) admits the actual
+entry registers, return/argument stack, lookup receiver, staff record, selected
+row, lookup/staff globals, current date, initialization flags, FS head and RNG
+cells. It checks hashes, extents and all overlapping bytes, including the
+independently captured overlapping stack windows. It verifies:
+
+- The lookup global equals entry ECX.
+- The participant argument equals `staff_base + 110*record_index`, with a
+  nonnegative index below the captured signed count.
+- The selected row equals `lookup.rows + 31*record_index`; its date equals the
+  captured current date, and initialization bits 1/2/4 are already set.
+- The row mapping is `-1`, so the cache array and any cache record are not read.
+- The captured RNG cursor, offset, limit and CRT state satisfy their established
+  address/table contract. No RNG call occurs in this admitted path.
+
+These values are read from the capture; the adapter does not populate a cache,
+set flags, repair a date or manufacture an allocation. All original memory
+accesses must fall within captured extents. The unchanged original instructions
+perform the nested CALL, refresh return and lookup `RET 4`, stopping at the
+captured effect continuation before its next instruction.
+
+The emulator represents the captured FS head at isolated logical address
+zero. It retains that head's exact value and the actual captured stack
+addresses. This normalization affects only the two SEH writes and the head
+read in a path with no exception or callback execution. Other captured
+addresses are preserved. Original emulation verifies nonvolatile registers,
+represented nonstack bytes, and x87 control/status/tag metadata. x87 payloads
+and platform exception behavior are not reconstructed; no x87 instruction
+executes on the admitted path.
+
+The [private-state TypeScript checker](../reconstruction/check-captured-state-41.ts)
+reuses the same cached-lookup model and caller-owned `RandomState` object.
+It matches returned pointer/mapping/row, all 19 ordered memory effects, the
+refresh call's participant/receiver/stack, the return boundary, row and RNG
+digests, SEH restoration and `RET 4` cleanup. The private replay SHA-256 is
+`40f17b0ca21610c8ecc40d8bd04f989e226adccd5d34792460ec7f456b4e27cf`.
+Public evidence retains the [sanitized validation receipt](../evidence/engine-state-41-captured-validation.json);
+raw stack, object data, register values and the full replay remain private.
 
 The original producers remain those established in
 [R39-B](action33-participant-39.md): `008968f0` obtains a borrowed staff-record
@@ -96,11 +153,11 @@ nonstack pages, nonvolatile registers and the x87 control word. Scratch
 registers, flags and stack scratch payloads are not TypeScript subsystem
 outputs; no exceptional or asynchronous execution is admitted.
 
-## Genuine capture still required
+## Remaining producer and effect closure
 
-R41-A was given the exact GDI entry, globals and minimal capture closure above.
-No game was launched, attached, suspended or otherwise controlled by R41-B.
-A useful lookup-entry capture needs:
+R41-A supplied the minimal lookup-entry closure listed below; R41-B performed
+offline replay only. No game was launched, attached, suspended or otherwise
+controlled by R41-B.
 
 - Exact executable, module base, thread and entry identity; entry registers,
   return address and participant argument at `[ESP+4]`.
@@ -124,10 +181,18 @@ is documented as
 The returned descriptor combines its base components into the address of
 FS offset zero. R41-A owns any implementation and host verification.
 
-A genuine lookup-entry replay would establish a captured boundary only.
-Proving that the same staff/lookup objects belong to the shooter at the
-R39 effect entry still requires the actual effect caller, slot alias and
-intervening lifetime. A lookup receiver alone does not close that edge.
+The admitted capture establishes a genuine GDI lookup boundary with the
+effect's return address. It does not yet include the 446-byte slot referenced
+by entry ESI. The next same-boundary capture request to R41-A is that slot,
+to check `slot+0x69 == [ESP+4]` and
+`slot+0x6d == staff_record+0x61`. Reading those old addresses after the process
+resumes would not preserve this boundary.
+
+The attribute pointer is captured and nonnull, but its referent is absent.
+That referent is not read by the cached-refresh path; it is a separate
+requirement before any continuation that reads attributes. Full allocation
+lifetimes, slot placement, the lookup constructor and setup-to-match continuity
+remain unobserved. No score, event, goal/non-goal or resolver return is claimed.
 
 ## Verification and reproduction
 
@@ -156,6 +221,29 @@ npm run check
 Use Node 24. The task checker remains separate from the coordinator-owned
 shared runner. No native annotations, checkpoints, queue or frontier change.
 
-The unfinished offline capture adapter is preserved locally in ignored
-`results/capture_engine_state_41.unfinished.py`; it is excluded from this
-research commit and requires capture admission tests before use.
+The captured continuation has its own
+[verifier](../scripts/verify_capture_engine_state_41.py). It requires the exact
+private capture identity, repeats replay under normal/optimized Python,
+executes the TypeScript comparison, and rejects 14 altered capture admissions
+and six altered TypeScript results/effects. The capture tests include resealed
+wrong aliases, a stale row, an invented cache mapping without its referent,
+missing initialization, a changed RNG cursor, conflicting stack snapshots
+and missing FS state.
+
+Public continuation files are scanned against overlapping original-code
+**and captured-data** windows in raw, hex and base64. The normal/optimized
+private replay and sanitized receipts are byte-identical. The original
+synthetic checker and the Node 24 repository check also pass.
+
+```text
+python -B scripts/capture_engine_state_41.py PINNED_EXE GDI_EXE PRIVATE_CAPTURE --output results/engine-state-41-captured-oracle.json
+node reconstruction/check-captured-state-41.ts results/engine-state-41-captured-oracle.json
+python -B scripts/verify_capture_engine_state_41.py PINNED_EXE GDI_EXE PRIVATE_CAPTURE --node NODE24 --output evidence/engine-state-41-captured-validation.json
+python -O -B scripts/verify_capture_engine_state_41.py PINNED_EXE GDI_EXE PRIVATE_CAPTURE --node NODE24 --output results/engine-state-41-captured-optimized-validation.json
+```
+
+Local private inputs/results are `../runtime-capture-41/results/r41-live-lookup-A.json`
+and this worktree's ignored `results/engine-state-41-captured-*.json`.
+The separate RNG-entry capture is not used as the lookup's RNG state; the
+lookup uses its own four same-boundary captured cells. R41-A owns executable,
+save, configuration and durable-capture preservation records.
