@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'd27c9ac284747e32f91215c967c5651fb9be6d80013d86bd92f5a4424d6ba193'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'ced1f0fbd1ff9b541e59c3945be514694a08b1a407eb65931869b1f8cf076402'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -197,7 +197,7 @@ def has_private_path_or_payload(part):
     for candidate in (part, html.unescape(part), render_for_privacy(part)):
         if PRIVATE_PATH_PAYLOAD.search(candidate) or ROOT_RELATIVE_WINDOWS.search(candidate) or rooted_in_spans(candidate):
             return True
-        unicode_boundaries = ''.join(' ' if ord(char) > 127 and unicodedata.category(char).startswith('P') else char for char in candidate)
+        unicode_boundaries = ''.join(' ' if ord(char) > 127 and unicodedata.category(char)[0] in 'PS' else char for char in candidate)
         if unicode_boundaries != candidate and ROOT_RELATIVE_WINDOWS.search(unicode_boundaries):
             return True
     return False
@@ -731,6 +731,8 @@ def main():
     unicode_boundary_report_leaks = (
         '\nlocation—\\Users\\operator\\private\\capture.png'.encode('utf-8'),
         '\n“\\Users\\operator\\private\\capture.png'.encode('utf-8'),
+        '\nlocation📁\\Users\\operator\\private\\capture.png'.encode('utf-8'),
+        '\nlocation→\\Users\\operator\\private\\capture.png'.encode('utf-8'),
     )
     for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks + whitespace_reference_report_leaks + next_line_reference_report_leaks + unicode_boundary_report_leaks:
         try:
