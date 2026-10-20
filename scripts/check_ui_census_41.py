@@ -396,6 +396,7 @@ def check_private_display(snapshot, public):
             add(attribute['label'], attribute['value'], generic=True)
     folded_public = fold_display(public)
     require(not any(fold_display(value) in folded_public for value in exact), 'private captured display string present in public catalogue/report')
+    markdown_plain = public.translate(str.maketrans('', '', '*_~`'))
     def labelled_leak(label, value):
         key, val = re.escape(label), re.escape(value)
         boundary = r'(?!\w|\.[A-Za-z0-9])'
@@ -403,7 +404,7 @@ def check_private_display(snapshot, public):
         direct = rf'(?<!\w)["\x27]?{key}["\x27]?\s*(?::|\|)\s*{value_token}'
         prose = rf'(?<!\w){key}\s+{val}{boundary}'
         object_pair = rf'["\x27]label["\x27]\s*:\s*["\x27]{key}["\x27]\s*,\s*["\x27]value["\x27]\s*:\s*{value_token}'
-        return any(re.search(pattern, public, re.IGNORECASE) for pattern in (direct, prose, object_pair))
+        return any(re.search(pattern, source, re.IGNORECASE) for source in (public, markdown_plain) for pattern in (direct, prose, object_pair))
     require(not any(labelled_leak(label, value) for label,value in labelled), 'private captured labelled value present in public catalogue/report')
     # Parse JSON from its original escaped text. Decoding the whole file first
     # can corrupt valid objects when a separate property contains quotes/braces.
@@ -673,6 +674,11 @@ def main():
             attribute['label'] + ' ' + attribute['value'] + '.',
             '{"' + attribute['label'] + '":"' + attribute['value'] + '"}',
             '| ' + attribute['label'] + ' | ' + attribute['value'] + ' |',
+            attribute['label'] + ': **' + attribute['value'] + '**',
+            attribute['label'] + ': `' + attribute['value'] + '`',
+            attribute['label'] + ': _' + attribute['value'] + '_',
+            attribute['label'] + ': ~~' + attribute['value'] + '~~',
+            '| ' + attribute['label'] + ' | **' + attribute['value'] + '** |',
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
