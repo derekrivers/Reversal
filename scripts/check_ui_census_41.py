@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'ced1f0fbd1ff9b541e59c3945be514694a08b1a407eb65931869b1f8cf076402'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '3f47b89ce496d2a9655a5dbe5b4e53e5253ea68c8903d9d4fbe8dfcff60df670'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -172,7 +172,9 @@ def render_for_privacy(source):
     html_view.close()
     rendered = render_inline_links(''.join(html_view.parts))
     fold_ref = lambda value: unicodedata.normalize('NFC', re.sub(r'\s+', ' ', value.strip())).casefold()
-    references = {fold_ref(match.group(1)) for match in re.finditer(r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]{0,3})?\S+', rendered)}
+    reference_pattern = r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]*)?\S+'
+    # HTML parsing consumes an angle-bracketed Markdown destination as a tag.
+    references = {fold_ref(match.group(1)) for text in (source, rendered) for match in re.finditer(reference_pattern, text)}
     rendered = re.sub(r'!?\[([^\]\r\n]*)\]\[([^\]]{0,999})\]', lambda match: match.group(1) if fold_ref(match.group(2) or match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_ref(match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'\\[ \t]*\r?\n', ' ', rendered)
@@ -727,7 +729,13 @@ def main():
         b'\nC:[][ref\none]\\Users\\operator\\private\\capture.png\n\n[ref one]: target',
         b'\nC:[][ref one]\\Users\\operator\\private\\capture.png\n\n[ref\none]: target',
     )
-    next_line_reference_report_leaks = (b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]:\n target',)
+    next_line_reference_report_leaks = (
+        b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]:\n target',
+        b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]:\n    target',
+        b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]:\n\ttarget',
+        b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]: <target>',
+        b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]:\n    <target>',
+    )
     unicode_boundary_report_leaks = (
         '\nlocation—\\Users\\operator\\private\\capture.png'.encode('utf-8'),
         '\n“\\Users\\operator\\private\\capture.png'.encode('utf-8'),
@@ -788,6 +796,10 @@ def main():
             name_head + ' [][ref one]' + name_tail + '\n\n[ref\none]: target',
             name_head + ' [][ref]' + name_tail + '\n\n[ref]:\n target',
             name_head + ' ![][ref]' + name_tail + '\n\n[ref]:\n target',
+            name_head + ' [][ref]' + name_tail + '\n\n[ref]:\n    target',
+            name_head + ' [][ref]' + name_tail + '\n\n[ref]:\n\ttarget',
+            name_head + ' [][ref]' + name_tail + '\n\n[ref]: <target>',
+            name_head + ' ![][ref]' + name_tail + '\n\n[ref]:\n    <target>',
             name_head + ' ![' + name_tail + '](https://example.invalid/image.png)',
             name_head + ' [' + name_tail + '](https://example.invalid/a(b(c)))',
             name_head + ' [' + name_tail + '][reference]\n[reference]: https://example.invalid',
@@ -830,6 +842,10 @@ def main():
             attribute['label'] + ': ' + attribute['value'][0] + '[][ref\tone]' + attribute['value'][1:] + '\n\n[ref one]: target',
             attribute['label'] + ': ' + attribute['value'][0] + '[][ref one]' + attribute['value'][1:] + '\n\n[ref\none]: target',
             attribute['label'] + ': ' + attribute['value'][0] + '[][ref]' + attribute['value'][1:] + '\n\n[ref]:\n target',
+            attribute['label'] + ': ' + attribute['value'][0] + '[][ref]' + attribute['value'][1:] + '\n\n[ref]:\n    target',
+            attribute['label'] + ': ' + attribute['value'][0] + '[][ref]' + attribute['value'][1:] + '\n\n[ref]:\n\ttarget',
+            attribute['label'] + ': ' + attribute['value'][0] + '[][ref]' + attribute['value'][1:] + '\n\n[ref]: <target>',
+            attribute['label'] + ': ' + attribute['value'][0] + '[][ref]' + attribute['value'][1:] + '\n\n[ref]:\n    <target>',
             attribute['label'] + ': ![' + attribute['value'] + '](https://example.invalid/image.png)',
             attribute['label'] + ': [' + attribute['value'] + '][reference]\n[reference]: https://example.invalid',
             attribute['label'] + '<br>' + attribute['value'],
