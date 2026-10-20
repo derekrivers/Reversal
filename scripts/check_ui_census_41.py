@@ -111,7 +111,13 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
-ROOT_RELATIVE_WINDOWS = re.compile(r'(?<![A-Za-z0-9_.:\\/])\\(?!\\)[A-Za-z0-9_.-]{3,}')
+ROOT_RELATIVE_WINDOWS = re.compile(
+    r'(?<![\w.:/\\-])\\(?!\\)(?:'
+    r'[^\\/\s"<>|:*?]+[\\/][^\\/\s"<>|:*?]+'
+    r'|[^\\/\s"<>|:*?]*\.[^\\/\s"<>|:*?]+'
+    r'|[^\\/\s"<>|:*?]{3,}'
+    r')'
+)
 
 
 def has_private_path_or_payload(part):
@@ -586,7 +592,7 @@ def main():
         except ValueError:
             continue
         raise ValueError('negative validation probe accepted')
-    for leaked in ('\\Users\\operator\\private\\capture.png', '\\capture.png'):
+    for leaked in ('\\Users\\operator\\private\\capture.png', '\\capture.png', '\\UI\\capture.png', '\\Équipe\\capture.png'):
         changed = copy.deepcopy(data)
         changed['private_payload'] = leaked
         try:
@@ -607,7 +613,7 @@ def main():
     else:
         raise ValueError('altered public source accepted')
     report = public_report_bytes()
-    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png')
+    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'))
     for leaked in report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
@@ -616,6 +622,7 @@ def main():
         else:
             raise ValueError('private path in public report accepted')
     require(not has_private_path_or_payload('docs\\reference\\ui.md'), 'repository-relative Windows path rejected')
+    require(not has_private_path_or_payload('docs-\\reference\\ui.md'), 'hyphenated repository-relative Windows path rejected')
     require(not has_private_path_or_payload('escaped \\n punctuation'), 'ordinary escaped punctuation rejected')
     if args.private_root or args.private_aliases:
         require(args.private_root and args.private_aliases,'private root and aliases must be supplied together')
@@ -699,8 +706,8 @@ def main():
         result['private_leak_probes'] = len(private_leaks)
         result['private_near_miss_probes'] = 3
         result['private_escape_probes'] = 2
-    result['negative_probes'] = len(mutations) + 4 + len(report_leaks)
-    result['public_path_near_miss_probes'] = 2
+    result['negative_probes'] = len(mutations) + 6 + len(report_leaks)
+    result['public_path_near_miss_probes'] = 3
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     print(json.dumps(result,sort_keys=True))
 
