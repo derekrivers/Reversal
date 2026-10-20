@@ -111,7 +111,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '40e3dbe3e52a080cfbcb86b452929e4dd2846348b7c37f18a756a544cb1d8904'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'd0a5ff1b95a6a56cd58b8833c55754bdb750750ce1b75459b269660e8a91b68d'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -333,6 +333,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
         'operator_only_state_ids':[i for i,s in states.items() if s['kind'] == 'operator-only'],
         'terminal_state_ids':[i for i,s in states.items() if s['kind'] == 'terminal'],
         'discovered_uncaptured_route_ids':list(routes), 'unknown_unbounded_section_ids':list(domains)}
+    require(set(denominator) == {'scope', 'total_application_screen_states', 'counts', *expected_sets}, 'unreviewed denominator fields')
     require(all(denominator[k] == v for k,v in expected_sets.items()), 'denominator membership mismatch')
     require(denominator['counts'] == {k:len(v) for k,v in expected_sets.items()}, 'denominator count mismatch')
     report_bytes = report_reader()
@@ -409,9 +410,10 @@ def check_private_display(snapshot, public):
             plain_public = wrapper.sub(lambda match: match.group(1), plain_public)
         if plain_public == previous:
             break
-    markdown_plain = plain_public
-    # A captured multiword value may be split by inline formatting. Remove only
-    # balanced, single-line markup pairs, then compare the complete value.
+    # A captured multiword value may be split by inline formatting. Compare
+    # rendered link/alt text and strip balanced, single-line markup pairs.
+    markdown_plain = re.sub(r'!?\[([^\]\r\n]+)\]\((?:[^()\r\n]|\([^()\r\n]*\))*\)', r'\1', plain_public)
+    markdown_plain = re.sub(r'!?\[([^\]\r\n]+)\]\[[^\]\r\n]+\]', r'\1', markdown_plain)
     markup = re.compile(r'(?P<marker>\*\*|__|~~|``|\*|_|`)(?P<body>[^\r\n]+?)(?P=marker)')
     while True:
         previous = markdown_plain
@@ -585,6 +587,7 @@ def main():
         lambda d:d.update(whole_application_coverage='complete'),
         redefine_screenshot_coverage,
         claim_whole_denominator_scope,
+        lambda d:d['denominator'].update(whole_application_coverage='complete'),
         lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(sha256='1'*64),
         lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(capture_pixels=[1,1]),
         lambda d:next(item for item in d['contexts'] if item['id'] == 'gdi-A').update(executable_sha256='1'*64),
@@ -698,7 +701,13 @@ def main():
         private_leaks.append(unicodedata.normalize('NFD', decomposable_name))
         multiword_name = next(row['name'] for row in snapshot['squad']['rows'] if len(row['name'].split(' ', 1)) == 2)
         name_head, name_tail = multiword_name.split(' ', 1)
-        private_leaks.extend((name_head + ' **' + name_tail + '**', name_head + ' `' + name_tail + '`'))
+        private_leaks.extend((
+            name_head + ' **' + name_tail + '**',
+            name_head + ' `' + name_tail + '`',
+            name_head + ' [' + name_tail + '](https://example.invalid)',
+            name_head + ' ![' + name_tail + '](https://example.invalid/image.png)',
+            name_head + ' [' + name_tail + '][reference]',
+        ))
         picked = next(row['picked'] for row in snapshot['squad']['rows'] if row['picked'])
         info = next(row['info'] for row in snapshot['squad']['rows'] if row['info'])
         attribute = snapshot['profile']['attributeColumns'][0][0]
