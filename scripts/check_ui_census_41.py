@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'e86da07013c118a258ff61382646c9eca83f4577a57af5fd0ddd82e2749bb7be'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'c9a744bad80341895cf036322c39eb1c0add1d44f171383fdbd846f8234ac3dc'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -179,7 +179,7 @@ def render_for_privacy(source):
     rendered = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_ref(match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'\\[ \t]*\r?\n', ' ', rendered)
     rendered = re.sub(r'\\([\\`*_{}\[\]()#+.!<>~\-])', r'\1', rendered)
-    code_spans = re.compile(r'(?<!`)(?P<ticks>`{1,3})(?!`)(?P<body>[\s\S]*?)(?<!`)(?P=ticks)(?!`)')
+    code_spans = re.compile(r'(?<!`)(?P<ticks>`+)(?!`)(?P<body>[\s\S]*?)(?<!`)(?P=ticks)(?!`)')
     rendered = code_spans.sub(lambda match: re.sub(r'\s+', ' ', match.group('body')), rendered)
     markup = re.compile(r'(?P<marker>\*\*|__|~~|``|\*|_|`)(?P<body>[^\r\n]+?)(?P=marker)')
     while True:
@@ -441,7 +441,8 @@ def check_private_display(snapshot, public):
     """Reject copied display values; tiny/generic values need their field label."""
     raw_public = public
     def fold_display(value):
-        return unicodedata.normalize('NFC', unicodedata.normalize('NFC', value).casefold())
+        visible = ''.join(char for char in unicodedata.normalize('NFC', value) if unicodedata.category(char) != 'Cf')
+        return unicodedata.normalize('NFC', visible.casefold())
     # Decode JSON escapes in copied text before comparison, including Unicode,
     # quotes and separators; the original text is still scanned below.
     escapes = {'"': '"', '\\': '\\', '/': '/', 'b': '\b', 'f': '\f', 'n': '\n', 'r': '\r', 't': '\t'}
@@ -789,6 +790,8 @@ def main():
             name_head + ' **' + name_tail + '**',
             name_head + ' `' + name_tail + '`',
             name_head + ' `' + name_tail + '\n`',
+            name_head + ' ````' + name_tail + '\n````',
+            name_head + ' ````````' + name_tail + '\n````````',
             name_head + ' [' + name_tail + '](https://example.invalid)',
             name_head + ' [](/x)' + name_tail,
             name_head + ' ![](/x)' + name_tail,
@@ -824,6 +827,16 @@ def main():
         picked = next(row['picked'] for row in snapshot['squad']['rows'] if row['picked'])
         info = next(row['info'] for row in snapshot['squad']['rows'] if row['info'])
         attribute = snapshot['profile']['attributeColumns'][0][0]
+        for invisible in ('\u200b', '\u2060'):
+            private_leaks.extend((
+                name_head + ' ' + name_tail[0] + invisible + name_tail[1:],
+                attribute['label'] + ': ' + attribute['value'][0] + invisible + attribute['value'][1:],
+                attribute['label'][0] + invisible + attribute['label'][1:] + ': ' + attribute['value'],
+            ))
+        private_leaks.extend((
+            name_head + ' ' + name_tail[0] + '&#8203;' + name_tail[1:],
+            attribute['label'] + ': ' + attribute['value'][0] + '\\u200b' + attribute['value'][1:],
+        ))
         private_leaks.extend([
             'picked: ' + picked,
             'info: ' + info,
@@ -835,6 +848,8 @@ def main():
             attribute['label'] + ': **' + attribute['value'] + '**',
             attribute['label'] + ': `' + attribute['value'] + '`',
             attribute['label'] + ': `' + attribute['value'] + '\n`',
+            attribute['label'] + ': ````' + attribute['value'] + '\n````',
+            attribute['label'] + ': ````````' + attribute['value'] + '\n````````',
             attribute['label'] + ': _' + attribute['value'] + '_',
             attribute['label'] + ': ~~' + attribute['value'] + '~~',
             '| ' + attribute['label'] + ' | **' + attribute['value'] + '** |',
@@ -893,6 +908,8 @@ def main():
         check_private_display(snapshot, public + '\n' + expression_near_miss)
         check_private_display(snapshot, public + '\n' + name_head + '[][other]' + name_tail + '\n\n[ref one]: target')
         check_private_display(snapshot, public + '\n' + name_head + '[][ref]' + name_tail + '\n\n[ref]:\n\n target')
+        check_private_display(snapshot, public + '\n' + name_head + ' ````' + name_tail + '\n```')
+        check_private_display(snapshot, public + '\n' + name_head + ' ````' + name_tail + '\n')
         synthetic = copy.deepcopy(snapshot)
         synthetic['squad']['clubLabel'] = 'Synthetic "Club"'
         try:
@@ -934,7 +951,7 @@ def main():
             raise ValueError('Unicode case-folded private label accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 6
+        result['private_near_miss_probes'] = 8
         result['private_escape_probes'] = 5
     result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 9
