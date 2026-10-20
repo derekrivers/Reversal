@@ -363,7 +363,7 @@ def check_private_display(snapshot, public):
         for key in row_fields:
             add(key, row[key], generic=(key in ('info', 'position', 'morale')))
     for key in ('title', 'bio', 'role', 'preferredFoot', 'form', 'morale', 'condition'):
-        add(key, snapshot['profile'][key], generic=(key == 'role'))
+        add(key, snapshot['profile'][key], generic=(key in ('role', 'morale')))
     for column in snapshot['profile']['attributeColumns']:
         for attribute in column:
             add(attribute['label'], attribute['value'], generic=True)
@@ -657,6 +657,7 @@ def main():
         check_private_display(snapshot, public + '\n' + near_miss)
         decimal_near_miss = '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '.5"}'
         check_private_display(snapshot, public + '\n' + decimal_near_miss)
+        check_private_display(snapshot, public + '\nGeneric description: ' + snapshot['profile']['morale'].swapcase() + '.')
         synthetic = copy.deepcopy(snapshot)
         synthetic['squad']['clubLabel'] = 'Synthetic "Club"'
         try:
@@ -675,7 +676,7 @@ def main():
             raise ValueError('Unicode-equivalent structured display leak probe accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 2
+        result['private_near_miss_probes'] = 3
         result['private_escape_probes'] = 2
     result['negative_probes'] = len(mutations) + 2 + len(report_leaks)
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
