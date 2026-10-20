@@ -1,0 +1,47 @@
+{
+  "schema": "reversal.engine-state-41.integrity.v1",
+  "oracle_sha256": "13c5bded6db0af4c3584977a8c9835000efb0a2d59ccb0783513cb4db1836634",
+  "normal_and_optimized_identical": true,
+  "negative_probes": [
+    "changed-pinned-PE",
+    "wrong-build-identity",
+    "GDI-participant-read-width",
+    "wrong-lookup-global-map",
+    "original-missing-init-bit",
+    "original-stale-row",
+    "original-null-attributes",
+    "original-out-of-count",
+    "late-raw-excerpt",
+    "late-uppercase-hex",
+    "base64-alignment-0",
+    "base64-alignment-1",
+    "base64-alignment-2"
+  ],
+  "privacy_scanned_files": [
+    "scripts/replay_engine_state_41.py",
+    "scripts/verify_engine_state_41.py",
+    "reconstruction/engine-state-41.ts",
+    "reconstruction/check-engine-state-41.ts",
+    "reports/engine-state-41.md",
+    "engine-state-41-oracle.json"
+  ],
+  "privacy": "all overlapping 12..32-byte raw/hex and 9..30-byte aligned base64 source windows",
+  "source_sha256": {
+    "scripts/replay_engine_state_41.py": "75888889367d49a7e157d94b8d049fdb5fcb46cf3fb59bf2c40daa605476d7b5",
+    "scripts/verify_engine_state_41.py": "7f66b08816fab4a1265b1517735212861d75411669e399e8c4572c9112183481",
+    "reconstruction/engine-state-41.ts": "253a324c87c576079c3906e3f72a0dd082428c42b73dab7e0753696188938744",
+    "reconstruction/check-engine-state-41.ts": "cf12631e2074829504ce8f1ed7c39fffe0d41004e5b12d7a6ccee19b9c0a3ac4",
+    "reports/engine-state-41.md": "1f22c405424a5bb235ffd98ab6372029cce15f7cb6d9855a491d94f96e92ad2a"
+  },
+  "specimens": {
+    "pinned": {
+      "sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+      "bytes": 7192576
+    },
+    "gdi": {
+      "sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "bytes": 7188480
+    }
+  },
+  "captured_runtime_cases": 0
+}
