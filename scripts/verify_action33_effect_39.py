@@ -10,7 +10,7 @@ import sys
 import tempfile
 
 import emulate_action33_effect_39 as task
-from verify_action33_keeper_38 import snapshot, expand, scan
+from verify_action33_keeper_38 import snapshot, expand
 from verify_action33_adjustment_34 import BytesFile, reject
 from emulate_action33_prefix_30 import need, sha, compact, packed, pe_offset
 from extract_action33_prefix_30 import rows, compare
@@ -57,15 +57,29 @@ def public_payload(blob):
 
 
 def private_fragments(data):
-    result=set()
+    result={'raw':{},'hex':{},'base64':{}}
     for start,end in (*task.RANGES,*task.BOUNDARIES,(task.p.GRID,task.p.GRID+432)):
-        off=pe_offset(data,start,end-start);body=data[off:off+end-start];size=min(32,len(body))
-        if size<12:continue
-        for n in range(len(body)-size+1):result.add(body[n:n+size])
-        # Padding-free base64 windows detect longer excerpts at every alignment.
-        width=min(30,len(body));width-=width%3
-        for n in range(len(body)-width+1):result.add(body[n:n+width])
-    need(bool(result),'missing privacy samples');return sorted(result)
+        off=pe_offset(data,start,end-start);body=data[off:off+end-start]
+        for width in range(12,min(32,len(body))+1):
+            for n in range(len(body)-width+1):
+                fragment=body[n:n+width]
+                result['raw'].setdefault(width,set()).add(fragment)
+                result['hex'].setdefault(width*2,set()).add(fragment.hex().encode())
+        # Nine aligned source bytes occur inside any twelve-byte excerpt,
+        # including one embedded at either nonzero base64 group alignment.
+        for width in range(9,min(30,len(body))+1,3):
+            for n in range(len(body)-width+1):
+                fragment=body[n:n+width]
+                result['base64'].setdefault(width*4//3,set()).add(base64.b64encode(fragment))
+    need(all(result.values()),'missing privacy samples');return result
+
+
+def scan_private(payload,fragments):
+    for kind,groups in fragments.items():
+        data=payload.lower() if kind=='hex' else payload
+        for width,samples in groups.items():
+            if any(data[n:n+width] in samples for n in range(len(data)-width+1)):
+                need(False,'private original fragment')
 
 
 def verify(a):
@@ -123,23 +137,25 @@ def verify(a):
         fragments=private_fragments(data)
         for path in (*root.glob('scripts/*action33_effect_39.py'),*root.glob('reconstruction/*action33-effect-39.ts'),
                      *root.glob('reports/*action33-effect-39.md'),*root.glob('evidence/*action33-effect-39*')):
-            raw=path.read_bytes();scan(raw,fragments)
-            if path.suffix=='.bin':scan(expand(raw),fragments)
-        failures['private_raw_fragment']=reject(lambda:scan(b'x'+fragments[0]+b'y',fragments),'private original fragment')
-        failures['private_hex_fragment']=reject(lambda:scan(fragments[0].hex().upper().encode(),fragments),'private original fragment')
-        failures['private_base64_fragment']=reject(lambda:scan(base64.b64encode(fragments[-1]),fragments),'private original fragment')
-        failures['compressed_private_fragment']=reject(lambda:scan(expand(packed({'probe':fragments[-1].hex()})),fragments),'private original fragment')
+            raw=path.read_bytes();scan_private(raw,fragments)
+            if path.suffix=='.bin':scan_private(expand(raw),fragments)
+        short_raw=next(iter(fragments['raw'][12]))
+        short_base64=next(iter(fragments['base64'][12]))
+        failures['private_raw_fragment']=reject(lambda:scan_private(b'x'+short_raw+b'y',fragments),'private original fragment')
+        failures['private_hex_fragment']=reject(lambda:scan_private(short_raw.hex().upper().encode(),fragments),'private original fragment')
+        failures['private_base64_fragment']=reject(lambda:scan_private(short_base64,fragments),'private original fragment')
+        failures['compressed_private_fragment']=reject(lambda:scan_private(expand(packed({'probe':short_raw.hex()})),fragments),'private original fragment')
         for label,address in (('effect',0x6cfe50),('grid',0xa15e84)):
-            for width in (33,48,64,96):
+            for width in (12,13,14,21,29,33,48,64,96):
                 off=pe_offset(data,address,width);fragment=data[off:off+width]
                 for prefix in range(3):
                     hidden=base64.b64encode(b'\x01'*prefix+fragment).decode('ascii')
                     probe=expand(packed({'probe':hidden}))
-                    failures[f'private_base64_{label}_{width}_prefix{prefix}']=reject(lambda:scan(probe,fragments),'private original fragment')
+                    failures[f'private_base64_{label}_{width}_prefix{prefix}']=reject(lambda:scan_private(probe,fragments),'private original fragment')
     return {'unit':'R39-A','status':'passed','oracle_sha256':sha(retained),'specimen_sha256':task.p.EXPECTED,
       'verifier_dependency_hashes':VERIFIER_DEPENDENCIES,
       'coverage':oracle['coverage'],'normal_optimized':'byte-identical original instruction regeneration',
-      'negative_checks':failures,'privacy':'bounded canonical gzip; unchanged synthetic schedule; every overlapping raw/hex window up to 32 bytes and padding-free base64 window up to 30 bytes across admitted code and original grid scanned in task files and expanded oracle',
+      'negative_checks':failures,'privacy':'bounded canonical gzip; unchanged synthetic schedule; every overlapping raw/hex window of 12..32 bytes and padding-free base64 source window of 9..30 bytes across admitted code and original grid scanned in task files and expanded oracle',
       'scope':'original-entry effect and lookup remain pending at null participant diagnostic; no effect/lookup/resolver return, outcome or live reachability; separate R30-B 160-case domain'}
 
 

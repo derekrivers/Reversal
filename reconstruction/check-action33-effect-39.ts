@@ -151,11 +151,11 @@ for(const mode of ['participant','lookup','shooter','x87']){
  assert.throws(()=>runAction33EffectSuffix39(m),mode==='x87'?/effect requires empty x87/:/effect requires unchanged nonnull shooter/);
 }
 const receiptBytes=readFileSync(new URL('evidence/action33-effect-39-integrity.json',root));
-assert.equal(hash(receiptBytes),'1fb01ab9556f7c034451af49dcdfa25200b95d4d20a613f6b09bc3c52c9a32fa');const receipt=JSON.parse(receiptBytes);
+assert.equal(hash(receiptBytes),'13b034ad68ad3cc103e36f7cb7dc91d4afd2a260eb0c633d0baef3f411eb6c7e');const receipt=JSON.parse(receiptBytes);
 assert.equal(receipt.unit,'R39-A');assert.equal(receipt.status,'passed');assert.equal(receipt.oracle_sha256,hash(blob));assert.deepEqual(receipt.coverage,oracle.coverage);
 for(const [name,digest] of Object.entries(receipt.verifier_dependency_hashes))assert.equal(hash(readFileSync(new URL(name,root))),digest);
-assert.equal(Object.keys(receipt.negative_checks).length,47);
-for(const source of ['effect','grid'])for(const width of [33,48,64,96])for(const prefix of [0,1,2])
+assert.equal(Object.keys(receipt.negative_checks).length,77);
+for(const source of ['effect','grid'])for(const width of [12,13,14,21,29,33,48,64,96])for(const prefix of [0,1,2])
  assert.equal(receipt.negative_checks[`private_base64_${source}_${width}_prefix${prefix}`],'private original fragment');
 console.log(JSON.stringify({unit:'R39-A',status:'passed',node:process.version,...oracle.coverage,
  scope:'original-entry effect/lookup remain pending before diagnostic; no effect/lookup/resolver return, outcome or live reachability'}));
