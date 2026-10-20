@@ -11,6 +11,43 @@ import re
 
 ROOT = Path(__file__).resolve().parent.parent
 
+# Reviewed operator-action scopes. The private A4 receipts are opaque; this
+# binds their declared roles to the observed edge IDs and launch contexts.
+OPERATOR_CLAIMS = {
+    'r41-operator-route-report': {
+        'edge.restore-open': ('Restore Saved Game', ('gdi-A',)),
+        'edge.original-cd': ('Original restore selection', ('gdi-A',)),
+        'edge.cd-gap': ('External input intervened', ('gdi-A',)),
+        'edge.club-link': ('Click managed club label', ('gdi-A',)),
+        'edge.profile': ('Click captured roster player row', ('gdi-A',)),
+        'edge.profile-back': ('Back', ('gdi-A',)),
+        'edge.tactics': ('Tactics', ('gdi-A',)),
+        'edge.tactics-cancel': ('Cancel', ('gdi-A',)),
+        'edge.continue-squad': ('Continue Game', ('gdi-A',)),
+        'edge.confirm-match': ('Continue Game', ('gdi-A',)),
+        'edge.enter-match': ('Yes', ('gdi-A',)),
+        'edge.options': ('Game Options', ('gdi-B-late',)),
+        'edge.restart': ('Restart Game', ('gdi-B-late',)),
+        'edge.save-prompt': ('Yes', ('gdi-B-late',)),
+        'edge.restart-cancel': ('Cancel', ('gdi-B-late',)),
+        'edge.save-separate': ('Save before restart', ('gdi-B-late',)),
+        'edge.restart-child': ('Save distinct file; native restart creates child', ('gdi-B-late', 'gdi-restarted-partial')),
+    },
+    'r41-a4-operator-notes': {
+        'edge.exit-yes': ('Yes', ('gdi-restarted-partial',)),
+    },
+    'r41-a4-index-snapshot': {
+        'edge.restore-open': ('Restore Saved Game', ('gdi-A4-restored',)),
+        'edge.select-file': ('Select duplicate input row', ('gdi-A4-restored',)),
+        'edge.load-info': ('Ok starts loading', ('gdi-A4-restored',)),
+        'edge.info-dismiss': ('Ok dismisses information; next loaded fixtures', ('gdi-A4-restored',)),
+        'edge.continue-fixture': ('Continue Game', ('gdi-A4-restored',)),
+        'edge.confirm-match': ('Continue Game', ('gdi-A4-restored',)),
+        'edge.exit-confirm': ('Exit Game', ('gdi-restarted-partial',)),
+        'edge.error-ok': ('OK', ('gdi-A4-failed-launch',)),
+    },
+}
+
 
 def require(condition, message):
     if not condition:
@@ -98,9 +135,20 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
         require(edge['status'] in ['observed-action', 'screenshot-sequence', 'unresolved-gap'], 'unknown transition confidence')
         refs(edge['evidence_ids'], evidence)
         refs(edge['context_ids'], contexts)
-        require(bool(edge['evidence_ids']), 'transition without evidence')
-        if edge['status'] == 'observed-action':
-            require(any(evidence[i]['kind'] == 'operator-report' for i in edge['evidence_ids']), 'image-only action claim')
+        require(bool(edge['evidence_ids']) and bool(edge['context_ids']), 'transition without evidence/context')
+        reports = [i for i in edge['evidence_ids'] if evidence[i]['kind'] == 'operator-report']
+        claimed_contexts = set()
+        for report_id in reports:
+            claim = OPERATOR_CLAIMS.get(report_id, {}).get(edge['id'])
+            require(claim is not None and claim[0] == edge['action'], 'operator receipt unrelated to claimed action')
+            claimed_contexts.update(claim[1])
+        images = [i for i in edge['evidence_ids'] if evidence[i]['kind'] == 'screenshot']
+        endpoints = set(states[edge['from']]['evidence_ids']) | set(states[edge['to']]['evidence_ids'])
+        require(all(i in endpoints and evidence[i]['context_id'] in edge['context_ids'] for i in images), 'transition image outside endpoint/context')
+        if edge['status'] in ['observed-action', 'unresolved-gap']:
+            require(bool(reports) and set(edge['context_ids']).issubset(claimed_contexts), 'action context without operator claim')
+        else:
+            require(any(i in states[edge['from']]['evidence_ids'] for i in images) and any(i in states[edge['to']]['evidence_ids'] for i in images), 'screenshot sequence without endpoint images')
     for state in states.values():
         refs(state['evidence_ids'], evidence)
         require(bool(state['evidence_ids']), 'state without evidence')
@@ -193,6 +241,10 @@ def main():
         item['source'] = 'private opaque replacement'
     mutations = [
         lambda d:d['transitions'][0].update(to='ui41.unmapped'),
+        lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(evidence_ids=['r41-a4-operator-notes'], context_ids=['gdi-A4-failed-launch']),
+        lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(context_ids=['gdi-A4-failed-launch']),
+        lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(action='Exit Game'),
+        lambda d:next(e for e in d['transitions'] if e['id']=='edge.running-sequence').update(evidence_ids=['r41-ui-09-match-before-kickoff-A']),
         lambda d:d['evidence'].append(d['evidence'][0]),
         lambda d:d['states'][0]['coverage'].update(engine_binding=True),
         lambda d:d['layouts'][0]['regions'][0].update(bounds=[799,0,10,10]),
