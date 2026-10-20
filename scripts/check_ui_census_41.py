@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '7961fd75ff9a43b244f68145426a8049545207d45183680f91de1646bb1f925f'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'afba8272d3e9e6a4adb97bdd4495aab6584e9e9e1cd0bdcdf46566ef44dcc7bf'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -129,8 +129,9 @@ ROOT_RELATIVE_WINDOWS = re.compile(
 def render_for_privacy(source):
     """Approximate rendered inline text for conservative privacy matching."""
     block_marker = re.compile(r'(?m)^ {0,3}(?:>[ \t]?|(?:[-+*]|\d{1,9}[.)])[ \t]+)')
+    separator = re.compile(r'(?m)^ {0,3}(?:(?:[=-][ \t]*)+|(?:[*_][ \t]*){3,})\r?$')
     while True:
-        updated = block_marker.sub('', source)
+        updated = block_marker.sub('', separator.sub('', source))
         if updated == source:
             break
         source = updated
@@ -795,7 +796,11 @@ def main():
         result['private_image_checks'] = 'pass'
     if args.private_snapshot:
         snapshot = strict_json_loads(args.private_snapshot.read_text(encoding='utf-8'))
-        public = (ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8') + (ROOT/'reports/ui-map-41.md').read_text(encoding='utf-8')
+        public = ''.join(path.read_text(encoding='utf-8') for path in (
+            ROOT/'evidence/ui-screen-census-41.json',
+            ROOT/'reports/ui-map-41.md',
+            ROOT/'reports/runtime-capture-41.md',
+        ))
         check_private_display(snapshot, public)
         private_leaks = [snapshot['squad']['clubLabel'], snapshot['squad']['dateLabel'], snapshot['profile']['bio']]
         private_leaks.append(snapshot['squad']['rows'][0]['name'].swapcase())
@@ -848,6 +853,9 @@ def main():
             name_head + '\n- - ' + name_tail,
             name_head + '\n> 1. ' + name_tail,
             name_head + '\n# ' + name_tail + ' ###',
+            name_head + '\n---\n' + name_tail,
+            name_head + '\n===\n' + name_tail,
+            name_head + '\n* * *\n' + name_tail,
             name_head + chr(92) + '\n' + name_tail,
         ))
         picked = next(row['picked'] for row in snapshot['squad']['rows'] if row['picked'])
@@ -889,6 +897,7 @@ def main():
             attribute['label'] + ':\n> - ' + attribute['value'],
             attribute['label'] + ':\n> # ' + attribute['value'],
             '# ' + attribute['label'] + ' ###\n' + attribute['value'],
+            attribute['label'] + ':\n---\n' + attribute['value'],
             attribute['label'] + ': ' + attribute['value'] + '.',
             attribute['label'] + ' ' + attribute['value'] + '.',
             '{"' + attribute['label'] + '":"' + attribute['value'] + '"}',
@@ -939,13 +948,13 @@ def main():
         ])
         escaped_name = next(row['name'] for row in snapshot['squad']['rows'] if any(ord(ch) > 127 for ch in row['name']))
         private_leaks.append(json.dumps({'name': escaped_name}))
-        for field in private_leaks:
+        for probe_index, field in enumerate(private_leaks):
             try:
                 check_private_display(snapshot, public + '\n' + field)
             except ValueError:
                 pass
             else:
-                raise ValueError('private display leak probe accepted')
+                raise ValueError(f'private display leak probe {probe_index} accepted')
         near_miss = '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '0"}'
         check_private_display(snapshot, public + '\n' + near_miss)
         decimal_near_miss = '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '.5"}'
@@ -961,6 +970,7 @@ def main():
         check_private_display(snapshot, public + '\n' + name_head + '\n#' + name_tail)
         check_private_display(snapshot, public + '\n' + name_head + '\n> #' + name_tail)
         check_private_display(snapshot, public + '\n' + name_head + '\n# ' + name_tail[0] + '###' + name_tail[1:])
+        check_private_display(snapshot, public + '\n' + name_head + '\n--not-marker\n' + name_tail)
         check_private_display(snapshot, public + '\n' + json.dumps({'value': attribute['value'] + '.5', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'value': '<em>' + attribute['value'][0] + '*' + attribute['value'][1:] + '</em>', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'v&#97;lues': attribute['value'], 'label': attribute['label']}))
@@ -1005,7 +1015,7 @@ def main():
             raise ValueError('Unicode case-folded private label accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 14
+        result['private_near_miss_probes'] = 15
         result['private_escape_probes'] = 5
     result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 9
