@@ -1,7 +1,7 @@
 # Working on Reversal
 
 - Read README.md, docs/ROADMAP.md and docs/PROVENANCE.md before extending the research.
-- Advance function mapping, bounded original-instruction-validated TypeScript reconstruction, and evidence-backed headless game composition together. State initialization, shared lifecycle and connected execution validation are in scope now. Substantial browser UI construction is deferred. A static contract is not execution validation; record both states separately.
+- Prioritize faithful, connected TypeScript behavior and reliable observation of the running original game. State initialization, shared lifecycle and connected execution validation are in scope. Map the observed UI and recover installed assets alongside engine work; a small React integration is in scope once its data and command boundary is evidenced. A static contract is not execution validation; record both states separately.
 - Keep every binary claim tied to the executable SHA-256 and distinguish file offsets from virtual addresses.
 - Treat function names as research labels and structures as partial. Check calling conventions and widths in assembly before changing a prototype.
 - Preserve the existing native database. Rebuild into a separate project; do not replace the only checkpoint with a fresh import.
@@ -11,7 +11,7 @@
 - Keep specimen, manifest and instruction checks active under optimized Python too. An extractor that still uses `assert` for integrity must explicitly reject `python -O` before reading or writing evidence.
 - CI checks retained numerical fixtures and checkpoint metadata. It does not reopen Ghidra or reproduce a full match.
 - Do not describe a full match, goal formula or playable game as recovered without the relevant evidence.
-- Keep unresolved original behavior explicit when composing the headless core. A synthetic fixture, supplied intermediate state or stub does not establish a connected gameplay result through the omitted behavior. Preserve original call, state-write and shared-RNG order in each admitted path.
+- Keep unresolved original behavior explicit when composing the headless core. A synthetic fixture, supplied intermediate state or stub does not establish a connected gameplay result through the omitted behavior. Preserve original call, state-write and shared-RNG order in each admitted path. Label captured read-only UI snapshots as reference data and keep unsupported commands unavailable.
 
 ## Parallel investigations
 
