@@ -114,7 +114,7 @@ PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
     # directory name (including names ending in + or @) does not.
-    r'(?<![^\s\x22\x27\x28\x5b\x7b\x3d\x3a\x2c\x3b])\\(?!\\)(?:'
+    r'(?<![^\s\x22\x27\x28\x5b\x7b\x3d\x3a\x2c\x3b\x2a\x3e\x7c\x3f])\\(?!\\)(?:'
     r'[^\s\\/"<>|:*?][^\\/\r\n\t"<>|:*?]*[\\/][^\s\\/"<>|:*?][^\\/\r\n\t"<>|:*?]*'
     r'|[^\s\\/"<>|:*?][^\\/\r\n\t"<>|:*?]*\.[A-Za-z0-9]{1,10}\b'
     r'|[^\\/\s"<>|:*?]{3,}'
@@ -123,7 +123,11 @@ ROOT_RELATIVE_WINDOWS = re.compile(
 
 
 def has_private_path_or_payload(part):
-    return bool(PRIVATE_PATH_PAYLOAD.search(part) or ROOT_RELATIVE_WINDOWS.search(part))
+    if PRIVATE_PATH_PAYLOAD.search(part) or ROOT_RELATIVE_WINDOWS.search(part):
+        return True
+    # Backticks are legal in Windows filenames, so only a balanced Markdown
+    # code span makes one a delimiter instead of treating every backtick as one.
+    return any(ROOT_RELATIVE_WINDOWS.search(match.group(1)) for match in re.finditer(r'`([^`\r\n]+)`', part))
 
 
 def route_digest(rows):
@@ -594,7 +598,7 @@ def main():
         except ValueError:
             continue
         raise ValueError('negative validation probe accepted')
-    for leaked in ('\\Users\\operator\\private\\capture.png', '\\capture.png', '\\UI\\capture.png', '\\Équipe\\capture.png', '\\My Documents\\capture.png', '\\My capture.png'):
+    for leaked in ('\\Users\\operator\\private\\capture.png', '\\capture.png', '\\UI\\capture.png', '\\Équipe\\capture.png', '\\My Documents\\capture.png', '\\My capture.png', '`\\UI\\capture.png`', '**\\UI\\capture.png**'):
         changed = copy.deepcopy(data)
         changed['private_payload'] = leaked
         try:
@@ -615,7 +619,7 @@ def main():
     else:
         raise ValueError('altered public source accepted')
     report = public_report_bytes()
-    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'), b'\n\\My Documents\\capture.png', b'\n\\My capture.png')
+    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'), b'\n\\My Documents\\capture.png', b'\n\\My capture.png', b'\n`\\UI\\capture.png`', b'\n**\\UI\\capture.png**')
     for leaked in report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
@@ -627,6 +631,7 @@ def main():
     require(not has_private_path_or_payload('docs-\\reference\\ui.md'), 'hyphenated repository-relative Windows path rejected')
     require(not has_private_path_or_payload('docs+\\reference\\ui.md'), 'plus-suffixed repository-relative Windows path rejected')
     require(not has_private_path_or_payload('docs@\\reference\\ui.md'), 'at-suffixed repository-relative Windows path rejected')
+    require(not has_private_path_or_payload('docs`\\reference\\ui.md'), 'backtick-suffixed repository-relative Windows path rejected')
     require(not has_private_path_or_payload('escaped \\n punctuation.'), 'ordinary escaped punctuation rejected')
     if args.private_root or args.private_aliases:
         require(args.private_root and args.private_aliases,'private root and aliases must be supplied together')
@@ -710,8 +715,8 @@ def main():
         result['private_leak_probes'] = len(private_leaks)
         result['private_near_miss_probes'] = 3
         result['private_escape_probes'] = 2
-    result['negative_probes'] = len(mutations) + 8 + len(report_leaks)
-    result['public_path_near_miss_probes'] = 5
+    result['negative_probes'] = len(mutations) + 10 + len(report_leaks)
+    result['public_path_near_miss_probes'] = 6
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     print(json.dumps(result,sort_keys=True))
 
