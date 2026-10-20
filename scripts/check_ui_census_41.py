@@ -320,6 +320,7 @@ def jpeg_size(data):
 
 def check_private_display(snapshot, public):
     """Reject copied display values; tiny/generic values need their field label."""
+    raw_public = public
     # Decode JSON escapes in copied text before comparison, including Unicode,
     # quotes and separators; the original text is still scanned below.
     escapes = {'"': '"', '\\': '\\', '/': '/', 'b': '\b', 'f': '\f', 'n': '\n', 'r': '\r', 't': '\t'}
@@ -357,16 +358,29 @@ def check_private_display(snapshot, public):
         object_pair = rf'["\x27]label["\x27]\s*:\s*["\x27]{key}["\x27]\s*,\s*["\x27]value["\x27]\s*:\s*{value_token}'
         return any(re.search(pattern, public, re.IGNORECASE) for pattern in (direct, prose, object_pair))
     require(not any(labelled_leak(label, value) for label,value in labelled), 'private captured labelled value present in public catalogue/report')
-    # Parse small flat JSON objects as data, so key order and intervening
-    # properties cannot conceal a captured label/value pair.
+    # Parse JSON from its original escaped text. Decoding the whole file first
+    # can corrupt valid objects when a separate property contains quotes/braces.
     pairs = {(label.casefold(), value) for label,value in labelled}
-    for match in re.finditer(r'\{[^{}]{0,2048}\}', public):
-        try:
-            obj = json.loads(match.group())
-        except json.JSONDecodeError:
-            continue
-        if isinstance(obj, dict) and isinstance(obj.get('label'), str) and isinstance(obj.get('value'), str):
-            require((obj['label'].casefold(), obj['value']) not in pairs, 'private captured structured value present in public catalogue/report')
+    decoder = json.JSONDecoder()
+    def inspect_json_objects(source):
+        for match in re.finditer(r'\{', source):
+            try:
+                obj, _ = decoder.raw_decode(source, match.start())
+            except json.JSONDecodeError:
+                continue
+            if isinstance(obj, dict) and isinstance(obj.get('label'), str) and isinstance(obj.get('value'), str):
+                require((obj['label'].casefold(), obj['value']) not in pairs, 'private captured structured value present in public catalogue/report')
+    inspect_json_objects(raw_public)
+    # A complete public JSON file can itself contain a JSON fragment in a
+    # string field; parse that decoded field as a separate structured source.
+    try:
+        root_object, _ = decoder.raw_decode(raw_public)
+    except json.JSONDecodeError:
+        root_object = None
+    if root_object is not None:
+        for value in text_values(root_object):
+            if '{' in value:
+                inspect_json_objects(value)
 
 
 def main():
@@ -565,6 +579,8 @@ def main():
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
             '{"value":"' + attribute['value'] + '","source":"capture","label":"' + attribute['label'] + '"}',
+            json.dumps({'value': attribute['value'], 'source': 'quoted "capture"', 'label': attribute['label']}),
+            json.dumps({'value': attribute['value'], 'source': '{capture}', 'label': attribute['label']}),
         ])
         escaped_name = next(row['name'] for row in snapshot['squad']['rows'] if any(ord(ch) > 127 for ch in row['name']))
         private_leaks.append(json.dumps({'name': escaped_name}))
