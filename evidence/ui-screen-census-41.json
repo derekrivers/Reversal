@@ -1717,11 +1717,9 @@
         "Ok"
       ],
       "back": {
-        "status": "observed",
-        "target_state_id": "ui41.squad.selection",
-        "evidence_ids": [
-          "r41-operator-route-report"
-        ]
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
       },
       "assets": {
         "binding": "unknown; inventory presence does not establish screen selection",

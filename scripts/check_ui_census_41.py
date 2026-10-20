@@ -98,7 +98,7 @@ REVIEWED_STATE_IDS = frozenset({
 # and encoded as canonical UTF-8 JSON. Extending the census requires a fresh
 # visual review and an intentional update of this batch pin.
 REVIEWED_ROUTE_SHA256 = 'ec9061bf37e9952998d52693b911e5f8c4c92a50d17947f24dc981dd3b06819f'
-REVIEWED_STATE_CLAIMS_SHA256 = 'ae9000b3478513d3911f1a97fdc611f768bb81c8f587827443d51f7834ff33ef'
+REVIEWED_STATE_CLAIMS_SHA256 = '9f24c76350e8c8871154657e81788d06bcb0a29966c0f4ead40bbeff069a58f6'
 REVIEWED_UNKNOWN_SECTIONS_SHA256 = 'ef594ff35e5a3add0543db42260213d285774a5c5878cbe319963b37dcc93f6a'
 REVIEWED_BATCH_SECTION_SHA256 = {
     'contexts': 'c732d0015cb29c35ab2ddbe83adc056e63689d2abd4fc8097ac1c0af19a22778',
@@ -284,7 +284,11 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
         require(back['target_state_id'] is None or back['target_state_id'] in states, 'unknown back target')
         refs(back['evidence_ids'], evidence)
         if back['status'] == 'observed':
-            require(any(e['from'] == state['id'] and e['to'] == back['target_state_id'] and e['status'] == 'observed-action' for e in edges.values()), 'back claim without action edge')
+            require('Back' in state['controls'], 'observed Back absent from controls')
+            require(bool(back['evidence_ids']), 'observed Back without evidence')
+            require(any(e['from'] == state['id'] and e['to'] == back['target_state_id'] and e['action'] == 'Back' and e['status'] == 'observed-action' and set(back['evidence_ids']).issubset(e['evidence_ids']) for e in edges.values()), 'back claim without matching Back action edge')
+        else:
+            require(back['status'] == 'unobserved' and back['target_state_id'] is None and not back['evidence_ids'], 'unobserved Back has target or evidence')
     owned_images = {evidence_id for state in states.values() for evidence_id in state['evidence_ids'] if evidence[evidence_id]['kind'] == 'screenshot'}
     require(owned_images == {evidence_id for evidence_id,item in evidence.items() if item['kind'] == 'screenshot'}, 'unowned screenshot evidence')
     expected = {id:[{'to':e['to'],'transition_id':eid} for eid,e in edges.items() if e['from'] == id and e['status'] == 'observed-action'] for id in states}
