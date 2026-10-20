@@ -105,6 +105,14 @@ That extension has not yet been attached to the game. It must pass fresh review
 before a second capture. Reading a resumed process at Lookup A's old addresses
 would not establish the missing same-event state.
 
+The extension review found that an unrelated caller's ESI near `ffffffff`
+could overflow the optional 446-byte range and abort an otherwise valid capture.
+The corrected tool records an incomplete, out-of-range candidate without issuing
+that read; both alias results remain null. A pure fake-memory regression checks
+overflowing, null and valid-but-unmapped ESI under normal and optimized Python.
+Required region limits are unchanged. The original live captures and their
+backup remain byte-for-byte unchanged; this correction applies to future captures.
+
 ## Paired save experiment
 
 Runs A and B each start a fresh GDI process and load the same unchanged duplicate

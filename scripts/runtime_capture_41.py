@@ -106,7 +106,17 @@ def lookup_closure(dbg, process, ctx, loaded_base):
     # R41-B effect consumer uses ESI for the slot at the actual lookup CALL.
     # A different caller may supply an unrelated ESI: record bytes, but assert
     # no slot semantics unless both caller provenance and pointer equalities hold.
-    slot = read("effect_esi_candidate_slot", ctx.Esi, 0x1BE) if ctx.Esi else None
+    slot = None
+    if ctx.Esi:
+        if 0 < ctx.Esi and ctx.Esi + 0x1BE <= 2**32:
+            slot = read("effect_esi_candidate_slot", ctx.Esi, 0x1BE)
+        else:
+            # An unrelated caller's ESI is optional evidence. Do not let its
+            # invalid range discard the otherwise valid lookup entry.
+            reads.append({"label": "effect_esi_candidate_slot", "address": ctx.Esi,
+                          "requested": 0x1BE, "received": 0, "complete": False,
+                          "winerror": None, "error": "outside-x86-address-space",
+                          "sha256": base.hashlib.sha256(b"").hexdigest(), "hex": ""})
     index = struct.unpack_from("<i", record)[0] if record else None
     row_base = u32(receiver)
     if row_base and index is not None and count is not None and 0 <= index < count:
