@@ -314,6 +314,32 @@ def jpeg_size(data):
     raise ValueError('JPEG dimensions missing')
 
 
+def check_private_display(snapshot, public):
+    """Reject copied display values; tiny/generic values need their field label."""
+    exact = set()
+    labelled = set()
+    def add(label, value, generic=False):
+        if not isinstance(value, str) or not value.strip():
+            return
+        value = value.strip()
+        if len(value) >= 3 and not generic:
+            exact.add(value)
+        labelled.add((label, value))
+    for key in ('clubLabel', 'dateLabel'):
+        add(key, snapshot['squad'][key])
+    row_fields = ('name', 'position', 'form', 'morale', 'condition', 'apps', 'averageRating', 'value')
+    for row in snapshot['squad']['rows']:
+        for key in row_fields:
+            add(key, row[key])
+    for key in ('title', 'bio', 'role', 'preferredFoot', 'form', 'morale', 'condition'):
+        add(key, snapshot['profile'][key], generic=(key == 'role'))
+    for column in snapshot['profile']['attributeColumns']:
+        for attribute in column:
+            add(attribute['label'], attribute['value'], generic=True)
+    require(not any(value in public for value in exact), 'private captured display string present in public catalogue/report')
+    require(not any(f'{label}: {value}' in public or f'{label} {value}' in public for label,value in labelled), 'private captured labelled value present in public catalogue/report')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--private-root',type=Path)
@@ -486,10 +512,24 @@ def main():
         result['private_image_checks'] = 'pass'
     if args.private_snapshot:
         snapshot = json.loads(args.private_snapshot.read_text(encoding='utf-8'))
-        private = {row[key] for row in snapshot['squad']['rows'] for key in ['name','form']}
         public = (ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8') + (ROOT/'reports/ui-map-41.md').read_text(encoding='utf-8')
-        require(not any(token in public for token in private),'private captured token present in public catalogue/report')
+        check_private_display(snapshot, public)
+        for field in (snapshot['squad']['clubLabel'], snapshot['squad']['dateLabel'], snapshot['profile']['bio']):
+            try:
+                check_private_display(snapshot, public + '\n' + field)
+            except ValueError:
+                pass
+            else:
+                raise ValueError('private display leak probe accepted')
+        attribute = snapshot['profile']['attributeColumns'][0][0]
+        try:
+            check_private_display(snapshot, public + '\n' + attribute['label'] + ': ' + attribute['value'])
+        except ValueError:
+            pass
+        else:
+            raise ValueError('private attribute leak probe accepted')
         result['private_token_checks'] = 'pass'
+        result['private_leak_probes'] = 4
     result['negative_probes'] = len(mutations) + 1 + len(report_leaks)
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     print(json.dumps(result,sort_keys=True))
