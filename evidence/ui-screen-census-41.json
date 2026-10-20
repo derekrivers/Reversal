@@ -615,13 +615,18 @@
     {
       "id": "r41-operator-route-report",
       "kind": "operator-report",
-      "sha256": "52bb88bed6dc87bd8ecf863c564df2e834683569ea3228515d8b4c7ec0772019",
+      "sha256": "0fe2ae378cde014c2b5195f90cf4f0ca0c170c02348590a60171cd0edbc72f88",
+      "source_visibility": "public-tracked",
+      "source_digest_basis": "utf8-lf",
+      "source_digest_scope": "complete tracked file; only CRLF-to-LF normalization",
       "source": "reports/runtime-capture-41.md",
       "scope": "recorded route and restart; no additional screenshots implied"
     },
     {
       "id": "r41-a4-operator-notes",
       "kind": "operator-report",
+      "source_visibility": "private-not-loaded",
+      "source_digest_basis": "raw-bytes",
       "sha256": "9b99ba616b733258641ebdb1e7dc0530e926e9c4b2deae1febec265ae51e1903",
       "source": "private operator notes; opaque receipt only",
       "scope": "exit Yes confirmed; No unexercised"
@@ -629,6 +634,8 @@
     {
       "id": "r41-a4-index-snapshot",
       "kind": "operator-report",
+      "source_visibility": "private-not-loaded",
+      "source_digest_basis": "raw-bytes",
       "sha256": "a958681ad5bc3351eb1206fc0c70d9052e740612124460cc5a84f397aad8ecbd",
       "source": "private action-index cutoff 11; opaque receipt only",
       "scope": "recorded actions and prerequisites, not image-only effects"

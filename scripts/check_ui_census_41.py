@@ -23,7 +23,20 @@ def indexed(rows, label):
     return {row['id']: row for row in rows}
 
 
-def validate(data, assets):
+def source_digest(raw):
+    """Hash the complete UTF-8 source after CRLF-to-LF normalization only."""
+    normalized = raw.replace(b'\r\n', b'\n')
+    normalized.decode('utf-8')
+    return hashlib.sha256(normalized).hexdigest()
+
+
+def tracked_source_bytes(source):
+    path = (ROOT / source).resolve(strict=True)
+    require(path.is_relative_to(ROOT) and source.startswith('reports/') and path.suffix == '.md', 'public report source escaped tracked report scope')
+    return path.read_bytes()
+
+
+def validate(data, assets, source_reader=tracked_source_bytes):
     require(data['schema'] == 'reversal.ui-screen-census-41.v1', 'unsupported schema')
     contexts = indexed(data['contexts'], 'context')
     evidence = indexed(data['evidence'], 'evidence')
@@ -48,6 +61,13 @@ def validate(data, assets):
             require(item['encoding'] == 'JPEG', 'unverified screenshot encoding')
             require(len(item['capture_pixels']) == 2 and all(isinstance(n,int) and n > 0 for n in item['capture_pixels']), 'invalid image dimensions')
             require(item['client_pixels'] in (None, [800,600]), 'unexpected game-client extent')
+        else:
+            require(item['source_visibility'] in ['public-tracked','private-not-loaded'], 'unknown operator source visibility')
+            if item['source_visibility'] == 'public-tracked':
+                require(item['source_digest_basis'] == 'utf8-lf', 'unsupported public source digest basis')
+                require(source_digest(source_reader(item['source'])) == item['sha256'], 'public operator source digest mismatch')
+            else:
+                require(item['source'].startswith('private ') and item['source_digest_basis'] == 'raw-bytes', 'private receipt mislabels a public report source')
     for layout in layouts.values():
         require(layout['extent'] == [800,600] and layout['coordinate_space'] == 'game-client-pixels', 'unsupported layout coordinate space')
         for region in layout['regions']:
@@ -144,6 +164,7 @@ def main():
         lambda d:d['contexts'][0].update(capture_configuration_sha256=None),
         lambda d:next(s for s in d['states'] if s['id']=='ui41.match.running')['coverage'].update(observed_transition=True),
         lambda d:next(s for s in d['states'] if s['id']=='ui41.game.options')['coverage'].update(layout=True),
+        lambda d:next(e for e in d['evidence'] if e['id']=='r41-operator-route-report').update(sha256='0'*64),
     ]
     for mutation in mutations:
         changed = copy.deepcopy(data)
@@ -153,6 +174,17 @@ def main():
         except ValueError:
             continue
         raise ValueError('negative validation probe accepted')
+    # Both checkout newline modes must match the same tracked-file digest.
+    source = next(e for e in data['evidence'] if e['id']=='r41-operator-route-report')
+    raw_lf = tracked_source_bytes(source['source']).replace(b'\r\n',b'\n')
+    validate(data,assets,source_reader=lambda _:raw_lf)
+    validate(data,assets,source_reader=lambda _:raw_lf.replace(b'\n',b'\r\n'))
+    try:
+        validate(data,assets,source_reader=lambda _:raw_lf+b'\nsynthetic changed source\n')
+    except ValueError:
+        pass
+    else:
+        raise ValueError('altered public source accepted')
     if args.private_root or args.private_aliases:
         require(args.private_root and args.private_aliases,'private root and aliases must be supplied together')
         root = args.private_root.resolve(strict=True)
@@ -172,7 +204,8 @@ def main():
         public = (ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8') + (ROOT/'reports/ui-map-41.md').read_text(encoding='utf-8')
         require(not any(token in public for token in private),'private captured token present in public catalogue/report')
         result['private_token_checks'] = 'pass'
-    result['negative_probes'] = len(mutations)
+    result['negative_probes'] = len(mutations) + 1
+    result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     print(json.dumps(result,sort_keys=True))
 
 
