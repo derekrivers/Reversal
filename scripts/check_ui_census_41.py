@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '85e892f22c51bedf7bd92edb676c0bb206be83df470482ec906d310eacd568a0'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '612436acac356b734636c3d3b174342b9deb32f2b5abbd5813762e9580962bb3'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -196,6 +196,9 @@ def has_private_path_or_payload(part):
         return any(ROOT_RELATIVE_WINDOWS.search(match.group('body')) or rooted_in_spans(match.group('body'), depth+1) for match in spans)
     for candidate in (part, html.unescape(part), render_for_privacy(part)):
         if PRIVATE_PATH_PAYLOAD.search(candidate) or ROOT_RELATIVE_WINDOWS.search(candidate) or rooted_in_spans(candidate):
+            return True
+        unicode_boundaries = ''.join(' ' if ord(char) > 127 and unicodedata.category(char).startswith('P') else char for char in candidate)
+        if unicode_boundaries != candidate and ROOT_RELATIVE_WINDOWS.search(unicode_boundaries):
             return True
     return False
 
@@ -724,7 +727,11 @@ def main():
         b'\nC:[][ref\none]\\Users\\operator\\private\\capture.png\n\n[ref one]: target',
         b'\nC:[][ref one]\\Users\\operator\\private\\capture.png\n\n[ref\none]: target',
     )
-    for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks + whitespace_reference_report_leaks:
+    unicode_boundary_report_leaks = (
+        '\nlocation—\\Users\\operator\\private\\capture.png'.encode('utf-8'),
+        '\n“\\Users\\operator\\private\\capture.png'.encode('utf-8'),
+    )
+    for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks + whitespace_reference_report_leaks + unicode_boundary_report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
         except ValueError as exc:
@@ -900,7 +907,7 @@ def main():
         result['private_leak_probes'] = len(private_leaks)
         result['private_near_miss_probes'] = 5
         result['private_escape_probes'] = 5
-    result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks)
+    result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 9
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     result['public_report_checks'] = 'LF/CRLF match; changed coverage total rejected'
