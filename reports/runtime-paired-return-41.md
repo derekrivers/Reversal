@@ -25,8 +25,10 @@ specimen; no pinned-runtime equivalence is implied.
    stack and bounded lookup closure. Require `[ESP]` to equal the mapped
    effect-caller return. A different or unreadable caller stops unpaired.
 3. Record that thread and `expected return ESP = entry ESP + 8`. Replace only
-   its DR0 with the return address; disarm other saved threads and leave newly
-   created threads unarmed. No later invocation replaces this selected entry.
+   its DR0 with the return address; leave newly created threads unarmed.
+   Other existing entry watches retain their ownership evidence until drained
+   once or restored during final cleanup. No later invocation replaces this
+   selected entry.
 4. Accept an owned return hit only on that thread, at that address and with
    the expected ESP. A recursive visit to the same address with another ESP
    stops unpaired. The tool does not single-step, retry an ambiguous hit or
@@ -60,6 +62,29 @@ owned hardware and debugger bootstrap/timeout exceptions are consumed.
 No application registers, code bytes or game data are written. The instrument
 changes debug registers, pauses execution and may create a timeout-break thread.
 
+### Late entry traps from other threads
+
+Independent review identified a concurrency gap in the initial paired tool:
+another armed thread could already have generated its entry exception when the
+first entry was selected. Disarming all other threads cannot retract an already
+queued exception, and the initial handler would forward that owned exception
+to the application.
+
+The correction preserves the other threads' entry watches. A late event is
+owned only when its thread is still in the entry-watch set, EIP and DR0 both
+equal the entry address, and DR6 reports breakpoint zero. The handler restores
+that thread's original debug registers before continuing the pending event,
+removes the watch and records the drained thread. The stopped instruction can
+then execute normally. Each other thread can produce at most one such owned
+entry stop; its entry snapshot never replaces the selected pair. An application
+INT3 or a later trap after that watch was removed remains unhandled by the
+debugger. The selected return also requires its DR0 to match the return address.
+
+Threads that never reach entry remain armed until final restoration. All
+late stops count toward the existing 2,048-event and time limits. This bounded
+drain introduces possible extra pauses between the two observations; it does
+not establish atomic game state or exclude concurrent writes.
+
 ## Synthetic validation
 
 Run on Windows with 64-bit Python:
@@ -90,6 +115,19 @@ Nine cases pass under normal and optimized Python:
 - Injected return-read, breakpoint-transition and resume failures all detach;
   each child supports a subsequent successful paired attach, also checking
   that the old hardware breakpoint does not remain enabled.
+
+Three deterministic fake-API queue cases additionally cover selected return,
+timeout and an injected late-entry disarm failure. Each queue models another
+previously armed thread's entry trap after selection, an unarmed newly created
+thread, an application INT3, a foreign trap after disarm, and a third armed
+thread that never hits. They require the owned trap to be handled exactly once,
+disarming before its resume, preservation of the selected entry, forwarding of
+application/foreign exceptions, and restoration of every saved thread before
+detach. The queue exercises the actual capture event loop without launching a
+process. It does not claim a live simultaneous-thread stress test.
+Running the same deterministic queue against the initial `5c35421` tool
+rejects its forwarding of the late owned trap under normal and optimized
+Python, without launching any process.
 
 The retained single-hit checker also passes under normal and optimized Python:
 three real hardware hits, application INT3 preservation, timeout cleanup, FS

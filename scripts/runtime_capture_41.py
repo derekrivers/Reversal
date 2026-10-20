@@ -184,9 +184,11 @@ def run(args, *, owned_test_child=None):
     if paired:
         result.update({"paired_return": True, "return_observed": False, "return_sample": None,
                        "return_runtime_va": return_address, "pairing": None,
+                       "late_entry_threads": [],
                        "stop_reason": "entry_not_observed",
                        "instrumentation": "DR0 entry on existing/new threads; after accepted entry, "
-                           "DR0 return on selected thread only; all saved debug registers restored"})
+                           "DR0 return on selected thread only; other entry watches drained once; "
+                           "all saved debug registers restored"})
     # CREATE_THREAD | VM_OPERATION | VM_READ | VM_WRITE | QUERY_INFORMATION:
     # DebugBreakProcess needs remote-break thread rights. No target memory writes
     # are exposed or issued by this tool.
@@ -222,6 +224,7 @@ def run(args, *, owned_test_child=None):
         bootstrap_break = None
         pair_thread = None
         pair_esp = None
+        entry_watches = set()
 
         def snapshot(tid, ctx):
             sample = base.context_record(ctx)
@@ -247,6 +250,7 @@ def run(args, *, owned_test_child=None):
             base.require(not (ctx.Dr7 & 0xFF), "existing hardware breakpoint; refusing interference")
             armed[tid] = old
             dbg.set_debug(handle, (address, ctx.Dr1, ctx.Dr2, ctx.Dr3, 0, (ctx.Dr7 & ~0xF0003) | 1))
+            entry_watches.add(tid)
 
         def restore():
             errors = []
@@ -302,6 +306,7 @@ def run(args, *, owned_test_child=None):
                     threads.pop(event.tid, None)
                     thread_starts.pop(event.tid, None)
                     armed.pop(event.tid, None)
+                    entry_watches.discard(event.tid)
                     if event.tid == pair_thread:
                         result["stop_reason"] = "entry_thread_exited"
                         break
@@ -320,9 +325,12 @@ def run(args, *, owned_test_child=None):
                     result["events"][-1]["exception"] = exception
                     if exception in (0x80000004, 0x4000001E) and event.tid in armed:
                         ctx = dbg.context(threads[event.tid])
-                        owned_entry = pair_thread is None and ctx.Eip == address and ctx.Dr6 & 1
+                        entry_trap = (event.tid in entry_watches and ctx.Eip == address and
+                                      ctx.Dr0 == address and ctx.Dr6 & 1)
+                        owned_entry = pair_thread is None and entry_trap
+                        late_entry = pair_thread is not None and event.tid != pair_thread and entry_trap
                         owned_return = (pair_thread == event.tid and
-                                        ctx.Eip == return_address and ctx.Dr6 & 1)
+                                        ctx.Eip == return_address and ctx.Dr0 == return_address and ctx.Dr6 & 1)
                         if owned_entry:
                             # Recognized owned exception stays handled even if a later read fails.
                             pending_status = 0x10002
@@ -342,14 +350,20 @@ def run(args, *, owned_test_child=None):
                                 break
                             pair_thread, pair_esp = event.tid, ctx.Esp + 8
                             result["stop_reason"] = "return_not_observed"
-                            # Keep the original registers for every thread until final cleanup.
-                            # Only the selected thread receives a return breakpoint. No other
-                            # thread or nested-entry event can replace the selected invocation.
-                            for tid, old in armed.items():
-                                dbg.set_debug(threads[tid], (
-                                    return_address if tid == pair_thread else old[0],
-                                    old[1], old[2], old[3], 0,
-                                    (old[5] & ~0xF0003) | 1 if tid == pair_thread else old[5]))
+                            # A different armed thread may already have queued its entry trap.
+                            # Preserve its DR0/Dr6 ownership evidence until that event is drained.
+                            # New threads stay unarmed; each remaining watch can fire only once.
+                            old = armed[pair_thread]
+                            dbg.set_debug(threads[pair_thread], (return_address, old[1], old[2],
+                                          old[3], 0, (old[5] & ~0xF0003) | 1))
+                            entry_watches.remove(pair_thread)
+                        elif late_entry:
+                            # Handle only our tracked DR0 execution trap, never application INT3.
+                            # Restore before continuing so the stopped entry executes normally.
+                            pending_status = 0x10002
+                            dbg.set_debug(threads[event.tid], armed[event.tid])
+                            entry_watches.remove(event.tid)
+                            result["late_entry_threads"].append(event.tid)
                         elif owned_return:
                             pending_status = 0x10002
                             # A recursive/nested visit to the same caller address is insufficient.
