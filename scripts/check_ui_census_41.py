@@ -9,6 +9,7 @@ import hashlib
 import json
 import math
 import re
+import unicodedata
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -336,6 +337,8 @@ def jpeg_size(data):
 def check_private_display(snapshot, public):
     """Reject copied display values; tiny/generic values need their field label."""
     raw_public = public
+    def fold_display(value):
+        return unicodedata.normalize('NFC', unicodedata.normalize('NFC', value).casefold())
     # Decode JSON escapes in copied text before comparison, including Unicode,
     # quotes and separators; the original text is still scanned below.
     escapes = {'"': '"', '\\': '\\', '/': '/', 'b': '\b', 'f': '\f', 'n': '\n', 'r': '\r', 't': '\t'}
@@ -343,12 +346,13 @@ def check_private_display(snapshot, public):
         token = match.group(1)
         return chr(int(token[1:], 16)) if token.startswith('u') else escapes[token]
     public = re.sub(r'\\(u[0-9a-fA-F]{4}|["\\/bfnrt])', unescape, public)
+    public = unicodedata.normalize('NFC', public)
     exact = set()
     labelled = set()
     def add(label, value, generic=False):
         if not isinstance(value, str) or not value.strip():
             return
-        value = value.strip()
+        label, value = unicodedata.normalize('NFC', label), unicodedata.normalize('NFC', value.strip())
         if len(value) >= 3 and not generic:
             exact.add(value)
         labelled.add((label, value))
@@ -363,8 +367,8 @@ def check_private_display(snapshot, public):
     for column in snapshot['profile']['attributeColumns']:
         for attribute in column:
             add(attribute['label'], attribute['value'], generic=True)
-    folded_public = public.casefold()
-    require(not any(value.casefold() in folded_public for value in exact), 'private captured display string present in public catalogue/report')
+    folded_public = fold_display(public)
+    require(not any(fold_display(value) in folded_public for value in exact), 'private captured display string present in public catalogue/report')
     def labelled_leak(label, value):
         key, val = re.escape(label), re.escape(value)
         boundary = r'(?!\w|\.[A-Za-z0-9])'
@@ -376,18 +380,24 @@ def check_private_display(snapshot, public):
     require(not any(labelled_leak(label, value) for label,value in labelled), 'private captured labelled value present in public catalogue/report')
     # Parse JSON from its original escaped text. Decoding the whole file first
     # can corrupt valid objects when a separate property contains quotes/braces.
-    pairs = {(label.casefold(), value.casefold()) for label,value in labelled}
+    pairs = {(fold_display(label), fold_display(value)) for label,value in labelled}
     decoder = json.JSONDecoder(object_pairs_hook=unique_json_pairs)
     def inspect_value(value, depth):
         require(depth < 32, 'excessively nested structured display text')
         if isinstance(value, dict):
-            displayed = value.get('value')
+            display_fields = {}
+            for key, child in value.items():
+                folded_key = fold_display(key)
+                if folded_key in ('label', 'value'):
+                    require(folded_key not in display_fields, 'duplicate case-varied display key')
+                    display_fields[folded_key] = child
+            displayed = display_fields.get('value')
             if isinstance(displayed, int) and not isinstance(displayed, bool):
                 displayed = str(displayed)
             elif isinstance(displayed, float):
                 displayed = str(int(displayed)) if math.isfinite(displayed) and displayed.is_integer() else str(displayed)
-            if isinstance(value.get('label'), str) and isinstance(displayed, str):
-                require((value['label'].casefold(), displayed.casefold()) not in pairs, 'private captured structured value present in public catalogue/report')
+            if isinstance(display_fields.get('label'), str) and isinstance(displayed, str):
+                require((fold_display(display_fields['label']), fold_display(displayed)) not in pairs, 'private captured structured value present in public catalogue/report')
             for child in value.values():
                 inspect_value(child, depth + 1)
         elif isinstance(value, list):
@@ -605,6 +615,8 @@ def main():
         check_private_display(snapshot, public)
         private_leaks = [snapshot['squad']['clubLabel'], snapshot['squad']['dateLabel'], snapshot['profile']['bio']]
         private_leaks.append(snapshot['squad']['rows'][0]['name'].swapcase())
+        decomposable_name = next(row['name'] for row in snapshot['squad']['rows'] if unicodedata.normalize('NFD', row['name']) != row['name'])
+        private_leaks.append(unicodedata.normalize('NFD', decomposable_name))
         picked = next(row['picked'] for row in snapshot['squad']['rows'] if row['picked'])
         info = next(row['info'] for row in snapshot['squad']['rows'] if row['info'])
         attribute = snapshot['profile']['attributeColumns'][0][0]
@@ -622,6 +634,9 @@ def main():
             '{"value":"' + attribute['value'] + '","source":"capture","label":"' + attribute['label'] + '"}',
             json.dumps({'value': attribute['value'], 'source': 'quoted "capture"', 'label': attribute['label']}),
             json.dumps({'value': attribute['value'], 'source': '{capture}', 'label': attribute['label']}),
+            json.dumps({'Value': attribute['value'], 'source': 'capture', 'Label': attribute['label']}),
+            json.dumps({'VALUE': attribute['value'], 'source': 'capture', 'LABEL': attribute['label']}),
+            json.dumps({'value': 'unrelated', 'Value': attribute['value'], 'Label': attribute['label']}),
             '\n' + json.dumps({'note': json.dumps({'value': attribute['value'], 'source': 'quoted "capture"', 'label': attribute['label']})}),
             '\n```json\n' + json.dumps({'note': json.dumps({'value': attribute['value'], 'source': '{capture}', 'label': attribute['label']})}) + '\n```',
             json.dumps({'value': int(attribute['value']), 'label': attribute['label']}),
@@ -650,10 +665,18 @@ def main():
             pass
         else:
             raise ValueError('JSON-escaped private display leak probe accepted')
+        synthetic['profile']['attributeColumns'][0][0] = {'label': 'Café', 'value': 'Élite'}
+        unicode_pair = {'VALUE': unicodedata.normalize('NFD', 'Élite'), 'LABEL': unicodedata.normalize('NFD', 'Café')}
+        try:
+            check_private_display(synthetic, public + '\n' + json.dumps(unicode_pair, ensure_ascii=False))
+        except ValueError:
+            pass
+        else:
+            raise ValueError('Unicode-equivalent structured display leak probe accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
         result['private_near_miss_probes'] = 2
-        result['private_escape_probes'] = 1
+        result['private_escape_probes'] = 2
     result['negative_probes'] = len(mutations) + 2 + len(report_leaks)
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     print(json.dumps(result,sort_keys=True))
