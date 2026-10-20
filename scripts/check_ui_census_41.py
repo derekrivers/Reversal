@@ -7,6 +7,7 @@ import argparse
 import copy
 import hashlib
 import json
+import math
 import re
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -107,6 +108,7 @@ REVIEWED_BATCH_SECTION_SHA256 = {
 }
 REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5eaf0a0d1560300fa7a'
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
+REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 
 
 def route_digest(rows):
@@ -282,6 +284,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
         refs(request['route_ids'], routes)
         require(request['owner'] == 'R41-A4', 'capture operator mismatch')
     denominator = data['denominator']
+    require(denominator['scope'] == REVIEWED_DENOMINATOR_SCOPE, 'unreviewed denominator scope')
     require(denominator['total_application_screen_states'] is None, 'unknown total application denominator promoted to known')
     expected_sets = {
         'screenshot_confirmed_state_ids':[i for i,s in states.items() if s['coverage']['screenshot']],
@@ -366,8 +369,10 @@ def check_private_display(snapshot, public):
         require(depth < 32, 'excessively nested structured display text')
         if isinstance(value, dict):
             displayed = value.get('value')
-            if isinstance(displayed, (int, float)) and not isinstance(displayed, bool):
+            if isinstance(displayed, int) and not isinstance(displayed, bool):
                 displayed = str(displayed)
+            elif isinstance(displayed, float):
+                displayed = str(int(displayed)) if math.isfinite(displayed) and displayed.is_integer() else str(displayed)
             if isinstance(value.get('label'), str) and isinstance(displayed, str):
                 require((value['label'].casefold(), displayed) not in pairs, 'private captured structured value present in public catalogue/report')
             for child in value.values():
@@ -479,6 +484,8 @@ def main():
         d['completion_claim'] = 'Complete application UI coverage established'
     def redefine_screenshot_coverage(d):
         d['coverage_definitions']['screenshot'] = 'Screenshot proves observed action behavior'
+    def claim_whole_denominator_scope(d):
+        d['denominator']['scope'] = 'entire application covered'
     mutations = [
         lambda d:d['transitions'][0].update(to='ui41.unmapped'),
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(evidence_ids=['r41-a4-operator-notes'], context_ids=['gdi-A4-failed-launch']),
@@ -495,6 +502,7 @@ def main():
         mislabel_continue_as_back,
         claim_whole_ui_complete,
         redefine_screenshot_coverage,
+        claim_whole_denominator_scope,
         lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(sha256='1'*64),
         lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(capture_pixels=[1,1]),
         lambda d:next(item for item in d['contexts'] if item['id'] == 'gdi-A').update(executable_sha256='1'*64),
@@ -595,6 +603,8 @@ def main():
             '\n```json\n' + json.dumps({'note': json.dumps({'value': attribute['value'], 'source': '{capture}', 'label': attribute['label']})}) + '\n```',
             json.dumps({'value': int(attribute['value']), 'label': attribute['label']}),
             json.dumps({'value': int(attribute['value']), 'source': 'capture', 'label': attribute['label']}),
+            json.dumps({'value': float(int(attribute['value'])), 'source': 'capture', 'label': attribute['label']}),
+            '{"value":' + attribute['value'] + 'e0,"source":"capture","label":"' + attribute['label'] + '"}',
         ])
         escaped_name = next(row['name'] for row in snapshot['squad']['rows'] if any(ord(ch) > 127 for ch in row['name']))
         private_leaks.append(json.dumps({'name': escaped_name}))
