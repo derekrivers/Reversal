@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '32bc45be3945a4929f241baec0b2ab347ebe62968e9d8e0422d55f7055a73044'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'd9dc6c231b6081db283eeae77703038bceebbb1f4b6d2a7881b7fd55f4628031'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -190,6 +190,11 @@ def render_for_privacy(source):
     return re.sub(r'\s+', ' ', rendered)
 
 
+def invisible_format(char):
+    category = unicodedata.category(char)
+    return category == 'Cf' or (category in ('Mn', 'Me') and unicodedata.combining(char) == 0)
+
+
 def has_private_path_or_payload(part):
     # Backticks, underscores and tildes can occur in filenames. Treat them as
     # Markdown delimiters only when a matching closing marker is present.
@@ -201,7 +206,7 @@ def has_private_path_or_payload(part):
     for candidate in (part, html.unescape(part), render_for_privacy(part)):
         if PRIVATE_PATH_PAYLOAD.search(candidate) or ROOT_RELATIVE_WINDOWS.search(candidate) or rooted_in_spans(candidate):
             return True
-        unicode_boundaries = ''.join(' ' if ord(char) > 127 and (unicodedata.category(char)[0] in 'PS' or unicodedata.category(char) == 'Cf') else char for char in candidate)
+        unicode_boundaries = ''.join(' ' if ord(char) > 127 and (unicodedata.category(char)[0] in 'PS' or invisible_format(char)) else char for char in candidate)
         if unicode_boundaries != candidate and ROOT_RELATIVE_WINDOWS.search(unicode_boundaries):
             return True
     return False
@@ -441,7 +446,7 @@ def check_private_display(snapshot, public):
     """Reject copied display values; tiny/generic values need their field label."""
     raw_public = public
     def fold_display(value):
-        visible = ''.join(char for char in unicodedata.normalize('NFC', value) if unicodedata.category(char) != 'Cf')
+        visible = ''.join(char for char in unicodedata.normalize('NFC', value) if not invisible_format(char))
         return unicodedata.normalize('NFC', visible.casefold())
     # Decode JSON escapes in copied text before comparison, including Unicode,
     # quotes and separators; the original text is still scanned below.
@@ -748,6 +753,8 @@ def main():
         '\nlocation→\\Users\\operator\\private\\capture.png'.encode('utf-8'),
         '\nlocation\u200b\\Users\\operator\\private\\capture.png'.encode('utf-8'),
         '\nlocation\u2060\\Users\\operator\\private\\capture.png'.encode('utf-8'),
+        '\nlocation\u034f\\Users\\operator\\private\\capture.png'.encode('utf-8'),
+        '\nlocation\ufe0f\\Users\\operator\\private\\capture.png'.encode('utf-8'),
     )
     for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks + whitespace_reference_report_leaks + next_line_reference_report_leaks + unicode_boundary_report_leaks:
         try:
@@ -835,9 +842,17 @@ def main():
                 attribute['label'] + ': ' + attribute['value'][0] + invisible + attribute['value'][1:],
                 attribute['label'][0] + invisible + attribute['label'][1:] + ': ' + attribute['value'],
             ))
+        for invisible in ('\u034f', '\ufe0f'):
+            private_leaks.extend((
+                name_head + ' ' + name_tail[0] + invisible + name_tail[1:],
+                attribute['label'] + ': ' + attribute['value'][0] + invisible + attribute['value'][1:],
+                attribute['label'][0] + invisible + attribute['label'][1:] + ': ' + attribute['value'],
+            ))
         private_leaks.extend((
             name_head + ' ' + name_tail[0] + '&#8203;' + name_tail[1:],
             attribute['label'] + ': ' + attribute['value'][0] + '\\u200b' + attribute['value'][1:],
+            name_head + ' ' + name_tail[0] + '&#847;' + name_tail[1:],
+            attribute['label'] + ': ' + attribute['value'][0] + '\\u034f' + attribute['value'][1:],
         ))
         private_leaks.extend((
             json.dumps({'value': attribute['value'][0] + '&#8203;' + attribute['value'][1:], 'note': 'context', 'label': attribute['label']}),
