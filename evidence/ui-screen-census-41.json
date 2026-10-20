@@ -1,0 +1,3607 @@
+{
+  "schema": "reversal.ui-screen-census-41.v1",
+  "cutoff": "original captures 01-16 plus A4 action-index entries 001-011",
+  "state_aliases": {
+    "ui41.squad.returned": "ui41.squad.selection"
+  },
+  "completion_claim": "ongoing entire-application objective; first bounded census, not complete UI coverage",
+  "coverage_definitions": {
+    "screenshot": "Directly inspected retained image, not behavior validation",
+    "layout": "Approximate geometry, fields and controls tied to image; no exact font/pixel equivalence",
+    "observed_transition": "At least one operator-observed action edge; excludes image sequences and unresolved gaps",
+    "engine_binding": "Specific established native/headless command contract; none admitted in this census"
+  },
+  "denominator": {
+    "scope": "finite catalogue frontier only; not the entire application",
+    "total_application_screen_states": null,
+    "screenshot_confirmed_state_ids": [
+      "ui41.load.menu",
+      "ui41.load.restore",
+      "ui41.load.restore.selected",
+      "ui41.load.media_info",
+      "ui41.load.language_error",
+      "ui41.load.config_error",
+      "ui41.fixture.evening",
+      "ui41.squad.selection",
+      "ui41.squad.prematch",
+      "ui41.player.profile",
+      "ui41.tactics.overview",
+      "ui41.match.confirm",
+      "ui41.match.prekickoff",
+      "ui41.match.running",
+      "ui41.match.halftime",
+      "ui41.result.fulltime",
+      "ui41.exit.confirm"
+    ],
+    "operator_only_state_ids": [
+      "ui41.load.media_request",
+      "ui41.game.options",
+      "ui41.restart.confirm",
+      "ui41.restart.saveprompt",
+      "ui41.save.dialog"
+    ],
+    "terminal_state_ids": [
+      "ui41.process.exited"
+    ],
+    "discovered_uncaptured_route_ids": [
+      "route.load.menu.new",
+      "route.load.menu.quick",
+      "route.load.menu.delete",
+      "route.load.menu.network",
+      "route.load.menu.settings",
+      "route.load.menu.fame",
+      "route.load.menu.credits",
+      "route.load.menu.web",
+      "route.load.restore.cancel",
+      "route.load.restore.info",
+      "route.load.restore.empty",
+      "route.fixture.evening.competition",
+      "route.fixture.evening.scroll",
+      "route.fixture.evening.back",
+      "route.squad.selection.transfers",
+      "route.squad.selection.next",
+      "route.squad.selection.fixtures",
+      "route.squad.selection.finances",
+      "route.squad.selection.view",
+      "route.squad.selection.clear",
+      "route.squad.selection.filter",
+      "route.squad.selection.training",
+      "route.squad.selection.last",
+      "route.squad.selection.league",
+      "route.squad.selection.history",
+      "route.squad.selection.print",
+      "route.squad.selection.sort",
+      "route.player.profile.injuries",
+      "route.player.profile.contract",
+      "route.player.profile.transfer",
+      "route.player.profile.history",
+      "route.player.profile.action",
+      "route.player.profile.stats",
+      "route.player.profile.next",
+      "route.tactics.overview.with",
+      "route.tactics.overview.without",
+      "route.tactics.overview.selector",
+      "route.tactics.overview.view",
+      "route.tactics.overview.last",
+      "route.tactics.overview.edit",
+      "route.tactics.overview.ok",
+      "route.tactics.overview.pitch",
+      "route.match.prekickoff.stats",
+      "route.match.prekickoff.zones",
+      "route.match.prekickoff.report",
+      "route.match.prekickoff.home-tactics",
+      "route.match.prekickoff.away-tactics",
+      "route.match.prekickoff.speed",
+      "route.match.prekickoff.home-stats",
+      "route.match.prekickoff.ratings",
+      "route.match.prekickoff.scores",
+      "route.match.prekickoff.table",
+      "route.match.prekickoff.away-stats",
+      "route.match.running.pause",
+      "route.match.halftime.restart",
+      "route.result.fulltime.continue",
+      "route.match.confirm.no",
+      "route.exit.confirm.no",
+      "route.fixture.evening.competitions",
+      "route.fixture.evening.nations",
+      "route.fixture.evening.find",
+      "route.fixture.evening.manager"
+    ],
+    "unknown_unbounded_section_ids": [
+      "domain.new-game",
+      "domain.network",
+      "domain.settings",
+      "domain.database-browsing",
+      "domain.competitions",
+      "domain.manager-world",
+      "domain.transfers",
+      "domain.training",
+      "domain.finance",
+      "domain.tactics",
+      "domain.match",
+      "domain.persistence-errors"
+    ],
+    "counts": {
+      "screenshot_confirmed_state_ids": 17,
+      "operator_only_state_ids": 5,
+      "terminal_state_ids": 1,
+      "discovered_uncaptured_route_ids": 62,
+      "unknown_unbounded_section_ids": 12
+    }
+  },
+  "contexts": [
+    {
+      "id": "gdi-A",
+      "executable_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "loaded_input_save_sha256": "8698569fbd83d9952a9832a95aee17a943c32f18e29621e9396ed228107abbd3",
+      "expected_configuration_sha256": "fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a",
+      "capture_configuration_sha256": "fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a",
+      "configuration_status": "pre-run-matched",
+      "notes": "Fresh process A; captured state is not an atomic snapshot."
+    },
+    {
+      "id": "gdi-B",
+      "executable_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "loaded_input_save_sha256": "8698569fbd83d9952a9832a95aee17a943c32f18e29621e9396ed228107abbd3",
+      "expected_configuration_sha256": "fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a",
+      "capture_configuration_sha256": "fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a",
+      "configuration_status": "pre-run-matched",
+      "notes": "Fresh process B; same pre-run identities; background/setup differ."
+    },
+    {
+      "id": "gdi-B-late",
+      "executable_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "loaded_input_save_sha256": "8698569fbd83d9952a9832a95aee17a943c32f18e29621e9396ed228107abbd3",
+      "expected_configuration_sha256": "fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a",
+      "capture_configuration_sha256": null,
+      "configuration_status": "capture-time-unverified",
+      "notes": "Post-run recheck found ten absent language files; removal time unobserved."
+    },
+    {
+      "id": "gdi-restarted-partial",
+      "executable_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "loaded_input_save_sha256": null,
+      "expected_configuration_sha256": "fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a",
+      "capture_configuration_sha256": null,
+      "configuration_status": "known-configuration-mismatch",
+      "notes": "Restart child; no loaded save; 774 of expected 784 files remained before revalidation."
+    },
+    {
+      "id": "gdi-A4-failed-launch",
+      "executable_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "loaded_input_save_sha256": null,
+      "expected_configuration_sha256": "fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a",
+      "capture_configuration_sha256": null,
+      "configuration_status": "preflight-only-launch-context-uncontrolled",
+      "notes": "Files revalidated before launch; launch directory uncontrolled; initialization errors, no save loaded."
+    },
+    {
+      "id": "gdi-A4-restored",
+      "executable_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "loaded_input_save_sha256": "8698569fbd83d9952a9832a95aee17a943c32f18e29621e9396ed228107abbd3",
+      "expected_configuration_sha256": "fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a",
+      "capture_configuration_sha256": "fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a",
+      "configuration_status": "operator-preflight-matched",
+      "notes": "784-file revalidation and explicit game-copy working directory before successful fresh launch."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "r41-ui-01-menu",
+      "kind": "screenshot",
+      "sha256": "2e6ab7225d8e20e113251952a90da7e06ab6d1cdc6da0735a7a91fa6016f80cf",
+      "context_id": "gdi-A",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        653
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-02-restore",
+      "kind": "screenshot",
+      "sha256": "c592a55d646c55b991cb18dbd34bbfde19f9f5ca43b9c9f98a651381afea069b",
+      "context_id": "gdi-A",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        653
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-03-fixtures",
+      "kind": "screenshot",
+      "sha256": "315837a075ee9835056ae731197b78865c4d49f162f38968fbe598ffe27c28fd",
+      "context_id": "gdi-A",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-04-squad",
+      "kind": "screenshot",
+      "sha256": "f83317f0bf2f2427f8e693e21e3733cfb713892ad4d43469727bf66b33ce5403",
+      "context_id": "gdi-A",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-05-player",
+      "kind": "screenshot",
+      "sha256": "9a07c2474582b4c02b1adad624744d4c504c6030a50213765bac0b3fed4b6a01",
+      "context_id": "gdi-A",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-06-tactics",
+      "kind": "screenshot",
+      "sha256": "eb37b5150a3ebbde7ebb8d449d2fbf87b46839b917d930a43549a9e7b327a4f7",
+      "context_id": "gdi-A",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-07-squad-after-tactics",
+      "kind": "screenshot",
+      "sha256": "e03ae5b690e455dd8a4abb6660e882200a53ab605705765c72a005380dc7fa93",
+      "context_id": "gdi-A",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-08-proceed-modal",
+      "kind": "screenshot",
+      "sha256": "9e529a95dcc8fe4680c8d5f59182e9702f3eccfd4e667316569b478daaa72abb",
+      "context_id": "gdi-A",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-09-match-before-kickoff-A",
+      "kind": "screenshot",
+      "sha256": "6a7a8305a9d32f866cc93617a4a251d967294fbc265828a6e46ea9e60a8ed8f8",
+      "context_id": "gdi-A",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-10-match-running-A",
+      "kind": "screenshot",
+      "sha256": "4f96cff06e96021978da4a9d5b1183fbf3b90eaacbd4e736578d768d00c96841",
+      "context_id": "gdi-A",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-11-result-A",
+      "kind": "screenshot",
+      "sha256": "b394d33e8b72d9dec35248629b4e23dd73333bb3e5d2cd3541ac30b0089697ca",
+      "context_id": "gdi-A",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-12-fixtures-B",
+      "kind": "screenshot",
+      "sha256": "bfba8fd779446c50ad82be97498465ba82d944c052bfe2549581edaf517223b6",
+      "context_id": "gdi-B",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-13-match-before-kickoff-B",
+      "kind": "screenshot",
+      "sha256": "6e9e704610b0e82451585ff6c775ac8909d0d82244b9f9453fe325260276b75c",
+      "context_id": "gdi-B",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-14-halftime-B",
+      "kind": "screenshot",
+      "sha256": "086a961e7281e1e1709c967ffa0c88dc99a5f642ddd4e3b0940bbe63c0006401",
+      "context_id": "gdi-B-late",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-15-result-B",
+      "kind": "screenshot",
+      "sha256": "da4038d76933bb205cd0eca91c83dfd7154336a7034ede47715b4f5eb7e2a230",
+      "context_id": "gdi-B-late",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-ui-16-native-restart-new-process",
+      "kind": "screenshot",
+      "sha256": "2c17eaad8c3bd0dcfdf17c742d976de358b1150e921e298f73dbdcd5eb2a60b0",
+      "context_id": "gdi-restarted-partial",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        653
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-a4-ui-001",
+      "kind": "screenshot",
+      "sha256": "f6b3d77b876460de9e2e4fb3b90187ee216286adc5facd2aa319f7b80ee4e776",
+      "context_id": "gdi-restarted-partial",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        653
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-a4-ui-002",
+      "kind": "screenshot",
+      "sha256": "f6eff5c1d57962316ccbf952f824e2b843f404398d3280f72426161e1d98a8da",
+      "context_id": "gdi-restarted-partial",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        653
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-a4-ui-003",
+      "kind": "screenshot",
+      "sha256": "61aae3abc7145f1594af4f775e5fad7b9a295c09e3efdd5e7011d6da1c9ec1aa",
+      "context_id": "gdi-A4-failed-launch",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        166,
+        128
+      ],
+      "client_pixels": null,
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-a4-ui-004",
+      "kind": "screenshot",
+      "sha256": "11f3a4f539657bf1744f594284efe765212305db27a4708c1e4b052a2d86ee20",
+      "context_id": "gdi-A4-failed-launch",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        194,
+        128
+      ],
+      "client_pixels": null,
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-a4-ui-005",
+      "kind": "screenshot",
+      "sha256": "0405983d8bc80a732928ecc9f735fe1101af8f1a1252859edc948941a96b58ab",
+      "context_id": "gdi-A4-restored",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        653
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-a4-ui-006",
+      "kind": "screenshot",
+      "sha256": "eb22a184a9c80a97cb2630affaa7b495cb4d6609df7c988b42ba195aec316b3d",
+      "context_id": "gdi-A4-restored",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        653
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-a4-ui-007",
+      "kind": "screenshot",
+      "sha256": "596de0817e7e04fcd12194709a89f7df86a4877a9328866c68f6f5a7193d5ab0",
+      "context_id": "gdi-A4-restored",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        653
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-a4-ui-008",
+      "kind": "screenshot",
+      "sha256": "159166f4eb8b8cd6951c1c40477d646998bf9c81e19ab5346544a9f4eca329b0",
+      "context_id": "gdi-A4-restored",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-a4-ui-009",
+      "kind": "screenshot",
+      "sha256": "f5cd8e5c5b60106e0969babe05b2303f950dfdf0d1bf69dee39ba09ac5ae433c",
+      "context_id": "gdi-A4-restored",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-a4-ui-010",
+      "kind": "screenshot",
+      "sha256": "4975d09539854c60aedb88f231774e8f828abfa126d5959e12dc00898d447a68",
+      "context_id": "gdi-A4-restored",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-a4-ui-011",
+      "kind": "screenshot",
+      "sha256": "f959e5c2bdc673012b0334ae5cab4af4c79e487d39924f40904b00fa3a9224e7",
+      "context_id": "gdi-A4-restored",
+      "encoding": "JPEG",
+      "capture_pixels": [
+        802,
+        627
+      ],
+      "client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline-visual"
+    },
+    {
+      "id": "r41-operator-route-report",
+      "kind": "operator-report",
+      "sha256": "52bb88bed6dc87bd8ecf863c564df2e834683569ea3228515d8b4c7ec0772019",
+      "source": "reports/runtime-capture-41.md",
+      "scope": "recorded route and restart; no additional screenshots implied"
+    },
+    {
+      "id": "r41-a4-operator-notes",
+      "kind": "operator-report",
+      "sha256": "9b99ba616b733258641ebdb1e7dc0530e926e9c4b2deae1febec265ae51e1903",
+      "source": "private operator notes; opaque receipt only",
+      "scope": "exit Yes confirmed; No unexercised"
+    },
+    {
+      "id": "r41-a4-index-snapshot",
+      "kind": "operator-report",
+      "sha256": "a958681ad5bc3351eb1206fc0c70d9052e740612124460cc5a84f397aad8ecbd",
+      "source": "private action-index cutoff 11; opaque receipt only",
+      "scope": "recorded actions and prerequisites, not image-only effects"
+    }
+  ],
+  "layouts": [
+    {
+      "id": "setup",
+      "coordinate_space": "game-client-pixels",
+      "extent": [
+        800,
+        600
+      ],
+      "precision": "approximate visual bounds",
+      "regions": [
+        {
+          "role": "navigation",
+          "bounds": [
+            0,
+            0,
+            90,
+            600
+          ]
+        },
+        {
+          "role": "heading",
+          "bounds": [
+            100,
+            10,
+            690,
+            60
+          ]
+        },
+        {
+          "role": "footer",
+          "bounds": [
+            100,
+            554,
+            690,
+            36
+          ]
+        },
+        {
+          "role": "setup-options",
+          "bounds": [
+            110,
+            144,
+            670,
+            325
+          ]
+        }
+      ]
+    },
+    {
+      "id": "restore",
+      "coordinate_space": "game-client-pixels",
+      "extent": [
+        800,
+        600
+      ],
+      "precision": "approximate visual bounds",
+      "regions": [
+        {
+          "role": "navigation",
+          "bounds": [
+            0,
+            0,
+            90,
+            600
+          ]
+        },
+        {
+          "role": "heading",
+          "bounds": [
+            100,
+            10,
+            690,
+            60
+          ]
+        },
+        {
+          "role": "footer",
+          "bounds": [
+            100,
+            554,
+            690,
+            36
+          ]
+        },
+        {
+          "role": "file-field",
+          "bounds": [
+            190,
+            194,
+            510,
+            35
+          ]
+        },
+        {
+          "role": "file-list",
+          "bounds": [
+            190,
+            234,
+            510,
+            276
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fixture",
+      "coordinate_space": "game-client-pixels",
+      "extent": [
+        800,
+        600
+      ],
+      "precision": "approximate visual bounds",
+      "regions": [
+        {
+          "role": "navigation",
+          "bounds": [
+            0,
+            0,
+            90,
+            600
+          ]
+        },
+        {
+          "role": "heading",
+          "bounds": [
+            100,
+            10,
+            690,
+            60
+          ]
+        },
+        {
+          "role": "footer",
+          "bounds": [
+            100,
+            554,
+            690,
+            36
+          ]
+        },
+        {
+          "role": "section-heading",
+          "bounds": [
+            110,
+            80,
+            670,
+            45
+          ]
+        },
+        {
+          "role": "fixture-list",
+          "bounds": [
+            110,
+            170,
+            670,
+            358
+          ]
+        }
+      ]
+    },
+    {
+      "id": "squad",
+      "coordinate_space": "game-client-pixels",
+      "extent": [
+        800,
+        600
+      ],
+      "precision": "approximate visual bounds",
+      "regions": [
+        {
+          "role": "navigation",
+          "bounds": [
+            0,
+            0,
+            90,
+            600
+          ]
+        },
+        {
+          "role": "heading",
+          "bounds": [
+            100,
+            10,
+            690,
+            60
+          ]
+        },
+        {
+          "role": "footer",
+          "bounds": [
+            100,
+            554,
+            690,
+            36
+          ]
+        },
+        {
+          "role": "tabs",
+          "bounds": [
+            100,
+            78,
+            690,
+            37
+          ]
+        },
+        {
+          "role": "toolbar",
+          "bounds": [
+            110,
+            124,
+            670,
+            22
+          ]
+        },
+        {
+          "role": "selection-strip",
+          "bounds": [
+            110,
+            188,
+            670,
+            23
+          ]
+        },
+        {
+          "role": "roster",
+          "bounds": [
+            110,
+            222,
+            670,
+            270
+          ]
+        },
+        {
+          "role": "secondary-tabs",
+          "bounds": [
+            100,
+            509,
+            690,
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "id": "profile",
+      "coordinate_space": "game-client-pixels",
+      "extent": [
+        800,
+        600
+      ],
+      "precision": "approximate visual bounds",
+      "regions": [
+        {
+          "role": "navigation",
+          "bounds": [
+            0,
+            0,
+            90,
+            600
+          ]
+        },
+        {
+          "role": "heading",
+          "bounds": [
+            100,
+            10,
+            690,
+            60
+          ]
+        },
+        {
+          "role": "footer",
+          "bounds": [
+            100,
+            554,
+            690,
+            36
+          ]
+        },
+        {
+          "role": "tabs",
+          "bounds": [
+            100,
+            78,
+            690,
+            37
+          ]
+        },
+        {
+          "role": "biography",
+          "bounds": [
+            110,
+            125,
+            670,
+            30
+          ]
+        },
+        {
+          "role": "attributes",
+          "bounds": [
+            110,
+            158,
+            670,
+            223
+          ]
+        },
+        {
+          "role": "statistics",
+          "bounds": [
+            110,
+            383,
+            670,
+            131
+          ]
+        },
+        {
+          "role": "role",
+          "bounds": [
+            110,
+            517,
+            670,
+            27
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tactics",
+      "coordinate_space": "game-client-pixels",
+      "extent": [
+        800,
+        600
+      ],
+      "precision": "approximate visual bounds",
+      "regions": [
+        {
+          "role": "navigation",
+          "bounds": [
+            0,
+            0,
+            90,
+            600
+          ]
+        },
+        {
+          "role": "heading",
+          "bounds": [
+            100,
+            10,
+            690,
+            60
+          ]
+        },
+        {
+          "role": "footer",
+          "bounds": [
+            100,
+            554,
+            690,
+            36
+          ]
+        },
+        {
+          "role": "player-list",
+          "bounds": [
+            110,
+            151,
+            330,
+            388
+          ]
+        },
+        {
+          "role": "pitch",
+          "bounds": [
+            450,
+            142,
+            330,
+            402
+          ]
+        },
+        {
+          "role": "view-tabs",
+          "bounds": [
+            450,
+            103,
+            330,
+            39
+          ]
+        }
+      ]
+    },
+    {
+      "id": "confirmation",
+      "coordinate_space": "game-client-pixels",
+      "extent": [
+        800,
+        600
+      ],
+      "precision": "approximate visual bounds",
+      "regions": [
+        {
+          "role": "navigation",
+          "bounds": [
+            0,
+            0,
+            90,
+            600
+          ]
+        },
+        {
+          "role": "heading",
+          "bounds": [
+            100,
+            10,
+            690,
+            60
+          ]
+        },
+        {
+          "role": "footer",
+          "bounds": [
+            100,
+            554,
+            690,
+            36
+          ]
+        },
+        {
+          "role": "prompt",
+          "bounds": [
+            250,
+            304,
+            400,
+            40
+          ]
+        }
+      ]
+    },
+    {
+      "id": "media-info",
+      "coordinate_space": "game-client-pixels",
+      "extent": [
+        800,
+        600
+      ],
+      "precision": "approximate visual bounds",
+      "regions": [
+        {
+          "role": "navigation",
+          "bounds": [
+            0,
+            0,
+            90,
+            600
+          ]
+        },
+        {
+          "role": "heading",
+          "bounds": [
+            100,
+            10,
+            690,
+            60
+          ]
+        },
+        {
+          "role": "footer",
+          "bounds": [
+            100,
+            554,
+            690,
+            36
+          ]
+        },
+        {
+          "role": "informational-dialog",
+          "bounds": [
+            250,
+            242,
+            300,
+            115
+          ]
+        },
+        {
+          "role": "loading-progress",
+          "bounds": [
+            270,
+            563,
+            500,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "id": "match",
+      "coordinate_space": "game-client-pixels",
+      "extent": [
+        800,
+        600
+      ],
+      "precision": "approximate visual bounds",
+      "regions": [
+        {
+          "role": "navigation",
+          "bounds": [
+            0,
+            0,
+            90,
+            600
+          ]
+        },
+        {
+          "role": "heading",
+          "bounds": [
+            100,
+            10,
+            690,
+            60
+          ]
+        },
+        {
+          "role": "footer",
+          "bounds": [
+            100,
+            554,
+            690,
+            36
+          ]
+        },
+        {
+          "role": "tabs",
+          "bounds": [
+            100,
+            78,
+            690,
+            37
+          ]
+        },
+        {
+          "role": "phase",
+          "bounds": [
+            110,
+            125,
+            670,
+            30
+          ]
+        },
+        {
+          "role": "events",
+          "bounds": [
+            110,
+            164,
+            670,
+            242
+          ]
+        },
+        {
+          "role": "possession",
+          "bounds": [
+            150,
+            414,
+            590,
+            37
+          ]
+        },
+        {
+          "role": "conditions",
+          "bounds": [
+            110,
+            460,
+            670,
+            41
+          ]
+        },
+        {
+          "role": "secondary-tabs",
+          "bounds": [
+            100,
+            509,
+            690,
+            36
+          ]
+        }
+      ]
+    }
+  ],
+  "states": [
+    {
+      "id": "ui41.load.menu",
+      "label": "Setup Game",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-ui-01-menu",
+        "r41-ui-16-native-restart-new-process",
+        "r41-a4-ui-001",
+        "r41-a4-ui-005"
+      ],
+      "layout_id": "setup",
+      "visible_fields": [
+        "Version",
+        "Setup Game"
+      ],
+      "controls": [
+        "Start New Game",
+        "Quick Start Game",
+        "Restore Saved Game",
+        "Delete Saved Game",
+        "Network Play",
+        "Game Settings",
+        "Hall Of Fame",
+        "Game Credits",
+        "Web Sites",
+        "Restart Game",
+        "Exit Game",
+        "Back",
+        "Next"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Back/Next appear grey; their disabled behavior was not tested. Different contexts/backgrounds are separate evidence, not distinct rules.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.restore-open",
+          "edge.restart-child",
+          "edge.exit-confirm"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.load.restore",
+      "label": "Restore: no selection",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-ui-02-restore",
+        "r41-a4-ui-006"
+      ],
+      "layout_id": "restore",
+      "visible_fields": [
+        "Directory",
+        "File",
+        "file rows"
+      ],
+      "controls": [
+        "file row",
+        "Cancel",
+        "Info",
+        "Ok"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Blank File field and blank list slots observed; this is not evidence of a wholly empty save directory.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.restore-open",
+          "edge.select-file",
+          "edge.original-cd"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.load.restore.selected",
+      "label": "Restore: selected file",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-a4-ui-007"
+      ],
+      "layout_id": "restore",
+      "visible_fields": [
+        "Directory",
+        "File",
+        "selected file row"
+      ],
+      "controls": [
+        "Cancel",
+        "Info",
+        "Ok"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Selection populates File; filename value withheld.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.select-file",
+          "edge.load-info"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.load.media_info",
+      "label": "CD Not Required information",
+      "kind": "modal",
+      "evidence_ids": [
+        "r41-a4-ui-008"
+      ],
+      "layout_id": "media-info",
+      "visible_fields": [
+        "CD Not Required",
+        "Loading game data"
+      ],
+      "controls": [
+        "Ok"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Informational modal during loading. Separate from the earlier operator-reported CD request.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.load-info",
+          "edge.info-dismiss"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.load.language_error",
+      "label": "Language initialization error",
+      "kind": "native-dialog",
+      "evidence_ids": [
+        "r41-a4-ui-003"
+      ],
+      "layout_id": null,
+      "visible_fields": [
+        "Error",
+        "version/source diagnostic"
+      ],
+      "controls": [
+        "OK"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Small native dialog, not an 800x600 game screen; layout not yet mapped.",
+      "coverage": {
+        "screenshot": true,
+        "layout": false,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.error-ok"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.load.config_error",
+      "label": "Configuration initialization error",
+      "kind": "native-dialog",
+      "evidence_ids": [
+        "r41-a4-ui-004"
+      ],
+      "layout_id": null,
+      "visible_fields": [
+        "Error",
+        "version/source diagnostic"
+      ],
+      "controls": [
+        "OK"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Small native dialog; initialization failed before loading; no cause beyond operator launch-context observation established.",
+      "coverage": {
+        "screenshot": true,
+        "layout": false,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.error-ok"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.fixture.evening",
+      "label": "Evening Fixtures",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-ui-03-fixtures",
+        "r41-ui-12-fixtures-B",
+        "r41-a4-ui-009"
+      ],
+      "layout_id": "fixture",
+      "visible_fields": [
+        "competition heading",
+        "group heading",
+        "home/away names",
+        "position badge",
+        "date/phase"
+      ],
+      "controls": [
+        "team label",
+        "Competition",
+        "scrollbar",
+        "Continue Game",
+        "Back",
+        "Next"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Back is operator-recorded disabled in A4; sorting and other competition controls untested.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.info-dismiss",
+          "edge.club-link",
+          "edge.continue-fixture"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.squad.selection",
+      "label": "Squad: Selection Info",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-ui-04-squad",
+        "r41-ui-07-squad-after-tactics"
+      ],
+      "layout_id": "squad",
+      "visible_fields": [
+        "Pkd",
+        "Inf",
+        "Name",
+        "Position",
+        "Form",
+        "Morale",
+        "Cond.",
+        "Apps",
+        "Av R",
+        "Value"
+      ],
+      "controls": [
+        "Squad",
+        "Transfers",
+        "Next Match",
+        "Fixtures",
+        "Finances & Info",
+        "View",
+        "Clear Squad",
+        "Filter",
+        "Tactics",
+        "Training",
+        "Last Match",
+        "league position",
+        "History",
+        "Print",
+        "player row",
+        "Continue Game",
+        "Back",
+        "Next"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Only visible roster slice mapped; values/private player names withheld; no sorting, selection edits or navigation-caused condition effect established.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.club-link",
+          "edge.profile",
+          "edge.profile-back",
+          "edge.tactics",
+          "edge.tactics-cancel",
+          "edge.continue-squad"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.squad.prematch",
+      "label": "Squad: pre-match selection",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-a4-ui-010"
+      ],
+      "layout_id": "squad",
+      "visible_fields": [
+        "same roster columns",
+        "fixture in left rail"
+      ],
+      "controls": [
+        "Continue Game",
+        "Back",
+        "same squad tabs and controls"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Meaningful entry/rail state distinguished from ordinary squad; Back visible but unexercised.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.continue-squad",
+          "edge.continue-fixture",
+          "edge.confirm-match"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.player.profile",
+      "label": "Selected player: Profile",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-ui-05-player"
+      ],
+      "layout_id": "profile",
+      "visible_fields": [
+        "biography",
+        "attribute labels",
+        "attribute display strings",
+        "Preferred Foot",
+        "Form",
+        "Morale",
+        "Condition",
+        "statistics grid",
+        "role"
+      ],
+      "controls": [
+        "Profile",
+        "Injuries & Bans",
+        "Contract",
+        "Transfer",
+        "History",
+        "Action",
+        "statistics arrows",
+        "Back",
+        "Next"
+      ],
+      "back": {
+        "status": "observed",
+        "target_state_id": "ui41.squad.selection",
+        "evidence_ids": [
+          "r41-operator-route-report"
+        ]
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Captured roster-to-profile identity is local display linkage. Native record ID and handlers unknown; values withheld.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.profile",
+          "edge.profile-back"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.tactics.overview",
+      "label": "Tactics: Overview",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-ui-06-tactics"
+      ],
+      "layout_id": "tactics",
+      "visible_fields": [
+        "tactic name",
+        "player list",
+        "condition display",
+        "pitch slot/number"
+      ],
+      "controls": [
+        "Tactics",
+        "View",
+        "Last Match",
+        "Edit",
+        "Overview",
+        "With Ball",
+        "Without Ball",
+        "Cancel",
+        "Ok"
+      ],
+      "back": {
+        "status": "observed",
+        "target_state_id": "ui41.squad.selection",
+        "evidence_ids": [
+          "r41-operator-route-report"
+        ]
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "No intentional tactical edit. Formation write/validation rules unestablished.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.tactics",
+          "edge.tactics-cancel"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.match.confirm",
+      "label": "Proceed to match confirmation",
+      "kind": "modal",
+      "evidence_ids": [
+        "r41-ui-08-proceed-modal",
+        "r41-a4-ui-011"
+      ],
+      "layout_id": "confirmation",
+      "visible_fields": [
+        "Please Confirm",
+        "Proceed to the match ?"
+      ],
+      "controls": [
+        "No",
+        "Yes"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Yes observed in original route; No labelled but unexercised.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.confirm-match",
+          "edge.enter-match"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.match.prekickoff",
+      "label": "Match: pre-kickoff",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A",
+        "r41-ui-13-match-before-kickoff-B"
+      ],
+      "layout_id": "match",
+      "visible_fields": [
+        "clock",
+        "home/away score",
+        "Kick Off",
+        "date/competition",
+        "possession",
+        "referee",
+        "weather",
+        "venue"
+      ],
+      "controls": [
+        "Kick Off Match",
+        "Match Overview",
+        "Match Stats",
+        "Action Zones",
+        "Match Report",
+        "home tactics",
+        "away tactics",
+        "Commentary Speed",
+        "home stats",
+        "Player Ratings",
+        "Latest Scores",
+        "League Table",
+        "away stats"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.enter-match"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.match.running",
+      "label": "Match: running",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-ui-10-match-running-A"
+      ],
+      "layout_id": "match",
+      "visible_fields": [
+        "clock",
+        "score",
+        "phase",
+        "scorer/event list",
+        "commentary overlay",
+        "possession",
+        "conditions"
+      ],
+      "controls": [
+        "Pause Match",
+        "same match tabs"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Scoreboard/commentary are separate observations; no timing/cause inferred. A sequence of images is not a tested pause command.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": false,
+        "engine_binding": false,
+        "transition_ids": [],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.match.halftime",
+      "label": "Match: half time",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-ui-14-halftime-B"
+      ],
+      "layout_id": "match",
+      "visible_fields": [
+        "clock",
+        "Half Time",
+        "score",
+        "events",
+        "possession",
+        "conditions"
+      ],
+      "controls": [
+        "Re-start Match",
+        "same match tabs"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Re-start label observed; no captured action contract for that control.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": false,
+        "engine_binding": false,
+        "transition_ids": [],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.result.fulltime",
+      "label": "Match: full time",
+      "kind": "screen",
+      "evidence_ids": [
+        "r41-ui-11-result-A",
+        "r41-ui-15-result-B"
+      ],
+      "layout_id": "match",
+      "visible_fields": [
+        "clock",
+        "Full Time",
+        "score",
+        "events",
+        "attendance",
+        "referee",
+        "weather"
+      ],
+      "controls": [
+        "Continue Game",
+        "same match tabs",
+        "Game Options"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Different run outcomes are private reference observations; no simulation/outcome or persistence binding claimed.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.options",
+          "edge.restart-cancel"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.exit.confirm",
+      "label": "Exit confirmation",
+      "kind": "modal",
+      "evidence_ids": [
+        "r41-a4-ui-002"
+      ],
+      "layout_id": "confirmation",
+      "visible_fields": [
+        "Please Confirm",
+        "Exit the game ?"
+      ],
+      "controls": [
+        "No",
+        "Yes"
+      ],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "No\u2192Setup was expected from label only. Actual operator action was Yes and process exit.",
+      "coverage": {
+        "screenshot": true,
+        "layout": true,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.exit-confirm",
+          "edge.exit-yes"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.load.media_request",
+      "label": "CD request reported, no retained image",
+      "kind": "operator-only",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "layout_id": null,
+      "visible_fields": [],
+      "controls": [],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Operator route only; layout, labels beyond reported action and all other states remain uncaptured.",
+      "coverage": {
+        "screenshot": false,
+        "layout": false,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.original-cd"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.game.options",
+      "label": "Game Options menu",
+      "kind": "operator-only",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "layout_id": null,
+      "visible_fields": [],
+      "controls": [],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Operator route only; layout, labels beyond reported action and all other states remain uncaptured.",
+      "coverage": {
+        "screenshot": false,
+        "layout": false,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.options",
+          "edge.restart"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.restart.confirm",
+      "label": "Restart confirmation",
+      "kind": "operator-only",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "layout_id": null,
+      "visible_fields": [],
+      "controls": [],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Operator route only; layout, labels beyond reported action and all other states remain uncaptured.",
+      "coverage": {
+        "screenshot": false,
+        "layout": false,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.restart",
+          "edge.save-prompt"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.restart.saveprompt",
+      "label": "Save Game Before Restart",
+      "kind": "operator-only",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "layout_id": null,
+      "visible_fields": [],
+      "controls": [],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Operator route only; layout, labels beyond reported action and all other states remain uncaptured.",
+      "coverage": {
+        "screenshot": false,
+        "layout": false,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.save-prompt",
+          "edge.restart-cancel",
+          "edge.save-separate"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.save.dialog",
+      "label": "Save under separate filename",
+      "kind": "operator-only",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "layout_id": null,
+      "visible_fields": [],
+      "controls": [],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Operator route only; layout, labels beyond reported action and all other states remain uncaptured.",
+      "coverage": {
+        "screenshot": false,
+        "layout": false,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.save-separate",
+          "edge.restart-child"
+        ],
+        "engine_evidence_ids": []
+      }
+    },
+    {
+      "id": "ui41.process.exited",
+      "label": "Process exited; no window",
+      "kind": "terminal",
+      "evidence_ids": [
+        "r41-a4-operator-notes"
+      ],
+      "layout_id": null,
+      "visible_fields": [],
+      "controls": [],
+      "back": {
+        "status": "unobserved",
+        "target_state_id": null,
+        "evidence_ids": []
+      },
+      "assets": {
+        "binding": "unknown; inventory presence does not establish screen selection",
+        "asset_ids": []
+      },
+      "nonvisual_effects": "unknown",
+      "notes": "Operator-confirmed absence; not a screen and not counted as screenshot coverage.",
+      "coverage": {
+        "screenshot": false,
+        "layout": false,
+        "observed_transition": true,
+        "engine_binding": false,
+        "transition_ids": [
+          "edge.exit-yes"
+        ],
+        "engine_evidence_ids": []
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "id": "edge.restore-open",
+      "from": "ui41.load.menu",
+      "to": "ui41.load.restore",
+      "action": "Restore Saved Game",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-ui-01-menu",
+        "r41-ui-02-restore",
+        "r41-a4-ui-005",
+        "r41-a4-ui-006",
+        "r41-a4-index-snapshot"
+      ],
+      "context_ids": [
+        "gdi-A",
+        "gdi-A4-restored"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.select-file",
+      "from": "ui41.load.restore",
+      "to": "ui41.load.restore.selected",
+      "action": "Select duplicate input row",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-a4-ui-006",
+        "r41-a4-ui-007",
+        "r41-a4-index-snapshot"
+      ],
+      "context_ids": [
+        "gdi-A4-restored"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.load-info",
+      "from": "ui41.load.restore.selected",
+      "to": "ui41.load.media_info",
+      "action": "Ok starts loading",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-a4-ui-007",
+        "r41-a4-ui-008",
+        "r41-a4-index-snapshot"
+      ],
+      "context_ids": [
+        "gdi-A4-restored"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.info-dismiss",
+      "from": "ui41.load.media_info",
+      "to": "ui41.fixture.evening",
+      "action": "Ok dismisses information; next loaded fixtures",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-a4-ui-008",
+        "r41-a4-ui-009",
+        "r41-a4-index-snapshot"
+      ],
+      "context_ids": [
+        "gdi-A4-restored"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.original-cd",
+      "from": "ui41.load.restore",
+      "to": "ui41.load.media_request",
+      "action": "Original restore selection",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-A"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.cd-gap",
+      "from": "ui41.load.media_request",
+      "to": "ui41.fixture.evening",
+      "action": "External input intervened",
+      "status": "unresolved-gap",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-A"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.club-link",
+      "from": "ui41.fixture.evening",
+      "to": "ui41.squad.selection",
+      "action": "Click managed club label",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report",
+        "r41-ui-03-fixtures",
+        "r41-ui-04-squad"
+      ],
+      "context_ids": [
+        "gdi-A"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.profile",
+      "from": "ui41.squad.selection",
+      "to": "ui41.player.profile",
+      "action": "Click captured roster player row",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report",
+        "r41-ui-04-squad",
+        "r41-ui-05-player"
+      ],
+      "context_ids": [
+        "gdi-A"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.profile-back",
+      "from": "ui41.player.profile",
+      "to": "ui41.squad.selection",
+      "action": "Back",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-A"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.tactics",
+      "from": "ui41.squad.selection",
+      "to": "ui41.tactics.overview",
+      "action": "Tactics",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report",
+        "r41-ui-06-tactics"
+      ],
+      "context_ids": [
+        "gdi-A"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.tactics-cancel",
+      "from": "ui41.tactics.overview",
+      "to": "ui41.squad.selection",
+      "action": "Cancel",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-A"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.continue-squad",
+      "from": "ui41.squad.selection",
+      "to": "ui41.squad.prematch",
+      "action": "Continue Game",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-A"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.continue-fixture",
+      "from": "ui41.fixture.evening",
+      "to": "ui41.squad.prematch",
+      "action": "Continue Game",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-a4-index-snapshot",
+        "r41-a4-ui-009",
+        "r41-a4-ui-010"
+      ],
+      "context_ids": [
+        "gdi-A4-restored"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.confirm-match",
+      "from": "ui41.squad.prematch",
+      "to": "ui41.match.confirm",
+      "action": "Continue Game",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-a4-index-snapshot",
+        "r41-a4-ui-010",
+        "r41-a4-ui-011",
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-A",
+        "gdi-A4-restored"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.enter-match",
+      "from": "ui41.match.confirm",
+      "to": "ui41.match.prekickoff",
+      "action": "Yes",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report",
+        "r41-ui-08-proceed-modal",
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "context_ids": [
+        "gdi-A"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.running-sequence",
+      "from": "ui41.match.prekickoff",
+      "to": "ui41.match.running",
+      "action": "Observed later phase",
+      "status": "screenshot-sequence",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A",
+        "r41-ui-10-match-running-A"
+      ],
+      "context_ids": [
+        "gdi-A"
+      ],
+      "advances_time": "elapsed time visible",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.result-sequence",
+      "from": "ui41.match.running",
+      "to": "ui41.result.fulltime",
+      "action": "Observed later full-time state",
+      "status": "screenshot-sequence",
+      "evidence_ids": [
+        "r41-ui-10-match-running-A",
+        "r41-ui-11-result-A"
+      ],
+      "context_ids": [
+        "gdi-A"
+      ],
+      "advances_time": "elapsed time visible",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.halftime-sequence",
+      "from": "ui41.match.prekickoff",
+      "to": "ui41.match.halftime",
+      "action": "Observed later half-time state",
+      "status": "screenshot-sequence",
+      "evidence_ids": [
+        "r41-ui-13-match-before-kickoff-B",
+        "r41-ui-14-halftime-B"
+      ],
+      "context_ids": [
+        "gdi-B",
+        "gdi-B-late"
+      ],
+      "advances_time": "elapsed time visible",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.b-result-sequence",
+      "from": "ui41.match.halftime",
+      "to": "ui41.result.fulltime",
+      "action": "Observed later full-time state",
+      "status": "screenshot-sequence",
+      "evidence_ids": [
+        "r41-ui-14-halftime-B",
+        "r41-ui-15-result-B"
+      ],
+      "context_ids": [
+        "gdi-B-late"
+      ],
+      "advances_time": "elapsed time visible",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.options",
+      "from": "ui41.result.fulltime",
+      "to": "ui41.game.options",
+      "action": "Game Options",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-B-late"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.restart",
+      "from": "ui41.game.options",
+      "to": "ui41.restart.confirm",
+      "action": "Restart Game",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-B-late"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.save-prompt",
+      "from": "ui41.restart.confirm",
+      "to": "ui41.restart.saveprompt",
+      "action": "Yes",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-B-late"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.restart-cancel",
+      "from": "ui41.restart.saveprompt",
+      "to": "ui41.result.fulltime",
+      "action": "Cancel",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-B-late"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.save-separate",
+      "from": "ui41.restart.saveprompt",
+      "to": "ui41.save.dialog",
+      "action": "Save before restart",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-B-late"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.restart-child",
+      "from": "ui41.save.dialog",
+      "to": "ui41.load.menu",
+      "action": "Save distinct file; native restart creates child",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-operator-route-report"
+      ],
+      "context_ids": [
+        "gdi-B-late",
+        "gdi-restarted-partial"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.exit-confirm",
+      "from": "ui41.load.menu",
+      "to": "ui41.exit.confirm",
+      "action": "Exit Game",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-a4-ui-001",
+        "r41-a4-ui-002",
+        "r41-a4-index-snapshot"
+      ],
+      "context_ids": [
+        "gdi-restarted-partial"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.exit-yes",
+      "from": "ui41.exit.confirm",
+      "to": "ui41.process.exited",
+      "action": "Yes",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-a4-operator-notes"
+      ],
+      "context_ids": [
+        "gdi-restarted-partial"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    },
+    {
+      "id": "edge.error-ok",
+      "from": "ui41.load.language_error",
+      "to": "ui41.load.config_error",
+      "action": "OK",
+      "status": "observed-action",
+      "evidence_ids": [
+        "r41-a4-ui-003",
+        "r41-a4-ui-004",
+        "r41-a4-index-snapshot"
+      ],
+      "context_ids": [
+        "gdi-A4-failed-launch"
+      ],
+      "advances_time": "unknown",
+      "other_state_effects": "unknown"
+    }
+  ],
+  "observed_adjacency": {
+    "ui41.load.menu": [
+      {
+        "to": "ui41.load.restore",
+        "transition_id": "edge.restore-open"
+      },
+      {
+        "to": "ui41.exit.confirm",
+        "transition_id": "edge.exit-confirm"
+      }
+    ],
+    "ui41.load.restore": [
+      {
+        "to": "ui41.load.restore.selected",
+        "transition_id": "edge.select-file"
+      },
+      {
+        "to": "ui41.load.media_request",
+        "transition_id": "edge.original-cd"
+      }
+    ],
+    "ui41.load.restore.selected": [
+      {
+        "to": "ui41.load.media_info",
+        "transition_id": "edge.load-info"
+      }
+    ],
+    "ui41.load.media_info": [
+      {
+        "to": "ui41.fixture.evening",
+        "transition_id": "edge.info-dismiss"
+      }
+    ],
+    "ui41.load.language_error": [
+      {
+        "to": "ui41.load.config_error",
+        "transition_id": "edge.error-ok"
+      }
+    ],
+    "ui41.load.config_error": [],
+    "ui41.fixture.evening": [
+      {
+        "to": "ui41.squad.selection",
+        "transition_id": "edge.club-link"
+      },
+      {
+        "to": "ui41.squad.prematch",
+        "transition_id": "edge.continue-fixture"
+      }
+    ],
+    "ui41.squad.selection": [
+      {
+        "to": "ui41.player.profile",
+        "transition_id": "edge.profile"
+      },
+      {
+        "to": "ui41.tactics.overview",
+        "transition_id": "edge.tactics"
+      },
+      {
+        "to": "ui41.squad.prematch",
+        "transition_id": "edge.continue-squad"
+      }
+    ],
+    "ui41.squad.prematch": [
+      {
+        "to": "ui41.match.confirm",
+        "transition_id": "edge.confirm-match"
+      }
+    ],
+    "ui41.player.profile": [
+      {
+        "to": "ui41.squad.selection",
+        "transition_id": "edge.profile-back"
+      }
+    ],
+    "ui41.tactics.overview": [
+      {
+        "to": "ui41.squad.selection",
+        "transition_id": "edge.tactics-cancel"
+      }
+    ],
+    "ui41.match.confirm": [
+      {
+        "to": "ui41.match.prekickoff",
+        "transition_id": "edge.enter-match"
+      }
+    ],
+    "ui41.match.prekickoff": [],
+    "ui41.match.running": [],
+    "ui41.match.halftime": [],
+    "ui41.result.fulltime": [
+      {
+        "to": "ui41.game.options",
+        "transition_id": "edge.options"
+      }
+    ],
+    "ui41.exit.confirm": [
+      {
+        "to": "ui41.process.exited",
+        "transition_id": "edge.exit-yes"
+      }
+    ],
+    "ui41.load.media_request": [],
+    "ui41.game.options": [
+      {
+        "to": "ui41.restart.confirm",
+        "transition_id": "edge.restart"
+      }
+    ],
+    "ui41.restart.confirm": [
+      {
+        "to": "ui41.restart.saveprompt",
+        "transition_id": "edge.save-prompt"
+      }
+    ],
+    "ui41.restart.saveprompt": [
+      {
+        "to": "ui41.result.fulltime",
+        "transition_id": "edge.restart-cancel"
+      },
+      {
+        "to": "ui41.save.dialog",
+        "transition_id": "edge.save-separate"
+      }
+    ],
+    "ui41.save.dialog": [
+      {
+        "to": "ui41.load.menu",
+        "transition_id": "edge.restart-child"
+      }
+    ],
+    "ui41.process.exited": []
+  },
+  "discovered_routes": [
+    {
+      "id": "route.load.menu.new",
+      "from": "ui41.load.menu",
+      "control_label": "Start New Game",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-01-menu"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.load.menu.quick",
+      "from": "ui41.load.menu",
+      "control_label": "Quick Start Game",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-01-menu"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.load.menu.delete",
+      "from": "ui41.load.menu",
+      "control_label": "Delete Saved Game",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-01-menu"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.load.menu.network",
+      "from": "ui41.load.menu",
+      "control_label": "Network Play",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-01-menu"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.load.menu.settings",
+      "from": "ui41.load.menu",
+      "control_label": "Game Settings",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-01-menu"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.load.menu.fame",
+      "from": "ui41.load.menu",
+      "control_label": "Hall Of Fame",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-01-menu"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.load.menu.credits",
+      "from": "ui41.load.menu",
+      "control_label": "Game Credits",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-01-menu"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.load.menu.web",
+      "from": "ui41.load.menu",
+      "control_label": "Web Sites",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-01-menu"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.load.restore.cancel",
+      "from": "ui41.load.restore",
+      "control_label": "Cancel",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-a4-ui-006"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.load.restore.info",
+      "from": "ui41.load.restore",
+      "control_label": "Info",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-a4-ui-006"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.load.restore.empty",
+      "from": "ui41.load.restore",
+      "control_label": "Empty file/directory behavior",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-a4-ui-006"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.fixture.evening.competition",
+      "from": "ui41.fixture.evening",
+      "control_label": "Competition",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-03-fixtures"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.fixture.evening.scroll",
+      "from": "ui41.fixture.evening",
+      "control_label": "Fixture scrollbar",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-03-fixtures"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.fixture.evening.back",
+      "from": "ui41.fixture.evening",
+      "control_label": "Back in a context allowing it",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-03-fixtures"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.transfers",
+      "from": "ui41.squad.selection",
+      "control_label": "Transfers",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.next",
+      "from": "ui41.squad.selection",
+      "control_label": "Next Match",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.fixtures",
+      "from": "ui41.squad.selection",
+      "control_label": "Fixtures",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.finances",
+      "from": "ui41.squad.selection",
+      "control_label": "Finances & Info",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.view",
+      "from": "ui41.squad.selection",
+      "control_label": "View",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.clear",
+      "from": "ui41.squad.selection",
+      "control_label": "Clear Squad",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.filter",
+      "from": "ui41.squad.selection",
+      "control_label": "Filter",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.training",
+      "from": "ui41.squad.selection",
+      "control_label": "Training",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.last",
+      "from": "ui41.squad.selection",
+      "control_label": "Last Match",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.league",
+      "from": "ui41.squad.selection",
+      "control_label": "league position",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.history",
+      "from": "ui41.squad.selection",
+      "control_label": "History",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.print",
+      "from": "ui41.squad.selection",
+      "control_label": "Print",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.squad.selection.sort",
+      "from": "ui41.squad.selection",
+      "control_label": "Column header sorting",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-04-squad"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.player.profile.injuries",
+      "from": "ui41.player.profile",
+      "control_label": "Injuries & Bans",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-05-player"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.player.profile.contract",
+      "from": "ui41.player.profile",
+      "control_label": "Contract",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-05-player"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.player.profile.transfer",
+      "from": "ui41.player.profile",
+      "control_label": "Transfer",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-05-player"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.player.profile.history",
+      "from": "ui41.player.profile",
+      "control_label": "History",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-05-player"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.player.profile.action",
+      "from": "ui41.player.profile",
+      "control_label": "Action",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-05-player"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.player.profile.stats",
+      "from": "ui41.player.profile",
+      "control_label": "statistics arrows",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-05-player"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.player.profile.next",
+      "from": "ui41.player.profile",
+      "control_label": "Next",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-05-player"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.tactics.overview.with",
+      "from": "ui41.tactics.overview",
+      "control_label": "With Ball",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-06-tactics"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.tactics.overview.without",
+      "from": "ui41.tactics.overview",
+      "control_label": "Without Ball",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-06-tactics"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.tactics.overview.selector",
+      "from": "ui41.tactics.overview",
+      "control_label": "Tactics selector",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-06-tactics"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.tactics.overview.view",
+      "from": "ui41.tactics.overview",
+      "control_label": "View",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-06-tactics"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.tactics.overview.last",
+      "from": "ui41.tactics.overview",
+      "control_label": "Last Match",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-06-tactics"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.tactics.overview.edit",
+      "from": "ui41.tactics.overview",
+      "control_label": "Edit",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-06-tactics"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.tactics.overview.ok",
+      "from": "ui41.tactics.overview",
+      "control_label": "Ok",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-06-tactics"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.tactics.overview.pitch",
+      "from": "ui41.tactics.overview",
+      "control_label": "pitch/player manipulation",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-06-tactics"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.prekickoff.stats",
+      "from": "ui41.match.prekickoff",
+      "control_label": "Match Stats",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.prekickoff.zones",
+      "from": "ui41.match.prekickoff",
+      "control_label": "Action Zones",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.prekickoff.report",
+      "from": "ui41.match.prekickoff",
+      "control_label": "Match Report",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.prekickoff.home-tactics",
+      "from": "ui41.match.prekickoff",
+      "control_label": "home tactics",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.prekickoff.away-tactics",
+      "from": "ui41.match.prekickoff",
+      "control_label": "away tactics",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.prekickoff.speed",
+      "from": "ui41.match.prekickoff",
+      "control_label": "Commentary Speed",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.prekickoff.home-stats",
+      "from": "ui41.match.prekickoff",
+      "control_label": "home stats",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.prekickoff.ratings",
+      "from": "ui41.match.prekickoff",
+      "control_label": "Player Ratings",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.prekickoff.scores",
+      "from": "ui41.match.prekickoff",
+      "control_label": "Latest Scores",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.prekickoff.table",
+      "from": "ui41.match.prekickoff",
+      "control_label": "League Table",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.prekickoff.away-stats",
+      "from": "ui41.match.prekickoff",
+      "control_label": "away stats",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-09-match-before-kickoff-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.running.pause",
+      "from": "ui41.match.running",
+      "control_label": "Pause Match",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-10-match-running-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.halftime.restart",
+      "from": "ui41.match.halftime",
+      "control_label": "Re-start Match",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-14-halftime-B"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.result.fulltime.continue",
+      "from": "ui41.result.fulltime",
+      "control_label": "Continue Game result commit",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-11-result-A"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.match.confirm.no",
+      "from": "ui41.match.confirm",
+      "control_label": "No",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-08-proceed-modal"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.exit.confirm.no",
+      "from": "ui41.exit.confirm",
+      "control_label": "No",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-a4-ui-002"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.fixture.evening.competitions",
+      "from": "ui41.fixture.evening",
+      "control_label": "Competitions",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-03-fixtures"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.fixture.evening.nations",
+      "from": "ui41.fixture.evening",
+      "control_label": "Nations & Clubs",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-03-fixtures"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.fixture.evening.find",
+      "from": "ui41.fixture.evening",
+      "control_label": "Find",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-03-fixtures"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    },
+    {
+      "id": "route.fixture.evening.manager",
+      "from": "ui41.fixture.evening",
+      "control_label": "Manager menu (personal label withheld)",
+      "status": "discovered-uncaptured",
+      "evidence_ids": [
+        "r41-ui-03-fixtures"
+      ],
+      "target_state_id": null,
+      "destination": "unmapped; label alone does not prove destination layout or behavior"
+    }
+  ],
+  "unknown_sections": [
+    {
+      "id": "domain.new-game",
+      "label": "New game and quick-start setup",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    },
+    {
+      "id": "domain.network",
+      "label": "Network/multiplayer",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    },
+    {
+      "id": "domain.settings",
+      "label": "Settings, preferences and media/display",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    },
+    {
+      "id": "domain.database-browsing",
+      "label": "Nations, clubs, people and search",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    },
+    {
+      "id": "domain.competitions",
+      "label": "Competitions, standings, scheduling and history",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    },
+    {
+      "id": "domain.manager-world",
+      "label": "Manager, news, jobs and world navigation",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    },
+    {
+      "id": "domain.transfers",
+      "label": "Transfers, scouting and negotiations",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    },
+    {
+      "id": "domain.training",
+      "label": "Training and development",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    },
+    {
+      "id": "domain.finance",
+      "label": "Club information, finance and contracts",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    },
+    {
+      "id": "domain.tactics",
+      "label": "Tactical edit/substitution/selection variants",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    },
+    {
+      "id": "domain.match",
+      "label": "Match tabs, commentary, incidents and result processing",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    },
+    {
+      "id": "domain.persistence-errors",
+      "label": "Save/load, restart, empty/error/permission/media variants",
+      "scope_status": "unknown-unbounded",
+      "reason": "Unvisited or partially referenced; internal states/modal/error variants have no finite denominator yet."
+    }
+  ],
+  "capture_requests": [
+    {
+      "id": "request.finance-transfer",
+      "priority": 1,
+      "owner": "R41-A4",
+      "route_ids": [
+        "route.squad.selection.finances",
+        "route.squad.selection.transfers"
+      ],
+      "procedure": "After paired-probe detach, visit each visible subtab read-only, capture active tab and back path; retain values privately. Prefer naturally empty/disabled state; do not make transactions."
+    },
+    {
+      "id": "request.profile-tabs",
+      "priority": 2,
+      "owner": "R41-A4",
+      "route_ids": [
+        "route.player.profile.injuries",
+        "route.player.profile.contract",
+        "route.player.profile.transfer",
+        "route.player.profile.history"
+      ],
+      "procedure": "Same captured player, each tab then return; record exact route, enabled appearance, action menus without committing commands."
+    },
+    {
+      "id": "request.competition",
+      "priority": 3,
+      "owner": "R41-A4",
+      "route_ids": [
+        "route.fixture.evening.competition",
+        "route.squad.selection.fixtures",
+        "route.squad.selection.league"
+      ],
+      "procedure": "Capture competition/fixtures/table reachable tabs and Back; no time advancement for coverage alone."
+    },
+    {
+      "id": "request.frontier",
+      "priority": 4,
+      "owner": "R41-A4",
+      "route_ids": [
+        "route.fixture.evening.competitions",
+        "route.fixture.evening.nations",
+        "route.fixture.evening.find",
+        "route.squad.selection.training"
+      ],
+      "procedure": "One representative screen per navigation family, then enumerate actual visible tabs/modal states; preserve a useful empty state if present."
+    }
+  ],
+  "capture_protocol": {
+    "operator": "R41-A4 only",
+    "engine_priority": "Capture/interception cleanup first; navigation afterwards",
+    "required_private_record": [
+      "capture ID/hash/encoding/dimensions",
+      "executable/config/save and process-reload context",
+      "entry/prerequisite/exact action",
+      "back exercised or explicitly unexercised",
+      "time/state effects observed or unknown",
+      "active tabs/modals/empty/disabled appearance"
+    ],
+    "public_record": "opaque IDs/hashes, labels, layout and evidence level only; no player/finance/save-filename values, original images or absolute private paths"
+  }
+}

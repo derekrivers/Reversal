@@ -1,0 +1,180 @@
+"""Validate the bounded screen census; optional read-only private image checks.
+
+No game/process/browser access. No integrity checks depend on Python assert.
+"""
+from pathlib import Path
+import argparse
+import copy
+import hashlib
+import json
+import re
+
+ROOT = Path(__file__).resolve().parent.parent
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def indexed(rows, label):
+    ids = [row['id'] for row in rows]
+    require(len(ids) == len(set(ids)), f'duplicate {label} ID')
+    return {row['id']: row for row in rows}
+
+
+def validate(data, assets):
+    require(data['schema'] == 'reversal.ui-screen-census-41.v1', 'unsupported schema')
+    contexts = indexed(data['contexts'], 'context')
+    evidence = indexed(data['evidence'], 'evidence')
+    layouts = indexed(data['layouts'], 'layout')
+    states = indexed(data['states'], 'state')
+    edges = indexed(data['transitions'], 'transition')
+    routes = indexed(data['discovered_routes'], 'route')
+    domains = indexed(data['unknown_sections'], 'domain')
+    require(all(alias not in states and target in states for alias,target in data['state_aliases'].items()), 'invalid historical state alias')
+    def refs(ids, source):
+        require(len(ids) == len(set(ids)) and all(i in source for i in ids), 'unknown/duplicate reference')
+    for context in contexts.values():
+        for key in ['executable_sha256', 'loaded_input_save_sha256', 'expected_configuration_sha256', 'capture_configuration_sha256']:
+            require(context[key] is None or re.fullmatch('[a-f0-9]{64}', context[key]), 'invalid identity hash')
+        if context['configuration_status'].endswith('matched'):
+            require(context['capture_configuration_sha256'] == context['expected_configuration_sha256'], 'matched configuration identity missing')
+    for item in evidence.values():
+        require(re.fullmatch('[a-f0-9]{64}', item['sha256']), 'invalid evidence digest')
+        require(item['kind'] in ['screenshot', 'operator-report'], 'unknown evidence kind')
+        if item['kind'] == 'screenshot':
+            require(item['context_id'] in contexts, 'unknown screenshot context')
+            require(item['encoding'] == 'JPEG', 'unverified screenshot encoding')
+            require(len(item['capture_pixels']) == 2 and all(isinstance(n,int) and n > 0 for n in item['capture_pixels']), 'invalid image dimensions')
+            require(item['client_pixels'] in (None, [800,600]), 'unexpected game-client extent')
+    for layout in layouts.values():
+        require(layout['extent'] == [800,600] and layout['coordinate_space'] == 'game-client-pixels', 'unsupported layout coordinate space')
+        for region in layout['regions']:
+            x,y,w,h = region['bounds']
+            require(all(isinstance(n,int) for n in [x,y,w,h]) and x >= 0 and y >= 0 and w > 0 and h > 0 and x+w <= 800 and y+h <= 600, 'layout outside client')
+    for edge in edges.values():
+        require(edge['from'] in states and edge['to'] in states, 'dangling graph endpoint')
+        require(edge['status'] in ['observed-action', 'screenshot-sequence', 'unresolved-gap'], 'unknown transition confidence')
+        refs(edge['evidence_ids'], evidence)
+        refs(edge['context_ids'], contexts)
+        require(bool(edge['evidence_ids']), 'transition without evidence')
+        if edge['status'] == 'observed-action':
+            require(any(evidence[i]['kind'] == 'operator-report' for i in edge['evidence_ids']), 'image-only action claim')
+    for state in states.values():
+        refs(state['evidence_ids'], evidence)
+        require(state['layout_id'] is None or state['layout_id'] in layouts, 'unknown layout')
+        screen = any(evidence[i]['kind'] == 'screenshot' for i in state['evidence_ids'])
+        observed = [i for i,e in edges.items() if e['status'] == 'observed-action' and state['id'] in (e['from'],e['to'])]
+        level = state['coverage']
+        require(level['screenshot'] == screen, 'screenshot coverage mismatch')
+        require(level['layout'] == bool(screen and state['layout_id']), 'layout coverage without image/layout')
+        require(level['observed_transition'] == bool(observed) and level['transition_ids'] == observed, 'image sequence promoted to behavior coverage')
+        require(level['engine_binding'] is False and level['engine_evidence_ids'] == [], 'no engine binding admitted by this census schema')
+        refs(state['assets']['asset_ids'], assets)
+        back = state['back']
+        require(back['target_state_id'] is None or back['target_state_id'] in states, 'unknown back target')
+        refs(back['evidence_ids'], evidence)
+        if back['status'] == 'observed':
+            require(any(e['from'] == state['id'] and e['to'] == back['target_state_id'] and e['status'] == 'observed-action' for e in edges.values()), 'back claim without action edge')
+    expected = {id:[{'to':e['to'],'transition_id':eid} for eid,e in edges.items() if e['from'] == id and e['status'] == 'observed-action'] for id in states}
+    require(data['observed_adjacency'] == expected, 'observed adjacency mismatch')
+    for route in routes.values():
+        require(route['from'] in states and route['target_state_id'] is None and route['status'] == 'discovered-uncaptured', 'unseen destination promoted to screen')
+        refs(route['evidence_ids'], evidence)
+    for request in data['capture_requests']:
+        refs(request['route_ids'], routes)
+        require(request['owner'] == 'R41-A4', 'capture operator mismatch')
+    denominator = data['denominator']
+    require(denominator['total_application_screen_states'] is None, 'unknown total application denominator promoted to known')
+    expected_sets = {
+        'screenshot_confirmed_state_ids':[i for i,s in states.items() if s['coverage']['screenshot']],
+        'operator_only_state_ids':[i for i,s in states.items() if not s['coverage']['screenshot'] and s['kind'] != 'terminal'],
+        'terminal_state_ids':[i for i,s in states.items() if s['kind'] == 'terminal'],
+        'discovered_uncaptured_route_ids':list(routes), 'unknown_unbounded_section_ids':list(domains)}
+    require(all(denominator[k] == v for k,v in expected_sets.items()), 'denominator membership mismatch')
+    require(denominator['counts'] == {k:len(v) for k,v in expected_sets.items()}, 'denominator count mismatch')
+    public = json.dumps(data, ensure_ascii=False)
+    require(not re.search(r'[A-Za-z]:[\\/]|\bfile:|\bdata:image|\bbase64\b',public), 'private path/payload in census')
+    require(not re.search(r'\b\d{1,2}(?:-\d{1,2}){3,}\b|[£$€]\d',public), 'captured display value in census')
+    return {'states':len(states),'screenshots':sum(e['kind']=='screenshot' for e in evidence.values()), 'denominator':denominator['counts'], 'engine_bindings':0}
+
+
+def jpeg_size(data):
+    require(data.startswith(b'\xff\xd8'), 'private image encoding mismatch')
+    i = 2
+    while i < len(data):
+        require(data[i] == 255, 'invalid JPEG marker')
+        while i < len(data) and data[i] == 255:
+            i += 1
+        require(i < len(data), 'truncated JPEG marker')
+        marker = data[i]
+        i += 1
+        if marker in (0xd8,0xd9) or 0xd0 <= marker <= 0xd7:
+            continue
+        require(i+2 <= len(data), 'truncated JPEG segment')
+        size = int.from_bytes(data[i:i+2],'big')
+        require(size >= 2 and i+size <= len(data), 'JPEG segment outside file')
+        if marker in (0xc0,0xc1,0xc2):
+            require(size >= 8,'short JPEG dimensions')
+            return [int.from_bytes(data[i+5:i+7],'big'),int.from_bytes(data[i+3:i+5],'big')]
+        i += size
+    raise ValueError('JPEG dimensions missing')
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--private-root',type=Path)
+    parser.add_argument('--private-aliases',type=Path)
+    parser.add_argument('--private-snapshot',type=Path)
+    args = parser.parse_args()
+    data = json.loads((ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8'))
+    assets = {a['asset_id']:a for a in json.loads((ROOT/'evidence/ui-assets-41-inventory.json').read_text(encoding='utf-8'))['assets']}
+    result = validate(data, assets)
+    mutations = [
+        lambda d:d['transitions'][0].update(to='ui41.unmapped'),
+        lambda d:d['evidence'].append(d['evidence'][0]),
+        lambda d:d['states'][0]['coverage'].update(engine_binding=True),
+        lambda d:d['layouts'][0]['regions'][0].update(bounds=[799,0,10,10]),
+        lambda d:d['denominator']['screenshot_confirmed_state_ids'].pop(),
+        lambda d:d['denominator'].update(total_application_screen_states=100),
+        lambda d:d['states'][0]['assets']['asset_ids'].append('unknown-asset'),
+        lambda d:d['observed_adjacency'][d['states'][0]['id']].clear(),
+        lambda d:d.update(private_payload='1-2-3-4'),
+        lambda d:d['contexts'][0].update(capture_configuration_sha256=None),
+        lambda d:next(s for s in d['states'] if s['id']=='ui41.match.running')['coverage'].update(observed_transition=True),
+        lambda d:next(s for s in d['states'] if s['id']=='ui41.game.options')['coverage'].update(layout=True),
+    ]
+    for mutation in mutations:
+        changed = copy.deepcopy(data)
+        mutation(changed)
+        try:
+            validate(changed,assets)
+        except ValueError:
+            continue
+        raise ValueError('negative validation probe accepted')
+    if args.private_root or args.private_aliases:
+        require(args.private_root and args.private_aliases,'private root and aliases must be supplied together')
+        root = args.private_root.resolve(strict=True)
+        aliases = json.loads(args.private_aliases.read_text(encoding='utf-8'))['aliases']
+        for evidence in data['evidence']:
+            if evidence['kind'] != 'screenshot':
+                continue
+            path = (root / aliases[evidence['id']]).resolve(strict=True)
+            require(path.is_relative_to(root),'private alias escaped root')
+            image = path.read_bytes()
+            require(hashlib.sha256(image).hexdigest() == evidence['sha256'],'private screenshot hash mismatch')
+            require(jpeg_size(image) == evidence['capture_pixels'],'private screenshot dimensions mismatch')
+        result['private_image_checks'] = 'pass'
+    if args.private_snapshot:
+        snapshot = json.loads(args.private_snapshot.read_text(encoding='utf-8'))
+        private = {row[key] for row in snapshot['squad']['rows'] for key in ['name','form']}
+        public = (ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8') + (ROOT/'reports/ui-map-41.md').read_text(encoding='utf-8')
+        require(not any(token in public for token in private),'private captured token present in public catalogue/report')
+        result['private_token_checks'] = 'pass'
+    result['negative_probes'] = len(mutations)
+    print(json.dumps(result,sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

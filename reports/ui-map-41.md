@@ -1,4 +1,60 @@
-# R41-C2: observed journey and captured React reference viewer
+# R41-C3: application screen census and ongoing navigation map
+
+The UI objective now covers the entire original application as navigation continues alongside engine work. [The machine-readable census](../evidence/ui-screen-census-41.json) is the first bounded frontier, based on original captures 01–16 and A4 action-index entries 001–011. Later A4 match tabs and post-match navigation belong to the next capture batch. The total number of discoverable application states remains unknown; these counts are not a completion percentage.
+
+| Machine-checked denominator set | Count | Meaning |
+| --- | ---: | --- |
+| Screenshot-confirmed screen/state IDs | 17 | At least one retained, directly inspected image. |
+| Operator-route-only state IDs | 5 | Reported CD request, Game Options, restart confirmation, restart save prompt and save dialog; no retained layout image in this cutoff. |
+| Terminal state IDs | 1 | Operator confirmed process exit; this is not a screen. |
+| Discovered uncaptured control-route IDs | 62 | Visible labels/action affordances with unresolved destinations or effects; they are not 62 proven additional screens. |
+| Unknown/unbounded application sections | 12 | Internal tab/modal/error/state populations have no finite denominator yet. |
+| Total application screen/state denominator | Unknown | Whole UI remains an ongoing target. |
+
+Coverage flags are independent: **screenshot**, **layout**, **observed transition**, **engine binding**. This batch contains 27 screenshot files, 15 states with approximate mapped geometry, and 21 catalogue states touched by a recorded action edge, including operator-only states and the exit terminal. None has an established engine binding. Running/half-time image sequences do not count as tested actions; native initialization error dialogs are seen but do not yet have mapped game-client geometry. A screenshot is never promoted to behavior validation. The JSON carries each flag, its evidence and exact set membership; the checker derives and verifies every denominator.
+
+The observed screenshot states are Setup Game; restore with blank File field; restore with selected file; CD information; language/configuration error dialogs; evening fixtures; ordinary/pre-match squad; player profile; tactics overview; proceed confirmation; pre-kickoff/running/half-time/full-time match; and Exit confirmation. The historical `ui41.squad.returned` ID aliases ordinary squad selection rather than creating a duplicate screen for a repeated capture. Blank file-list slots and grey-looking Back/Next controls are recorded as appearances; an entirely empty directory or a disabled action contract is not inferred. A4 explicitly reports fixture Back disabled; confirmation No and several Cancel routes remain unexercised.
+
+The adjacency list in the JSON is generated only from **operator-observed action** edges and checked against those edges. Screenshot sequences and the earlier external-input load gap are separate relations. The principal mapped routes are:
+
+```mermaid
+flowchart LR
+  Setup -->|Restore|Blank[Restore: blank field]
+  Blank -->|Select row|Selected[Restore: selected]
+  Selected -->|Ok|Media[CD information]
+  Media -->|Ok|Fixtures
+  Fixtures -->|Club label|Squad
+  Fixtures -->|Continue|Prematch[Pre-match squad]
+  Squad -->|Player row|Profile
+  Profile -->|Back|Squad
+  Squad -->|Tactics|Tactics
+  Tactics -->|Cancel|Squad
+  Squad -->|Continue|Prematch
+  Prematch -->|Continue|Confirm[Proceed confirmation]
+  Confirm -->|Yes|Kickoff[Pre-kickoff]
+  Setup -->|Exit|Exit[Exit confirmation]
+  Exit -->|Yes|Closed[Process exited]
+```
+
+The successful A4 media-information route does not retroactively resolve the original load's externally interrupted CD-request transition. Exit No is labelled but was not exercised. The operator-only restart route is separately recorded: result → Game Options → Restart → save-before-restart; Cancel returned to result, while saving separately caused a new native process. No same-process reload is established.
+
+Identity is scoped per capture: matched A/B pre-run configuration; later B capture-time configuration unverified; restarted child known to have only 774 of 784 expected files; A4 failed launch with uncontrolled working directory; and A4 successful fresh launch after exact revalidation with the correct working directory. Screens are not pooled under one current-configuration claim. The two native error dialogs and subsequent successful launch are observations of different launch contexts, not proof of an error cause or recovery contract. JPEG encoding and outer dimensions are retained even for files named `.png`; the small native dialogs are not treated as 800 × 600 game windows.
+
+Approximate geometry, field labels/order, controls, back status and asset bindings are explicit per state. Original typography, palettes and native handlers remain unknown. The installed resource manifest supplies candidate asset IDs; this census does not guess background-to-screen bindings from visual resemblance. Empty/disabled/modal variants, filter/sort effects and command side effects remain capture targets.
+
+The highest-priority requests sent to sole operator R41-A4, after paired-probe cleanup, are read-only Finances & Info/Transfers tabs, profile subtabs, competition/fixture/table routes, then representative search/nation/training families. Each batch must record identity, entry/prerequisite/action, back **observed or unexercised**, active tab/modal, image hash/encoding/dimensions, and time/state effects **observed or unknown**. Do not manufacture empty states or make transactions merely for coverage. Newly exposed labels expand the uncaptured frontier and unknown sections; the census does not assume the starting menu exhausts the app.
+
+Run the standalone consistency/privacy checker normally and under optimized Python:
+
+```text
+python scripts/check_ui_census_41.py
+python -O scripts/check_ui_census_41.py
+python scripts/check_ui_census_41.py --private-root PRIVATE_CAPTURE_ROOT --private-aliases PRIVATE_ALIAS_JSON --private-snapshot PRIVATE_VIEWER_SNAPSHOT
+```
+
+The optional check reads private files only to compare image hashes/JPEG dimensions and reject copied roster names/Form strings in the public catalogue/report. It prints no private values. Twelve negative probes reject broken references, invented whole-app denominators, geometry overflow, image-only action claims, unsupported engine promotion, absent source identity and captured display payloads. Normal and optimized Python checks passed with identical summaries, including all 27 private image hashes/dimensions and captured-token rejection. The Node 24 full repository check and whitespace check passed. No browser, game, process or native database access is used. Raw screenshots, private action paths and captured values stay outside Git. Private cutoff/alias annotations are local; source capture preservation remains with R41-A4, without an off-host durability claim here. The prior asset inventory and React viewer are preserved; their narrower scope follows.
+
+## R41-C2: bounded journey and reference viewer
 
 The actual observed route is **restore → evening fixtures → squad → player profile → Back → tactics → Cancel → squad → match confirmation → pre-kickoff → running match → result**. R41-A alone operated the disposable GDI game and recorded the actions. R41-C2 inspected the retained screenshots offline and built a bounded squad/profile reference viewer from their visible values. This establishes UI navigation/display evidence, not reconstructed game execution.
 
@@ -18,21 +74,21 @@ Capture IDs below abbreviate the `r41-ui-` prefix. Navigation actions are R41-A'
 | --- | --- | --- | --- |
 | `ui41.load.menu` | `01-menu` | Version 3.9.68; Setup Game grid includes Restore Saved Game, Start New Game, Quick Start Game and other options. Restore opened the file picker. | Other menu actions, keyboard shortcuts and disabled-state behavior untested. |
 | `ui41.load.restore` | `02-restore` | Restore Saved Game / Select File; one duplicated save; file field, Cancel, Info, Ok. Selecting save preceded the CD prompt and fixtures. | CD dismissal has intervening external input; full load/error/persistence contract unknown. |
-| `ui41.fixture.evening` | `03-fixtures` | European Champions Cup, Evening Fixtures; Tuesday 14.10.03 EVE; group labels, team pairings and position badges. Clicking the Newcastle label opened squad. | No evidence that this is a direct route from every fixture view. Competition control and fixture sorting untested. |
-| `ui41.squad.selection` | `04-squad` | Newcastle United; active Squad tab; Selection Info; 13 visible roster rows. Clicking Giorgi Mamardashvili, second visible row, opened profile. | The scrollable roster is larger than its visible slice; no sorting/filtering/selection mutation admitted. |
+| `ui41.fixture.evening` | `03-fixtures` | Competition heading, Evening Fixtures; date/phase, group labels, pairings and position badges. Clicking the managed club label opened squad. | No evidence that this is a direct route from every fixture view. Competition control and fixture sorting untested. |
+| `ui41.squad.selection` | `04-squad` | Managed club; active Squad tab; Selection Info; 13 visible roster rows. Clicking the second visible player opened profile. | The scrollable roster is larger than its visible slice; no sorting/filtering/selection mutation admitted. |
 | `ui41.player.profile` | `05-player` | Same selected player name, shirt prefix, club; biography, role, 31 integer attributes in three columns, foot/form/morale/condition and a statistics table. Bottom Back returned squad. | Identity link is observed navigation, not a recovered native player ID. Other tabs/action menu, next player and statistics controls untested. |
-| `ui41.tactics.overview` | `06-tactics` | Squad bottom Tactics opened overview; named tactic `iodineCF`; Overview/With Ball/Without Ball; player list, conditions and shirt-number pitch nodes; Cancel returned squad. | No intentional formation or selection edits. Handlers, persistence and tactical engine effects unknown. |
-| `ui41.squad.returned` | `07-squad-after-tactics` | Same visible roster slice and ordering. In 04/06/07 Hall reads 95%, Botman 100%. | Captures are sequential and not atomic. No condition-change or navigation-caused update is established. |
+| `ui41.tactics.overview` | `06-tactics` | Squad bottom Tactics opened overview; tactic label; Overview/With Ball/Without Ball; player list, conditions and shirt-number pitch nodes; Cancel returned squad. | No intentional formation or selection edits. Handlers, persistence and tactical engine effects unknown. |
+| `ui41.squad.returned` | `07-squad-after-tactics` | Repeated visible roster slice and ordering; private values retained in source evidence. | Captures are sequential and not atomic. No condition-change or navigation-caused update is established. |
 | `ui41.match.confirm` | `08-proceed-modal` | Continue twice from squad, with an uncaptured pre-match selection step, led to “Proceed to the match ?” with No/Yes. Yes opened pre-kickoff. | First intermediate state's exact layout and No/back behavior unobserved. Continue can invoke game logic; viewer cannot issue it. |
-| `ui41.match.prekickoff` | `09-match-before-kickoff-A` | Newcastle 0–0 Midtjylland at clock 0, Kick Off, Kick Off Match control; referee and weather; overview/statistics/zones/report tabs. | Native match initialization and supported headless commands are not established by this screen. |
-| `ui41.match.running` | `10-match-running-A` | Second Half at 71; scoreboard 0–1 and Osorio 64. Pause Match control. Commentary text names a different scoring event. | Display fields are separate observations. Commentary/score timing relationship and cause are unresolved; no outcome inferred from commentary. |
-| `ui41.result.fulltime` | `11-result-A` | Full Time at 94; Newcastle 0–1 Midtjylland; Osorio 64; attendance 51,590; referee Mohammed Al-Hakim; weather Breezy, Shower, 9°C. Continue Game available. | Later result commit, continue, persistence and return navigation unobserved. This GDI result is not a TypeScript outcome or pinned-runtime equivalence. |
+| `ui41.match.prekickoff` | `09-match-before-kickoff-A` | Initial clock/score, Kick Off, Kick Off Match control; referee/weather fields; overview/statistics/zones/report tabs. | Native match initialization and supported headless commands are not established by this screen. |
+| `ui41.match.running` | `10-match-running-A` | Second Half; clock/score/event fields and Pause Match control. Commentary and scorer list contain different event references. | Display fields are separate observations. Commentary/score timing relationship and cause are unresolved; no outcome inferred from commentary. |
+| `ui41.result.fulltime` | `11-result-A` | Full Time; clock, score, scorer, attendance, referee/weather fields; Continue Game available. Captured values remain private. | Later result commit, continue and persistence unobserved at this cutoff; restart route is recorded separately above. This is not a TypeScript outcome or pinned-runtime equivalence. |
 
 ## Components, formatting and layout
 
 At the observed resolution, the original has an approximately 90-pixel left navigation rail, a wide heading band, horizontal tabs and grey bottom navigation. Background photographs occupy the main pane; this integration uses CSS color panels because original assets remain private. Active tabs have yellow outlines; dark blue/purple navigation, yellow values, cyan position/rating text and orange condition text recur. Arial-like body text and larger bold headings are visible, but exact font metrics remain unresolved by the opaque FNT files. React's browser Arial and colors are approximations, not recovered typography/palette equivalence.
 
-The squad column order is **Pkd, Inf, Name, Position, Form, Morale, Cond., Apps, Av R, Value**. Blank picked/info cells remain blank; display strings preserve punctuation, percent signs, decimal places, currency suffixes and substitute counts such as `2 (1)`. No new sort order, numeric conversion, rating ceiling, attribute units or currency calculation is inferred. The View, Clear Squad and Filter controls are visible but untested. Column-header sorting and keyboard navigation in the original are unknown.
+The squad column order is **Pkd, Inf, Name, Position, Form, Morale, Cond., Apps, Av R, Value**. Blank picked/info cells remain blank; display strings preserve punctuation, percent signs, decimal places, currency suffixes and parenthesized substitute counts. No new sort order, numeric conversion, rating ceiling, attribute units or currency calculation is inferred. The View, Clear Squad and Filter controls are visible but untested. Column-header sorting and keyboard navigation in the original are unknown.
 
 Profile attributes retain their observed three-column order. Seven attributes occupy the third column, followed by Preferred Foot, Form, Morale and Condition. Biography and Goalkeeper role are displayed verbatim in the private snapshot. The native statistics grid is visible but intentionally outside this bounded view model, with its omission labelled in React. Player details are historical save/mod data; they are not current real-world facts.
 
