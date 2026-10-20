@@ -56,7 +56,6 @@
       "route.load.restore.info",
       "route.fixture.evening.competition",
       "route.fixture.evening.scroll",
-      "route.fixture.evening.back",
       "route.squad.selection.transfers",
       "route.squad.selection.next",
       "route.squad.selection.fixtures",
@@ -124,7 +123,7 @@
       "screenshot_confirmed_state_ids": 17,
       "operator_only_state_ids": 5,
       "terminal_state_ids": 1,
-      "discovered_uncaptured_route_ids": 61,
+      "discovered_uncaptured_route_ids": 60,
       "unknown_unbounded_section_ids": 12
     }
   },
@@ -2918,17 +2917,6 @@
       "id": "route.fixture.evening.scroll",
       "from": "ui41.fixture.evening",
       "control_label": "Fixture scrollbar",
-      "status": "discovered-uncaptured",
-      "evidence_ids": [
-        "r41-ui-03-fixtures"
-      ],
-      "target_state_id": null,
-      "destination": "unmapped; label alone does not prove destination layout or behavior"
-    },
-    {
-      "id": "route.fixture.evening.back",
-      "from": "ui41.fixture.evening",
-      "control_label": "Back in a context allowing it",
       "status": "discovered-uncaptured",
       "evidence_ids": [
         "r41-ui-03-fixtures"

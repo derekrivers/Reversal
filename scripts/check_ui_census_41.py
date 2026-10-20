@@ -100,8 +100,14 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
             require(any(evidence[i]['kind'] == 'operator-report' for i in edge['evidence_ids']), 'image-only action claim')
     for state in states.values():
         refs(state['evidence_ids'], evidence)
+        require(bool(state['evidence_ids']), 'state without evidence')
         require(state['layout_id'] is None or state['layout_id'] in layouts, 'unknown layout')
         screen = any(evidence[i]['kind'] == 'screenshot' for i in state['evidence_ids'])
+        require(state['kind'] in ['screen', 'modal', 'native-dialog', 'operator-only', 'terminal'], 'unknown state kind')
+        if state['kind'] in ['operator-only', 'terminal']:
+            require(not screen and any(evidence[i]['kind'] == 'operator-report' for i in state['evidence_ids']), 'unconfirmed nonvisual state')
+        else:
+            require(screen, 'visual state without screenshot')
         observed = [i for i,e in edges.items() if e['status'] == 'observed-action' and state['id'] in (e['from'],e['to'])]
         level = state['coverage']
         require(level['screenshot'] == screen, 'screenshot coverage mismatch')
@@ -127,7 +133,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
     require(denominator['total_application_screen_states'] is None, 'unknown total application denominator promoted to known')
     expected_sets = {
         'screenshot_confirmed_state_ids':[i for i,s in states.items() if s['coverage']['screenshot']],
-        'operator_only_state_ids':[i for i,s in states.items() if not s['coverage']['screenshot'] and s['kind'] != 'terminal'],
+        'operator_only_state_ids':[i for i,s in states.items() if s['kind'] == 'operator-only'],
         'terminal_state_ids':[i for i,s in states.items() if s['kind'] == 'terminal'],
         'discovered_uncaptured_route_ids':list(routes), 'unknown_unbounded_section_ids':list(domains)}
     require(all(denominator[k] == v for k,v in expected_sets.items()), 'denominator membership mismatch')
@@ -182,6 +188,9 @@ def main():
         lambda d:d['denominator'].update(total_application_screen_states=100),
         lambda d:d['discovered_routes'][0].update(evidence_ids=[]),
         lambda d:d['discovered_routes'][0].update(evidence_ids=[d['evidence'][-1]['id']]),
+        lambda d:next(s for s in d['states'] if s['kind']=='operator-only').update(evidence_ids=[]),
+        lambda d:next(s for s in d['states'] if s['kind']=='operator-only').update(kind='screen'),
+        lambda d:next(s for s in d['states'] if s['kind']=='terminal').update(evidence_ids=[]),
         escape_report_source,
         lambda d:d['states'][0]['assets']['asset_ids'].append('unknown-asset'),
         lambda d:d['observed_adjacency'][d['states'][0]['id']].clear(),
