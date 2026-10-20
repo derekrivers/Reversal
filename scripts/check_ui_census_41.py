@@ -362,25 +362,32 @@ def check_private_display(snapshot, public):
     # can corrupt valid objects when a separate property contains quotes/braces.
     pairs = {(label.casefold(), value) for label,value in labelled}
     decoder = json.JSONDecoder()
-    def inspect_json_objects(source):
-        for match in re.finditer(r'\{', source):
+    def inspect_value(value, depth):
+        require(depth < 32, 'excessively nested structured display text')
+        if isinstance(value, dict):
+            if isinstance(value.get('label'), str) and isinstance(value.get('value'), str):
+                require((value['label'].casefold(), value['value']) not in pairs, 'private captured structured value present in public catalogue/report')
+            for child in value.values():
+                inspect_value(child, depth + 1)
+        elif isinstance(value, list):
+            for child in value:
+                inspect_value(child, depth + 1)
+        elif isinstance(value, str) and '{' in value:
+            inspect_json_objects(value, depth + 1)
+    def inspect_json_objects(source, depth=0):
+        pos = 0
+        while True:
+            start = source.find('{', pos)
+            if start < 0:
+                return
             try:
-                obj, _ = decoder.raw_decode(source, match.start())
+                obj, end = decoder.raw_decode(source, start)
             except json.JSONDecodeError:
+                pos = start + 1
                 continue
-            if isinstance(obj, dict) and isinstance(obj.get('label'), str) and isinstance(obj.get('value'), str):
-                require((obj['label'].casefold(), obj['value']) not in pairs, 'private captured structured value present in public catalogue/report')
+            inspect_value(obj, depth + 1)
+            pos = end
     inspect_json_objects(raw_public)
-    # A complete public JSON file can itself contain a JSON fragment in a
-    # string field; parse that decoded field as a separate structured source.
-    try:
-        root_object, _ = decoder.raw_decode(raw_public)
-    except json.JSONDecodeError:
-        root_object = None
-    if root_object is not None:
-        for value in text_values(root_object):
-            if '{' in value:
-                inspect_json_objects(value)
 
 
 def main():
@@ -581,6 +588,8 @@ def main():
             '{"value":"' + attribute['value'] + '","source":"capture","label":"' + attribute['label'] + '"}',
             json.dumps({'value': attribute['value'], 'source': 'quoted "capture"', 'label': attribute['label']}),
             json.dumps({'value': attribute['value'], 'source': '{capture}', 'label': attribute['label']}),
+            '\n' + json.dumps({'note': json.dumps({'value': attribute['value'], 'source': 'quoted "capture"', 'label': attribute['label']})}),
+            '\n```json\n' + json.dumps({'note': json.dumps({'value': attribute['value'], 'source': '{capture}', 'label': attribute['label']})}) + '\n```',
         ])
         escaped_name = next(row['name'] for row in snapshot['squad']['rows'] if any(ord(ch) > 127 for ch in row['name']))
         private_leaks.append(json.dumps({'name': escaped_name}))
