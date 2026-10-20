@@ -81,6 +81,27 @@ REVIEWED_EDGE_TOPOLOGY = {
     'edge.error-ok': ('ui41.load.language_error', 'ui41.load.config_error', 'observed-action'),
 }
 
+REVIEWED_STATE_IDS = frozenset({
+    'ui41.load.menu', 'ui41.load.restore', 'ui41.load.restore.selected',
+    'ui41.load.media_info', 'ui41.load.language_error', 'ui41.load.config_error',
+    'ui41.fixture.evening', 'ui41.squad.selection', 'ui41.squad.prematch',
+    'ui41.player.profile', 'ui41.tactics.overview', 'ui41.match.confirm',
+    'ui41.match.prekickoff', 'ui41.match.running', 'ui41.match.halftime',
+    'ui41.result.fulltime', 'ui41.exit.confirm', 'ui41.load.media_request',
+    'ui41.game.options', 'ui41.restart.confirm', 'ui41.restart.saveprompt',
+    'ui41.save.dialog', 'ui41.process.exited',
+})
+
+# Digest of the complete 60-row reviewed control frontier, ordered by route ID
+# and encoded as canonical UTF-8 JSON. Extending the census requires a fresh
+# visual review and an intentional update of this batch pin.
+REVIEWED_ROUTE_SHA256 = 'ec9061bf37e9952998d52693b911e5f8c4c92a50d17947f24dc981dd3b06819f'
+
+
+def route_digest(rows):
+    canonical = json.dumps(sorted(rows, key=lambda row: row['id']), sort_keys=True, separators=(',', ':'), ensure_ascii=False)
+    return hashlib.sha256(canonical.encode('utf-8')).hexdigest()
+
 
 def require(condition, message):
     if not condition:
@@ -129,9 +150,11 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
     evidence = indexed(data['evidence'], 'evidence')
     layouts = indexed(data['layouts'], 'layout')
     states = indexed(data['states'], 'state')
+    require(set(states) == REVIEWED_STATE_IDS, 'unreviewed state catalogue')
     edges = indexed(data['transitions'], 'transition')
     require(set(edges) == set(REVIEWED_EDGE_TOPOLOGY), 'unreviewed transition set')
     routes = indexed(data['discovered_routes'], 'route')
+    require(route_digest(data['discovered_routes']) == REVIEWED_ROUTE_SHA256, 'unreviewed control frontier')
     domains = indexed(data['unknown_sections'], 'domain')
     require(all(alias not in states and target in states for alias,target in data['state_aliases'].items()), 'invalid historical state alias')
     def refs(ids, source):
@@ -289,6 +312,22 @@ def main():
     def promote_cd_gap(d):
         next(edge for edge in d['transitions'] if edge['id'] == 'edge.cd-gap')['status'] = 'observed-action'
         reseal_derived_transitions(d)
+    def clone_visual_state(d):
+        cloned = copy.deepcopy(next(state for state in d['states'] if state['id'] == 'ui41.match.running'))
+        cloned['id'] = 'ui41.match.running.cloned'
+        cloned['coverage']['transition_ids'] = []
+        cloned['coverage']['observed_transition'] = False
+        d['states'].append(cloned)
+        d['observed_adjacency'][cloned['id']] = []
+        d['denominator']['screenshot_confirmed_state_ids'].append(cloned['id'])
+        d['denominator']['counts']['screenshot_confirmed_state_ids'] += 1
+    def invent_control_route(d):
+        invented = copy.deepcopy(d['discovered_routes'][0])
+        invented['id'] = 'route.load.menu.invented'
+        invented['control_label'] = 'Invented control'
+        d['discovered_routes'].append(invented)
+        d['denominator']['discovered_uncaptured_route_ids'].append(invented['id'])
+        d['denominator']['counts']['discovered_uncaptured_route_ids'] += 1
     mutations = [
         lambda d:d['transitions'][0].update(to='ui41.unmapped'),
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(evidence_ids=['r41-a4-operator-notes'], context_ids=['gdi-A4-failed-launch']),
@@ -296,6 +335,8 @@ def main():
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(action='Exit Game'),
         retarget_option,
         promote_cd_gap,
+        clone_visual_state,
+        invent_control_route,
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.running-sequence').update(evidence_ids=['r41-ui-09-match-before-kickoff-A']),
         lambda d:d['evidence'].append(d['evidence'][0]),
         lambda d:d['states'][0]['coverage'].update(engine_binding=True),
