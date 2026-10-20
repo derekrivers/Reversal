@@ -1,0 +1,63 @@
+{
+  "schema": "reversal.gdi-code-anchors-40.v1",
+  "pinned_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
+  "gdi_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+  "identity": "exact disk hashes; no runtime memory authentication",
+  "scope": "bounded exact code bytes only; no state, callee, outcome or complete-build equivalence",
+  "anchors": [
+    {
+      "name": "action33-entry",
+      "pinned_va": "0x00702050",
+      "gdi_va": "0x00701a80",
+      "bytes": 64,
+      "pinned_file_offset": "0x302050",
+      "gdi_file_offset": "0x301a80",
+      "sha256": "3cece14e01198aae144cccd86e4c982b0c3d9cd3d717ff4f14c5599a3b412d82"
+    },
+    {
+      "name": "action33-keeper-through-effect",
+      "pinned_va": "0x00702416",
+      "gdi_va": "0x00701e46",
+      "bytes": 222,
+      "pinned_file_offset": "0x302416",
+      "gdi_file_offset": "0x301e46",
+      "sha256": "7999bb6d0d80f93d7a047399f98f98005021d7827b84415916dae076f983d20d"
+    },
+    {
+      "name": "keeper-entry",
+      "pinned_va": "0x00700420",
+      "gdi_va": "0x006ffe50",
+      "bytes": 64,
+      "pinned_file_offset": "0x300420",
+      "gdi_file_offset": "0x2ffe50",
+      "sha256": "d663858120b646cabf9d040fb282519db47c9be5c0c62e2e2cbf353f9129bd4f"
+    },
+    {
+      "name": "effect-entry",
+      "pinned_va": "0x006cfe10",
+      "gdi_va": "0x006cf840",
+      "bytes": 32,
+      "pinned_file_offset": "0x2cfe10",
+      "gdi_file_offset": "0x2cf840",
+      "sha256": "565533b7dc1f0bda744e76b6f22aea87b766339f9d3af3c120e125b0f774bce7"
+    },
+    {
+      "name": "score-effect-entry",
+      "pinned_va": "0x006d0980",
+      "gdi_va": "0x006d03b0",
+      "bytes": 24,
+      "pinned_file_offset": "0x2d0980",
+      "gdi_file_offset": "0x2d03b0",
+      "sha256": "f871563c8904699479f91c6230f8703737dd2f91e689ef84be6b22a75feab5dc"
+    },
+    {
+      "name": "bounded-rng-entry",
+      "pinned_va": "0x0090cfc0",
+      "gdi_va": "0x0090c860",
+      "bytes": 16,
+      "pinned_file_offset": "0x50cfc0",
+      "gdi_file_offset": "0x50c860",
+      "sha256": "0501e7f359902acaf49b347b77ed52233daa572fca353b2908dbcacab45161cd"
+    }
+  ]
+}
