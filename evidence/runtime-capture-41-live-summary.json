@@ -95,7 +95,7 @@
       "referee": "Drazenko Kovacic",
       "weather": "Breezy, 9 C",
       "state": "parked before kickoff",
-      "probes": "none"
+      "probes": "one 40-second pre-kickoff lookup attempt; no hit; restored and detached; game input blocked by security modal"
     },
     "earliest_gameplay_difference_observed": "pre-kickoff referee and weather, before debugger attached to either run",
     "earlier_cosmetic_difference": "menu/fixture backgrounds differ",
@@ -107,5 +107,41 @@
     "bytes": 151793237,
     "entries": 25,
     "restored_hashes_match": true
-  }
+  },
+  "blocked_attempts": [
+    {
+      "capture_id": "r41-live-lookup-B",
+      "sha256": "3359d0fd69faeb2e70d04bd2dd81c39e86b0306fe37e91781f391bf8179814ea",
+      "bytes": 4691,
+      "tool_commit": "ac8a965b1c111cf0e744a89d820c9c48a44ad1fb",
+      "exe_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "boundary": {
+        "preferred_va": 6481632,
+        "rva": 2287328,
+        "runtime_va": 6481632,
+        "file_offset": 2287328
+      },
+      "requested_seconds": 40,
+      "elapsed_seconds": 40.10645350000004,
+      "hit": false,
+      "sample_observed": false,
+      "memory_complete": null,
+      "slot_aliases_observed": false,
+      "restored_thread_count": 7,
+      "detached": true,
+      "scenario": "pre-kickoff; Windows Security network permission dialog blocked game input",
+      "gameplay_absence_inferred": false
+    }
+  ],
+  "supplemental_backup": {
+    "sha256": "f3e5d7e2c0cfa6fb22c06df40925f02505d019519f136d74c60eb2142fea9e14",
+    "entries": 7,
+    "restored_hashes_match": true,
+    "scope": "corrected tool/checker/report, full-check log, timeout result and resume note before reporting-only wrap-up"
+  },
+  "pending": [
+    "user dismissal of security dialog",
+    "same-event ESI slot capture",
+    "same-process reload comparison"
+  ]
 }

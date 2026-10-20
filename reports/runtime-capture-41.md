@@ -35,6 +35,12 @@ cleanup. The CLI has no elevation or broker. Forced host termination can bypass
 cleanup; a Windows cleanup API failure is an explicit failure, not a successful
 capture. All-thread event stops affect scheduling.
 
+Requested memory is limited to eight explicit regions, each at most 4,096 bytes,
+and 15,872 explicit bytes in total, plus the fixed 512-byte stack sample and
+four-byte FS head. Lookup captures add at most 1,484 bytes of bounded selected
+state, including the optional 446-byte ESI region. Identity/header reads occur
+separately before attachment. These bounds are unchanged by the ESI correction.
+
 At GDI lookup entry, the tool follows a bounded graph: entry stack, lookup
 receiver, staff argument, selected status row, selected cache record when valid,
 flags/count/date/global, staff base and four RNG scalars. The documented
@@ -99,10 +105,11 @@ this genuine entry through the original instructions and TypeScript; its report
 owns that comparison. This capture alone observes entry, not the live return,
 ordered effects, slot ownership, producer execution or a complete attempt.
 
-The next tool version adds a 446-byte ESI candidate-slot read at the same
+The current tool adds a 446-byte ESI candidate-slot read at the same
 event and records the two pointer equalities and effect-return provenance.
-That extension has not yet been attached to the game. It must pass fresh review
-before a second capture. Reading a resumed process at Lookup A's old addresses
+The corrected extension passed independent review and was attached once for
+run B, but no lookup hit or slot bytes were obtained. Reading a resumed process
+at Lookup A's old addresses
 would not establish the missing same-event state.
 
 The extension review found that an unrelated caller's ESI near `ffffffff`
@@ -112,6 +119,22 @@ that read; both alias results remain null. A pure fake-memory regression checks
 overflowing, null and valid-but-unmapped ESI under normal and optimized Python.
 Required region limits are unchanged. The original live captures and their
 backup remain byte-for-byte unchanged; this correction applies to future captures.
+
+## Blocked second lookup attempt
+
+The reviewed tool at `ac8a965b1c111cf0e744a89d820c9c48a44ad1fb` attached to
+run B for one 40-second lookup attempt. A Windows Security network-permission
+dialog for Node.js covered the game before any kickoff input was sent. The
+operator did not interact with that dialog or advance the game. The debugger
+timed out after 40.106 seconds, restored seven threads' saved debug registers
+and detached successfully. The result has `hit: false` and no sample.
+
+This is a timeout while the game remained before kickoff, not evidence that
+gameplay omitted the lookup. The same-process reload experiment and ESI
+pointer-alias observations remain pending. No more game input or instrumentation
+was attempted while awaiting the user's dismissal of the security prompt.
+The sanitized receipt records the raw-result hash and cleanup facts without
+publishing registers, pointer values or memory.
 
 ## Paired save experiment
 
@@ -135,7 +158,8 @@ unestablished despite the usable captured function boundary.
 
 ## Private preservation and resume
 
-Private results retain 13 journey screenshots, the two raw capture JSON files,
+Private results retain 13 journey screenshots, two raw hit captures and one
+timeout result,
 scenario and configuration manifests, the duplicated save and the disposable
 game copy. Files named `.png` from the UI bridge contain JPEG bytes; their
 original bytes/names were preserved and the private manifest labels encoding.
@@ -150,6 +174,15 @@ save, both executable identities, active config and English language file.
 Remaining installed data is inventoried but not duplicated into this archive.
 This establishes local backup/restore only; no off-host durability is claimed.
 
-The sole game instance is run B, process 15240, parked before kickoff. Next:
-review the isolated ESI read, then capture a new lookup event and give its
-referent to R41-B. No shared registry or canonical Ghidra state was changed.
+A second local archive preserves the corrected tool/checker/report, full-check
+log, timeout result and resume note: SHA-256
+`f3e5d7e2c0cfa6fb22c06df40925f02505d019519f136d74c60eb2142fea9e14`.
+All seven entries were independently extracted and rehashed. This supplement
+preserves the state before this reporting-only wrap-up; the original capture
+archive remains unchanged.
+
+Run B, process 15240, was left before kickoff with no debugger attached. Next:
+after the user confirms dismissal of the security dialog, reobserve the game,
+capture one new lookup event using the reviewed tool and give its slot referent
+to R41-B. Then attempt the same-process reload comparison. No shared registry
+or canonical Ghidra state was changed.
