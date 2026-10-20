@@ -1,0 +1,116 @@
+{
+  "schema": "reversal.runtime-paired-return-41.validation.v1",
+  "scope": "tool-only owned synthetic WOW64 tests; no game process operation",
+  "gdi_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+  "entry_preferred_va": "0062e6e0",
+  "return_preferred_va": "006cf8f7",
+  "normal_and_optimized_pass": true,
+  "cases": [
+    {
+      "case": "Normal",
+      "passed": true,
+      "stop_reason": "paired_return"
+    },
+    {
+      "case": "WrongCaller",
+      "passed": true,
+      "stop_reason": "entry_caller_or_stack_mismatch"
+    },
+    {
+      "case": "WrongStack",
+      "passed": true,
+      "stop_reason": "return_stack_mismatch"
+    },
+    {
+      "case": "NestedMismatch",
+      "passed": true,
+      "stop_reason": "return_stack_mismatch"
+    },
+    {
+      "case": "Timeout",
+      "passed": true,
+      "stop_reason": "return_not_observed"
+    },
+    {
+      "case": "Exception",
+      "passed": true,
+      "stop_reason": "paired_return"
+    },
+    {
+      "case": "ReadFailure",
+      "passed": true,
+      "stop_reason": "paired_return"
+    },
+    {
+      "case": "RearmFailure",
+      "passed": true,
+      "stop_reason": "paired_return"
+    },
+    {
+      "case": "ContinueFailure",
+      "passed": true,
+      "stop_reason": "paired_return"
+    }
+  ],
+  "legacy_normal_and_optimized_pass": true,
+  "node24_full_check_pass": true,
+  "source_identity": [
+    {
+      "path": "scripts/runtime_capture_41.py",
+      "sha256_lf": "43576651ce9d0f6f68d58e6324da8a8b59a3e027c04bbfe49c9609de1607a004",
+      "tested_file_sha256": "7f27a745f6364e4222afb4704d5ffb414f0d5284329f34fdcfd9d99eddc5c4a6"
+    },
+    {
+      "path": "scripts/check_runtime_paired_return_41.py",
+      "sha256_lf": "b111369fce6e5571e471f93b37e8e327f22499017627cbcdc54686f762a2f943",
+      "tested_file_sha256": "b111369fce6e5571e471f93b37e8e327f22499017627cbcdc54686f762a2f943"
+    },
+    {
+      "path": "scripts/runtime_paired_return_41_synthetic.ps1",
+      "sha256_lf": "86734016e0c3a41372ed0e2fe938c70d7c5074c39732e36f65f5f3caa817978c",
+      "tested_file_sha256": "86734016e0c3a41372ed0e2fe938c70d7c5074c39732e36f65f5f3caa817978c"
+    }
+  ],
+  "private_configuration_recheck": {
+    "manifest_entries": 784,
+    "unchanged_entries": 774,
+    "missing_root_language_files": 10,
+    "duplicate_save_matches": true,
+    "game_operation": false
+  },
+  "review_status": "independent exact-head review required before live use",
+  "limits": {
+    "max_requested_seconds": 60,
+    "event_loop_cleanup_allowance_seconds": 5,
+    "exceptional_cleanup_event_wait_ms": 5000,
+    "max_events": 2048,
+    "max_sampled_bytes_excluding_fs_and_identity": 52120
+  },
+  "missing": [
+    "live paired return",
+    "intervening instruction trace",
+    "ordered effects",
+    "producer and ownership lifetime",
+    "complete effect continuation"
+  ],
+  "deterministic_queued_event_cases": [
+    {
+      "case": "queued_entry_return",
+      "passed": true
+    },
+    {
+      "case": "queued_entry_timeout",
+      "passed": true
+    },
+    {
+      "case": "queued_entry_drain_failure",
+      "passed": true
+    }
+  ],
+  "old_handler_negative": {
+    "head": "5c354218dc78f8bc3195113615d3b1e34acc51c0",
+    "normal_and_optimized_rejected": true,
+    "reason": "late owned hardware trap forwarded as NOT_HANDLED",
+    "real_processes_launched": 0
+  }
+}
