@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '740e2e2440af059e46b381921807ed005d1fff35ddd3d72df7e38f2af4480994'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'e86da07013c118a258ff61382646c9eca83f4577a57af5fd0ddd82e2749bb7be'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -179,6 +179,8 @@ def render_for_privacy(source):
     rendered = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_ref(match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'\\[ \t]*\r?\n', ' ', rendered)
     rendered = re.sub(r'\\([\\`*_{}\[\]()#+.!<>~\-])', r'\1', rendered)
+    code_spans = re.compile(r'(?<!`)(?P<ticks>`{1,3})(?!`)(?P<body>[\s\S]*?)(?<!`)(?P=ticks)(?!`)')
+    rendered = code_spans.sub(lambda match: re.sub(r'\s+', ' ', match.group('body')), rendered)
     markup = re.compile(r'(?P<marker>\*\*|__|~~|``|\*|_|`)(?P<body>[^\r\n]+?)(?P=marker)')
     while True:
         previous = rendered
@@ -199,7 +201,7 @@ def has_private_path_or_payload(part):
     for candidate in (part, html.unescape(part), render_for_privacy(part)):
         if PRIVATE_PATH_PAYLOAD.search(candidate) or ROOT_RELATIVE_WINDOWS.search(candidate) or rooted_in_spans(candidate):
             return True
-        unicode_boundaries = ''.join(' ' if ord(char) > 127 and unicodedata.category(char)[0] in 'PS' or unicodedata.category(char) == 'Cf' else char for char in candidate)
+        unicode_boundaries = ''.join(' ' if ord(char) > 127 and (unicodedata.category(char)[0] in 'PS' or unicodedata.category(char) == 'Cf') else char for char in candidate)
         if unicode_boundaries != candidate and ROOT_RELATIVE_WINDOWS.search(unicode_boundaries):
             return True
     return False
@@ -786,6 +788,7 @@ def main():
         private_leaks.extend((
             name_head + ' **' + name_tail + '**',
             name_head + ' `' + name_tail + '`',
+            name_head + ' `' + name_tail + '\n`',
             name_head + ' [' + name_tail + '](https://example.invalid)',
             name_head + ' [](/x)' + name_tail,
             name_head + ' ![](/x)' + name_tail,
@@ -831,6 +834,7 @@ def main():
             '| ' + attribute['label'] + ' | ' + attribute['value'] + ' |',
             attribute['label'] + ': **' + attribute['value'] + '**',
             attribute['label'] + ': `' + attribute['value'] + '`',
+            attribute['label'] + ': `' + attribute['value'] + '\n`',
             attribute['label'] + ': _' + attribute['value'] + '_',
             attribute['label'] + ': ~~' + attribute['value'] + '~~',
             '| ' + attribute['label'] + ' | **' + attribute['value'] + '** |',
