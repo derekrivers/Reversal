@@ -114,7 +114,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '04b717a8d15ee98e20a00aef9803cab77a59dc599f68209b24aecc064257978d'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '0f52914891e5067f957bac4b880cf46766ddf9c64b4ebdedcfda7a14b018a3f1'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -142,6 +142,8 @@ def render_for_privacy(source):
     for line in source.splitlines(keepends=True):
         bare = line.rstrip('\r\n')
         if fence_char is None:
+            if not bare.strip():
+                pending_code_runs.clear()
             opening = re.fullmatch(r' {0,3}(`{3,}|~{3,})[^\r\n]*', bare)
             if opening and opening.group(1)[0] == '`' and len(opening.group(1)) in pending_code_runs:
                 opening = None  # Closing a multiline inline span, not opening a fence.
@@ -505,6 +507,10 @@ def check_private_display(snapshot, public):
         token = match.group(1)
         return chr(int(token[1:], 16)) if token.startswith('u') else escapes[token]
     public = re.sub(r'\\(u[0-9a-fA-F]{4}|["\\/bfnrt])', unescape, public)
+    try:
+        public = public.encode('utf-16', 'surrogatepass').decode('utf-16')
+    except UnicodeError as exc:
+        raise ValueError('malformed Unicode surrogate in public display') from exc
     public = unicodedata.normalize('NFC', public)
     exact = set()
     labelled = set()
@@ -932,6 +938,13 @@ def main():
             attribute['label'] + ': ' + attribute['value'][0] + '\\u034f' + attribute['value'][1:],
             name_head + ' ' + name_tail[0] + '&#4447;' + name_tail[1:],
             attribute['label'] + ': ' + attribute['value'][0] + '\\u115f' + attribute['value'][1:],
+            name_head + ' ' + name_tail[0] + '\U000e0100' + name_tail[1:],
+            name_head + ' ' + name_tail[0] + '&#917760;' + name_tail[1:],
+            json.dumps({'name': name_head + ' ' + name_tail[0] + '\U000e0100' + name_tail[1:]}),
+            json.dumps({'clubLabel': snapshot['squad']['clubLabel'][0] + '\U0001d173' + snapshot['squad']['clubLabel'][1:]}),
+            json.dumps({'bio': snapshot['profile']['bio'][0] + '\U000e0020' + snapshot['profile']['bio'][1:]}),
+            attribute['label'] + ': ' + attribute['value'][0] + '\U0001d173' + attribute['value'][1:],
+            attribute['label'] + ': ' + attribute['value'][0] + '\U000e0020' + attribute['value'][1:],
         ))
         private_leaks.extend((
             json.dumps({'value': attribute['value'][0] + '&#8203;' + attribute['value'][1:], 'note': 'context', 'label': attribute['label']}),
@@ -958,6 +971,8 @@ def main():
             attribute['label'] + ':\n```text\n' + attribute['value'] + '\n```',
             attribute['label'] + ':\n~~~plain\n' + attribute['value'] + '\n~~~',
             name_head + '\n```text\n' + name_tail + '\n```',
+            'note ```literal\n\n' + attribute['label'] + ':\n```text\n' + attribute['value'] + '\n```',
+            'note ```literal\n\n' + name_head + '\n```text\n' + name_tail + '\n```',
             attribute['label'] + ': ' + attribute['value'] + '.',
             attribute['label'] + ' ' + attribute['value'] + '.',
             '{"' + attribute['label'] + '":"' + attribute['value'] + '"}',
@@ -1033,6 +1048,7 @@ def main():
         check_private_display(snapshot, public + '\n' + name_head + '\n--not-marker\n' + name_tail)
         check_private_display(snapshot, public + '\n' + name_head + '\n#######\n' + name_tail)
         check_private_display(snapshot, public + '\n' + attribute['label'] + ':\n```text\n' + attribute['value'][0] + '*' + attribute['value'][1:] + '\n```')
+        check_private_display(snapshot, public + '\n' + name_head + ' ' + name_tail[0] + 'X' + name_tail[1:])
         check_private_display(snapshot, public + '\n' + json.dumps({'value': attribute['value'] + '.5', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'value': '<em>' + attribute['value'][0] + '*' + attribute['value'][1:] + '</em>', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'v&#97;lues': attribute['value'], 'label': attribute['label']}))
@@ -1052,6 +1068,12 @@ def main():
             pass
         else:
             raise ValueError('Unicode-equivalent structured display leak probe accepted')
+        try:
+            check_private_display(snapshot, public + '\n\\uD800')
+        except ValueError as exc:
+            require(str(exc) == 'malformed Unicode surrogate in public display', 'malformed surrogate rejected for unrelated reason')
+        else:
+            raise ValueError('malformed Unicode surrogate accepted')
         escaped = copy.deepcopy(snapshot)
         escaped['squad']['rows'][0]['name'] = 'Harper Example-ton'
         try:
@@ -1077,8 +1099,8 @@ def main():
             raise ValueError('Unicode case-folded private label accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 17
-        result['private_escape_probes'] = 5
+        result['private_near_miss_probes'] = 18
+        result['private_escape_probes'] = 6
     result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 9
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
