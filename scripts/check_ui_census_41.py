@@ -80,6 +80,8 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
             require(item['client_pixels'] in (None, [800,600]), 'unexpected game-client extent')
         else:
             require(item['source_visibility'] in ['public-tracked','private-not-loaded'], 'unknown operator source visibility')
+            if item['id'] == 'r41-operator-route-report':
+                require(item['source_visibility'] == 'public-tracked' and item['source_digest_basis'] == 'utf8-lf' and item['source'] == 'reports/runtime-capture-41.md', 'operator journey source downgraded or changed')
             if item['source_visibility'] == 'public-tracked':
                 require(item['id'] == 'r41-operator-route-report' and item['source'] == 'reports/runtime-capture-41.md', 'unexpected public operator source')
                 require(item['source_digest_basis'] == 'utf8-lf', 'unsupported public source digest basis')
@@ -184,6 +186,11 @@ def main():
         item = next(e for e in d['evidence'] if e['id'] == 'r41-operator-route-report')
         item['source'] = 'reports/asset-inventory-41.md'
         item['sha256'] = source_digest((ROOT / item['source']).read_bytes())
+    def downgrade_operator_source(d):
+        item = next(e for e in d['evidence'] if e['id'] == 'r41-operator-route-report')
+        item['source_visibility'] = 'private-not-loaded'
+        item['source_digest_basis'] = 'raw-bytes'
+        item['source'] = 'private opaque replacement'
     mutations = [
         lambda d:d['transitions'][0].update(to='ui41.unmapped'),
         lambda d:d['evidence'].append(d['evidence'][0]),
@@ -198,6 +205,7 @@ def main():
         lambda d:next(s for s in d['states'] if s['kind']=='terminal').update(evidence_ids=[]),
         escape_report_source,
         unrelated_report_source,
+        downgrade_operator_source,
         lambda d:d['states'][0]['assets']['asset_ids'].append('unknown-asset'),
         lambda d:d['observed_adjacency'][d['states'][0]['id']].clear(),
         lambda d:d.update(private_payload='1-2-3-4'),
