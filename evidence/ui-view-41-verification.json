@@ -1,0 +1,111 @@
+{
+  "schema": "reversal.ui-view-41.verification.v1",
+  "private_snapshot_sha256": "0dc7e7ee26eedffa8c17f79dc143188a84921013c11c0180f25887815432e6f6",
+  "source_capture_ids": [
+    "r41-ui-04-squad",
+    "r41-ui-05-player"
+  ],
+  "snapshot_kind": "captured-read-only",
+  "local_id_scope": "capture-local roster ordinal, no native IDs",
+  "transcribed_rows": 13,
+  "transcribed_attributes": 31,
+  "viewport": [
+    800,
+    600
+  ],
+  "build": "pass",
+  "snapshot_validation_rejections": 8,
+  "synthetic_browser_check": "pass",
+  "captured_browser_check": "pass; corrected captured input",
+  "external_requests": 0,
+  "captured_renders": [
+    {
+      "id": "ui-view-41-squad",
+      "sha256": "6fe9795ceaa46447844ff230b856401246e1b2e2d1202e9cef78b026df1a4362",
+      "input_snapshot_sha256": "0dc7e7ee26eedffa8c17f79dc143188a84921013c11c0180f25887815432e6f6",
+      "visually_inspected": true,
+      "status": "current corrected-input browser render"
+    },
+    {
+      "id": "ui-view-41-profile",
+      "sha256": "eaf99ae8b264b8576ca9684d9655cfe85f92e4451a867c1e7bf9ba711e077a8f",
+      "input_snapshot_sha256": "0dc7e7ee26eedffa8c17f79dc143188a84921013c11c0180f25887815432e6f6",
+      "visually_inspected": true,
+      "status": "current corrected-input browser render"
+    }
+  ],
+  "private_data_in_public_app": false,
+  "preservation": "separate local private ZIP with restore/hash verification; off-host durability not verified",
+  "transcription_correction": {
+    "local_row_id": "row11",
+    "field": "form",
+    "values_retained_privately": true,
+    "source_capture_ids": [
+      "r41-ui-04-squad",
+      "r41-ui-07-squad-after-tactics"
+    ],
+    "previous_snapshot_sha256": "5e7eecc5b1acb1b78d671216c600f3ffe8510d97e3a30e278f116f76a624b654",
+    "basis": "independent screenshot comparison; corrected source transcription and private reproduction script"
+  },
+  "corrected_offline_render": {
+    "id": "ui-view-41-squad-corrected-static",
+    "format": "HTML",
+    "sha256": "1ca1dcb467235983993ab9468637f90fd7fd25213d116777d984acf418288946",
+    "method": "React static markup from current component with corrected initial snapshot; CSS inline; no browser or listening server",
+    "corrected_form_present": true,
+    "visually_inspected": false,
+    "limitations": "does not replace a browser pixel render or interaction rerun"
+  },
+  "historical_renders": [
+    {
+      "id": "ui-view-41-squad",
+      "sha256": "cfab2013e2a4179b294659dfc8b0ff29e92e4a1d6d6c3af9ed9ff90c96acba60",
+      "visually_inspected": true,
+      "input_snapshot_sha256": "5e7eecc5b1acb1b78d671216c600f3ffe8510d97e3a30e278f116f76a624b654",
+      "status": "superseded by corrected-input browser render"
+    },
+    {
+      "id": "ui-view-41-profile",
+      "sha256": "eaf99ae8b264b8576ca9684d9655cfe85f92e4451a867c1e7bf9ba711e077a8f",
+      "visually_inspected": true,
+      "input_snapshot_sha256": "5e7eecc5b1acb1b78d671216c600f3ffe8510d97e3a30e278f116f76a624b654",
+      "status": "superseded by corrected-input browser render"
+    }
+  ],
+  "browser_gate": {
+    "status": "complete after user-confirmed security-dialog dismissal",
+    "observed_resolution": [
+      800,
+      600
+    ],
+    "squad_profile_back": "pass",
+    "field_order_formatting": "pass",
+    "unsupported_commands": "unavailable",
+    "malformed_file_rejection": "pass",
+    "external_requests": 0,
+    "owned_browser_server_exited": true,
+    "game_or_security_ui_operated": false
+  },
+  "pixel_comparison": {
+    "dimensions": [
+      800,
+      600
+    ],
+    "changedPixels": 46,
+    "changedBounds": [
+      478,
+      371,
+      7,
+      8
+    ],
+    "scope": "changed pixels confined to corrected roster form cell"
+  },
+  "private_backup": {
+    "backup_id": "r41-ui-view-corrected-2026-10-20T175717Z",
+    "archive_sha256": "c6a93521bd15c95186b13c47c877b305e651885986f9179dd48874f6ced24476",
+    "payload_files": 8,
+    "archive_entries": 9,
+    "restored_entries_verified": 9,
+    "preservation": "separate local private ZIP with restore/hash verification; off-host durability not verified"
+  }
+}

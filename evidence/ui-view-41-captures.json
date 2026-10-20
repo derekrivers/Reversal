@@ -1,0 +1,177 @@
+{
+  "schema": "reversal.ui-view-41.captures.v1",
+  "build": "gdi",
+  "executable_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+  "save_sha256": "8698569fbd83d9952a9832a95aee17a943c32f18e29621e9396ed228107abbd3",
+  "configuration_set_sha256": "fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a",
+  "configuration_manifest_file_sha256": "92aa3097961c972c8bd868d33766bcec59f0c9f799236a3b46c07044d13b1843",
+  "captures": [
+    {
+      "id": "r41-ui-01-menu",
+      "sha256": "2e6ab7225d8e20e113251952a90da7e06ab6d1cdc6da0735a7a91fa6016f80cf",
+      "file_extension": ".png",
+      "actual_encoding": "JPEG",
+      "outer_pixels": [
+        802,
+        653
+      ],
+      "observed_client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline visual"
+    },
+    {
+      "id": "r41-ui-02-restore",
+      "sha256": "c592a55d646c55b991cb18dbd34bbfde19f9f5ca43b9c9f98a651381afea069b",
+      "file_extension": ".png",
+      "actual_encoding": "JPEG",
+      "outer_pixels": [
+        802,
+        653
+      ],
+      "observed_client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline visual"
+    },
+    {
+      "id": "r41-ui-03-fixtures",
+      "sha256": "315837a075ee9835056ae731197b78865c4d49f162f38968fbe598ffe27c28fd",
+      "file_extension": ".png",
+      "actual_encoding": "JPEG",
+      "outer_pixels": [
+        802,
+        627
+      ],
+      "observed_client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline visual"
+    },
+    {
+      "id": "r41-ui-04-squad",
+      "sha256": "f83317f0bf2f2427f8e693e21e3733cfb713892ad4d43469727bf66b33ce5403",
+      "file_extension": ".png",
+      "actual_encoding": "JPEG",
+      "outer_pixels": [
+        802,
+        627
+      ],
+      "observed_client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline visual"
+    },
+    {
+      "id": "r41-ui-05-player",
+      "sha256": "9a07c2474582b4c02b1adad624744d4c504c6030a50213765bac0b3fed4b6a01",
+      "file_extension": ".png",
+      "actual_encoding": "JPEG",
+      "outer_pixels": [
+        802,
+        627
+      ],
+      "observed_client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline visual"
+    },
+    {
+      "id": "r41-ui-06-tactics",
+      "sha256": "eb37b5150a3ebbde7ebb8d449d2fbf87b46839b917d930a43549a9e7b327a4f7",
+      "file_extension": ".png",
+      "actual_encoding": "JPEG",
+      "outer_pixels": [
+        802,
+        627
+      ],
+      "observed_client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline visual"
+    },
+    {
+      "id": "r41-ui-07-squad-after-tactics",
+      "sha256": "e03ae5b690e455dd8a4abb6660e882200a53ab605705765c72a005380dc7fa93",
+      "file_extension": ".png",
+      "actual_encoding": "JPEG",
+      "outer_pixels": [
+        802,
+        627
+      ],
+      "observed_client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline visual"
+    },
+    {
+      "id": "r41-ui-08-proceed-modal",
+      "sha256": "9e529a95dcc8fe4680c8d5f59182e9702f3eccfd4e667316569b478daaa72abb",
+      "file_extension": ".png",
+      "actual_encoding": "JPEG",
+      "outer_pixels": [
+        802,
+        627
+      ],
+      "observed_client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline visual"
+    },
+    {
+      "id": "r41-ui-09-match-before-kickoff-A",
+      "sha256": "6a7a8305a9d32f866cc93617a4a251d967294fbc265828a6e46ea9e60a8ed8f8",
+      "file_extension": ".png",
+      "actual_encoding": "JPEG",
+      "outer_pixels": [
+        802,
+        627
+      ],
+      "observed_client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline visual"
+    },
+    {
+      "id": "r41-ui-10-match-running-A",
+      "sha256": "4f96cff06e96021978da4a9d5b1183fbf3b90eaacbd4e736578d768d00c96841",
+      "file_extension": ".png",
+      "actual_encoding": "JPEG",
+      "outer_pixels": [
+        802,
+        627
+      ],
+      "observed_client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline visual"
+    },
+    {
+      "id": "r41-ui-11-result-A",
+      "sha256": "b394d33e8b72d9dec35248629b4e23dd73333bb3e5d2cd3541ac30b0089697ca",
+      "file_extension": ".png",
+      "actual_encoding": "JPEG",
+      "outer_pixels": [
+        802,
+        627
+      ],
+      "observed_client_pixels": [
+        800,
+        600
+      ],
+      "inspection": "offline visual"
+    }
+  ],
+  "capture_scope": "sequential visual captures and operator-recorded navigation, not atomic native state; source files remain private",
+  "private_sources_committed": false
+}
