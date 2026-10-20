@@ -365,8 +365,11 @@ def check_private_display(snapshot, public):
     def inspect_value(value, depth):
         require(depth < 32, 'excessively nested structured display text')
         if isinstance(value, dict):
-            if isinstance(value.get('label'), str) and isinstance(value.get('value'), str):
-                require((value['label'].casefold(), value['value']) not in pairs, 'private captured structured value present in public catalogue/report')
+            displayed = value.get('value')
+            if isinstance(displayed, (int, float)) and not isinstance(displayed, bool):
+                displayed = str(displayed)
+            if isinstance(value.get('label'), str) and isinstance(displayed, str):
+                require((value['label'].casefold(), displayed) not in pairs, 'private captured structured value present in public catalogue/report')
             for child in value.values():
                 inspect_value(child, depth + 1)
         elif isinstance(value, list):
@@ -590,6 +593,8 @@ def main():
             json.dumps({'value': attribute['value'], 'source': '{capture}', 'label': attribute['label']}),
             '\n' + json.dumps({'note': json.dumps({'value': attribute['value'], 'source': 'quoted "capture"', 'label': attribute['label']})}),
             '\n```json\n' + json.dumps({'note': json.dumps({'value': attribute['value'], 'source': '{capture}', 'label': attribute['label']})}) + '\n```',
+            json.dumps({'value': int(attribute['value']), 'label': attribute['label']}),
+            json.dumps({'value': int(attribute['value']), 'source': 'capture', 'label': attribute['label']}),
         ])
         escaped_name = next(row['name'] for row in snapshot['squad']['rows'] if any(ord(ch) > 127 for ch in row['name']))
         private_leaks.append(json.dumps({'name': escaped_name}))
