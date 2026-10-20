@@ -97,6 +97,7 @@ REVIEWED_STATE_IDS = frozenset({
 # visual review and an intentional update of this batch pin.
 REVIEWED_ROUTE_SHA256 = 'ec9061bf37e9952998d52693b911e5f8c4c92a50d17947f24dc981dd3b06819f'
 REVIEWED_STATE_CLAIMS_SHA256 = '6fd5b4125eed1b07d95fdaf8c7c4ac276d8323bfbed6a1cb164aec89669e9a06'
+REVIEWED_UNKNOWN_SECTIONS_SHA256 = 'ef594ff35e5a3add0543db42260213d285774a5c5878cbe319963b37dcc93f6a'
 
 
 def route_digest(rows):
@@ -107,6 +108,11 @@ def route_digest(rows):
 def state_claims_digest(rows):
     claims = [{'id': row['id'], 'kind': row['kind'], 'layout_id': row['layout_id'], 'evidence_ids': row['evidence_ids']} for row in rows]
     canonical = json.dumps(sorted(claims, key=lambda row: row['id']), sort_keys=True, separators=(',', ':'), ensure_ascii=False)
+    return hashlib.sha256(canonical.encode('utf-8')).hexdigest()
+
+
+def unknown_sections_digest(rows):
+    canonical = json.dumps(sorted(rows, key=lambda row: row['id']), sort_keys=True, separators=(',', ':'), ensure_ascii=False)
     return hashlib.sha256(canonical.encode('utf-8')).hexdigest()
 
 
@@ -164,6 +170,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
     routes = indexed(data['discovered_routes'], 'route')
     require(route_digest(data['discovered_routes']) == REVIEWED_ROUTE_SHA256, 'unreviewed control frontier')
     domains = indexed(data['unknown_sections'], 'domain')
+    require(unknown_sections_digest(data['unknown_sections']) == REVIEWED_UNKNOWN_SECTIONS_SHA256, 'unreviewed unknown-section catalogue')
     require(all(alias not in states and target in states for alias,target in data['state_aliases'].items()), 'invalid historical state alias')
     def refs(ids, source):
         require(len(ids) == len(set(ids)) and all(i in source for i in ids), 'unknown/duplicate reference')
@@ -243,6 +250,8 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
         refs(back['evidence_ids'], evidence)
         if back['status'] == 'observed':
             require(any(e['from'] == state['id'] and e['to'] == back['target_state_id'] and e['status'] == 'observed-action' for e in edges.values()), 'back claim without action edge')
+    owned_images = {evidence_id for state in states.values() for evidence_id in state['evidence_ids'] if evidence[evidence_id]['kind'] == 'screenshot'}
+    require(owned_images == {evidence_id for evidence_id,item in evidence.items() if item['kind'] == 'screenshot'}, 'unowned screenshot evidence')
     expected = {id:[{'to':e['to'],'transition_id':eid} for eid,e in edges.items() if e['from'] == id and e['status'] == 'observed-action'] for id in states}
     require(data['observed_adjacency'] == expected, 'observed adjacency mismatch')
     for route in routes.values():
@@ -353,6 +362,18 @@ def main():
         d['denominator']['counts']['screenshot_confirmed_state_ids'] += 1
     def reuse_visual_image(d):
         next(state for state in d['states'] if state['id'] == 'ui41.player.profile')['evidence_ids'].append('r41-ui-01-menu')
+    def invent_unknown_section(d):
+        invented = copy.deepcopy(d['unknown_sections'][0])
+        invented['id'] = 'domain.invented'
+        invented['label'] = 'Invented domain'
+        d['unknown_sections'].append(invented)
+        d['denominator']['unknown_unbounded_section_ids'].append(invented['id'])
+        d['denominator']['counts']['unknown_unbounded_section_ids'] += 1
+    def append_unowned_screenshot(d):
+        invented = copy.deepcopy(next(item for item in d['evidence'] if item['kind'] == 'screenshot'))
+        invented['id'] = 'r41-ui-invented-unowned'
+        invented['sha256'] = '1' * 64
+        d['evidence'].append(invented)
     mutations = [
         lambda d:d['transitions'][0].update(to='ui41.unmapped'),
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(evidence_ids=['r41-a4-operator-notes'], context_ids=['gdi-A4-failed-launch']),
@@ -364,6 +385,8 @@ def main():
         invent_control_route,
         promote_existing_operator,
         reuse_visual_image,
+        invent_unknown_section,
+        append_unowned_screenshot,
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.running-sequence').update(evidence_ids=['r41-ui-09-match-before-kickoff-A']),
         lambda d:d['evidence'].append(d['evidence'][0]),
         lambda d:d['states'][0]['coverage'].update(engine_binding=True),
