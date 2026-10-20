@@ -346,9 +346,10 @@ def check_private_display(snapshot, public):
     require(not any(value in public for value in exact), 'private captured display string present in public catalogue/report')
     def labelled_leak(label, value):
         key, val = re.escape(label), re.escape(value)
-        value_token = rf'(?:["\x27]{val}["\x27]|{val}(?![\w.]))'
+        boundary = r'(?!\w|\.[A-Za-z0-9])'
+        value_token = rf'(?:["\x27]{val}["\x27]|{val}{boundary})'
         direct = rf'(?<!\w)["\x27]?{key}["\x27]?\s*(?::|\|)\s*{value_token}'
-        prose = rf'(?<!\w){key}\s+{val}(?![\w.])'
+        prose = rf'(?<!\w){key}\s+{val}{boundary}'
         object_pair = rf'["\x27]label["\x27]\s*:\s*["\x27]{key}["\x27]\s*,\s*["\x27]value["\x27]\s*:\s*{value_token}'
         return any(re.search(pattern, public, re.IGNORECASE) for pattern in (direct, prose, object_pair))
     require(not any(labelled_leak(label, value) for label,value in labelled), 'private captured labelled value present in public catalogue/report')
@@ -536,6 +537,8 @@ def main():
             'picked: ' + picked,
             'info: ' + info,
             attribute['label'] + ': ' + attribute['value'],
+            attribute['label'] + ': ' + attribute['value'] + '.',
+            attribute['label'] + ' ' + attribute['value'] + '.',
             '{"' + attribute['label'] + '":"' + attribute['value'] + '"}',
             '| ' + attribute['label'] + ' | ' + attribute['value'] + ' |',
             '{"role":"' + snapshot['profile']['role'] + '"}',
