@@ -1,0 +1,147 @@
+{
+  "schema": "reversal.runtime-capture-41.sanitized.v1",
+  "configuration_manifest_sha256": "fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a",
+  "save_sha256": "8698569fbd83d9952a9832a95aee17a943c32f18e29621e9396ed228107abbd3",
+  "captures": [
+    {
+      "capture_id": "r41-live-rng-A",
+      "sha256": "b0b93a0cabee1dd2b414c2caacf897ddbeb11918bfa87e91a1117f4aa8925c5c",
+      "bytes": 8779,
+      "exe_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "module_base": 4194304,
+      "boundary": {
+        "preferred_va": 9488480,
+        "rva": 5294176,
+        "runtime_va": 9488480,
+        "file_offset": 5294176
+      },
+      "thread": 19248,
+      "hit": true,
+      "x87_control_word": 639,
+      "fs_head_complete": true,
+      "restored_thread_count": 3,
+      "detached": true,
+      "elapsed_seconds": 19.86105090000001,
+      "memory_complete": true,
+      "closure_complete": false,
+      "return_observed": false
+    },
+    {
+      "capture_id": "r41-live-lookup-A",
+      "sha256": "5359421a6164e301f32a4f406cbebdbe9458d4fcede5fa259c7e977066e90271",
+      "bytes": 14105,
+      "exe_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "module_base": 4194304,
+      "boundary": {
+        "preferred_va": 6481632,
+        "rva": 2287328,
+        "runtime_va": 6481632,
+        "file_offset": 2287328
+      },
+      "thread": 19248,
+      "hit": true,
+      "x87_control_word": 639,
+      "fs_head_complete": true,
+      "restored_thread_count": 3,
+      "detached": true,
+      "elapsed_seconds": 0.7324685999999474,
+      "memory_complete": true,
+      "closure_complete": false,
+      "return_observed": false,
+      "selected_reads_complete": true,
+      "selected_row_stamp_matches_current_date": true,
+      "effect_caller_return_preferred_va": 7141623,
+      "missing": [
+        "staff attributes referent",
+        "refresh-path closure",
+        "RNG table",
+        "return and ordered effects"
+      ]
+    }
+  ],
+  "scope": "GDI observed live entry; no original pinned runtime or return/outcome equivalence",
+  "private_preservation": "separate local archive extracted; all25 entries rehashed; no off-host backup established",
+  "capture_time_intervals": [
+    {
+      "file": "r41-live-lookup-A.json",
+      "sha256": "5359421a6164e301f32a4f406cbebdbe9458d4fcede5fa259c7e977066e90271",
+      "file_reserved_utc": "2026-10-20T17:29:10.081716+00:00",
+      "file_last_write_utc": "2026-10-20T17:29:10.894890+00:00",
+      "time_scope": "capture lies within file reserve/write interval; raw v1 lacked event timestamp"
+    },
+    {
+      "file": "r41-live-rng-A.json",
+      "sha256": "b0b93a0cabee1dd2b414c2caacf897ddbeb11918bfa87e91a1117f4aa8925c5c",
+      "file_reserved_utc": "2026-10-20T17:28:39.243939+00:00",
+      "file_last_write_utc": "2026-10-20T17:28:59.191790+00:00",
+      "time_scope": "capture lies within file reserve/write interval; raw v1 lacked event timestamp"
+    }
+  ],
+  "paired_setup": {
+    "same_save_sha256": "8698569fbd83d9952a9832a95aee17a943c32f18e29621e9396ed228107abbd3",
+    "all_784_configuration_files_identical": true,
+    "config_sha256": "8d35d1cef56360742ddb87995e4a81c3c1f56ed0f5420838e92f7315dc0a66d7",
+    "A": {
+      "pid": 23072,
+      "mode": "fresh process",
+      "referee": "Mohammed Al-Hakim",
+      "weather": "Breezy, Shower, 9 C",
+      "result": "Newcastle 0-1 Midtjylland",
+      "probes": "RNG and lookup after kickoff"
+    },
+    "B": {
+      "pid": 15240,
+      "mode": "fresh process",
+      "referee": "Drazenko Kovacic",
+      "weather": "Breezy, 9 C",
+      "state": "parked before kickoff",
+      "probes": "one 40-second pre-kickoff lookup attempt; no hit; restored and detached; game input blocked by security modal"
+    },
+    "earliest_gameplay_difference_observed": "pre-kickoff referee and weather, before debugger attached to either run",
+    "earlier_cosmetic_difference": "menu/fixture backgrounds differ",
+    "cause": "unknown; system time, initial RNG, media-dialogue route and process state not controlled",
+    "same_process_reload": "not performed"
+  },
+  "backup": {
+    "sha256": "dc24ef02dda83321b290a48c58d3b393ce65438efa54cb94301757e992fbe38f",
+    "bytes": 151793237,
+    "entries": 25,
+    "restored_hashes_match": true
+  },
+  "blocked_attempts": [
+    {
+      "capture_id": "r41-live-lookup-B",
+      "sha256": "3359d0fd69faeb2e70d04bd2dd81c39e86b0306fe37e91781f391bf8179814ea",
+      "bytes": 4691,
+      "tool_commit": "ac8a965b1c111cf0e744a89d820c9c48a44ad1fb",
+      "exe_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "boundary": {
+        "preferred_va": 6481632,
+        "rva": 2287328,
+        "runtime_va": 6481632,
+        "file_offset": 2287328
+      },
+      "requested_seconds": 40,
+      "elapsed_seconds": 40.10645350000004,
+      "hit": false,
+      "sample_observed": false,
+      "memory_complete": null,
+      "slot_aliases_observed": false,
+      "restored_thread_count": 7,
+      "detached": true,
+      "scenario": "pre-kickoff; Windows Security network permission dialog blocked game input",
+      "gameplay_absence_inferred": false
+    }
+  ],
+  "supplemental_backup": {
+    "sha256": "f3e5d7e2c0cfa6fb22c06df40925f02505d019519f136d74c60eb2142fea9e14",
+    "entries": 7,
+    "restored_hashes_match": true,
+    "scope": "corrected tool/checker/report, full-check log, timeout result and resume note before reporting-only wrap-up"
+  },
+  "pending": [
+    "user dismissal of security dialog",
+    "same-event ESI slot capture",
+    "same-process reload comparison"
+  ]
+}

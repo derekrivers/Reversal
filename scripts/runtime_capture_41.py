@@ -103,6 +103,20 @@ def lookup_closure(dbg, process, ctx, loaded_base):
     staff = u32(stack, 0x264)
     receiver = read("lookup_receiver", ctx.Ecx, 0x2C) if ctx.Ecx else None
     record = read("staff_record", staff, 0x6E) if staff else None
+    # R41-B effect consumer uses ESI for the slot at the actual lookup CALL.
+    # A different caller may supply an unrelated ESI: record bytes, but assert
+    # no slot semantics unless both caller provenance and pointer equalities hold.
+    slot = None
+    if ctx.Esi:
+        if 0 < ctx.Esi and ctx.Esi + 0x1BE <= 2**32:
+            slot = read("effect_esi_candidate_slot", ctx.Esi, 0x1BE)
+        else:
+            # An unrelated caller's ESI is optional evidence. Do not let its
+            # invalid range discard the otherwise valid lookup entry.
+            reads.append({"label": "effect_esi_candidate_slot", "address": ctx.Esi,
+                          "requested": 0x1BE, "received": 0, "complete": False,
+                          "winerror": None, "error": "outside-x86-address-space",
+                          "sha256": base.hashlib.sha256(b"").hexdigest(), "hex": ""})
     index = struct.unpack_from("<i", record)[0] if record else None
     row_base = u32(receiver)
     if row_base and index is not None and count is not None and 0 <= index < count:
@@ -115,6 +129,10 @@ def lookup_closure(dbg, process, ctx, loaded_base):
                 read("selected_cache_record", cache + 48 * mapped, 48)
     return {"memory": reads, "all_requested_reads_complete": all(r["complete"] for r in reads),
             "staff": staff, "index": index, "count": count,
+            "effect_return_address_matches": u32(stack, 0x260) == 0x6CF8F7 + delta,
+            "slot_staff_pointer_matches": u32(slot, 0x69) == staff if slot and staff else None,
+            "slot_attribute_pointer_matches": u32(slot, 0x6D) == u32(record, 0x61)
+                if slot and record else None,
             "flags": flags.hex() if flags else None,
             "missing": ["staff attributes referent", "refresh-path closure",
                         "RNG table", "return and ordered effects"]}
@@ -254,6 +272,7 @@ def run(args, *, owned_test_child=None):
                         ctx = dbg.context(threads[event.tid])
                         if ctx.Eip == address and ctx.Dr6 & 1:
                             sample = base.context_record(ctx)
+                            sample["captured_utc"] = base.datetime.now(base.timezone.utc).isoformat()
                             sample["thread"] = event.tid
                             descriptor = (C.c_ubyte * 8)()
                             fs_ok = dbg.api.Wow64GetThreadSelectorEntry(
