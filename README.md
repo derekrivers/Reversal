@@ -1,6 +1,6 @@
 # Reversal
 
-Evidence-led reverse engineering of **Championship Manager 01/02, SI patch 3.9.68**. The current priority is mapping function contracts, reconstructing bounded behavior in headless TypeScript with original x86 instruction validation, and connecting supported behavior through shared game state. Substantial browser UI implementation is deferred.
+Evidence-led reverse engineering of **Championship Manager 01/02, SI patch 3.9.68**. The current priority is capturing real game state, reconstructing connected behavior in headless TypeScript with original x86 instruction validation, and mapping the observed interface and installed assets. A small React view may use an evidenced data boundary; it must label captured read-only snapshots and leave unsupported commands unavailable. No complete match or playable game has been reproduced.
 
 This repository contains investigations 01–29: an executable-wide code atlas, recovered layouts, narrow TypeScript reconstructions and numerical validation fixtures. Headless state initialization and connected execution validation are now in scope; no complete match or playable browser game has been reproduced.
 

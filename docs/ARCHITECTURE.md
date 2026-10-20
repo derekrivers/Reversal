@@ -1,6 +1,6 @@
 # TypeScript reconstruction and React presentation
 
-The goal is a faithful game whose compatibility behavior is backed by evidence from the original executable. Build the headless game core and its state lifecycle as verified paths become available; substantial browser presentation comes later. The code atlas maps the native program, and connected implementation grows through verified subsystem contracts. Recovering every original class, function name or line of C++ is not assumed possible.
+The goal is a faithful game whose compatibility behavior is backed by evidence from the original executable. Build the headless game core and its state lifecycle as verified paths become available. Map the running game's interface and assets in parallel, and integrate a small React view when its data boundary is evidenced. The code atlas maps the native program, and connected implementation grows through verified subsystem contracts. Recovering every original class, function name or line of C++ is not assumed possible.
 
 ## Boundaries
 
@@ -42,7 +42,7 @@ The penalty-preparation oracle sets the original sudden-death flag to suppress a
 3. Inspect native widths/calling conventions and isolate a bounded path.
 4. Capture original-instruction results under explicit fixtures.
 5. Implement and check the TypeScript contract, then widen the path.
-6. Add UI once a stable behavioral boundary exists.
+6. Add an explicitly labelled read-only UI view once its data boundary exists; enable commands only after their state transitions are evidenced.
 
 Keep recovered facts, working interpretations and proposed architecture distinct. The inventory covers native code locations; it does not establish that all source, UI screens or competition rules have been rebuilt.
 
