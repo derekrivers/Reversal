@@ -110,7 +110,8 @@ REVIEWED_BATCH_SECTION_SHA256 = {
 REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5eaf0a0d1560300fa7a'
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
-REVIEWED_UI_REPORT_SHA256 = 'ce23b1786ccdb6bf1a3076176f3f7bc5a0429a24ee58cb260ead0a96adb8b0ea'  # Complete public report, normalized CRLF to LF.
+REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
+REVIEWED_UI_REPORT_SHA256 = '40e3dbe3e52a080cfbcb86b452929e4dd2846348b7c37f18a756a544cb1d8904'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -338,6 +339,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
     public = list(text_values(data)) + [report_bytes.decode('utf-8')]
     require(not any(has_private_path_or_payload(part) for part in public), 'private path/payload in census')
     require(not any(re.search(r'\b\d{1,2}(?:-\d{1,2}){3,}\b|[£$€]\d',part) for part in public), 'captured display value in census')
+    require(set(data) == REVIEWED_ROOT_FIELDS, 'unreviewed root fields')
     require(hashlib.sha256(report_bytes.replace(b'\r\n', b'\n')).hexdigest() == REVIEWED_UI_REPORT_SHA256, 'public UI report digest mismatch')
     return {'states':len(states),'screenshots':sum(e['kind']=='screenshot' for e in evidence.values()), 'denominator':denominator['counts'], 'engine_bindings':0}
 
@@ -397,8 +399,6 @@ def check_private_display(snapshot, public):
     for column in snapshot['profile']['attributeColumns']:
         for attribute in column:
             add(attribute['label'], attribute['value'], generic=True)
-    folded_public = fold_display(public)
-    require(not any(fold_display(value) in folded_public for value in exact), 'private captured display string present in public catalogue/report')
     tokens = sorted({token for label,value in labelled for token in (label,value)}, key=len, reverse=True)
     token_pattern = '|'.join(re.escape(token) for token in tokens)
     wrappers = [re.compile(re.escape(marker) + rf'({token_pattern})' + re.escape(marker), re.IGNORECASE) for marker in ('**', '__', '~~', '``', '*', '_', '`')]
@@ -409,6 +409,17 @@ def check_private_display(snapshot, public):
             plain_public = wrapper.sub(lambda match: match.group(1), plain_public)
         if plain_public == previous:
             break
+    markdown_plain = plain_public
+    # A captured multiword value may be split by inline formatting. Remove only
+    # balanced, single-line markup pairs, then compare the complete value.
+    markup = re.compile(r'(?P<marker>\*\*|__|~~|``|\*|_|`)(?P<body>[^\r\n]+?)(?P=marker)')
+    while True:
+        previous = markdown_plain
+        markdown_plain = markup.sub(lambda match: match.group('body'), markdown_plain)
+        if markdown_plain == previous:
+            break
+    folded_public = fold_display(markdown_plain)
+    require(not any(fold_display(value) in folded_public for value in exact), 'private captured display string present in public catalogue/report')
     def labelled_leak(label, value):
         key, val = re.escape(label), re.escape(value)
         boundary = r'(?!\w|\.[A-Za-z0-9])'
@@ -571,6 +582,7 @@ def main():
         append_unowned_screenshot,
         mislabel_continue_as_back,
         claim_whole_ui_complete,
+        lambda d:d.update(whole_application_coverage='complete'),
         redefine_screenshot_coverage,
         claim_whole_denominator_scope,
         lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(sha256='1'*64),
@@ -684,6 +696,9 @@ def main():
         private_leaks.append(snapshot['squad']['rows'][0]['name'].swapcase())
         decomposable_name = next(row['name'] for row in snapshot['squad']['rows'] if unicodedata.normalize('NFD', row['name']) != row['name'])
         private_leaks.append(unicodedata.normalize('NFD', decomposable_name))
+        multiword_name = next(row['name'] for row in snapshot['squad']['rows'] if len(row['name'].split(' ', 1)) == 2)
+        name_head, name_tail = multiword_name.split(' ', 1)
+        private_leaks.extend((name_head + ' **' + name_tail + '**', name_head + ' `' + name_tail + '`'))
         picked = next(row['picked'] for row in snapshot['squad']['rows'] if row['picked'])
         info = next(row['info'] for row in snapshot['squad']['rows'] if row['info'])
         attribute = snapshot['profile']['attributeColumns'][0][0]
