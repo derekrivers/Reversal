@@ -327,7 +327,7 @@ def check_private_display(snapshot, public):
         labelled.add((label, value))
     for key in ('clubLabel', 'dateLabel'):
         add(key, snapshot['squad'][key])
-    row_fields = ('name', 'position', 'form', 'morale', 'condition', 'apps', 'averageRating', 'value')
+    row_fields = ('picked', 'info', 'name', 'position', 'form', 'morale', 'condition', 'apps', 'averageRating', 'value')
     for row in snapshot['squad']['rows']:
         for key in row_fields:
             add(key, row[key])
@@ -337,7 +337,13 @@ def check_private_display(snapshot, public):
         for attribute in column:
             add(attribute['label'], attribute['value'], generic=True)
     require(not any(value in public for value in exact), 'private captured display string present in public catalogue/report')
-    require(not any(f'{label}: {value}' in public or f'{label} {value}' in public for label,value in labelled), 'private captured labelled value present in public catalogue/report')
+    def labelled_leak(label, value):
+        key, val = re.escape(label), re.escape(value)
+        direct = rf'(?<!\w)["\x27]?{key}["\x27]?\s*(?::|\|)\s*["\x27]?{val}["\x27]?(?!\w)'
+        prose = rf'(?<!\w){key}\s+{val}(?!\w)'
+        object_pair = rf'["\x27]label["\x27]\s*:\s*["\x27]{key}["\x27]\s*,\s*["\x27]value["\x27]\s*:\s*["\x27]?{val}["\x27]?'
+        return any(re.search(pattern, public, re.IGNORECASE) for pattern in (direct, prose, object_pair))
+    require(not any(labelled_leak(label, value) for label,value in labelled), 'private captured labelled value present in public catalogue/report')
 
 
 def main():
@@ -514,22 +520,28 @@ def main():
         snapshot = json.loads(args.private_snapshot.read_text(encoding='utf-8'))
         public = (ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8') + (ROOT/'reports/ui-map-41.md').read_text(encoding='utf-8')
         check_private_display(snapshot, public)
-        for field in (snapshot['squad']['clubLabel'], snapshot['squad']['dateLabel'], snapshot['profile']['bio']):
+        private_leaks = [snapshot['squad']['clubLabel'], snapshot['squad']['dateLabel'], snapshot['profile']['bio']]
+        picked = next(row['picked'] for row in snapshot['squad']['rows'] if row['picked'])
+        info = next(row['info'] for row in snapshot['squad']['rows'] if row['info'])
+        attribute = snapshot['profile']['attributeColumns'][0][0]
+        private_leaks.extend([
+            'picked: ' + picked,
+            'info: ' + info,
+            attribute['label'] + ': ' + attribute['value'],
+            '{"' + attribute['label'] + '":"' + attribute['value'] + '"}',
+            '| ' + attribute['label'] + ' | ' + attribute['value'] + ' |',
+            '{"role":"' + snapshot['profile']['role'] + '"}',
+            '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
+        ])
+        for field in private_leaks:
             try:
                 check_private_display(snapshot, public + '\n' + field)
             except ValueError:
                 pass
             else:
                 raise ValueError('private display leak probe accepted')
-        attribute = snapshot['profile']['attributeColumns'][0][0]
-        try:
-            check_private_display(snapshot, public + '\n' + attribute['label'] + ': ' + attribute['value'])
-        except ValueError:
-            pass
-        else:
-            raise ValueError('private attribute leak probe accepted')
         result['private_token_checks'] = 'pass'
-        result['private_leak_probes'] = 4
+        result['private_leak_probes'] = len(private_leaks)
     result['negative_probes'] = len(mutations) + 1 + len(report_leaks)
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     print(json.dumps(result,sort_keys=True))
