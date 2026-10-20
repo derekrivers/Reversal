@@ -1,0 +1,174 @@
+{
+  "schema": "reversal.engine-paired-return-41.validation.v1",
+  "comparison": {
+    "schema": "reversal.engine-paired-return-41.result.v1",
+    "status": "matched",
+    "input_sha256": "7cdba6316f5e7286d3e59a8aa29049a12c1ee4d165e7b145e10d1608d990d589",
+    "executable_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+    "original_replay_sha256": "5b33ff88619a72cc51c8c6aeede3c9544a99108a39aa7729ac7d317a8fc0b0ad",
+    "entry_va": "0062e6e0",
+    "return_va": "006cf8f7",
+    "declared_live_pair": true,
+    "provenance_authenticated": false,
+    "live_pair_compared": true,
+    "live_instruction_trace": false,
+    "general_registers_compared": [
+      "eax",
+      "ebx",
+      "ecx",
+      "edx",
+      "esi",
+      "edi",
+      "ebp",
+      "esp",
+      "eip"
+    ],
+    "fixed_regions_compared": 15,
+    "game_regions_unchanged": 13,
+    "stable_bytes_compared": 1180,
+    "callee_scratch_changed": true,
+    "slot_staff_alias_both_boundaries": true,
+    "slot_attribute_alias_both_boundaries": true,
+    "fs_head_restored": true,
+    "floating_areas_unchanged": true,
+    "selected_rng_cells_unchanged": true,
+    "original_to_typescript": {
+      "schema": "reversal.engine-state-41b2.comparison.v1",
+      "status": "matched",
+      "source_capture_sha256": "7cdba6316f5e7286d3e59a8aa29049a12c1ee4d165e7b145e10d1608d990d589",
+      "cases": [
+        {
+          "original_steps": 85,
+          "memory_events": 19,
+          "call_boundaries": 2,
+          "returned_null": true
+        }
+      ],
+      "altered_result_rejections": [
+        "0:return-pointer",
+        "0:mapping",
+        "0:final-rng",
+        "0:call-argument",
+        "0:memory-effect",
+        "0:missing-fs-head"
+      ],
+      "shared_rng_unchanged": true,
+      "original_replay_sha256": "5b33ff88619a72cc51c8c6aeede3c9544a99108a39aa7729ac7d317a8fc0b0ad"
+    },
+    "effect_frontier": {
+      "executed": false,
+      "start_va": "006cf8f7",
+      "file_offset": "002cf8f7",
+      "bytes": 98,
+      "sha256": "d28d904dc99a12597a093a3c7afe72de75a3df98793fae8c29dfae3634c9908f",
+      "first_uncaptured_constant_read_va": "006cf92c",
+      "constant_va": "00967f28",
+      "constant_file_offset": "00567f28",
+      "first_missing_dynamic_read_va": "006cf956",
+      "attribute_offset": 45,
+      "width": 1
+    },
+    "limits": [
+      "two live boundaries; intervening execution untraced",
+      "cached null-return path only; no live ordered-effects trace",
+      "no effect completion, object lifetime or resolver-entry join",
+      "EFLAGS and scratch stack payload are not compared to replay"
+    ]
+  },
+  "normal_optimized_identical": true,
+  "negative_inputs": [
+    {
+      "name": "altered-live-eax",
+      "code": "LIVE_REPLAY_REGISTER_MISMATCH"
+    },
+    {
+      "name": "altered-live-ecx",
+      "code": "LIVE_REPLAY_REGISTER_MISMATCH"
+    },
+    {
+      "name": "altered-return-esp",
+      "code": "RETURN_STACK"
+    },
+    {
+      "name": "altered-return-eip",
+      "code": "RETURN_ADDRESS"
+    },
+    {
+      "name": "altered-nonvolatile",
+      "code": "RETURN_NONVOLATILE"
+    },
+    {
+      "name": "different-thread",
+      "code": "RETURN_THREAD"
+    },
+    {
+      "name": "resealed-return-rng-change",
+      "code": "SELECTED_STATE_CHANGED"
+    },
+    {
+      "name": "resealed-return-row-change",
+      "code": "SELECTED_STATE_CHANGED"
+    },
+    {
+      "name": "resealed-return-slot-staff-change",
+      "code": "SLOT_STAFF_ALIAS"
+    },
+    {
+      "name": "resealed-return-slot-attribute-change",
+      "code": "SLOT_ATTRIBUTE_ALIAS"
+    },
+    {
+      "name": "both-boundaries-invalid-slot-alias",
+      "code": "SLOT_STAFF_ALIAS"
+    },
+    {
+      "name": "resealed-fs-head-change",
+      "code": "RETURN_FS_CHANGED"
+    },
+    {
+      "name": "x87-control-change",
+      "code": "RETURN_X87_CHANGED"
+    },
+    {
+      "name": "missing-fixed-reread",
+      "code": "FIXED_REREADS_MISSING"
+    },
+    {
+      "name": "invented-unchanged-effect",
+      "code": "REREAD_EFFECT_METADATA"
+    },
+    {
+      "name": "wrong-return-code",
+      "code": "RETURN_CODE_DIGEST"
+    },
+    {
+      "name": "missing-live-return",
+      "code": "LIVE_RETURN_MISSING"
+    },
+    {
+      "name": "inconsistent-pair-metadata",
+      "code": "PAIR_METADATA"
+    },
+    {
+      "name": "resealed-overlapping-return-conflict",
+      "code": "RETURN_ALIAS_CONFLICT"
+    },
+    {
+      "name": "reversed-timestamp",
+      "code": "PAIR_TIMESTAMP_ORDER"
+    }
+  ],
+  "privacy_negative_probes": 6,
+  "source_sha256": {
+    "scripts/check_paired_return_41.py": "db621cc97b0d651ef5052b5b6b0b859b57f501bd3fece7db8b87e8d51fbcb2f1",
+    "scripts/verify_paired_return_41.py": "2ed2336e92d9e6bfb89708633f7ada826ab70a8e47209f7af62921e0d7926613",
+    "reports/engine-paired-return-41.md": "c0bdd86c01bf75c5c0574bc2a5dda5c1b87f50ebac3527cb9d4f7c97dfee6c4e",
+    "scripts/check_engine_state_41b2.py": "7c3831ea0f0e825bb7f61e5d46b4184cc2ae71dc6043e8e29c0818a4a196a77b",
+    "scripts/capture_engine_state_41.py": "74b4deecdc0e3eff15f04016d80a0264eccba92a384feb88338b6a2dad5641cb",
+    "scripts/replay_engine_state_41.py": "75888889367d49a7e157d94b8d049fdb5fcb46cf3fb59bf2c40daa605476d7b5",
+    "reconstruction/compare-state-41b2.ts": "9f863a00435fd456db8c87d058daced2a561656fc3dbf432c221f2e596ab7879",
+    "reconstruction/engine-state-41.ts": "253a324c87c576079c3906e3f72a0dd082428c42b73dab7e0753696188938744"
+  },
+  "privacy": "public files and stdout scanned for selected code, memory and floating-register excerpts",
+  "scope": "one genuine null cached-lookup pair; no live instruction trace or enclosing effect completion"
+}
