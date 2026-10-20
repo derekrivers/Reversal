@@ -110,6 +110,12 @@ REVIEWED_BATCH_SECTION_SHA256 = {
 REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5eaf0a0d1560300fa7a'
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
+PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
+ROOT_RELATIVE_WINDOWS = re.compile(r'(?<![A-Za-z0-9_.:\\/])\\(?!\\)[A-Za-z0-9_.-]{3,}')
+
+
+def has_private_path_or_payload(part):
+    return bool(PRIVATE_PATH_PAYLOAD.search(part) or ROOT_RELATIVE_WINDOWS.search(part))
 
 
 def route_digest(rows):
@@ -311,7 +317,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
     require(all(denominator[k] == v for k,v in expected_sets.items()), 'denominator membership mismatch')
     require(denominator['counts'] == {k:len(v) for k,v in expected_sets.items()}, 'denominator count mismatch')
     public = list(text_values(data)) + [report_reader().decode('utf-8')]
-    require(not any(re.search(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b',part,re.IGNORECASE) or re.search(r'(?<!\\)\\(?!\\)[^\\/\s"]+(?:[\\/][^\\/\s"]+)+',part) for part in public), 'private path/payload in census')
+    require(not any(has_private_path_or_payload(part) for part in public), 'private path/payload in census')
     require(not any(re.search(r'\b\d{1,2}(?:-\d{1,2}){3,}\b|[£$€]\d',part) for part in public), 'captured display value in census')
     return {'states':len(states),'screenshots':sum(e['kind']=='screenshot' for e in evidence.values()), 'denominator':denominator['counts'], 'engine_bindings':0}
 
@@ -567,7 +573,6 @@ def main():
         lambda d:d['states'][0].update(notes='line\n/tmp/capture.jpg'),
         lambda d:d['states'][0].update(notes='tab\t/home/operator/private/capture.png'),
         lambda d:d['states'][0].update(notes='\\\\server\\share\\private\\capture.png'),
-        lambda d:d['states'][0].update(notes='\\Users\\operator\\private\\capture.png'),
         lambda d:d['contexts'][0].update(capture_configuration_sha256=None),
         lambda d:next(s for s in d['states'] if s['id']=='ui41.match.running')['coverage'].update(observed_transition=True),
         lambda d:next(s for s in d['states'] if s['id']=='ui41.game.options')['coverage'].update(layout=True),
@@ -581,6 +586,15 @@ def main():
         except ValueError:
             continue
         raise ValueError('negative validation probe accepted')
+    for leaked in ('\\Users\\operator\\private\\capture.png', '\\capture.png'):
+        changed = copy.deepcopy(data)
+        changed['private_payload'] = leaked
+        try:
+            validate(changed, assets)
+        except ValueError as exc:
+            require(str(exc) == 'private path/payload in census', 'root-relative census path rejected for unrelated reason')
+        else:
+            raise ValueError('root-relative census path accepted')
     # Both checkout newline modes must match the same tracked-file digest.
     source = next(e for e in data['evidence'] if e['id']=='r41-operator-route-report')
     raw_lf = tracked_source_bytes(source['source']).replace(b'\r\n',b'\n')
@@ -593,14 +607,16 @@ def main():
     else:
         raise ValueError('altered public source accepted')
     report = public_report_bytes()
-    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png')
+    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png')
     for leaked in report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
-        except ValueError:
-            pass
+        except ValueError as exc:
+            require(str(exc) == 'private path/payload in census', 'public report path rejected for unrelated reason')
         else:
             raise ValueError('private path in public report accepted')
+    require(not has_private_path_or_payload('docs\\reference\\ui.md'), 'repository-relative Windows path rejected')
+    require(not has_private_path_or_payload('escaped \\n punctuation'), 'ordinary escaped punctuation rejected')
     if args.private_root or args.private_aliases:
         require(args.private_root and args.private_aliases,'private root and aliases must be supplied together')
         root = args.private_root.resolve(strict=True)
@@ -683,7 +699,8 @@ def main():
         result['private_leak_probes'] = len(private_leaks)
         result['private_near_miss_probes'] = 3
         result['private_escape_probes'] = 2
-    result['negative_probes'] = len(mutations) + 2 + len(report_leaks)
+    result['negative_probes'] = len(mutations) + 4 + len(report_leaks)
+    result['public_path_near_miss_probes'] = 2
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     print(json.dumps(result,sort_keys=True))
 
