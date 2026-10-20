@@ -36,8 +36,10 @@ capture. All-thread event stops affect scheduling.
 
 At GDI lookup entry, the tool follows a bounded graph: entry stack, lookup
 receiver, staff argument, selected status row, selected cache record when valid,
-flags/count/date/global. R41-B supplies the build-specific mappings. Missing
-FS:[0], staff-attribute referent, refresh closure, RNG mapping/table, return
+flags/count/date/global, staff base and four RNG scalars. The documented
+WOW64 selector-entry API also obtains the actual FS base and four-byte head,
+with explicit failure metadata. R41-B supplies the build-specific mappings. Missing
+staff-attribute referent, refresh closure, RNG table, return
 effects and ordered calls remain explicit. Even complete requested reads do not
 make a complete replay fixture. No pinned-build runtime equivalence is claimed.
 
@@ -51,8 +53,15 @@ The copied config's save directory was changed to the disposable directory.
 Full data/config identity and paired-save experiments remain pending.
 
 Run `python scripts/check_runtime_capture_41.py` and its `python -O` variant for
-two actual hits, a timeout, target survival and deadline rejection. Both passed
-on Windows x64/Python 3.13.7. The repository check uses Node 24.
+three actual hits, a timeout, target survival, actual FS head and deadline
+rejection. The third hit follows an application INT3 whose vectored exception
+handler increments a private counter. This regression verifies that unrelated
+application breakpoints are passed to the application. The initial bootstrap
+breakpoint is handled once; the timeout breakpoint must match its exception
+address and remote-thread start address on a thread absent from initial inventory.
+An independent review caught the earlier swallowing of unrelated INT3 events;
+the corrected normal and optimized runs both pass. The full repository check
+passed on Node 24.19.0.
 
 API basis:
 [debug events](https://learn.microsoft.com/en-us/windows/win32/debug/debugging-events),

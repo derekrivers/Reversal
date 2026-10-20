@@ -43,6 +43,7 @@ class Debugger(base.Windows):
             ("WaitForDebugEvent", W.BOOL, [C.POINTER(Event), W.DWORD]),
             ("ContinueDebugEvent", W.BOOL, [W.DWORD, W.DWORD, W.DWORD]),
             ("Wow64SetThreadContext", W.BOOL, [W.HANDLE, C.POINTER(base.Context)]),
+            ("Wow64GetThreadSelectorEntry", W.BOOL, [W.HANDLE, W.DWORD, C.c_void_p]),
         ]:
             fn = getattr(self.api, name)
             fn.restype, fn.argtypes = result, args
@@ -94,6 +95,10 @@ def lookup_closure(dbg, process, ctx, loaded_base):
     count = u32(read("staff_count", 0xAE12B4 + delta, 4))
     read("current_date", 0xAE1BE0 + delta, 8)
     read("lookup_global", 0xB62C70 + delta, 4)
+    read("staff_base", 0xAE130C + delta, 4)
+    for label, preferred in (("rng_cursor", 0xDE0EA8), ("rng_offset", 0xDE0EA4),
+                             ("rng_limit", 0xDE16E0), ("crt_seed", 0xAD5B80)):
+        read(label, preferred + delta, 4)
     stack = read("entry_stack_below_and_arguments", ctx.Esp - 0x260, 0x300)
     staff = u32(stack, 0x264)
     receiver = read("lookup_receiver", ctx.Ecx, 0x2C) if ctx.Ecx else None
@@ -111,8 +116,8 @@ def lookup_closure(dbg, process, ctx, loaded_base):
     return {"memory": reads, "all_requested_reads_complete": all(r["complete"] for r in reads),
             "staff": staff, "index": index, "count": count,
             "flags": flags.hex() if flags else None,
-            "missing": ["FS:[0] chain", "staff attributes referent", "refresh-path closure",
-                        "RNG globals/table not yet independently mapped", "return and ordered effects"]}
+            "missing": ["staff attributes referent", "refresh-path closure",
+                        "RNG table", "return and ordered effects"]}
 
 
 def run(args, *, owned_test_child=None):
@@ -170,6 +175,8 @@ def run(args, *, owned_test_child=None):
         attached = False
         started = time.monotonic()
         shutdown_requested = False
+        thread_starts = {}
+        bootstrap_break = None
 
         def arm(tid, handle):
             ctx = dbg.context(handle, 0x10010)
@@ -221,6 +228,7 @@ def run(args, *, owned_test_child=None):
                 if event.code in (2, 3):
                     offset = 16 if event.code == 3 else 0
                     threads[event.tid] = struct.unpack_from("<Q", data, offset)[0]
+                    thread_starts[event.tid] = struct.unpack_from("<Q", data, 40 if event.code == 3 else 16)[0]
                     if event.code == 3:
                         file_handle = struct.unpack_from("<Q", data)[0]
                         if file_handle:
@@ -229,6 +237,7 @@ def run(args, *, owned_test_child=None):
                         arm(event.tid, threads[event.tid])
                 elif event.code == 4:
                     threads.pop(event.tid, None)
+                    thread_starts.pop(event.tid, None)
                     armed.pop(event.tid, None)
                 elif event.code == 5:
                     armed.clear()
@@ -246,6 +255,17 @@ def run(args, *, owned_test_child=None):
                         if ctx.Eip == address and ctx.Dr6 & 1:
                             sample = base.context_record(ctx)
                             sample["thread"] = event.tid
+                            descriptor = (C.c_ubyte * 8)()
+                            fs_ok = dbg.api.Wow64GetThreadSelectorEntry(
+                                threads[event.tid], ctx.SegFs, C.byref(descriptor))
+                            sample["fs"] = {"selector": ctx.SegFs, "complete": bool(fs_ok),
+                                            "winerror": 0 if fs_ok else C.get_last_error()}
+                            if fs_ok:
+                                raw = bytes(descriptor)
+                                fs_base = struct.unpack_from("<H", raw, 2)[0] | raw[4] << 16 | raw[7] << 24
+                                sample["fs"]["base"] = fs_base
+                                sample["fs"]["head"] = dbg.read(process, fs_base, 4)
+                                sample["fs"]["complete"] = sample["fs"]["head"]["complete"]
                             sample["memory"] = [dbg.read(process, ctx.Esp, 512)] + [
                                 dbg.read(process, addr, size) for addr, size in args.region]
                             result["sample"], result["hit"] = sample, True
@@ -257,17 +277,23 @@ def run(args, *, owned_test_child=None):
                             break
                         status = 0x80010001
                     elif exception in (0x80000003, 0x4000001F):
-                        pending_status = 0x10002
-                        if shutdown_requested:
+                        identity = (struct.unpack_from("<Q", data, 16)[0],
+                                    thread_starts.get(event.tid))
+                        own_timeout = (shutdown_requested and event.tid not in info["threads"]
+                                       and identity == bootstrap_break)
+                        if own_timeout:
+                            pending_status = 0x10002
                             break
                         if not ready:
+                            pending_status = 0x10002
+                            bootstrap_break = identity
                             for tid, handle in threads.items():
                                 arm(tid, handle)
                             ready = True
+                        else:
+                            status = 0x80010001
                     else:
                         status = 0x80010001
-                if shutdown_requested:
-                    break
                 dbg.check(dbg.api.ContinueDebugEvent(event.pid, event.tid, status), "ContinueDebugEvent")
                 pending = None
         finally:
@@ -319,4 +345,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
