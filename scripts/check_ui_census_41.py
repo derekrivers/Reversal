@@ -6,7 +6,7 @@ from pathlib import Path
 import argparse
 import copy
 import hashlib
-import html
+from html.parser import HTMLParser
 import json
 import math
 import re
@@ -112,7 +112,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '4a7e6da4202c41fbd5d460f8f0306259b39d1ffcb3c1628f122e454f99552fbd'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'a18d4c57147801fd94652e10bc7663650970b158d63ec8cc848e67cfcb549025'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -435,8 +435,26 @@ def check_private_display(snapshot, public):
             pos = cursor
         chunks.append(source[pos:])
         return ''.join(chunks)
-    markdown_plain = html.unescape(plain_public)
-    markdown_plain = re.sub(r'<[A-Za-z/][^>\r\n]*>', '', markdown_plain)
+    class RenderedHTML(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.parts = []
+        def handle_starttag(self, tag, attrs):
+            if tag in ('br', 'p', 'div', 'li', 'tr', 'td', 'th', 'hr'):
+                self.parts.append(' ')
+            if tag == 'img':
+                self.parts.extend(value for key,value in attrs if key == 'alt' and value)
+        def handle_startendtag(self, tag, attrs):
+            self.handle_starttag(tag, attrs)
+        def handle_endtag(self, tag):
+            if tag in ('p', 'div', 'li', 'tr', 'td', 'th'):
+                self.parts.append(' ')
+        def handle_data(self, data):
+            self.parts.append(data)
+    html_view = RenderedHTML()
+    html_view.feed(plain_public)
+    html_view.close()
+    markdown_plain = ''.join(html_view.parts)
     markdown_plain = render_inline_links(markdown_plain)
     references = {fold_display(match.group(1)) for match in re.finditer(r'(?m)^ {0,3}\[([^\]\r\n]+)\]:\s*\S+', markdown_plain)}
     markdown_plain = re.sub(r'!?\[([^\]\r\n]+)\]\[([^\]\r\n]*)\]', lambda match: match.group(1) if fold_display(match.group(2) or match.group(1)) in references else match.group(0), markdown_plain)
@@ -739,6 +757,11 @@ def main():
             name_head + ' [' + name_tail + '][reference]\n[reference]: https://example.invalid',
             name_head + ' [' + name_tail + ']\n[' + name_tail + ']: https://example.invalid',
             name_head + ' <span>' + name_tail + '</span>',
+            name_head + '<br>' + name_tail,
+            '<p>' + name_head + '</p><p>' + name_tail + '</p>',
+            name_head + ' <!-- note -->' + name_tail,
+            name_head + ' <span title=">">' + name_tail + '</span>',
+            name_head + ' <img alt="' + name_tail + '">',
             name_head + ' &#' + str(ord(name_tail[0])) + ';' + name_tail[1:],
             name_head + '\n' + name_tail,
         ))
@@ -764,6 +787,7 @@ def main():
             attribute['label'] + ': [' + attribute['value'] + '](https://example.invalid)',
             attribute['label'] + ': ![' + attribute['value'] + '](https://example.invalid/image.png)',
             attribute['label'] + ': [' + attribute['value'] + '][reference]\n[reference]: https://example.invalid',
+            attribute['label'] + '<br>' + attribute['value'],
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
