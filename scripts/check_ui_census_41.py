@@ -4,6 +4,7 @@ No game/process/browser access. No integrity checks depend on Python assert.
 """
 from pathlib import Path
 import argparse
+from bisect import bisect_right
 import copy
 import hashlib
 import html
@@ -113,7 +114,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '598a94a5cf3ef3eb23035dd51fe9a44cef79e9d691437d80ce6b8fc1cec16935'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '04b717a8d15ee98e20a00aef9803cab77a59dc599f68209b24aecc064257978d'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -137,6 +138,30 @@ def render_for_privacy(source):
         source = updated
     heading = re.compile(r'(?m)^ {0,3}#{1,6}(?:[ \t]+([^\r\n]*)|(?=\r?$))')
     source = heading.sub(lambda match: re.sub(r'[ \t]+#+[ \t]*$', '', match.group(1) or ''), source)
+    fenced, fence_char, fence_length, pending_code_runs = [], None, 0, set()
+    for line in source.splitlines(keepends=True):
+        bare = line.rstrip('\r\n')
+        if fence_char is None:
+            opening = re.fullmatch(r' {0,3}(`{3,}|~{3,})[^\r\n]*', bare)
+            if opening and opening.group(1)[0] == '`' and len(opening.group(1)) in pending_code_runs:
+                opening = None  # Closing a multiline inline span, not opening a fence.
+            if opening:
+                fence_char, fence_length = opening.group(1)[0], len(opening.group(1))
+                fenced.append('\n')
+                continue
+        elif re.fullmatch(r' {0,3}' + re.escape(fence_char) + '{' + str(fence_length) + r',}[ \t]*', bare):
+            fence_char, fence_length = None, 0
+            fenced.append('\n')
+            continue
+        if fence_char is None:
+            for run in re.finditer(r'(?<!`)`+(?!`)', bare):
+                length = len(run.group())
+                if length in pending_code_runs:
+                    pending_code_runs.remove(length)
+                else:
+                    pending_code_runs.add(length)
+        fenced.append(line)
+    source = ''.join(fenced)
     def render_inline_links(value):
         opener = re.compile(r'!?\[([^\]\r\n]*)\]\(')
         chunks, pos = [], 0
@@ -199,9 +224,25 @@ def render_for_privacy(source):
     return re.sub(r'\s+', ' ', rendered)
 
 
+# Unicode 17.0 DerivedCoreProperties.txt, Default_Ignorable_Code_Point.
+# https://www.unicode.org/Public/17.0.0/ucd/DerivedCoreProperties.txt
+DEFAULT_IGNORABLE_RANGES = (
+    (0x00AD, 0x00AD), (0x034F, 0x034F), (0x061C, 0x061C),
+    (0x115F, 0x1160), (0x17B4, 0x17B5), (0x180B, 0x180F),
+    (0x200B, 0x200F), (0x202A, 0x202E), (0x2060, 0x206F),
+    (0x3164, 0x3164), (0xFE00, 0xFE0F), (0xFEFF, 0xFEFF),
+    (0xFFA0, 0xFFA0), (0xFFF0, 0xFFF8), (0x1BCA0, 0x1BCA3),
+    (0x1D173, 0x1D17A), (0xE0000, 0xE0FFF),
+)
+DEFAULT_IGNORABLE_STARTS = tuple(start for start, _ in DEFAULT_IGNORABLE_RANGES)
+
+
 def invisible_format(char):
     category = unicodedata.category(char)
-    return category == 'Cf' or (category in ('Mn', 'Me') and unicodedata.combining(char) == 0)
+    if category == 'Cf' or (category in ('Mn', 'Me') and unicodedata.combining(char) == 0):
+        return True
+    index = bisect_right(DEFAULT_IGNORABLE_STARTS, ord(char)) - 1
+    return index >= 0 and ord(char) <= DEFAULT_IGNORABLE_RANGES[index][1]
 
 
 def has_private_path_or_payload(part):
@@ -764,6 +805,8 @@ def main():
         '\nlocation\u2060\\Users\\operator\\private\\capture.png'.encode('utf-8'),
         '\nlocation\u034f\\Users\\operator\\private\\capture.png'.encode('utf-8'),
         '\nlocation\ufe0f\\Users\\operator\\private\\capture.png'.encode('utf-8'),
+        '\nlocation\u115f\\Users\\operator\\private\\capture.png'.encode('utf-8'),
+        '\nlocation\u3164\\Users\\operator\\private\\capture.png'.encode('utf-8'),
     )
     for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks + whitespace_reference_report_leaks + next_line_reference_report_leaks + unicode_boundary_report_leaks:
         try:
@@ -876,11 +919,19 @@ def main():
                 attribute['label'] + ': ' + attribute['value'][0] + invisible + attribute['value'][1:],
                 attribute['label'][0] + invisible + attribute['label'][1:] + ': ' + attribute['value'],
             ))
+        for invisible in ('\u115f', '\u3164'):
+            private_leaks.extend((
+                name_head + ' ' + name_tail[0] + invisible + name_tail[1:],
+                attribute['label'] + ': ' + attribute['value'][0] + invisible + attribute['value'][1:],
+                attribute['label'][0] + invisible + attribute['label'][1:] + ': ' + attribute['value'],
+            ))
         private_leaks.extend((
             name_head + ' ' + name_tail[0] + '&#8203;' + name_tail[1:],
             attribute['label'] + ': ' + attribute['value'][0] + '\\u200b' + attribute['value'][1:],
             name_head + ' ' + name_tail[0] + '&#847;' + name_tail[1:],
             attribute['label'] + ': ' + attribute['value'][0] + '\\u034f' + attribute['value'][1:],
+            name_head + ' ' + name_tail[0] + '&#4447;' + name_tail[1:],
+            attribute['label'] + ': ' + attribute['value'][0] + '\\u115f' + attribute['value'][1:],
         ))
         private_leaks.extend((
             json.dumps({'value': attribute['value'][0] + '&#8203;' + attribute['value'][1:], 'note': 'context', 'label': attribute['label']}),
@@ -904,6 +955,9 @@ def main():
             attribute['label'] + ':\n\n###\n\n' + attribute['value'],
             attribute['label'] + ':\n\n*\n\n' + attribute['value'],
             attribute['label'] + ':\n\n1)\n\n' + attribute['value'],
+            attribute['label'] + ':\n```text\n' + attribute['value'] + '\n```',
+            attribute['label'] + ':\n~~~plain\n' + attribute['value'] + '\n~~~',
+            name_head + '\n```text\n' + name_tail + '\n```',
             attribute['label'] + ': ' + attribute['value'] + '.',
             attribute['label'] + ' ' + attribute['value'] + '.',
             '{"' + attribute['label'] + '":"' + attribute['value'] + '"}',
@@ -978,6 +1032,7 @@ def main():
         check_private_display(snapshot, public + '\n' + name_head + '\n# ' + name_tail[0] + '###' + name_tail[1:])
         check_private_display(snapshot, public + '\n' + name_head + '\n--not-marker\n' + name_tail)
         check_private_display(snapshot, public + '\n' + name_head + '\n#######\n' + name_tail)
+        check_private_display(snapshot, public + '\n' + attribute['label'] + ':\n```text\n' + attribute['value'][0] + '*' + attribute['value'][1:] + '\n```')
         check_private_display(snapshot, public + '\n' + json.dumps({'value': attribute['value'] + '.5', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'value': '<em>' + attribute['value'][0] + '*' + attribute['value'][1:] + '</em>', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'v&#97;lues': attribute['value'], 'label': attribute['label']}))
@@ -1022,7 +1077,7 @@ def main():
             raise ValueError('Unicode case-folded private label accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 16
+        result['private_near_miss_probes'] = 17
         result['private_escape_probes'] = 5
     result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 9
