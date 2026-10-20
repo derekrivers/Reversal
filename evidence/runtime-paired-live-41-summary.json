@@ -1,0 +1,90 @@
+{
+  "schema": "reversal.runtime-paired-live-41.summary.v1",
+  "gdi_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+  "reviewed_tool_sha256": "7f27a745f6364e4222afb4704d5ffb414f0d5284329f34fdcfd9d99eddc5c4a6",
+  "reviewed_tool_head": "f34ba202c0f05fc936f5708204088ab731cc4bd1",
+  "capture_sha256": "7cdba6316f5e7286d3e59a8aa29049a12c1ee4d165e7b145e10d1608d990d589",
+  "capture_bytes": 28890,
+  "pid": 6268,
+  "thread": 27348,
+  "module_base": 4194304,
+  "entry_boundary": {
+    "preferred_va": 6481632,
+    "rva": 2287328,
+    "runtime_va": 6481632,
+    "file_offset": 2287328
+  },
+  "return_boundary": {
+    "preferred_va": 7141623,
+    "rva": 2947319,
+    "runtime_va": 7141623,
+    "file_offset": 2947319
+  },
+  "entry_utc": "2026-10-20T18:37:42.430185+00:00",
+  "return_utc": "2026-10-20T18:37:42.430880+00:00",
+  "requested_seconds": 40,
+  "elapsed_seconds": 19.031047999999828,
+  "hit": true,
+  "return_observed": true,
+  "stop_reason": "paired_return",
+  "caller_matches": true,
+  "thread_matches": true,
+  "stack_matches_ret4": true,
+  "null_return": true,
+  "nonvolatile_matches": {
+    "ebx": true,
+    "esi": true,
+    "edi": true,
+    "ebp": true
+  },
+  "entry_slot_staff_matches": true,
+  "entry_slot_attribute_matches": true,
+  "entry_requested_reads_complete": true,
+  "entry_fs_complete": true,
+  "return_fs_complete": true,
+  "entry_x87_control_word": 639,
+  "return_x87_control_word": 639,
+  "selected_nonstack_regions": 13,
+  "selected_nonstack_regions_complete_and_unchanged": true,
+  "entry_stack_above_unchanged": true,
+  "entry_stack_below_changed": true,
+  "late_entry_count": 0,
+  "restored_thread_count": 7,
+  "detached": true,
+  "configuration": {
+    "manifest_entries": 784,
+    "restored_missing_root_language_files": 10,
+    "prelaunch_all_match": true,
+    "postbatch_all_match": true,
+    "manifest_file_sha256": "92aa3097961c972c8bd868d33766bcec59f0c9f799236a3b46c07044d13b1843",
+    "input_save_sha256": "8698569fbd83d9952a9832a95aee17a943c32f18e29621e9396ed228107abbd3",
+    "input_save_unchanged": true
+  },
+  "ui": {
+    "captures": 78,
+    "encoding": "JPEG",
+    "index_sha256": "22b7a469643ca7860043f76044e85eba002e61d972d0133f11f35c7dd2fb4e48",
+    "raw_private": true,
+    "timestamp_scope": "index observed_utc is retention time; not exact input event or screenshot acquisition",
+    "coverage": "bounded first batch; not exhaustive",
+    "parked_state": "Evening Results; ordinary postmatch date unchanged during read-only navigation"
+  },
+  "backup": {
+    "archive_sha256": "8385cbe481673dc62205986e0b5e15772d1037e796bd7bc7372800e4c780b1e8",
+    "archive_bytes": 220059583,
+    "data_entries": 872,
+    "hash_manifest_entry": 1,
+    "restored_hashes_match": true,
+    "verified_utc": "2026-10-20T18:49:35.769217+00:00",
+    "scope": "all784 baseline configuration files, unchanged input save, exact reviewed tool, raw paired capture,78 UI screenshots/index and private identity manifests; generated temporary game files and process RAM excluded",
+    "durability": "local separate archive and extracted restore; no off-host assurance"
+  },
+  "limitations": [
+    "two boundary observations rather than intervening instruction trace",
+    "no object ownership or lifetime validation",
+    "no complete effect continuation or action33 attempt",
+    "no full-match reconstruction or pinned-runtime equivalence",
+    "no same-process reload determinism",
+    "archive excludes runtime-generated temporary files and process RAM"
+  ]
+}
