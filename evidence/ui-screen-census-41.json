@@ -54,7 +54,6 @@
       "route.load.menu.web",
       "route.load.restore.cancel",
       "route.load.restore.info",
-      "route.load.restore.empty",
       "route.fixture.evening.competition",
       "route.fixture.evening.scroll",
       "route.fixture.evening.back",
@@ -125,7 +124,7 @@
       "screenshot_confirmed_state_ids": 17,
       "operator_only_state_ids": 5,
       "terminal_state_ids": 1,
-      "discovered_uncaptured_route_ids": 62,
+      "discovered_uncaptured_route_ids": 61,
       "unknown_unbounded_section_ids": 12
     }
   },
@@ -2897,17 +2896,6 @@
       "id": "route.load.restore.info",
       "from": "ui41.load.restore",
       "control_label": "Info",
-      "status": "discovered-uncaptured",
-      "evidence_ids": [
-        "r41-a4-ui-006"
-      ],
-      "target_state_id": null,
-      "destination": "unmapped; label alone does not prove destination layout or behavior"
-    },
-    {
-      "id": "route.load.restore.empty",
-      "from": "ui41.load.restore",
-      "control_label": "Empty file/directory behavior",
       "status": "discovered-uncaptured",
       "evidence_ids": [
         "r41-a4-ui-006"
