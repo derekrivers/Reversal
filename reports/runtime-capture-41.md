@@ -1,11 +1,12 @@
 # R41-A: single-use WOW64 execution interception
 
 The new `scripts/runtime_capture_41.py` uses a Windows debug-event loop and a
-DR0 hardware execution breakpoint. Its safe-process checker intercepted a real
-six-byte synthetic function twice, at the actual x86 entry EIP, with restoration
-and detach between attempts. A deliberately unreachable address exercised
-deadline cleanup. This establishes working host interception; no game boundary
-has yet been captured at this review checkpoint.
+DR0 hardware execution breakpoint. After independent review, it intercepted
+the real GDI RNG entry and then the participant lookup entry during an ordinary
+match. Both captures restored three threads' debug registers and detached.
+The lookup's actual return address is the effect caller's `006cf8f7`, its status
+stamp matches the current date, and all requested reads and the FS head are
+complete. This resolves the previous host-interception blocker.
 
 The production CLI accepts only the separately identified GDI executable SHA-256
 `0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b`,
@@ -50,7 +51,10 @@ language/configuration files, omitting saves and temporary files. Its duplicated
 experiment save has SHA-256
 `8698569fbd83d9952a9832a95aee17a943c32f18e29621e9396ed228107abbd3`.
 The copied config's save directory was changed to the disposable directory.
-Full data/config identity and paired-save experiments remain pending.
+The private inventory hashes 784 files separately from the save. Its canonical
+manifest SHA-256 is
+`fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a`;
+all 784 files and the save were unchanged when checked for the second run.
 
 Run `python scripts/check_runtime_capture_41.py` and its `python -O` variant for
 three actual hits, a timeout, target survival, actual FS head and deadline
@@ -69,3 +73,75 @@ API basis:
 [debugger detach](https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-debugactiveprocessstop).
 These are supported API contracts; the live safe-process checks establish the
 specific behavior exercised here.
+
+## Live captures and evidence limits
+
+The [sanitized receipt](../evidence/runtime-capture-41-live-summary.json) records
+capture hashes, identity, timing intervals and mapping. Both captures have
+loaded base `00400000`, thread 19248 and x87 control word `027f`.
+
+| Capture | Preferred/runtime VA | RVA / file offset | Event interval UTC |
+| --- | --- | --- | --- |
+| RNG A | `0090c860` | `0050c860` / `0050c860` | 17:28:39–17:28:59 |
+| Lookup A | `0062e6e0` | `0022e6e0` / `0022e6e0` | 17:29:10 |
+
+These intervals on 20 October 2026 come from output reservation/write times;
+the original raw results lacked an event timestamp. The current tool adds that
+timestamp for subsequent captures. The RNG hit occurred after kickoff while
+the debugger was attached for about 19.86 seconds; lookup hit in 0.73 seconds.
+These are actual debug exceptions, not sampled EIP matches.
+
+Lookup A contains the actual staff argument and receiver, matching current
+status row, flags, staff base/count, date, stack, FS head, four RNG scalars and
+floating-point context. The selected row has a null-result mapping, so no cache
+record is required for that admitted lookup path. R41-B separately replayed
+this genuine entry through the original instructions and TypeScript; its report
+owns that comparison. This capture alone observes entry, not the live return,
+ordered effects, slot ownership, producer execution or a complete attempt.
+
+The next tool version adds a 446-byte ESI candidate-slot read at the same
+event and records the two pointer equalities and effect-return provenance.
+That extension has not yet been attached to the game. It must pass fresh review
+before a second capture. Reading a resumed process at Lookup A's old addresses
+would not establish the missing same-event state.
+
+## Paired save experiment
+
+Runs A and B each start a fresh GDI process and load the same unchanged duplicate
+save with the same 784-file configuration. Both follow fixture → squad → player
+profile → Back → tactics → Cancel → Continue → Continue → Yes. No squad or
+tactical selection was intentionally edited. The screenshot evidence does not
+substantiate a condition change caused by those visits.
+
+Before kickoff, A displayed referee Mohammed Al-Hakim and “Breezy, Shower, 9 C”;
+B displayed referee Drazenko Kovacic and “Breezy, 9 C”. These setup differences
+were observed before the debugger attached to either run. Cosmetic background
+images differed earlier. A subsequently completed 0–1; B remains at kickoff.
+The earliest recorded gameplay divergence is therefore setup, not final score.
+
+This is a fresh-process comparison, not a same-process reload test. Time and
+process-only state were not controlled, and A's CD-prompt transition included
+external input detected by the UI bridge. No RNG-initialization, save-restoration
+or weather/referee cause is inferred. A whole-save deterministic replay remains
+unestablished despite the usable captured function boundary.
+
+## Private preservation and resume
+
+Private results retain 13 journey screenshots, the two raw capture JSON files,
+scenario and configuration manifests, the duplicated save and the disposable
+game copy. Files named `.png` from the UI bridge contain JPEG bytes; their
+original bytes/names were preserved and the private manifest labels encoding.
+The screenshot journey covers setup/load, fixtures, squad, player, tactics,
+proceed modal, kickoff, running commentary and full-time result.
+
+A separate local ZIP was extracted and all 25 entries independently rehashed.
+Archive SHA-256:
+`dc24ef02dda83321b290a48c58d3b393ce65438efa54cb94301757e992fbe38f`,
+151,793,237 bytes. It includes captures, screenshots, logs/manifests, duplicate
+save, both executable identities, active config and English language file.
+Remaining installed data is inventoried but not duplicated into this archive.
+This establishes local backup/restore only; no off-host durability is claimed.
+
+The sole game instance is run B, process 15240, parked before kickoff. Next:
+review the isolated ESI read, then capture a new lookup event and give its
+referent to R41-B. No shared registry or canonical Ghidra state was changed.

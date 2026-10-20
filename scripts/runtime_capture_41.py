@@ -262,6 +262,7 @@ def run(args, *, owned_test_child=None):
                         ctx = dbg.context(threads[event.tid])
                         if ctx.Eip == address and ctx.Dr6 & 1:
                             sample = base.context_record(ctx)
+                            sample["captured_utc"] = base.datetime.now(base.timezone.utc).isoformat()
                             sample["thread"] = event.tid
                             descriptor = (C.c_ubyte * 8)()
                             fs_ok = dbg.api.Wow64GetThreadSelectorEntry(
