@@ -346,9 +346,10 @@ def check_private_display(snapshot, public):
     require(not any(value in public for value in exact), 'private captured display string present in public catalogue/report')
     def labelled_leak(label, value):
         key, val = re.escape(label), re.escape(value)
-        direct = rf'(?<!\w)["\x27]?{key}["\x27]?\s*(?::|\|)\s*["\x27]?{val}["\x27]?(?!\w)'
-        prose = rf'(?<!\w){key}\s+{val}(?!\w)'
-        object_pair = rf'["\x27]label["\x27]\s*:\s*["\x27]{key}["\x27]\s*,\s*["\x27]value["\x27]\s*:\s*["\x27]?{val}["\x27]?(?!\w)'
+        value_token = rf'(?:["\x27]{val}["\x27]|{val}(?![\w.]))'
+        direct = rf'(?<!\w)["\x27]?{key}["\x27]?\s*(?::|\|)\s*{value_token}'
+        prose = rf'(?<!\w){key}\s+{val}(?![\w.])'
+        object_pair = rf'["\x27]label["\x27]\s*:\s*["\x27]{key}["\x27]\s*,\s*["\x27]value["\x27]\s*:\s*{value_token}'
         return any(re.search(pattern, public, re.IGNORECASE) for pattern in (direct, prose, object_pair))
     require(not any(labelled_leak(label, value) for label,value in labelled), 'private captured labelled value present in public catalogue/report')
 
@@ -551,6 +552,8 @@ def main():
                 raise ValueError('private display leak probe accepted')
         near_miss = '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '0"}'
         check_private_display(snapshot, public + '\n' + near_miss)
+        decimal_near_miss = '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '.5"}'
+        check_private_display(snapshot, public + '\n' + decimal_near_miss)
         synthetic = copy.deepcopy(snapshot)
         synthetic['squad']['clubLabel'] = 'Synthetic "Club"'
         try:
@@ -561,7 +564,7 @@ def main():
             raise ValueError('JSON-escaped private display leak probe accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 1
+        result['private_near_miss_probes'] = 2
         result['private_escape_probes'] = 1
     result['negative_probes'] = len(mutations) + 1 + len(report_leaks)
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
