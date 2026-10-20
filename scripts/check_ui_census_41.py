@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'c9a744bad80341895cf036322c39eb1c0add1d44f171383fdbd846f8234ac3dc'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '32bc45be3945a4929f241baec0b2ab347ebe62968e9d8e0422d55f7055a73044'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -512,7 +512,9 @@ def check_private_display(snapshot, public):
             elif isinstance(displayed, float):
                 displayed = str(int(displayed)) if math.isfinite(displayed) and displayed.is_integer() else str(displayed)
             if isinstance(display_fields.get('label'), str) and isinstance(displayed, str):
-                require((fold_display(display_fields['label']), fold_display(displayed)) not in pairs, 'private captured structured value present in public catalogue/report')
+                rendered_label = fold_display(render_for_privacy(display_fields['label']))
+                rendered_value = fold_display(render_for_privacy(displayed))
+                require((rendered_label, rendered_value) not in pairs, 'private captured structured value present in public catalogue/report')
             for child in value.values():
                 inspect_value(child, depth + 1)
         elif isinstance(value, list):
@@ -837,6 +839,12 @@ def main():
             name_head + ' ' + name_tail[0] + '&#8203;' + name_tail[1:],
             attribute['label'] + ': ' + attribute['value'][0] + '\\u200b' + attribute['value'][1:],
         ))
+        private_leaks.extend((
+            json.dumps({'value': attribute['value'][0] + '&#8203;' + attribute['value'][1:], 'note': 'context', 'label': attribute['label']}),
+            json.dumps({'value': ''.join('&#' + str(ord(char)) + ';' for char in attribute['value']), 'note': 'context', 'label': attribute['label']}),
+            json.dumps({'value': '<em>' + attribute['value'] + '</em>', 'note': 'context', 'label': attribute['label']}),
+            json.dumps({'value': attribute['value'], 'note': 'context', 'label': attribute['label'][0] + '&#8203;' + attribute['label'][1:]}),
+        ))
         private_leaks.extend([
             'picked: ' + picked,
             'info: ' + info,
@@ -910,6 +918,8 @@ def main():
         check_private_display(snapshot, public + '\n' + name_head + '[][ref]' + name_tail + '\n\n[ref]:\n\n target')
         check_private_display(snapshot, public + '\n' + name_head + ' ````' + name_tail + '\n```')
         check_private_display(snapshot, public + '\n' + name_head + ' ````' + name_tail + '\n')
+        check_private_display(snapshot, public + '\n' + json.dumps({'value': attribute['value'] + '.5', 'label': attribute['label']}))
+        check_private_display(snapshot, public + '\n' + json.dumps({'value': '<em>' + attribute['value'][0] + '*' + attribute['value'][1:] + '</em>', 'label': attribute['label']}))
         synthetic = copy.deepcopy(snapshot)
         synthetic['squad']['clubLabel'] = 'Synthetic "Club"'
         try:
@@ -951,7 +961,7 @@ def main():
             raise ValueError('Unicode case-folded private label accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 8
+        result['private_near_miss_probes'] = 10
         result['private_escape_probes'] = 5
     result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 9
