@@ -136,6 +136,18 @@ def require(condition, message):
         raise ValueError(message)
 
 
+def unique_json_pairs(pairs):
+    result = {}
+    for key, value in pairs:
+        require(key not in result, 'duplicate JSON key')
+        result[key] = value
+    return result
+
+
+def strict_json_loads(raw):
+    return json.loads(raw, object_pairs_hook=unique_json_pairs)
+
+
 def indexed(rows, label):
     ids = [row['id'] for row in rows]
     require(len(ids) == len(set(ids)), f'duplicate {label} ID')
@@ -364,7 +376,7 @@ def check_private_display(snapshot, public):
     # Parse JSON from its original escaped text. Decoding the whole file first
     # can corrupt valid objects when a separate property contains quotes/braces.
     pairs = {(label.casefold(), value) for label,value in labelled}
-    decoder = json.JSONDecoder()
+    decoder = json.JSONDecoder(object_pairs_hook=unique_json_pairs)
     def inspect_value(value, depth):
         require(depth < 32, 'excessively nested structured display text')
         if isinstance(value, dict):
@@ -404,9 +416,16 @@ def main():
     parser.add_argument('--private-aliases',type=Path)
     parser.add_argument('--private-snapshot',type=Path)
     args = parser.parse_args()
-    data = json.loads((ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8'))
-    assets = {a['asset_id']:a for a in json.loads((ROOT/'evidence/ui-assets-41-inventory.json').read_text(encoding='utf-8'))['assets']}
+    raw_census = (ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8')
+    data = strict_json_loads(raw_census)
+    assets = {a['asset_id']:a for a in strict_json_loads((ROOT/'evidence/ui-assets-41-inventory.json').read_text(encoding='utf-8'))['assets']}
     result = validate(data, assets)
+    try:
+        strict_json_loads(raw_census.replace('"schema":', '"schema":"/home/operator/private/capture.png","schema":', 1))
+    except ValueError:
+        pass
+    else:
+        raise ValueError('duplicate-key private path probe accepted')
     def escape_report_source(d):
         item = next(e for e in d['evidence'] if e['id'] == 'r41-operator-route-report')
         item['source'] = 'reports/../AGENTS.md'
@@ -567,7 +586,7 @@ def main():
     if args.private_root or args.private_aliases:
         require(args.private_root and args.private_aliases,'private root and aliases must be supplied together')
         root = args.private_root.resolve(strict=True)
-        aliases = json.loads(args.private_aliases.read_text(encoding='utf-8'))['aliases']
+        aliases = strict_json_loads(args.private_aliases.read_text(encoding='utf-8'))['aliases']
         for evidence in data['evidence']:
             if evidence['kind'] != 'screenshot':
                 continue
@@ -578,7 +597,7 @@ def main():
             require(jpeg_size(image) == evidence['capture_pixels'],'private screenshot dimensions mismatch')
         result['private_image_checks'] = 'pass'
     if args.private_snapshot:
-        snapshot = json.loads(args.private_snapshot.read_text(encoding='utf-8'))
+        snapshot = strict_json_loads(args.private_snapshot.read_text(encoding='utf-8'))
         public = (ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8') + (ROOT/'reports/ui-map-41.md').read_text(encoding='utf-8')
         check_private_display(snapshot, public)
         private_leaks = [snapshot['squad']['clubLabel'], snapshot['squad']['dateLabel'], snapshot['profile']['bio']]
@@ -631,7 +650,7 @@ def main():
         result['private_leak_probes'] = len(private_leaks)
         result['private_near_miss_probes'] = 2
         result['private_escape_probes'] = 1
-    result['negative_probes'] = len(mutations) + 1 + len(report_leaks)
+    result['negative_probes'] = len(mutations) + 2 + len(report_leaks)
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     print(json.dumps(result,sort_keys=True))
 
