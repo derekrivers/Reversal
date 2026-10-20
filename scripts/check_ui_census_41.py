@@ -112,7 +112,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'b2d28a0904ad0852fbb6a424597086ad478c8dff62ccad673b280157e9b4580e'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '3187ef4dee304ea42c04379d1272122559f6214491d7588e20c235273b822e81'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -460,6 +460,7 @@ def check_private_display(snapshot, public):
     references = {fold_display(match.group(1)) for match in re.finditer(r'(?m)^ {0,3}\[([^\]\r\n]+)\]:\s*\S+', markdown_plain)}
     markdown_plain = re.sub(r'!?\[([^\]\r\n]+)\]\[([^\]\r\n]*)\]', lambda match: match.group(1) if fold_display(match.group(2) or match.group(1)) in references else match.group(0), markdown_plain)
     markdown_plain = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_display(match.group(1)) in references else match.group(0), markdown_plain)
+    markdown_plain = re.sub(r'\\[ \t]*\r?\n', ' ', markdown_plain)
     markdown_plain = re.sub(r'\\([\\`*_{}\[\]()#+.!<>~\-])', r'\1', markdown_plain)
     markup = re.compile(r'(?P<marker>\*\*|__|~~|``|\*|_|`)(?P<body>[^\r\n]+?)(?P=marker)')
     while True:
@@ -767,6 +768,7 @@ def main():
             name_head + ' <img alt="' + name_tail + '">',
             name_head + ' &#' + str(ord(name_tail[0])) + ';' + name_tail[1:],
             name_head + '\n' + name_tail,
+            name_head + chr(92) + '\n' + name_tail,
         ))
         picked = next(row['picked'] for row in snapshot['squad']['rows'] if row['picked'])
         info = next(row['info'] for row in snapshot['squad']['rows'] if row['info'])
@@ -791,6 +793,7 @@ def main():
             attribute['label'] + ': ![' + attribute['value'] + '](https://example.invalid/image.png)',
             attribute['label'] + ': [' + attribute['value'] + '][reference]\n[reference]: https://example.invalid',
             attribute['label'] + '<br>' + attribute['value'],
+            attribute['label'] + ': ' + attribute['value'][0] + '<!-- note -->' + attribute['value'][1:],
             '<h3>' + attribute['label'] + '</h3>' + attribute['value'],
             '<section>' + attribute['label'] + '</section>' + attribute['value'],
             '{"role":"' + snapshot['profile']['role'] + '"}',
