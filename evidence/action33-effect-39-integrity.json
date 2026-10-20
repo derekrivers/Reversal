@@ -4,7 +4,7 @@
   "oracle_sha256": "fc0771a515e0e142b3b1d1d5ffd62bebf6710aa93b258e6fa66a4cab78e8958d",
   "specimen_sha256": "0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86",
   "verifier_dependency_hashes": {
-    "scripts/verify_action33_keeper_38.py": "6b1102083094c0cfe4a7a9170a482a8f88f829b45e9990b5a991f65fa4eeb091"
+    "scripts/verify_action33_keeper_38.py": "a7603d66c70d0b0115eed14c1f51f5865de40ee1ab1800bfe7a83d68e3e2cc2e"
   },
   "coverage": {
     "cases": 232,

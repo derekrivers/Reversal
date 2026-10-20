@@ -24,6 +24,9 @@ const checks=[
  ['reconstruction/check-action33-selector-36.ts'],
  // R37-B compares the connected variant draw and caller state to the keeper call.
  ['reconstruction/check-action33-variant-37.ts'],
+ // R38-A compares the connected keeper call and caller through its bounded return.
+ ['reconstruction/check-action33-keeper-38.ts'],
+ ['reconstruction/check-action33-effect-39.ts'],
  // R31-B checks original synthetic fixture-entry lifecycle traces and stop boundaries.
  ['scripts/check-action33-lifecycle-31.mjs'],
  // R32-B verifies the original slot initializer and next owner boundary on synthetic state.
@@ -40,6 +43,8 @@ const checks=[
  ['scripts/check-action33-fixture-35.mjs'],
  // R36-C checks selector receiver constructor and caller allocation frontiers.
  ['scripts/check-action33-selector-state-36.mjs'],
+ // R39-B checks the separate participant producer and CRT heap boundary.
+ ['scripts/check-action33-participant-39.mjs'],
  // R30-D validates retained static/synthetic-prefix evidence, without emulating private inputs.
  ['scripts/check-action33-state-30.mjs'],
  ['reconstruction/check-descriptor-handle.ts','evidence/descriptor-handle-validation/oracle.json','results/descriptor-handle.json'],

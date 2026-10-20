@@ -135,10 +135,10 @@ for(const mode of ['action','x87']){
 }
 // Receipt hash is pinned after regeneration, separately from behavior fixtures.
 const receiptBytes=readFileSync(new URL('evidence/action33-keeper-38-integrity.json',root));
-assert.equal(hash(receiptBytes),'c54933d1074d6051a2235e7c2833b831bbbb3ad544c76df4a655946fd28c0bb1');const receipt=JSON.parse(receiptBytes);
+assert.equal(hash(receiptBytes),'0aab486478be2c33f6a21e04154b50055be8733b44d0f541ac50aba3f31ccdc3');const receipt=JSON.parse(receiptBytes);
 assert.equal(receipt.unit,'R38-A');assert.equal(receipt.status,'passed');assert.equal(receipt.oracle_sha256,hash(blob));assert.deepEqual(receipt.coverage,oracle.coverage);
-assert.equal(Object.keys(receipt.negative_checks).length,44);
-for(const source of ['keeper','grid'])for(const width of [33,48,64,96])for(const prefix of [0,1,2])
+assert.equal(Object.keys(receipt.negative_checks).length,74);
+for(const source of ['keeper','grid'])for(const width of [12,13,14,21,29,33,48,64,96])for(const prefix of [0,1,2])
  assert.equal(receipt.negative_checks[`private_base64_${source}_${width}_prefix${prefix}`],'private original fragment');
 console.log(JSON.stringify({unit:'R38-A',status:'passed',node:process.version,...oracle.coverage,
  scope:'original-entry keeper return to pre-007024b4 or pre-00702332; no resolver return, outcome, live reachability or R30-C machine-state join'}));

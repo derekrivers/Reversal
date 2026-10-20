@@ -16,7 +16,7 @@ from emulate_action33_prefix_30 import need, sha, compact, packed, pe_offset
 from extract_action33_prefix_30 import rows, compare
 
 ORACLE='fc0771a515e0e142b3b1d1d5ffd62bebf6710aa93b258e6fa66a4cab78e8958d'
-VERIFIER_DEPENDENCIES={'scripts/verify_action33_keeper_38.py':'6b1102083094c0cfe4a7a9170a482a8f88f829b45e9990b5a991f65fa4eeb091'}
+VERIFIER_DEPENDENCIES={'scripts/verify_action33_keeper_38.py':'a7603d66c70d0b0115eed14c1f51f5865de40ee1ab1800bfe7a83d68e3e2cc2e'}
 
 
 def public_payload(blob):
