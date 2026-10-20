@@ -48,6 +48,39 @@ OPERATOR_CLAIMS = {
     },
 }
 
+# Frozen topology for this reviewed capture batch. A receipt may support an
+# action only at its observed endpoints and with its recorded confidence.
+REVIEWED_EDGE_TOPOLOGY = {
+    'edge.restore-open': ('ui41.load.menu', 'ui41.load.restore', 'observed-action'),
+    'edge.select-file': ('ui41.load.restore', 'ui41.load.restore.selected', 'observed-action'),
+    'edge.load-info': ('ui41.load.restore.selected', 'ui41.load.media_info', 'observed-action'),
+    'edge.info-dismiss': ('ui41.load.media_info', 'ui41.fixture.evening', 'observed-action'),
+    'edge.original-cd': ('ui41.load.restore', 'ui41.load.media_request', 'observed-action'),
+    'edge.cd-gap': ('ui41.load.media_request', 'ui41.fixture.evening', 'unresolved-gap'),
+    'edge.club-link': ('ui41.fixture.evening', 'ui41.squad.selection', 'observed-action'),
+    'edge.profile': ('ui41.squad.selection', 'ui41.player.profile', 'observed-action'),
+    'edge.profile-back': ('ui41.player.profile', 'ui41.squad.selection', 'observed-action'),
+    'edge.tactics': ('ui41.squad.selection', 'ui41.tactics.overview', 'observed-action'),
+    'edge.tactics-cancel': ('ui41.tactics.overview', 'ui41.squad.selection', 'observed-action'),
+    'edge.continue-squad': ('ui41.squad.selection', 'ui41.squad.prematch', 'observed-action'),
+    'edge.continue-fixture': ('ui41.fixture.evening', 'ui41.squad.prematch', 'observed-action'),
+    'edge.confirm-match': ('ui41.squad.prematch', 'ui41.match.confirm', 'observed-action'),
+    'edge.enter-match': ('ui41.match.confirm', 'ui41.match.prekickoff', 'observed-action'),
+    'edge.running-sequence': ('ui41.match.prekickoff', 'ui41.match.running', 'screenshot-sequence'),
+    'edge.result-sequence': ('ui41.match.running', 'ui41.result.fulltime', 'screenshot-sequence'),
+    'edge.halftime-sequence': ('ui41.match.prekickoff', 'ui41.match.halftime', 'screenshot-sequence'),
+    'edge.b-result-sequence': ('ui41.match.halftime', 'ui41.result.fulltime', 'screenshot-sequence'),
+    'edge.options': ('ui41.result.fulltime', 'ui41.game.options', 'observed-action'),
+    'edge.restart': ('ui41.game.options', 'ui41.restart.confirm', 'observed-action'),
+    'edge.save-prompt': ('ui41.restart.confirm', 'ui41.restart.saveprompt', 'observed-action'),
+    'edge.restart-cancel': ('ui41.restart.saveprompt', 'ui41.result.fulltime', 'observed-action'),
+    'edge.save-separate': ('ui41.restart.saveprompt', 'ui41.save.dialog', 'observed-action'),
+    'edge.restart-child': ('ui41.save.dialog', 'ui41.load.menu', 'observed-action'),
+    'edge.exit-confirm': ('ui41.load.menu', 'ui41.exit.confirm', 'observed-action'),
+    'edge.exit-yes': ('ui41.exit.confirm', 'ui41.process.exited', 'observed-action'),
+    'edge.error-ok': ('ui41.load.language_error', 'ui41.load.config_error', 'observed-action'),
+}
+
 
 def require(condition, message):
     if not condition:
@@ -97,6 +130,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
     layouts = indexed(data['layouts'], 'layout')
     states = indexed(data['states'], 'state')
     edges = indexed(data['transitions'], 'transition')
+    require(set(edges) == set(REVIEWED_EDGE_TOPOLOGY), 'unreviewed transition set')
     routes = indexed(data['discovered_routes'], 'route')
     domains = indexed(data['unknown_sections'], 'domain')
     require(all(alias not in states and target in states for alias,target in data['state_aliases'].items()), 'invalid historical state alias')
@@ -133,6 +167,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
     for edge in edges.values():
         require(edge['from'] in states and edge['to'] in states, 'dangling graph endpoint')
         require(edge['status'] in ['observed-action', 'screenshot-sequence', 'unresolved-gap'], 'unknown transition confidence')
+        require((edge['from'], edge['to'], edge['status']) == REVIEWED_EDGE_TOPOLOGY[edge['id']], 'edge topology changed')
         refs(edge['evidence_ids'], evidence)
         refs(edge['context_ids'], contexts)
         require(bool(edge['evidence_ids']) and bool(edge['context_ids']), 'transition without evidence/context')
@@ -239,11 +274,28 @@ def main():
         item['source_visibility'] = 'private-not-loaded'
         item['source_digest_basis'] = 'raw-bytes'
         item['source'] = 'private opaque replacement'
+    def reseal_derived_transitions(d):
+        for state in d['states']:
+            observed = [edge['id'] for edge in d['transitions'] if edge['status'] == 'observed-action' and state['id'] in (edge['from'], edge['to'])]
+            state['coverage']['transition_ids'] = observed
+            state['coverage']['observed_transition'] = bool(observed)
+        d['observed_adjacency'] = {
+            state['id']: [{'to':edge['to'], 'transition_id':edge['id']} for edge in d['transitions'] if edge['from'] == state['id'] and edge['status'] == 'observed-action']
+            for state in d['states']
+        }
+    def retarget_option(d):
+        next(edge for edge in d['transitions'] if edge['id'] == 'edge.options')['from'] = 'ui41.match.prekickoff'
+        reseal_derived_transitions(d)
+    def promote_cd_gap(d):
+        next(edge for edge in d['transitions'] if edge['id'] == 'edge.cd-gap')['status'] = 'observed-action'
+        reseal_derived_transitions(d)
     mutations = [
         lambda d:d['transitions'][0].update(to='ui41.unmapped'),
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(evidence_ids=['r41-a4-operator-notes'], context_ids=['gdi-A4-failed-launch']),
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(context_ids=['gdi-A4-failed-launch']),
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.profile').update(action='Exit Game'),
+        retarget_option,
+        promote_cd_gap,
         lambda d:next(e for e in d['transitions'] if e['id']=='edge.running-sequence').update(evidence_ids=['r41-ui-09-match-before-kickoff-A']),
         lambda d:d['evidence'].append(d['evidence'][0]),
         lambda d:d['states'][0]['coverage'].update(engine_binding=True),
