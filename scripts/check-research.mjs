@@ -22,6 +22,8 @@ const checks=[
  ['reconstruction/check-action33-rng-35.ts'],
  // R36-A compares the original keeper selector and caller to the next RNG or diagnostic call.
  ['reconstruction/check-action33-selector-36.ts'],
+ // R37-B compares the connected variant draw and caller state to the keeper call.
+ ['reconstruction/check-action33-variant-37.ts'],
  // R31-B checks original synthetic fixture-entry lifecycle traces and stop boundaries.
  ['scripts/check-action33-lifecycle-31.mjs'],
  // R32-B verifies the original slot initializer and next owner boundary on synthetic state.
