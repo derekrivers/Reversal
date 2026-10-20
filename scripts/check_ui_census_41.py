@@ -105,7 +105,7 @@ REVIEWED_STATE_CLAIMS_SHA256 = '9f24c76350e8c8871154657e81788d06bcb0a29966c0f4ea
 REVIEWED_UNKNOWN_SECTIONS_SHA256 = 'ef594ff35e5a3add0543db42260213d285774a5c5878cbe319963b37dcc93f6a'
 REVIEWED_BATCH_SECTION_SHA256 = {
     'contexts': 'c732d0015cb29c35ab2ddbe83adc056e63689d2abd4fc8097ac1c0af19a22778',
-    'evidence': '0b0c8f118e218fccd1a0488541a7f677eba15056040dec62c698522b19a87858',
+    'evidence': '80caa7e6d6b9d29a613420d0e8bf2e7c3d202c1102d0016ea8eebc7e044cb65d',
     'layouts': 'b243b6201fcda8d5c3763688044d9d062dfcf5d9a127f2888c783dc276e44118',
     'transitions': 'e994cec077e8c69334a299a1733c36b86e2863ea4d1f55c42c893b3d6439adf1',
     'capture_requests': '2a1ef2b0ebaa83b5a3c108b121b23c953f42ab025a28fe1313d92460265b34d8',
@@ -114,8 +114,8 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '0f52914891e5067f957bac4b880cf46766ddf9c64b4ebdedcfda7a14b018a3f1'  # Complete public report, normalized CRLF to LF.
-PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
+REVIEWED_UI_REPORT_SHA256 = 'fb6c5232a5fb42d77bf83721be3e711a064de823dcf0eaf20b0ddca5985b83ee'  # Complete public report, normalized CRLF to LF.
+PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9:./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
     # directory name (including names ending in + or @) does not.
@@ -164,6 +164,11 @@ def render_for_privacy(source):
                     pending_code_runs.add(length)
         fenced.append(line)
     source = ''.join(fenced)
+    fold_ref = lambda value: unicodedata.normalize('NFC', re.sub(r'\s+', ' ', value.strip())).casefold()
+    reference_pattern = r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]*)?\S+'
+    reference_line = re.compile(reference_pattern + r'[^\r\n]*')
+    source_references = {fold_ref(match.group(1)) for match in reference_line.finditer(source)}
+    source = reference_line.sub('', source)
     def render_inline_links(value):
         opener = re.compile(r'!?\[([^\]\r\n]*)\]\(')
         chunks, pos = [], 0
@@ -207,10 +212,9 @@ def render_for_privacy(source):
     html_view.feed(source)
     html_view.close()
     rendered = render_inline_links(''.join(html_view.parts))
-    fold_ref = lambda value: unicodedata.normalize('NFC', re.sub(r'\s+', ' ', value.strip())).casefold()
-    reference_pattern = r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]*)?\S+'
     # HTML parsing consumes an angle-bracketed Markdown destination as a tag.
-    references = {fold_ref(match.group(1)) for text in (source, rendered) for match in re.finditer(reference_pattern, text)}
+    references = source_references | {fold_ref(match.group(1)) for match in re.finditer(reference_pattern, rendered)}
+    rendered = reference_line.sub('', rendered)
     rendered = re.sub(r'!?\[([^\]\r\n]*)\]\[([^\]]{0,999})\]', lambda match: match.group(1) if fold_ref(match.group(2) or match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_ref(match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'\\[ \t]*\r?\n', ' ', rendered)
@@ -366,6 +370,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
             require(context[key] is None or re.fullmatch('[a-f0-9]{64}', context[key]), 'invalid identity hash')
         if context['configuration_status'].endswith('matched'):
             require(context['capture_configuration_sha256'] == context['expected_configuration_sha256'], 'matched configuration identity missing')
+    operator_public_text = None
     for item in evidence.values():
         require(re.fullmatch('[a-f0-9]{64}', item['sha256']), 'invalid evidence digest')
         require(item['kind'] in ['screenshot', 'operator-report'], 'unknown evidence kind')
@@ -381,7 +386,9 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
             if item['source_visibility'] == 'public-tracked':
                 require(item['id'] == 'r41-operator-route-report' and item['source'] == 'reports/runtime-capture-41.md', 'unexpected public operator source')
                 require(item['source_digest_basis'] == 'utf8-lf', 'unsupported public source digest basis')
-                require(source_digest(source_reader(item['source'])) == item['sha256'], 'public operator source digest mismatch')
+                source_bytes = source_reader(item['source'])
+                require(source_digest(source_bytes) == item['sha256'], 'public operator source digest mismatch')
+                operator_public_text = source_bytes.decode('utf-8')
             else:
                 require(item['source'].startswith('private ') and item['source_digest_basis'] == 'raw-bytes', 'private receipt mislabels a public report source')
     for layout in layouts.values():
@@ -464,7 +471,8 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
     require(all(denominator[k] == v for k,v in expected_sets.items()), 'denominator membership mismatch')
     require(denominator['counts'] == {k:len(v) for k,v in expected_sets.items()}, 'denominator count mismatch')
     report_bytes = report_reader()
-    public = list(text_values(data)) + [report_bytes.decode('utf-8')]
+    require(operator_public_text is not None, 'public operator report missing')
+    public = list(text_values(data)) + [report_bytes.decode('utf-8'), operator_public_text]
     require(not any(has_private_path_or_payload(part) for part in public), 'private path/payload in census')
     require(not any(re.search(r'\b\d{1,2}(?:-\d{1,2}){3,}\b|[£$€]\d',part) for part in public), 'captured display value in census')
     require(set(data) == REVIEWED_ROOT_FIELDS, 'unreviewed root fields')
@@ -777,6 +785,20 @@ def main():
         pass
     else:
         raise ValueError('altered public source accepted')
+    operator_payload = raw_lf + b'\n/private/operator/capture.jpg\n'
+    operator_mutation = copy.deepcopy(data)
+    next(item for item in operator_mutation['evidence'] if item['id']=='r41-operator-route-report')['sha256'] = source_digest(operator_payload)
+    reviewed_evidence_digest = REVIEWED_BATCH_SECTION_SHA256['evidence']
+    try:
+        REVIEWED_BATCH_SECTION_SHA256['evidence'] = batch_section_digest(operator_mutation['evidence'])
+        try:
+            validate(operator_mutation, assets, source_reader=lambda _: operator_payload)
+        except ValueError as exc:
+            require(str(exc) == 'private path/payload in census', 'resealed operator path rejected for unrelated reason')
+        else:
+            raise ValueError('resealed operator path accepted')
+    finally:
+        REVIEWED_BATCH_SECTION_SHA256['evidence'] = reviewed_evidence_digest
     report = public_report_bytes()
     validate(data, assets, report_reader=lambda: report.replace(b'\r\n', b'\n').replace(b'\n', b'\r\n'))
     changed_count = report.replace(b'| Screenshot-confirmed screen/state IDs | 17 |', b'| Screenshot-confirmed screen/state IDs | 99 |', 1)
@@ -829,6 +851,9 @@ def main():
     require(not has_private_path_or_payload('docs_\\reference\\ui.md'), 'underscore-suffixed repository-relative Windows path rejected')
     require(not has_private_path_or_payload('docs~~\\reference\\ui.md'), 'tilde-suffixed repository-relative Windows path rejected')
     require(not has_private_path_or_payload('__private _docs\\reference\\ui.md_ location__'), 'nested relative Windows path rejected')
+    require(not has_private_path_or_payload('https://example.invalid/docs/reference/ui.md'), 'ordinary HTTPS URL rejected')
+    require(not has_private_path_or_payload('[docs](https://example.invalid/docs/reference/ui.md)'), 'Markdown HTTPS URL rejected')
+    require(not has_private_path_or_payload('https://example.invalid/private/capture.png'), 'remote URL path rejected as local path')
     require(not has_private_path_or_payload('escaped \\n punctuation.'), 'ordinary escaped punctuation rejected')
     if args.private_root or args.private_aliases:
         require(args.private_root and args.private_aliases,'private root and aliases must be supplied together')
@@ -973,6 +998,8 @@ def main():
             name_head + '\n```text\n' + name_tail + '\n```',
             'note ```literal\n\n' + attribute['label'] + ':\n```text\n' + attribute['value'] + '\n```',
             'note ```literal\n\n' + name_head + '\n```text\n' + name_tail + '\n```',
+            name_head + '\n\n[ref]: /x\n\n' + name_tail,
+            attribute['label'] + ':\n\n[ref]: /x\n\n' + attribute['value'],
             attribute['label'] + ': ' + attribute['value'] + '.',
             attribute['label'] + ' ' + attribute['value'] + '.',
             '{"' + attribute['label'] + '":"' + attribute['value'] + '"}',
@@ -1049,6 +1076,7 @@ def main():
         check_private_display(snapshot, public + '\n' + name_head + '\n#######\n' + name_tail)
         check_private_display(snapshot, public + '\n' + attribute['label'] + ':\n```text\n' + attribute['value'][0] + '*' + attribute['value'][1:] + '\n```')
         check_private_display(snapshot, public + '\n' + name_head + ' ' + name_tail[0] + 'X' + name_tail[1:])
+        check_private_display(snapshot, public + '\n' + name_head + '\n\n[ref]:\n\n /x\n\n' + name_tail)
         check_private_display(snapshot, public + '\n' + json.dumps({'value': attribute['value'] + '.5', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'value': '<em>' + attribute['value'][0] + '*' + attribute['value'][1:] + '</em>', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'v&#97;lues': attribute['value'], 'label': attribute['label']}))
@@ -1099,10 +1127,10 @@ def main():
             raise ValueError('Unicode case-folded private label accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 18
+        result['private_near_miss_probes'] = 19
         result['private_escape_probes'] = 6
-    result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
-    result['public_path_near_miss_probes'] = 9
+    result['negative_probes'] = len(mutations) + 17 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
+    result['public_path_near_miss_probes'] = 12
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     result['public_report_checks'] = 'LF/CRLF match; changed coverage total rejected'
     print(json.dumps(result,sort_keys=True))

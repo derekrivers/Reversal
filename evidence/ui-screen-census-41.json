@@ -613,7 +613,7 @@
     {
       "id": "r41-operator-route-report",
       "kind": "operator-report",
-      "sha256": "0fe2ae378cde014c2b5195f90cf4f0ca0c170c02348590a60171cd0edbc72f88",
+      "sha256": "c7a7537d6931dc6e697cb0c7c8cc0098072e513037d4535fb1819aa9f244682f",
       "source_visibility": "public-tracked",
       "source_digest_basis": "utf8-lf",
       "source_digest_scope": "complete tracked file; only CRLF-to-LF normalization",
