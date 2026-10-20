@@ -127,8 +127,12 @@ def has_private_path_or_payload(part):
         return True
     # Backticks, underscores and tildes can occur in filenames. Treat them as
     # Markdown delimiters only when a matching closing marker is present.
-    spans = re.finditer(r'(?P<marker>`{1,3}|_{1,3}|~{2})(?P<body>[^\r\n]+?)(?P=marker)', part)
-    return any(ROOT_RELATIVE_WINDOWS.search(match.group('body')) for match in spans)
+    def rooted_in_spans(source, depth=0):
+        if depth >= 16:
+            return True  # Too much nested markup to inspect safely.
+        spans = re.finditer(r'(?P<marker>`{1,3}|_{1,3}|~{2})(?P<body>[^\r\n]+?)(?P=marker)', source)
+        return any(ROOT_RELATIVE_WINDOWS.search(match.group('body')) or rooted_in_spans(match.group('body'), depth+1) for match in spans)
+    return rooted_in_spans(part)
 
 
 def route_digest(rows):
@@ -599,7 +603,7 @@ def main():
         except ValueError:
             continue
         raise ValueError('negative validation probe accepted')
-    for leaked in ('\\Users\\operator\\private\\capture.png', '\\capture.png', '\\UI\\capture.png', '\\Équipe\\capture.png', '\\My Documents\\capture.png', '\\My capture.png', '`\\UI\\capture.png`', '**\\UI\\capture.png**', '_\\UI\\capture.png_', '__\\UI\\capture.png__', '~~\\UI\\capture.png~~'):
+    for leaked in ('\\Users\\operator\\private\\capture.png', '\\capture.png', '\\UI\\capture.png', '\\Équipe\\capture.png', '\\My Documents\\capture.png', '\\My capture.png', '`\\UI\\capture.png`', '**\\UI\\capture.png**', '_\\UI\\capture.png_', '__\\UI\\capture.png__', '~~\\UI\\capture.png~~', '__private _\\UI\\capture.png_ location__', '~~private _\\UI\\capture.png_ location~~'):
         changed = copy.deepcopy(data)
         changed['private_payload'] = leaked
         try:
@@ -620,7 +624,7 @@ def main():
     else:
         raise ValueError('altered public source accepted')
     report = public_report_bytes()
-    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'), b'\n\\My Documents\\capture.png', b'\n\\My capture.png', b'\n`\\UI\\capture.png`', b'\n**\\UI\\capture.png**', b'\n_\\UI\\capture.png_', b'\n__\\UI\\capture.png__', b'\n~~\\UI\\capture.png~~')
+    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'), b'\n\\My Documents\\capture.png', b'\n\\My capture.png', b'\n`\\UI\\capture.png`', b'\n**\\UI\\capture.png**', b'\n_\\UI\\capture.png_', b'\n__\\UI\\capture.png__', b'\n~~\\UI\\capture.png~~', b'\n__private _\\UI\\capture.png_ location__', b'\n~~private _\\UI\\capture.png_ location~~')
     for leaked in report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
@@ -635,6 +639,7 @@ def main():
     require(not has_private_path_or_payload('docs`\\reference\\ui.md'), 'backtick-suffixed repository-relative Windows path rejected')
     require(not has_private_path_or_payload('docs_\\reference\\ui.md'), 'underscore-suffixed repository-relative Windows path rejected')
     require(not has_private_path_or_payload('docs~~\\reference\\ui.md'), 'tilde-suffixed repository-relative Windows path rejected')
+    require(not has_private_path_or_payload('__private _docs\\reference\\ui.md_ location__'), 'nested relative Windows path rejected')
     require(not has_private_path_or_payload('escaped \\n punctuation.'), 'ordinary escaped punctuation rejected')
     if args.private_root or args.private_aliases:
         require(args.private_root and args.private_aliases,'private root and aliases must be supplied together')
@@ -718,8 +723,8 @@ def main():
         result['private_leak_probes'] = len(private_leaks)
         result['private_near_miss_probes'] = 3
         result['private_escape_probes'] = 2
-    result['negative_probes'] = len(mutations) + 13 + len(report_leaks)
-    result['public_path_near_miss_probes'] = 8
+    result['negative_probes'] = len(mutations) + 15 + len(report_leaks)
+    result['public_path_near_miss_probes'] = 9
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     print(json.dumps(result,sort_keys=True))
 
