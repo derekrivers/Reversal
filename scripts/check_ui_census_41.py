@@ -32,8 +32,13 @@ def source_digest(raw):
 
 def tracked_source_bytes(source):
     path = (ROOT / source).resolve(strict=True)
-    require(path.is_relative_to(ROOT) and source.startswith('reports/') and path.suffix == '.md', 'public report source escaped tracked report scope')
+    reports_root = (ROOT / 'reports').resolve(strict=True)
+    require(path.is_relative_to(reports_root) and source.startswith('reports/') and path.suffix == '.md', 'public report source escaped tracked report scope')
     return path.read_bytes()
+
+
+def public_report_bytes():
+    return tracked_source_bytes('reports/ui-map-41.md')
 
 
 def text_values(value):
@@ -48,7 +53,7 @@ def text_values(value):
             yield from text_values(item)
 
 
-def validate(data, assets, source_reader=tracked_source_bytes):
+def validate(data, assets, source_reader=tracked_source_bytes, report_reader=public_report_bytes):
     require(data['schema'] == 'reversal.ui-screen-census-41.v1', 'unsupported schema')
     contexts = indexed(data['contexts'], 'context')
     evidence = indexed(data['evidence'], 'evidence')
@@ -114,6 +119,7 @@ def validate(data, assets, source_reader=tracked_source_bytes):
     for route in routes.values():
         require(route['from'] in states and route['target_state_id'] is None and route['status'] == 'discovered-uncaptured', 'unseen destination promoted to screen')
         refs(route['evidence_ids'], evidence)
+        require(bool(route['evidence_ids']) and bool(set(route['evidence_ids']).intersection(states[route['from']]['evidence_ids'])), 'discovered route without source-state evidence')
     for request in data['capture_requests']:
         refs(request['route_ids'], routes)
         require(request['owner'] == 'R41-A4', 'capture operator mismatch')
@@ -126,7 +132,7 @@ def validate(data, assets, source_reader=tracked_source_bytes):
         'discovered_uncaptured_route_ids':list(routes), 'unknown_unbounded_section_ids':list(domains)}
     require(all(denominator[k] == v for k,v in expected_sets.items()), 'denominator membership mismatch')
     require(denominator['counts'] == {k:len(v) for k,v in expected_sets.items()}, 'denominator count mismatch')
-    public = list(text_values(data))
+    public = list(text_values(data)) + [report_reader().decode('utf-8')]
     require(not any(re.search(r'[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b',part) for part in public), 'private path/payload in census')
     require(not any(re.search(r'\b\d{1,2}(?:-\d{1,2}){3,}\b|[£$€]\d',part) for part in public), 'captured display value in census')
     return {'states':len(states),'screenshots':sum(e['kind']=='screenshot' for e in evidence.values()), 'denominator':denominator['counts'], 'engine_bindings':0}
@@ -163,6 +169,10 @@ def main():
     data = json.loads((ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8'))
     assets = {a['asset_id']:a for a in json.loads((ROOT/'evidence/ui-assets-41-inventory.json').read_text(encoding='utf-8'))['assets']}
     result = validate(data, assets)
+    def escape_report_source(d):
+        item = next(e for e in d['evidence'] if e['id'] == 'r41-operator-route-report')
+        item['source'] = 'reports/../AGENTS.md'
+        item['sha256'] = source_digest((ROOT / 'AGENTS.md').read_bytes())
     mutations = [
         lambda d:d['transitions'][0].update(to='ui41.unmapped'),
         lambda d:d['evidence'].append(d['evidence'][0]),
@@ -170,6 +180,9 @@ def main():
         lambda d:d['layouts'][0]['regions'][0].update(bounds=[799,0,10,10]),
         lambda d:d['denominator']['screenshot_confirmed_state_ids'].pop(),
         lambda d:d['denominator'].update(total_application_screen_states=100),
+        lambda d:d['discovered_routes'][0].update(evidence_ids=[]),
+        lambda d:d['discovered_routes'][0].update(evidence_ids=[d['evidence'][-1]['id']]),
+        escape_report_source,
         lambda d:d['states'][0]['assets']['asset_ids'].append('unknown-asset'),
         lambda d:d['observed_adjacency'][d['states'][0]['id']].clear(),
         lambda d:d.update(private_payload='1-2-3-4'),
@@ -203,6 +216,14 @@ def main():
         pass
     else:
         raise ValueError('altered public source accepted')
+    report = public_report_bytes()
+    for leaked in (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json'):
+        try:
+            validate(data, assets, report_reader=lambda: report + leaked)
+        except ValueError:
+            pass
+        else:
+            raise ValueError('private path in public report accepted')
     if args.private_root or args.private_aliases:
         require(args.private_root and args.private_aliases,'private root and aliases must be supplied together')
         root = args.private_root.resolve(strict=True)
@@ -222,7 +243,7 @@ def main():
         public = (ROOT/'evidence/ui-screen-census-41.json').read_text(encoding='utf-8') + (ROOT/'reports/ui-map-41.md').read_text(encoding='utf-8')
         require(not any(token in public for token in private),'private captured token present in public catalogue/report')
         result['private_token_checks'] = 'pass'
-    result['negative_probes'] = len(mutations) + 1
+    result['negative_probes'] = len(mutations) + 3
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     print(json.dumps(result,sort_keys=True))
 
