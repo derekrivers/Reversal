@@ -1,0 +1,26 @@
+{
+  "schema": "reversal.asset-recovery-41.v1",
+  "inventory_sha256": "b71a539a802be9e3493e39c8aee188155b663c0a28fd90f51e2870f0dcd5931d",
+  "source_count": 304,
+  "unique_content_count": 286,
+  "normal_optimized_inventory_equal": true,
+  "synthetic_checker": {
+    "normal": "pass",
+    "optimized": "pass",
+    "malformed_input_rejections": 8
+  },
+  "representative_conversions": [
+    {
+      "source_sha256": "d3f7a0d4bea834eea0e0206380d26f69421fbdf75601543a023a13cf91b1f392",
+      "png_sha256": "bdd044f06bb957907f9e05e0607ba098231a5f619429a866d181c27c851b0174",
+      "visually_inspected": true
+    },
+    {
+      "source_sha256": "93b7c1e2947ae014ab9946ca864d5dacdedce11b9c5790a67b6a458e58749241",
+      "png_sha256": "4ea1116b21b0a7cbd36ef5b555fcfa1c63ac79791801d7d61c492ffa82571f69",
+      "visually_inspected": true
+    }
+  ],
+  "private_outputs_committed": false,
+  "backup": "local only; coordinator durable backup pending"
+}
