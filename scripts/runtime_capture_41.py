@@ -77,7 +77,63 @@ def inventory(args):
         boundary=pe["preferred_base"], synthetic_sha256=expected))
 
 
-def lookup_closure(dbg, process, ctx, loaded_base):
+def effect_input_address(regions, staff, caller_matches):
+    """Interpret captured aliases only; never dereference an unverified candidate."""
+    by_label = {r.get("label"): r for r in regions}
+    def payload(label, size):
+        item = by_label.get(label)
+        if item and item["complete"] and item["received"] == size:
+            data = bytes.fromhex(item["hex"])
+            return data if len(data) == size else None
+        return None
+    slot = payload("effect_esi_candidate_slot", 0x1BE)
+    record = payload("staff_record", 0x6E)
+    result = {"status": "missing-alias-input", "attribute_pointer": None,
+              "address": None, "slot_staff_matches": None, "slot_attribute_matches": None}
+    if not caller_matches:
+        result["status"] = "caller-mismatch"
+    elif slot is not None and record is not None and staff:
+        pointer = struct.unpack_from("<I", slot, 0x6D)[0]
+        result.update(attribute_pointer=pointer,
+            slot_staff_matches=struct.unpack_from("<I", slot, 0x69)[0] == staff,
+            slot_attribute_matches=pointer == struct.unpack_from("<I", record, 0x61)[0])
+        if not result["slot_staff_matches"] or not result["slot_attribute_matches"]:
+            result["status"] = "alias-mismatch"
+        elif pointer == 0:
+            result["status"] = "null-attribute-pointer"
+        elif pointer + 0x2D + 1 > 2**32:
+            result["status"] = "outside-x86-address-space"
+        else:
+            result.update(status="admitted-address", address=pointer + 0x2D)
+    return result
+
+
+def effect_input_return(before, after, slot_register_matches):
+    """Fixed entry-address rereads are not a fresh pointer chase at return."""
+    entry = before["effect_inputs"]
+    result = effect_input_address(after, before["staff"], before["effect_return_address_matches"])
+    result["entry_address"] = entry["address"]
+    result["slot_register_matches"] = slot_register_matches
+    result["pointer_matches_entry"] = (result["attribute_pointer"] == entry["attribute_pointer"]
+        if result["attribute_pointer"] is not None and entry["attribute_pointer"] is not None else None)
+    result["current_attribute_complete"] = False
+    constant = next((r for r in after if r.get("label") == "effect_multiplier_constant"), None)
+    result["constant_complete"] = bool(constant and constant["complete"] and
+        constant["received"] == 4 and len(bytes.fromhex(constant["hex"])) == 4)
+    if not slot_register_matches:
+        result["status"] = "slot-register-changed"
+    elif result["status"] == "admitted-address":
+        if entry["status"] != "admitted-address" or not result["pointer_matches_entry"]:
+            result["status"] = "pointer-changed-or-entry-unavailable"
+        else:
+            item = next((r for r in after if r.get("label") == "effect_attribute_byte"), None)
+            result["current_attribute_complete"] = bool(item and item["address"] == result["address"]
+                and item["complete"] and item["received"] == 1 and len(bytes.fromhex(item["hex"])) == 1)
+            result["status"] = "complete" if result["current_attribute_complete"] else "incomplete-read"
+    return result
+
+
+def lookup_closure(dbg, process, ctx, loaded_base, *, effect_inputs=False):
     """Bounded GDI lookup-entry graph; incomplete reads stay explicitly missing."""
     reads = []
 
@@ -127,7 +183,20 @@ def lookup_closure(dbg, process, ctx, loaded_base):
             cache = u32(receiver, 4)
             if cache and mapped is not None and mapped >= 0 and cache + 48 * mapped + 48 <= 2**32:
                 read("selected_cache_record", cache + 48 * mapped, 48)
+    inputs = None
+    if effect_inputs:
+        constant = read("effect_multiplier_constant", loaded_base + 0x567F28, 4)
+        inputs = effect_input_address(reads, staff, u32(stack, 0x260) == 0x6CF8F7 + delta)
+        inputs["constant_complete"] = constant is not None and len(constant) == 4
+        if inputs["status"] == "admitted-address":
+            value = read("effect_attribute_byte", inputs["address"], 1)
+            inputs["read_complete"] = value is not None and len(value) == 1
+        else:
+            inputs["read_complete"] = False
+        inputs["read_status"] = ("complete" if inputs["read_complete"] else
+            "incomplete-read" if inputs["status"] == "admitted-address" else "not-requested")
     return {"memory": reads, "all_requested_reads_complete": all(r["complete"] for r in reads),
+            "effect_inputs": inputs,
             "staff": staff, "index": index, "count": count,
             "effect_return_address_matches": u32(stack, 0x260) == 0x6CF8F7 + delta,
             "slot_staff_pointer_matches": u32(slot, 0x69) == staff if slot and staff else None,
@@ -339,7 +408,7 @@ def run(args, *, owned_test_child=None):
                             result["memory_complete"] = all(x["complete"] for x in sample["memory"])
                             if args.profile == "gdi" and args.boundary == 0x62E6E0:
                                 sample["lookup_closure"] = lookup_closure(
-                                    dbg, process, ctx, info["module"]["base"])
+                                    dbg, process, ctx, info["module"]["base"], effect_inputs=paired)
                             if not paired:
                                 break
                             stack = sample["memory"][0]
@@ -383,6 +452,10 @@ def run(args, *, owned_test_child=None):
                                 read["unchanged"] = (read["sha256"] == region["sha256"]
                                                      if read["complete"] and region["complete"] else None)
                                 after["entry_regions_after"].append(read)
+                            closure = before.get("lookup_closure")
+                            if closure and closure.get("effect_inputs") is not None:
+                                after["effect_inputs"] = effect_input_return(closure,
+                                    after["entry_regions_after"], ctx.Esi == before["registers"]["esi"])
                             result["return_sample"] = after
                             result["return_observed"] = True
                             result["stop_reason"] = "paired_return"
