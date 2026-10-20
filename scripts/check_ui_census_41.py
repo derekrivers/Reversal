@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '16fe27d7ed3c818db3f98784bda451812b07290dbeb172d334c8b87144e45db3'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '4f25dccaa3ca43440dcb6f84d11710725784e7f2f7ba2d9a03ef422c6ee83a79'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -126,10 +126,67 @@ ROOT_RELATIVE_WINDOWS = re.compile(
 )
 
 
+def render_for_privacy(source):
+    """Approximate rendered inline text for conservative privacy matching."""
+    def render_inline_links(value):
+        opener = re.compile(r'!?\[([^\]\r\n]+)\]\(')
+        chunks, pos = [], 0
+        while match := opener.search(value, pos):
+            cursor, depth = match.end(), 1
+            while cursor < len(value) and depth and value[cursor] not in '\r\n':
+                if value[cursor] == '\\':
+                    cursor += 2
+                    continue
+                if value[cursor] == '(':
+                    depth += 1
+                elif value[cursor] == ')':
+                    depth -= 1
+                cursor += 1
+            if depth:
+                chunks.append(value[pos:match.end()])
+                pos = match.end()
+                continue
+            chunks.extend((value[pos:match.start()], match.group(1)))
+            pos = cursor
+        chunks.append(value[pos:])
+        return ''.join(chunks)
+    class RenderedHTML(HTMLParser):
+        BLOCK_TAGS = frozenset(('address', 'article', 'aside', 'blockquote', 'br', 'canvas', 'dd', 'details', 'dialog', 'div', 'dl', 'dt', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'legend', 'li', 'main', 'nav', 'ol', 'p', 'pre', 'section', 'summary', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'ul'))
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.parts = []
+        def handle_starttag(self, tag, attrs):
+            if tag in self.BLOCK_TAGS:
+                self.parts.append(' ')
+            if tag == 'img':
+                self.parts.extend(value for key,value in attrs if key == 'alt' and value)
+        def handle_startendtag(self, tag, attrs):
+            self.handle_starttag(tag, attrs)
+        def handle_endtag(self, tag):
+            if tag in self.BLOCK_TAGS:
+                self.parts.append(' ')
+        def handle_data(self, data):
+            self.parts.append(data)
+    html_view = RenderedHTML()
+    html_view.feed(source)
+    html_view.close()
+    rendered = render_inline_links(''.join(html_view.parts))
+    fold_ref = lambda value: unicodedata.normalize('NFC', value).casefold()
+    references = {fold_ref(match.group(1)) for match in re.finditer(r'(?m)^ {0,3}\[([^\]\r\n]+)\]:\s*\S+', rendered)}
+    rendered = re.sub(r'!?\[([^\]\r\n]+)\]\[([^\]\r\n]*)\]', lambda match: match.group(1) if fold_ref(match.group(2) or match.group(1)) in references else match.group(0), rendered)
+    rendered = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_ref(match.group(1)) in references else match.group(0), rendered)
+    rendered = re.sub(r'\\[ \t]*\r?\n', ' ', rendered)
+    rendered = re.sub(r'\\([\\`*_{}\[\]()#+.!<>~\-])', r'\1', rendered)
+    markup = re.compile(r'(?P<marker>\*\*|__|~~|``|\*|_|`)(?P<body>[^\r\n]+?)(?P=marker)')
+    while True:
+        previous = rendered
+        rendered = markup.sub(lambda match: match.group('body'), rendered)
+        if rendered == previous:
+            break
+    return re.sub(r'\s+', ' ', rendered)
+
+
 def has_private_path_or_payload(part):
-    part = html.unescape(part)
-    if PRIVATE_PATH_PAYLOAD.search(part) or ROOT_RELATIVE_WINDOWS.search(part):
-        return True
     # Backticks, underscores and tildes can occur in filenames. Treat them as
     # Markdown delimiters only when a matching closing marker is present.
     def rooted_in_spans(source, depth=0):
@@ -137,7 +194,10 @@ def has_private_path_or_payload(part):
             return True  # Too much nested markup to inspect safely.
         spans = re.finditer(r'(?P<marker>`{1,3}|_{1,3}|~{2})(?P<body>[^\r\n]+?)(?P=marker)', source)
         return any(ROOT_RELATIVE_WINDOWS.search(match.group('body')) or rooted_in_spans(match.group('body'), depth+1) for match in spans)
-    return rooted_in_spans(part)
+    for candidate in (part, html.unescape(part), render_for_privacy(part)):
+        if PRIVATE_PATH_PAYLOAD.search(candidate) or ROOT_RELATIVE_WINDOWS.search(candidate) or rooted_in_spans(candidate):
+            return True
+    return False
 
 
 def route_digest(rows):
@@ -413,64 +473,7 @@ def check_private_display(snapshot, public):
             plain_public = wrapper.sub(lambda match: match.group(1), plain_public)
         if plain_public == previous:
             break
-    # Compare text as rendered by common inline Markdown/HTML formatting.
-    # Parenthesis depth matters in link destinations, so scan those explicitly.
-    def render_inline_links(source):
-        opener = re.compile(r'!?\[([^\]\r\n]+)\]\(')
-        chunks, pos = [], 0
-        while match := opener.search(source, pos):
-            cursor, depth = match.end(), 1
-            while cursor < len(source) and depth and source[cursor] not in '\r\n':
-                if source[cursor] == '\\':
-                    cursor += 2
-                    continue
-                if source[cursor] == '(':
-                    depth += 1
-                elif source[cursor] == ')':
-                    depth -= 1
-                cursor += 1
-            if depth:
-                chunks.append(source[pos:match.end()])
-                pos = match.end()
-                continue
-            chunks.extend((source[pos:match.start()], match.group(1)))
-            pos = cursor
-        chunks.append(source[pos:])
-        return ''.join(chunks)
-    class RenderedHTML(HTMLParser):
-        BLOCK_TAGS = frozenset(('address', 'article', 'aside', 'blockquote', 'br', 'canvas', 'dd', 'details', 'dialog', 'div', 'dl', 'dt', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'legend', 'li', 'main', 'nav', 'ol', 'p', 'pre', 'section', 'summary', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'ul'))
-        def __init__(self):
-            super().__init__(convert_charrefs=True)
-            self.parts = []
-        def handle_starttag(self, tag, attrs):
-            if tag in self.BLOCK_TAGS:
-                self.parts.append(' ')
-            if tag == 'img':
-                self.parts.extend(value for key,value in attrs if key == 'alt' and value)
-        def handle_startendtag(self, tag, attrs):
-            self.handle_starttag(tag, attrs)
-        def handle_endtag(self, tag):
-            if tag in self.BLOCK_TAGS:
-                self.parts.append(' ')
-        def handle_data(self, data):
-            self.parts.append(data)
-    html_view = RenderedHTML()
-    html_view.feed(plain_public)
-    html_view.close()
-    markdown_plain = ''.join(html_view.parts)
-    markdown_plain = render_inline_links(markdown_plain)
-    references = {fold_display(match.group(1)) for match in re.finditer(r'(?m)^ {0,3}\[([^\]\r\n]+)\]:\s*\S+', markdown_plain)}
-    markdown_plain = re.sub(r'!?\[([^\]\r\n]+)\]\[([^\]\r\n]*)\]', lambda match: match.group(1) if fold_display(match.group(2) or match.group(1)) in references else match.group(0), markdown_plain)
-    markdown_plain = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_display(match.group(1)) in references else match.group(0), markdown_plain)
-    markdown_plain = re.sub(r'\\[ \t]*\r?\n', ' ', markdown_plain)
-    markdown_plain = re.sub(r'\\([\\`*_{}\[\]()#+.!<>~\-])', r'\1', markdown_plain)
-    markup = re.compile(r'(?P<marker>\*\*|__|~~|``|\*|_|`)(?P<body>[^\r\n]+?)(?P=marker)')
-    while True:
-        previous = markdown_plain
-        markdown_plain = markup.sub(lambda match: match.group('body'), markdown_plain)
-        if markdown_plain == previous:
-            break
-    rendered_flat = re.sub(r'\s+', ' ', markdown_plain)
+    rendered_flat = render_for_privacy(plain_public)
     folded_public = fold_display(rendered_flat)
     require(not any(fold_display(re.sub(r'\s+', ' ', value)) in folded_public for value in exact), 'private captured display string present in public catalogue/report')
     def labelled_leak(label, value):
@@ -715,7 +718,8 @@ def main():
         raise ValueError('changed public coverage total accepted')
     report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'), b'\n\\My Documents\\capture.png', b'\n\\My capture.png', b'\n`\\UI\\capture.png`', b'\n**\\UI\\capture.png**', b'\n_\\UI\\capture.png_', b'\n__\\UI\\capture.png__', b'\n~~\\UI\\capture.png~~', b'\n__private _\\UI\\capture.png_ location__', b'\n~~private _\\UI\\capture.png_ location~~')
     encoded_report_leaks = (b'\n&#47;home/operator/private/capture.png', b'\nC&#58;\\Users\\operator\\capture.png', b'\n&#92;UI&#92;capture.png')
-    for leaked in report_leaks + encoded_report_leaks:
+    formatted_report_leaks = (b'\nC`:`\\Users\\operator\\private\\capture.png', b'\nC[:](https://example.invalid)\\Users\\operator\\private\\capture.png', b'\nC<code>:</code>\\Users\\operator\\private\\capture.png')
+    for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
         except ValueError as exc:
@@ -876,7 +880,7 @@ def main():
         result['private_leak_probes'] = len(private_leaks)
         result['private_near_miss_probes'] = 4
         result['private_escape_probes'] = 5
-    result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks)
+    result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks)
     result['public_path_near_miss_probes'] = 9
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     result['public_report_checks'] = 'LF/CRLF match; changed coverage total rejected'
