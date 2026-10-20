@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '4c7b7721147d0cfff145815093857f3ab85ce2a2fc436f2b2adf1f3b6479cc82'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '9b0d53bde6ef51f1a709909940ec4de4720f43e0650286164e9b22787494f5cc'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -128,6 +128,7 @@ ROOT_RELATIVE_WINDOWS = re.compile(
 
 def render_for_privacy(source):
     """Approximate rendered inline text for conservative privacy matching."""
+    source = re.sub(r'(?m)^ {0,3}(?:#{1,6}[ \t]+|>[ \t]?|(?:[-+*]|\d{1,9}[.)])[ \t]+)', ' ', source)
     def render_inline_links(value):
         opener = re.compile(r'!?\[([^\]\r\n]*)\]\(')
         chunks, pos = [], 0
@@ -831,6 +832,9 @@ def main():
             name_head + ' <img alt="' + name_tail + '">',
             name_head + ' &#' + str(ord(name_tail[0])) + ';' + name_tail[1:],
             name_head + '\n' + name_tail,
+            name_head + '\n# ' + name_tail,
+            name_head + '\n> ' + name_tail,
+            name_head + '\n- ' + name_tail,
             name_head + chr(92) + '\n' + name_tail,
         ))
         picked = next(row['picked'] for row in snapshot['squad']['rows'] if row['picked'])
@@ -938,6 +942,7 @@ def main():
         check_private_display(snapshot, public + '\n' + name_head + '[][ref]' + name_tail + '\n\n[ref]:\n\n target')
         check_private_display(snapshot, public + '\n' + name_head + ' ````' + name_tail + '\n```')
         check_private_display(snapshot, public + '\n' + name_head + ' ````' + name_tail + '\n')
+        check_private_display(snapshot, public + '\n' + name_head + '\n#' + name_tail)
         check_private_display(snapshot, public + '\n' + json.dumps({'value': attribute['value'] + '.5', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'value': '<em>' + attribute['value'][0] + '*' + attribute['value'][1:] + '</em>', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'v&#97;lues': attribute['value'], 'label': attribute['label']}))
@@ -982,7 +987,7 @@ def main():
             raise ValueError('Unicode case-folded private label accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 11
+        result['private_near_miss_probes'] = 12
         result['private_escape_probes'] = 5
     result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 9
