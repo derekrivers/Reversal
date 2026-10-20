@@ -311,7 +311,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
     require(all(denominator[k] == v for k,v in expected_sets.items()), 'denominator membership mismatch')
     require(denominator['counts'] == {k:len(v) for k,v in expected_sets.items()}, 'denominator count mismatch')
     public = list(text_values(data)) + [report_reader().decode('utf-8')]
-    require(not any(re.search(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b',part,re.IGNORECASE) for part in public), 'private path/payload in census')
+    require(not any(re.search(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b',part,re.IGNORECASE) or re.search(r'(?<!\\)\\(?!\\)[^\\/\s"]+(?:[\\/][^\\/\s"]+)+',part) for part in public), 'private path/payload in census')
     require(not any(re.search(r'\b\d{1,2}(?:-\d{1,2}){3,}\b|[£$€]\d',part) for part in public), 'captured display value in census')
     return {'states':len(states),'screenshots':sum(e['kind']=='screenshot' for e in evidence.values()), 'denominator':denominator['counts'], 'engine_bindings':0}
 
@@ -567,6 +567,7 @@ def main():
         lambda d:d['states'][0].update(notes='line\n/tmp/capture.jpg'),
         lambda d:d['states'][0].update(notes='tab\t/home/operator/private/capture.png'),
         lambda d:d['states'][0].update(notes='\\\\server\\share\\private\\capture.png'),
+        lambda d:d['states'][0].update(notes='\\Users\\operator\\private\\capture.png'),
         lambda d:d['contexts'][0].update(capture_configuration_sha256=None),
         lambda d:next(s for s in d['states'] if s['id']=='ui41.match.running')['coverage'].update(observed_transition=True),
         lambda d:next(s for s in d['states'] if s['id']=='ui41.game.options')['coverage'].update(layout=True),
@@ -592,7 +593,7 @@ def main():
     else:
         raise ValueError('altered public source accepted')
     report = public_report_bytes()
-    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png')
+    report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png')
     for leaked in report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
