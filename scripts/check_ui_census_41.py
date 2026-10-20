@@ -52,11 +52,74 @@ OPERATOR_CLAIMS = {
         'edge.exit-confirm': ('Exit Game', ('gdi-restarted-partial',)),
         'edge.error-ok': ('OK', ('gdi-A4-failed-launch',)),
     },
+    'r41-a4-index-full78': {
+        'edge.a4.match-running-after-kickoff': ('Kick Off Match', ('gdi-A4-restored',)),
+        'edge.a4.halftime-match-stats': ('Match Stats', ('gdi-A4-restored',)),
+        'edge.a4.halftime-action-zones': ('Action Zones', ('gdi-A4-restored',)),
+        'edge.a4.halftime-match-report': ('Match Report', ('gdi-A4-restored',)),
+        'edge.a4.halftime-overview-return': ('Match Overview', ('gdi-A4-restored',)),
+        'edge.a4.second-half-running': ('Re-start Match', ('gdi-A4-restored',)),
+        'edge.a4.evening-results': ('Continue Game', ('gdi-A4-restored',)),
+        'edge.a4.postmatch-squad': ('Click managed club label', ('gdi-A4-restored',)),
+        'edge.a4.club-general-info': ('Finances & Info', ('gdi-A4-restored',)),
+        'edge.a4.club-info-view-menu': ('View', ('gdi-A4-restored',)),
+        'edge.a4.club-info-stats': ('Stats', ('gdi-A4-restored',)),
+        'edge.a4.club-view-menu-stats-selected': ('View', ('gdi-A4-restored',)),
+        'edge.a4.club-finances': ('Finances', ('gdi-A4-restored',)),
+        'edge.a4.club-view-menu-finances-selected': ('View', ('gdi-A4-restored',)),
+        'edge.a4.club-income': ('Income', ('gdi-A4-restored',)),
+        'edge.a4.club-view-menu-income-selected': ('View', ('gdi-A4-restored',)),
+        'edge.a4.club-expenditure': ('Expenditure', ('gdi-A4-restored',)),
+        'edge.a4.results-return-from-finances': ('Back', ('gdi-A4-restored',)),
+        'edge.a4.transfers-players-in': ('Transfers', ('gdi-A4-restored',)),
+        'edge.a4.transfers-view-menu': ('View', ('gdi-A4-restored',)),
+        'edge.a4.transfers-players-out': ('Players Out', ('gdi-A4-restored',)),
+        'edge.a4.transfers-menu-out-selected': ('View', ('gdi-A4-restored',)),
+        'edge.a4.transfers-future-empty': ('Future Transfers', ('gdi-A4-restored',)),
+        'edge.a4.transfers-menu-future-selected': ('View', ('gdi-A4-restored',)),
+        'edge.a4.transfers-loans-in-empty': ('Loans In', ('gdi-A4-restored',)),
+        'edge.a4.transfers-menu-loans-in-selected': ('View', ('gdi-A4-restored',)),
+        'edge.a4.transfers-loans-out': ('Loans Out', ('gdi-A4-restored',)),
+        'edge.a4.transfers-menu-loans-out-selected': ('View', ('gdi-A4-restored',)),
+        'edge.a4.transfers-staff-in-empty': ('Staff In', ('gdi-A4-restored',)),
+        'edge.a4.transfers-menu-staff-in-selected': ('View', ('gdi-A4-restored',)),
+        'edge.a4.transfers-staff-out-empty': ('Staff Out', ('gdi-A4-restored',)),
+        'edge.a4.results-return-from-transfers': ('Back', ('gdi-A4-restored',)),
+        'edge.a4.player-injuries-bans': ('Injuries & Bans', ('gdi-A4-restored',)),
+        'edge.a4.player-contract': ('Contract', ('gdi-A4-restored',)),
+        'edge.a4.player-transfer': ('Transfer', ('gdi-A4-restored',)),
+        'edge.a4.player-history-career': ('History', ('gdi-A4-restored',)),
+        'edge.a4.player-history-view-menu': ('View', ('gdi-A4-restored',)),
+        'edge.a4.player-history-achievements': ('Achievements', ('gdi-A4-restored',)),
+        'edge.a4.player-history-menu-achievements-selected': ('View', ('gdi-A4-restored',)),
+        'edge.a4.player-history-injuries': ('Injuries', ('gdi-A4-restored',)),
+        'edge.a4.player-history-menu-injuries-selected': ('View', ('gdi-A4-restored',)),
+        'edge.a4.player-history-bans-empty': ('Bans', ('gdi-A4-restored',)),
+        'edge.a4.player-profile-return-from-history': ('Profile', ('gdi-A4-restored',)),
+        'edge.a4.player-profile-return-from-injuries': ('Profile', ('gdi-A4-restored',)),
+        'edge.a4.player-contract-return-check': ('Contract', ('gdi-A4-restored',)),
+        'edge.a4.player-profile-return-from-contract': ('Profile', ('gdi-A4-restored',)),
+        'edge.a4.player-transfer-return-check': ('Transfer', ('gdi-A4-restored',)),
+        'edge.a4.player-profile-return-from-transfer': ('Profile', ('gdi-A4-restored',)),
+        'edge.a4.club-fixtures': ('Fixtures', ('gdi-A4-restored',)),
+        'edge.a4.club-next-match': ('Next Match', ('gdi-A4-restored',)),
+        'edge.a4.results-return-for-competition': ('Back', ('gdi-A4-restored',)),
+        'edge.a4.competition-stages-group-a': ('Competition', ('gdi-A4-restored',)),
+        'edge.a4.competition-group-menu': ('Group', ('gdi-A4-restored',)),
+        'edge.a4.competition-stages-group-b': ('Group B', ('gdi-A4-restored',)),
+        'edge.a4.competition-results': ('Results', ('gdi-A4-restored',)),
+        'edge.a4.competition-fixtures': ('Fixtures', ('gdi-A4-restored',)),
+        'edge.a4.competition-schedule': ('Schedule', ('gdi-A4-restored',)),
+        'edge.a4.results-return-from-competition': ('Back', ('gdi-A4-restored',)),
+        'edge.enter-match': ('Yes', ('gdi-A4-restored',)),
+        'edge.profile': ('Click captured roster player row', ('gdi-A4-restored',)),
+        'edge.profile-back': ('Back', ('gdi-A4-restored',)),
+    },
 }
 
 # Frozen topology for this reviewed capture batch. A receipt may support an
 # action only at its observed endpoints and with its recorded confidence.
-REVIEWED_EDGE_TOPOLOGY = {
+PRIOR_BATCH_EDGE_TOPOLOGY = {
     'edge.restore-open': ('ui41.load.menu', 'ui41.load.restore', 'observed-action'),
     'edge.select-file': ('ui41.load.restore', 'ui41.load.restore.selected', 'observed-action'),
     'edge.load-info': ('ui41.load.restore.selected', 'ui41.load.media_info', 'observed-action'),
@@ -87,35 +150,289 @@ REVIEWED_EDGE_TOPOLOGY = {
     'edge.error-ok': ('ui41.load.language_error', 'ui41.load.config_error', 'observed-action'),
 }
 
-REVIEWED_STATE_IDS = frozenset({
-    'ui41.load.menu', 'ui41.load.restore', 'ui41.load.restore.selected',
-    'ui41.load.media_info', 'ui41.load.language_error', 'ui41.load.config_error',
-    'ui41.fixture.evening', 'ui41.squad.selection', 'ui41.squad.prematch',
-    'ui41.player.profile', 'ui41.tactics.overview', 'ui41.match.confirm',
-    'ui41.match.prekickoff', 'ui41.match.running', 'ui41.match.halftime',
-    'ui41.result.fulltime', 'ui41.exit.confirm', 'ui41.load.media_request',
-    'ui41.game.options', 'ui41.restart.confirm', 'ui41.restart.saveprompt',
-    'ui41.save.dialog', 'ui41.process.exited',
+PRIOR_BATCH_STATE_IDS = frozenset({
+    'ui41.exit.confirm',
+    'ui41.fixture.evening',
+    'ui41.game.options',
+    'ui41.load.config_error',
+    'ui41.load.language_error',
+    'ui41.load.media_info',
+    'ui41.load.media_request',
+    'ui41.load.menu',
+    'ui41.load.restore',
+    'ui41.load.restore.selected',
+    'ui41.match.confirm',
+    'ui41.match.halftime',
+    'ui41.match.prekickoff',
+    'ui41.match.running',
+    'ui41.player.profile',
+    'ui41.process.exited',
+    'ui41.restart.confirm',
+    'ui41.restart.saveprompt',
+    'ui41.result.fulltime',
+    'ui41.save.dialog',
+    'ui41.squad.prematch',
+    'ui41.squad.selection',
+    'ui41.tactics.overview',
 })
 
-# Digest of the complete 60-row reviewed control frontier, ordered by route ID
+PRIOR_BATCH_LAYOUT_IDS = frozenset({
+    'confirmation',
+    'fixture',
+    'match',
+    'media-info',
+    'profile',
+    'restore',
+    'setup',
+    'squad',
+    'tactics',
+})
+
+PRIOR_BATCH_SCREENSHOT_IDS = frozenset({
+    'r41-a4-ui-001',
+    'r41-a4-ui-002',
+    'r41-a4-ui-003',
+    'r41-a4-ui-004',
+    'r41-a4-ui-005',
+    'r41-a4-ui-006',
+    'r41-a4-ui-007',
+    'r41-a4-ui-008',
+    'r41-a4-ui-009',
+    'r41-a4-ui-010',
+    'r41-a4-ui-011',
+    'r41-ui-01-menu',
+    'r41-ui-02-restore',
+    'r41-ui-03-fixtures',
+    'r41-ui-04-squad',
+    'r41-ui-05-player',
+    'r41-ui-06-tactics',
+    'r41-ui-07-squad-after-tactics',
+    'r41-ui-08-proceed-modal',
+    'r41-ui-09-match-before-kickoff-A',
+    'r41-ui-10-match-running-A',
+    'r41-ui-11-result-A',
+    'r41-ui-12-fixtures-B',
+    'r41-ui-13-match-before-kickoff-B',
+    'r41-ui-14-halftime-B',
+    'r41-ui-15-result-B',
+    'r41-ui-16-native-restart-new-process',
+})
+
+PRIOR_BATCH_ROUTE_IDS = frozenset({
+    'route.exit.confirm.no',
+    'route.fixture.evening.competition',
+    'route.fixture.evening.competitions',
+    'route.fixture.evening.find',
+    'route.fixture.evening.manager',
+    'route.fixture.evening.nations',
+    'route.fixture.evening.scroll',
+    'route.load.menu.credits',
+    'route.load.menu.delete',
+    'route.load.menu.fame',
+    'route.load.menu.network',
+    'route.load.menu.new',
+    'route.load.menu.quick',
+    'route.load.menu.settings',
+    'route.load.menu.web',
+    'route.load.restore.cancel',
+    'route.load.restore.info',
+    'route.match.confirm.no',
+    'route.match.halftime.restart',
+    'route.match.prekickoff.away-stats',
+    'route.match.prekickoff.away-tactics',
+    'route.match.prekickoff.home-stats',
+    'route.match.prekickoff.home-tactics',
+    'route.match.prekickoff.ratings',
+    'route.match.prekickoff.report',
+    'route.match.prekickoff.scores',
+    'route.match.prekickoff.speed',
+    'route.match.prekickoff.stats',
+    'route.match.prekickoff.table',
+    'route.match.prekickoff.zones',
+    'route.match.running.pause',
+    'route.player.profile.action',
+    'route.player.profile.contract',
+    'route.player.profile.history',
+    'route.player.profile.injuries',
+    'route.player.profile.next',
+    'route.player.profile.stats',
+    'route.player.profile.transfer',
+    'route.result.fulltime.continue',
+    'route.squad.selection.clear',
+    'route.squad.selection.filter',
+    'route.squad.selection.finances',
+    'route.squad.selection.fixtures',
+    'route.squad.selection.history',
+    'route.squad.selection.last',
+    'route.squad.selection.league',
+    'route.squad.selection.next',
+    'route.squad.selection.print',
+    'route.squad.selection.sort',
+    'route.squad.selection.training',
+    'route.squad.selection.transfers',
+    'route.squad.selection.view',
+    'route.tactics.overview.edit',
+    'route.tactics.overview.last',
+    'route.tactics.overview.ok',
+    'route.tactics.overview.pitch',
+    'route.tactics.overview.selector',
+    'route.tactics.overview.view',
+    'route.tactics.overview.with',
+    'route.tactics.overview.without',
+})
+
+REVIEWED_EDGE_TOPOLOGY = {
+    **PRIOR_BATCH_EDGE_TOPOLOGY,
+    'edge.a4.match-running-after-kickoff': ('ui41.match.prekickoff', 'ui41.match.running', 'observed-action'),
+    'edge.a4.halftime-match-stats': ('ui41.match.halftime', 'ui41.match.halftime.stats', 'observed-action'),
+    'edge.a4.halftime-action-zones': ('ui41.match.halftime.stats', 'ui41.match.halftime.action_zones', 'observed-action'),
+    'edge.a4.halftime-match-report': ('ui41.match.halftime.action_zones', 'ui41.match.halftime.report', 'observed-action'),
+    'edge.a4.halftime-overview-return': ('ui41.match.halftime.report', 'ui41.match.halftime', 'observed-action'),
+    'edge.a4.second-half-running': ('ui41.match.halftime', 'ui41.match.running', 'observed-action'),
+    'edge.a4.evening-results': ('ui41.result.fulltime', 'ui41.fixture.evening_results', 'observed-action'),
+    'edge.a4.postmatch-squad': ('ui41.fixture.evening_results', 'ui41.squad.selection', 'observed-action'),
+    'edge.a4.club-general-info': ('ui41.squad.selection', 'ui41.club.info.general', 'observed-action'),
+    'edge.a4.club-info-view-menu': ('ui41.club.info.general', 'ui41.club.info.view_menu', 'observed-action'),
+    'edge.a4.club-info-stats': ('ui41.club.info.view_menu', 'ui41.club.info.stats', 'observed-action'),
+    'edge.a4.club-view-menu-stats-selected': ('ui41.club.info.stats', 'ui41.club.info.view_menu', 'observed-action'),
+    'edge.a4.club-finances': ('ui41.club.info.view_menu', 'ui41.club.info.finances', 'observed-action'),
+    'edge.a4.club-view-menu-finances-selected': ('ui41.club.info.finances', 'ui41.club.info.view_menu', 'observed-action'),
+    'edge.a4.club-income': ('ui41.club.info.view_menu', 'ui41.club.info.income', 'observed-action'),
+    'edge.a4.club-view-menu-income-selected': ('ui41.club.info.income', 'ui41.club.info.view_menu', 'observed-action'),
+    'edge.a4.club-expenditure': ('ui41.club.info.view_menu', 'ui41.club.info.expenditure', 'observed-action'),
+    'edge.a4.results-return-from-finances': ('ui41.club.info.expenditure', 'ui41.fixture.evening_results', 'observed-action'),
+    'edge.a4.transfers-players-in': ('ui41.squad.selection', 'ui41.club.transfers.players_in', 'observed-action'),
+    'edge.a4.transfers-view-menu': ('ui41.club.transfers.players_in', 'ui41.club.transfers.view_menu', 'observed-action'),
+    'edge.a4.transfers-players-out': ('ui41.club.transfers.view_menu', 'ui41.club.transfers.players_out', 'observed-action'),
+    'edge.a4.transfers-menu-out-selected': ('ui41.club.transfers.players_out', 'ui41.club.transfers.view_menu', 'observed-action'),
+    'edge.a4.transfers-future-empty': ('ui41.club.transfers.view_menu', 'ui41.club.transfers.future', 'observed-action'),
+    'edge.a4.transfers-menu-future-selected': ('ui41.club.transfers.future', 'ui41.club.transfers.view_menu', 'observed-action'),
+    'edge.a4.transfers-loans-in-empty': ('ui41.club.transfers.view_menu', 'ui41.club.transfers.loans_in', 'observed-action'),
+    'edge.a4.transfers-menu-loans-in-selected': ('ui41.club.transfers.loans_in', 'ui41.club.transfers.view_menu', 'observed-action'),
+    'edge.a4.transfers-loans-out': ('ui41.club.transfers.view_menu', 'ui41.club.transfers.loans_out', 'observed-action'),
+    'edge.a4.transfers-menu-loans-out-selected': ('ui41.club.transfers.loans_out', 'ui41.club.transfers.view_menu', 'observed-action'),
+    'edge.a4.transfers-staff-in-empty': ('ui41.club.transfers.view_menu', 'ui41.club.transfers.staff_in', 'observed-action'),
+    'edge.a4.transfers-menu-staff-in-selected': ('ui41.club.transfers.staff_in', 'ui41.club.transfers.view_menu', 'observed-action'),
+    'edge.a4.transfers-staff-out-empty': ('ui41.club.transfers.view_menu', 'ui41.club.transfers.staff_out', 'observed-action'),
+    'edge.a4.results-return-from-transfers': ('ui41.club.transfers.staff_out', 'ui41.fixture.evening_results', 'observed-action'),
+    'edge.a4.player-injuries-bans': ('ui41.player.profile', 'ui41.player.injuries_bans', 'observed-action'),
+    'edge.a4.player-contract': ('ui41.player.injuries_bans', 'ui41.player.contract', 'observed-action'),
+    'edge.a4.player-transfer': ('ui41.player.contract', 'ui41.player.transfer', 'observed-action'),
+    'edge.a4.player-history-career': ('ui41.player.transfer', 'ui41.player.history.career', 'observed-action'),
+    'edge.a4.player-history-view-menu': ('ui41.player.history.career', 'ui41.player.history.view_menu', 'observed-action'),
+    'edge.a4.player-history-achievements': ('ui41.player.history.view_menu', 'ui41.player.history.achievements', 'observed-action'),
+    'edge.a4.player-history-menu-achievements-selected': ('ui41.player.history.achievements', 'ui41.player.history.view_menu', 'observed-action'),
+    'edge.a4.player-history-injuries': ('ui41.player.history.view_menu', 'ui41.player.history.injuries', 'observed-action'),
+    'edge.a4.player-history-menu-injuries-selected': ('ui41.player.history.injuries', 'ui41.player.history.view_menu', 'observed-action'),
+    'edge.a4.player-history-bans-empty': ('ui41.player.history.view_menu', 'ui41.player.history.bans', 'observed-action'),
+    'edge.a4.player-profile-return-from-history': ('ui41.player.history.bans', 'ui41.player.profile', 'observed-action'),
+    'edge.a4.player-profile-return-from-injuries': ('ui41.player.injuries_bans', 'ui41.player.profile', 'observed-action'),
+    'edge.a4.player-contract-return-check': ('ui41.player.profile', 'ui41.player.contract', 'observed-action'),
+    'edge.a4.player-profile-return-from-contract': ('ui41.player.contract', 'ui41.player.profile', 'observed-action'),
+    'edge.a4.player-transfer-return-check': ('ui41.player.profile', 'ui41.player.transfer', 'observed-action'),
+    'edge.a4.player-profile-return-from-transfer': ('ui41.player.transfer', 'ui41.player.profile', 'observed-action'),
+    'edge.a4.club-fixtures': ('ui41.squad.selection', 'ui41.club.fixtures', 'observed-action'),
+    'edge.a4.club-next-match': ('ui41.club.fixtures', 'ui41.club.next_match', 'observed-action'),
+    'edge.a4.results-return-for-competition': ('ui41.club.next_match', 'ui41.fixture.evening_results', 'observed-action'),
+    'edge.a4.competition-stages-group-a': ('ui41.fixture.evening_results', 'ui41.competition.stages', 'observed-action'),
+    'edge.a4.competition-group-menu': ('ui41.competition.stages', 'ui41.competition.group_menu', 'observed-action'),
+    'edge.a4.competition-stages-group-b': ('ui41.competition.group_menu', 'ui41.competition.stages', 'observed-action'),
+    'edge.a4.competition-results': ('ui41.competition.stages', 'ui41.competition.results', 'observed-action'),
+    'edge.a4.competition-fixtures': ('ui41.competition.results', 'ui41.competition.fixtures', 'observed-action'),
+    'edge.a4.competition-schedule': ('ui41.competition.fixtures', 'ui41.competition.schedule', 'observed-action'),
+    'edge.a4.results-return-from-competition': ('ui41.competition.schedule', 'ui41.fixture.evening_results', 'observed-action'),
+    'edge.a4.running-to-halftime-sequence': ('ui41.match.running', 'ui41.match.halftime', 'screenshot-sequence'),
+}
+
+REVIEWED_STATE_IDS = frozenset({
+    'ui41.club.fixtures',
+    'ui41.club.info.expenditure',
+    'ui41.club.info.finances',
+    'ui41.club.info.general',
+    'ui41.club.info.income',
+    'ui41.club.info.stats',
+    'ui41.club.info.view_menu',
+    'ui41.club.next_match',
+    'ui41.club.transfers.future',
+    'ui41.club.transfers.loans_in',
+    'ui41.club.transfers.loans_out',
+    'ui41.club.transfers.players_in',
+    'ui41.club.transfers.players_out',
+    'ui41.club.transfers.staff_in',
+    'ui41.club.transfers.staff_out',
+    'ui41.club.transfers.view_menu',
+    'ui41.competition.fixtures',
+    'ui41.competition.group_menu',
+    'ui41.competition.results',
+    'ui41.competition.schedule',
+    'ui41.competition.stages',
+    'ui41.exit.confirm',
+    'ui41.fixture.evening',
+    'ui41.fixture.evening_results',
+    'ui41.game.options',
+    'ui41.load.config_error',
+    'ui41.load.language_error',
+    'ui41.load.media_info',
+    'ui41.load.media_request',
+    'ui41.load.menu',
+    'ui41.load.restore',
+    'ui41.load.restore.selected',
+    'ui41.match.confirm',
+    'ui41.match.halftime',
+    'ui41.match.halftime.action_zones',
+    'ui41.match.halftime.report',
+    'ui41.match.halftime.stats',
+    'ui41.match.prekickoff',
+    'ui41.match.running',
+    'ui41.player.contract',
+    'ui41.player.history.achievements',
+    'ui41.player.history.bans',
+    'ui41.player.history.career',
+    'ui41.player.history.injuries',
+    'ui41.player.history.view_menu',
+    'ui41.player.injuries_bans',
+    'ui41.player.profile',
+    'ui41.player.transfer',
+    'ui41.process.exited',
+    'ui41.restart.confirm',
+    'ui41.restart.saveprompt',
+    'ui41.result.fulltime',
+    'ui41.save.dialog',
+    'ui41.squad.prematch',
+    'ui41.squad.selection',
+    'ui41.tactics.overview',
+})
+
+# Digest of the complete 111-row reviewed control frontier, ordered by route ID
 # and encoded as canonical UTF-8 JSON. Extending the census requires a fresh
 # visual review and an intentional update of this batch pin.
-REVIEWED_ROUTE_SHA256 = 'ec9061bf37e9952998d52693b911e5f8c4c92a50d17947f24dc981dd3b06819f'
-REVIEWED_STATE_CLAIMS_SHA256 = '9f24c76350e8c8871154657e81788d06bcb0a29966c0f4ead40bbeff069a58f6'
+REVIEWED_ROUTE_SHA256 = '7389b0c08522e9821943a2b96e427d3ff61f4b415ddeaabac02065f612b80292'
+REVIEWED_STATE_CLAIMS_SHA256 = '23e4d59e560b81b9935a44915fb191872d9ed0a64fe90129d3e87cc07dad590f'
 REVIEWED_UNKNOWN_SECTIONS_SHA256 = 'ef594ff35e5a3add0543db42260213d285774a5c5878cbe319963b37dcc93f6a'
-REVIEWED_BATCH_SECTION_SHA256 = {
-    'contexts': 'c732d0015cb29c35ab2ddbe83adc056e63689d2abd4fc8097ac1c0af19a22778',
-    'evidence': '80caa7e6d6b9d29a613420d0e8bf2e7c3d202c1102d0016ea8eebc7e044cb65d',
-    'layouts': 'b243b6201fcda8d5c3763688044d9d062dfcf5d9a127f2888c783dc276e44118',
-    'transitions': 'e994cec077e8c69334a299a1733c36b86e2863ea4d1f55c42c893b3d6439adf1',
-    'capture_requests': '2a1ef2b0ebaa83b5a3c108b121b23c953f42ab025a28fe1313d92460265b34d8',
-}
+REVIEWED_BATCH_SECTION_SHA256 = {'contexts': 'c732d0015cb29c35ab2ddbe83adc056e63689d2abd4fc8097ac1c0af19a22778', 'evidence': 'f201101d5e3ab07ea7ec5390dc49984bc129332c3c393bcc2ab944b5e1506dd1', 'layouts': 'c7446b5dd96c2c875c7c822b5cdc82b859cc3802432d0bc133db540b90a34f8f', 'transitions': 'b6f6cbea16d5c4331a31af6fad5af47461f301dae8ec296248b52878279a8d7c', 'capture_requests': 'e66a0a8927570584b2ec2d2f90a70c5beb78611356bdc5d38db2e7d31456a8dc'}
 REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5eaf0a0d1560300fa7a'
-REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
+REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = 'e0aec5864e94c5b764081c7214f436727eb7ed51e88bed6b50b4f9248e5e831c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
-REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '831759988dd39940f13d323ce42ea56a5f496a951969719aa1b96dcbf574dac0'  # Complete public report, normalized CRLF to LF.
+REVIEWED_ROOT_FIELDS = frozenset({
+    'schema',
+    'cutoff',
+    'state_aliases',
+    'completion_claim',
+    'coverage_definitions',
+    'denominator',
+    'contexts',
+    'evidence',
+    'layouts',
+    'states',
+    'transitions',
+    'observed_adjacency',
+    'discovered_routes',
+    'unknown_sections',
+    'capture_requests',
+    'capture_protocol',
+    'batch_delta',
+})
+REVIEWED_UI_REPORT_SHA256 = '04c569fe4d106fef382127ca31ad7316b17b0fd45db772f4dbc7c2ec3aef2c13'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9_])[A-Za-z][A-Za-z0-9_]*_[A-Za-z0-9_]*://[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -418,9 +735,21 @@ def text_values(value):
             yield from text_values(item)
 
 
+def validate_capture_requests(requests, states, routes):
+    """Bind an operator request to the exact source states of its route IDs."""
+    for request in requests:
+        require(request['owner'] == 'R41-A6', 'capture operator mismatch')
+        require(request['entry_state_id'] in states, 'unknown capture entry state')
+        ids = request['route_ids']
+        require(len(ids) == len(set(ids)) and all(i in routes for i in ids), 'unknown/duplicate requested route')
+        sources = request['source_state_ids']
+        require(len(sources) == len(set(sources)) and set(sources) == {routes[i]['from'] for i in ids}, 'capture request source mismatch')
+        require(all(i in states for i in sources), 'unknown capture source state')
+
+
 def validate(data, assets, source_reader=tracked_source_bytes, report_reader=public_report_bytes):
     require(data['schema'] == 'reversal.ui-screen-census-41.v1', 'unsupported schema')
-    claims = {key:data[key] for key in ('cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol')}
+    claims = {key:data[key] for key in ('cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'batch_delta')}
     claim_bytes = json.dumps(claims, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8')
     require(hashlib.sha256(claim_bytes).hexdigest() == REVIEWED_TOP_LEVEL_CLAIMS_SHA256, 'unreviewed top-level coverage claims')
     for section, digest in REVIEWED_BATCH_SECTION_SHA256.items():
@@ -493,6 +822,39 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
             require(bool(reports) and set(edge['context_ids']).issubset(claimed_contexts), 'action context without operator claim')
         else:
             require(any(i in states[edge['from']]['evidence_ids'] for i in images) and any(i in states[edge['to']]['evidence_ids'] for i in images), 'screenshot sequence without endpoint images')
+    delta = data['batch_delta']
+    require(delta['baseline_head'] == 'def6b837947862112c5c4c701a3883ba41c732ca', 'wrong prior census head')
+    def delta_set(key, expected):
+        require(len(delta[key]) == len(set(delta[key])) and set(delta[key]) == expected, 'batch delta mismatch: ' + key)
+    delta_set('added_state_ids', set(states) - PRIOR_BATCH_STATE_IDS)
+    delta_set('added_layout_ids', set(layouts) - PRIOR_BATCH_LAYOUT_IDS)
+    delta_set('added_transition_ids', set(edges) - set(PRIOR_BATCH_EDGE_TOPOLOGY))
+    delta_set('added_screenshot_ids', {i for i,e in evidence.items() if e['kind'] == 'screenshot'} - PRIOR_BATCH_SCREENSHOT_IDS)
+    require(set(delta['added_screenshot_ids']) == {f'r41-a4-ui-{n:03d}' for n in range(12,79)}, 'image cutoff mismatch')
+    require(set(PRIOR_BATCH_EDGE_TOPOLOGY).issubset(edges), 'prior transition removed')
+    require(all((edges[i]['from'], edges[i]['to'], edges[i]['status']) == scope for i,scope in PRIOR_BATCH_EDGE_TOPOLOGY.items()), 'prior topology reinterpreted')
+    delta_set('closed_route_ids', PRIOR_BATCH_ROUTE_IDS - set(routes))
+    delta_set('preserved_route_ids', PRIOR_BATCH_ROUTE_IDS.intersection(routes))
+    delta_set('added_route_ids', set(routes) - PRIOR_BATCH_ROUTE_IDS)
+    for route_id in delta['added_route_ids']:
+        route = routes[route_id]
+        require(route['control_label'] in states[route['from']]['controls'], 'new frontier control absent from source')
+    back_sources = {routes[i]['from'] for i in delta['added_route_ids'] if routes[i]['control_label'] == 'Back'}
+    delta_set('unexercised_bottom_back_state_ids', back_sources)
+    require(len(back_sources) == 21 and all(states[i]['back']['status'] == 'unobserved' and states[i]['back']['target_state_id'] is None for i in back_sources), 'unexercised bottom Back promoted')
+    popup_variants = 0
+    variant_ids = set()
+    for state in states.values():
+        for variant in state.get('variants', []):
+            require(variant['id'] not in variant_ids, 'duplicate selected-context variant')
+            variant_ids.add(variant['id'])
+            refs(variant['evidence_ids'], evidence)
+            require(bool(variant['evidence_ids']) and set(variant['evidence_ids']).issubset(state['evidence_ids']), 'variant outside canonical state evidence')
+            if state['kind'] == 'modal':
+                popup_variants += 1
+    require(popup_variants == delta['variant_counts']['popup_selected_contexts'] == 14, 'popup variant count mismatch')
+    require(len(states['ui41.competition.stages']['variants']) == delta['variant_counts']['observed_group_contents'] == 2, 'group contents count mismatch')
+    require(len(states['ui41.competition.group_menu']['controls']) == delta['variant_counts']['enumerated_group_options'] == 8, 'group option count mismatch')
     image_owners = {}
     for state in states.values():
         refs(state['evidence_ids'], evidence)
@@ -533,9 +895,7 @@ def validate(data, assets, source_reader=tracked_source_bytes, report_reader=pub
         require(route['from'] in states and route['target_state_id'] is None and route['status'] == 'discovered-uncaptured', 'unseen destination promoted to screen')
         refs(route['evidence_ids'], evidence)
         require(bool(route['evidence_ids']) and bool(set(route['evidence_ids']).intersection(states[route['from']]['evidence_ids'])), 'discovered route without source-state evidence')
-    for request in data['capture_requests']:
-        refs(request['route_ids'], routes)
-        require(request['owner'] == 'R41-A4', 'capture operator mismatch')
+    validate_capture_requests(data['capture_requests'], states, routes)
     denominator = data['denominator']
     require(denominator['scope'] == REVIEWED_DENOMINATOR_SCOPE, 'unreviewed denominator scope')
     require(denominator['total_application_screen_states'] is None, 'unknown total application denominator promoted to known')
@@ -587,6 +947,22 @@ def main():
     data = strict_json_loads(raw_census)
     assets = {a['asset_id']:a for a in strict_json_loads((ROOT/'evidence/ui-assets-41-inventory.json').read_text(encoding='utf-8'))['assets']}
     result = validate(data, assets)
+    request_states = {s['id']:s for s in data['states']}
+    request_routes = {route['id']:route for route in data['discovered_routes']}
+    # Exercise the source binder directly as well as the pinned whole batch.
+    for field in ('route_ids', 'source_state_ids'):
+        changed_requests = copy.deepcopy(data['capture_requests'])
+        if field == 'route_ids':
+            pos = changed_requests[0]['route_ids'].index('route.fixture.evening_results.find')
+            changed_requests[0]['route_ids'][pos] = 'route.fixture.evening.find'
+        else:
+            changed_requests[0]['source_state_ids'].append('ui41.fixture.evening')
+        try:
+            validate_capture_requests(changed_requests, request_states, request_routes)
+        except ValueError as exc:
+            require(str(exc) == 'capture request source mismatch', 'request source probe rejected for unrelated reason')
+        else:
+            raise ValueError('wrong-source capture request accepted')
     try:
         strict_json_loads(raw_census.replace('"schema":', '"schema":"/home/operator/private/capture.png","schema":', 1))
     except ValueError:
@@ -690,6 +1066,11 @@ def main():
         lambda d:d.update(whole_application_coverage='complete'),
         redefine_screenshot_coverage,
         claim_whole_denominator_scope,
+        lambda d:d['batch_delta']['added_state_ids'].pop(),
+        lambda d:d['batch_delta']['closed_route_ids'].append('route.fixture.evening.competition'),
+        lambda d:next(s for s in d['states'] if s['id']=='ui41.club.fixtures')['back'].update(status='observed', target_state_id='ui41.fixture.evening_results'),
+        lambda d:next(s for s in d['states'] if s['id']=='ui41.competition.stages')['variants'].append({'id':'invented.group','evidence_ids':['r41-a4-ui-074']}),
+        lambda d:next(e for e in d['transitions'] if e['id']=='edge.a4.running-to-halftime-sequence').update(status='observed-action'),
         lambda d:d['denominator'].update(whole_application_coverage='complete'),
         lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(sha256='1'*64),
         lambda d:next(item for item in d['evidence'] if item['id'] == 'r41-ui-01-menu').update(capture_pixels=[1,1]),
@@ -723,7 +1104,7 @@ def main():
         lambda d:d['states'][0].update(notes='tab\t/home/operator/private/capture.png'),
         lambda d:d['states'][0].update(notes='\\\\server\\share\\private\\capture.png'),
         lambda d:d['contexts'][0].update(capture_configuration_sha256=None),
-        lambda d:next(s for s in d['states'] if s['id']=='ui41.match.running')['coverage'].update(observed_transition=True),
+        lambda d:next(s for s in d['states'] if s['id']=='ui41.match.running')['coverage'].update(observed_transition=False),
         lambda d:next(s for s in d['states'] if s['id']=='ui41.game.options')['coverage'].update(layout=True),
         lambda d:next(e for e in d['evidence'] if e['id']=='r41-operator-route-report').update(sha256='0'*64),
     ]
@@ -771,7 +1152,7 @@ def main():
         REVIEWED_BATCH_SECTION_SHA256['evidence'] = reviewed_evidence_digest
     report = public_report_bytes()
     validate(data, assets, report_reader=lambda: report.replace(b'\r\n', b'\n').replace(b'\n', b'\r\n'))
-    changed_count = report.replace(b'| Screenshot-confirmed screen/state IDs | 17 |', b'| Screenshot-confirmed screen/state IDs | 99 |', 1)
+    changed_count = report.replace(b'| Screenshot-confirmed screen/state IDs | 50 |', b'| Screenshot-confirmed screen/state IDs | 99 |', 1)
     require(changed_count != report, 'missing reviewed public screenshot total')
     try:
         validate(data, assets, report_reader=lambda: changed_count)
@@ -827,10 +1208,12 @@ def main():
     require(not has_private_path_or_payload('[docs](https://example.invalid/docs/reference/ui.md)'), 'Markdown HTTPS URL rejected')
     require(not has_private_path_or_payload('https://example.invalid/private/capture.png'), 'remote URL path rejected as local path')
     require(not has_private_path_or_payload('escaped \\n punctuation.'), 'ordinary escaped punctuation rejected')
+    require(not has_private_path_or_payload('Synthetic Player | 7-6-7-8-7 | '+chr(163)+'20K'), 'individual display text treated as path/payload')
     if args.private_root or args.private_aliases:
         require(args.private_root and args.private_aliases,'private root and aliases must be supplied together')
         root = args.private_root.resolve(strict=True)
         aliases = strict_json_loads(args.private_aliases.read_text(encoding='utf-8'))['aliases']
+        require(set(aliases) == {e['id'] for e in data['evidence'] if e['kind'] == 'screenshot'}, 'private screenshot alias set mismatch')
         for evidence in data['evidence']:
             if evidence['kind'] != 'screenshot':
                 continue
@@ -839,9 +1222,21 @@ def main():
             image = path.read_bytes()
             require(hashlib.sha256(image).hexdigest() == evidence['sha256'],'private screenshot hash mismatch')
             require(jpeg_size(image) == evidence['capture_pixels'],'private screenshot dimensions mismatch')
+        # New batch receipts are checked as raw bytes only in optional private
+        # mode. Public mode retains opaque, pinned provenance declarations.
+        source_aliases = strict_json_loads(args.private_aliases.read_text(encoding='utf-8'))['source_aliases']
+        require(set(source_aliases) == {'r41-a4-index-full78', 'r41-a4-postbatch-integrity'}, 'private source alias set mismatch')
+        evidence_by_id = {e['id']:e for e in data['evidence']}
+        for receipt_id, alias in source_aliases.items():
+            receipt_path = (root / alias).resolve(strict=True)
+            require(receipt_path.is_relative_to(root), 'private source alias escaped root')
+            require(hashlib.sha256(receipt_path.read_bytes()).hexdigest() == evidence_by_id[receipt_id]['sha256'], 'private source digest mismatch')
         result['private_image_checks'] = 'pass'
+        result['private_receipt_checks'] = 'pass'
     result['negative_probes'] = len(mutations) + 17 + len(report_leaks) + len(slash_root_report_leaks) + len(punctuation_root_report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 12
+    result['capture_source_negative_probes'] = 2
+    result['individual_display_scope_probes'] = 1
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     result['public_report_checks'] = 'LF/CRLF match; changed coverage total rejected'
     print(json.dumps(result,sort_keys=True))

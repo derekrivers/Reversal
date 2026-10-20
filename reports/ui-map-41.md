@@ -1,50 +1,77 @@
-# R41-C3: application screen census and ongoing navigation map
+# R41-C4: second bounded application screen census
 
-The UI objective now covers the entire original application as navigation continues alongside engine work. [The machine-readable census](../evidence/ui-screen-census-41.json) is the first bounded frontier, based on original captures 01–16 and A4 action-index entries 001–011. Later A4 match tabs and post-match navigation belong to the next capture batch. The total number of discoverable application states remains unknown; these counts are not a completion percentage.
+The UI objective covers the entire original application as navigation continues alongside engine work. [The machine-readable census](../evidence/ui-screen-census-41.json) now retains original captures 01–16 and A4 action-index entries 001–078. This second increment admits **67 already retained images, entries 012–078**, inspected offline; it adds no game inputs. The total application state population remains unknown. These counts describe the enumerated frontier, not completion percentages.
 
 | Machine-checked denominator set | Count | Meaning |
 | --- | ---: | --- |
-| Screenshot-confirmed screen/state IDs | 17 | At least one retained, directly inspected image. |
-| Operator-route-only state IDs | 5 | Reported CD request, Game Options, restart confirmation, restart save prompt and save dialog; no retained layout image in this cutoff. |
-| Terminal state IDs | 1 | Operator confirmed process exit; this is not a screen. |
-| Discovered uncaptured control-route IDs | 60 | Visible labels/action affordances with unresolved destinations or effects; they are not 60 proven additional screens. Disabled Back remains an appearance, not a discovered route. |
-| Unknown/unbounded application sections | 12 | Internal tab/modal/error/state populations have no finite denominator yet. |
-| Total application screen/state denominator | Unknown | Whole UI remains an ongoing target. |
+| Screenshot-confirmed screen/state IDs | 50 | Directly inspected image for each canonical state; repeated captures and selected-context variants are separate evidence. |
+| Operator-route-only state IDs | 5 | CD request, Game Options, restart confirmation, restart save prompt and save dialog; no retained layout image. |
+| Terminal state IDs | 1 | Confirmed process exit, not a screen. |
+| Discovered uncaptured control-route IDs | 111 | 52 preserved prior routes plus 38 newly enumerated controls and 21 unexercised bottom-Back sources. Destinations/effects remain unknown. |
+| Unknown/unbounded sections | 12 | Partial screens do not exhaust finance, transfer, competition or other application families. |
+| Total application state denominator | Unknown | Whole UI remains an ongoing target. |
 
-Coverage flags are independent: **screenshot**, **layout**, **observed transition**, **engine binding**. This batch contains 27 screenshot files, 15 states with approximate mapped geometry, and 21 catalogue states touched by a recorded action edge, including operator-only states and the exit terminal. None has an established engine binding. Running/half-time image sequences do not count as tested actions; native initialization error dialogs are seen but do not yet have mapped game-client geometry. A screenshot is never promoted to behavior validation. The JSON carries each flag, its evidence and exact set membership; the checker derives and verifies every denominator.
+There are **94 screenshot files, 33 approximate layout templates, 48 states with mapped geometry and 56 catalogue states touched by recorded action edges**. The latter includes operator-only and terminal states and means at least one action at an endpoint, not every control tested. There are **81 canonical observed-action edges, five screenshot-sequence relations and one unresolved load gap**. None establishes a UI engine binding. Approximate layouts share regions where appropriate: transfer lists, income/expenditure breakdowns and competition results and fixtures; active fields, absent controls and empty appearances remain per-state declarations.
 
-The observed screenshot states are Setup Game; restore with blank File field; restore with selected file; CD information; language/configuration error dialogs; evening fixtures; ordinary/pre-match squad; player profile; tactics overview; proceed confirmation; pre-kickoff/running/half-time/full-time match; and Exit confirmation. The historical `ui41.squad.returned` ID aliases ordinary squad selection rather than creating a duplicate screen for a repeated capture. Blank file-list slots and grey-looking Back/Next controls are recorded as appearances; an entirely empty directory or a disabled action contract is not inferred. A4 explicitly reports fixture Back disabled; confirmation No and several Cancel routes remain unexercised.
+## Exact scope and evidence
 
-The adjacency list in the JSON is generated only from **operator-observed action** edges and checked against those edges. Tactics returns via observed Cancel; Back on that state is unobserved. An observed Back declaration requires a matching Back control and action edge. The checker pins the full reviewed state declarations, including Back status and target, the complete 60-control frontier, 12 unknown-section declarations, the denominator's limited scope, and the top-level cutoff, completion, coverage and capture protocol claims for this batch. It also pins capture contexts, screenshot/report metadata, layout geometry, full transition declarations, historical aliases and capture requests; the next reviewed batch will explicitly update these pins. Every counted screenshot must belong to a mapped state, and a screenshot hash can belong to only one state. It binds each edge to its reviewed source state, destination state and confidence, and each action edge to the operator receipt's declared action and launch context; any cited screenshot must belong to an endpoint state and matching context. Screenshot sequences require an image from each endpoint. The private A4 receipt is still an opaque provenance declaration, not cryptographic proof of its operator actions. The earlier external-input load gap remains a separate relation. The principal mapped routes are:
+The second increment adds 33 state IDs, 24 layout IDs, 58 action edges and one running-to-half-time screenshot sequence. The JSON's `batch_delta` lists every added image/state/layout/transition/route ID, all eight closed route IDs and all 52 preserved route IDs. The 28 prior edge endpoint/status tuples remain unchanged. Existing Yes-to-match, squad-to-profile and Profile-Back edges receive A4 corroboration; older screenshot sequences remain sequences. Adjacency is generated only from observed-action edges.
+
+| Added family | New canonical states | A4 image evidence | Observed action and remaining limit |
+| --- | ---: | --- | --- |
+| Half-time tabs | 3 | 015–018 | Overview → Match Stats → Action Zones → Match Report → Overview; source phase is half-time. Pre-kickoff tab routes remain open. |
+| Evening Results entry | 1 | 022 and repeated returns | Full-time Continue Game → Evening Results; club and competition entry actions observed. Distinct from earlier Evening Fixtures and competition Results tab. |
+| Finances & Info | 6 | 024–032 | Five content modes and one View popup; Expenditure Back → Evening Results only. |
+| Transfers | 8 | 035–047 | Seven content modes and one View popup; Staff Out Back → Evening Results only. |
+| Player details/history | 8 | 051–067 | Injuries & Bans, Contract, Transfer; four History modes and one popup. Profile tab returns observed from main tabs and history Bans. |
+| Club Fixtures/Next Match | 2 | 069–071 | Squad → Fixtures → Next Match → bottom Back → Evening Results. Direct Squad → Next Match remains unexercised. |
+| Competition | 5 | 072–078 | Evening Results → Stages; Group popup → another group, Results → Fixtures → Schedule → Back. |
+
+Evidence IDs in the JSON use the full `r41-a4-ui-` prefix. Groups A/B are two data selections of one Stages screen; the eight labelled options are a finite parameter family. Four finance, six transfer, three history and one group selected-context popup captures form **14 popup variants**, not 14 additional screens. Reopening the Group menu with Group B selected is a variant gap. Natural primary empty lists are retained in Future Transfers, Loans In, Staff In, Staff Out and historical Bans. Numeric zeros and blank fields do not imply a wholly empty screen. Current-season/date forward or backward controls, competition Print and entry Back/Next have dim appearances; disabled handlers were not tested.
+
+## Observed routes and Back gaps
 
 ```mermaid
 flowchart LR
-  Setup -->|Restore|Blank[Restore: blank field]
-  Blank -->|Select row|Selected[Restore: selected]
-  Selected -->|Ok|Media[CD information]
-  Media -->|Ok|Fixtures
-  Fixtures -->|Club label|Squad
-  Fixtures -->|Continue|Prematch[Pre-match squad]
+  Confirm[Proceed confirmation] -->|Yes|Kickoff
+  Kickoff -->|Kick Off Match|Running
+  HalfTime[Half-time Overview] -->|Match Stats|Stats
+  Stats -->|Action Zones|Zones
+  Zones -->|Match Report|Report
+  Report -->|Match Overview|HalfTime
+  HalfTime -->|Re-start Match|Running
+  FullTime[Full-time] -->|Continue Game|Results[Evening Results]
+  Results -->|Club label|Squad
+  Squad -->|Finances and Info|General[General Info]
+  General -->|View selections|Expenditure
+  Expenditure -->|Back|Results
+  Squad -->|Transfers and View selections|StaffOut[Staff Out]
+  StaffOut -->|Back|Results
   Squad -->|Player row|Profile
   Profile -->|Back|Squad
-  Squad -->|Tactics|Tactics
-  Tactics -->|Cancel|Squad
-  Squad -->|Continue|Prematch
-  Prematch -->|Continue|Confirm[Proceed confirmation]
-  Confirm -->|Yes|Kickoff[Pre-kickoff]
-  Setup -->|Exit|Exit[Exit confirmation]
-  Exit -->|Yes|Closed[Process exited]
+  Squad -->|Fixtures|ClubFixtures[Club Fixtures]
+  ClubFixtures -->|Next Match|NextMatch[Next Match]
+  NextMatch -->|Back|Results
+  Results -->|Competition|Stages
+  Stages -->|Results, Fixtures, Schedule tabs|Schedule
+  Schedule -->|Back|Results
 ```
 
-The successful A4 media-information route does not retroactively resolve the original load's externally interrupted CD-request transition. Exit No is labelled but was not exercised. The operator-only restart route is separately recorded: result → Game Options → Restart → save-before-restart; Cancel returned to result, while saving separately caused a new native process. No same-process reload is established.
+The grouped View/tab arrows above summarize consecutive menu actions; the JSON contains each individual edge. Natural match progression is deliberately absent from this action-only graph. Match tabs were captured after probe cleanup at half-time; the ordinary kickoff had a bounded engine probe attached beforehand. This UI census does not turn that runtime observation into a field or command binding.
 
-Identity is scoped per capture: matched A/B pre-run configuration; later B capture-time configuration unverified; restarted child known to have only 774 of 784 expected files; A4 failed launch with uncontrolled working directory; and A4 successful fresh launch after exact revalidation with the correct working directory. Screens are not pooled under one current-configuration claim. The two native error dialogs and subsequent successful launch are observations of different launch contexts, not proof of an error cause or recovery contract. JPEG encoding and outer dimensions are retained even for files named `.png`; the small native dialogs are not treated as 800 × 600 game windows.
+Bottom Back is observed from **Expenditure, Staff Out, Next Match and Competition Schedule to Evening Results**, and from **Profile to Squad**. It is unexercised from four other finance modes, six other transfer modes, three other main player tabs, all four history modes, Club Fixtures and three other competition modes: **21 explicit source-specific gaps**. Clicking Profile is a tab return, not bottom Back. History was first entered from Transfer, not Profile. Do not infer Back behavior from a neighboring mode. Popup Escape/outside dismissal and preservation of selections remain unknown.
 
-Approximate geometry, field labels/order, controls, back status and asset bindings are explicit per state. Original typography, palettes and native handlers remain unknown. The installed resource manifest supplies candidate asset IDs; this census does not guess background-to-screen bindings from visual resemblance. Empty/disabled/modal variants, filter/sort effects and command side effects remain capture targets.
+Eight prior routes close under their exact source conditions: Squad → Finances & Info/Transfers/Fixtures; Profile → Injuries & Bans/Contract/Transfer; half-time Re-start Match; full-time Continue Game. Direct Profile → History, Squad → Next Match, earlier Evening Fixtures → Competition and pre-kickoff match-tab routes remain open. The three earlier Evening Fixtures-source Find, Nations & Clubs and manager routes also remain open. A6 starts at distinct Evening Results and requests three separately enumerated Results-source routes; its menu exploration cannot close the earlier source gaps. Each request declares its entry and exact route-source state IDs, checked against its route references. The 38 additional visible-control routes include menus, scrolling, season/date navigation and retained subview controls. The Group-menu selected-B context is a variant gap; the dim competition Print label and red News indicator hit target are held outside the actionable-route denominator. Fixture Cancel is a visible unexercised command, not authorization to cancel anything.
 
-The highest-priority requests sent to sole operator R41-A4, after paired-probe cleanup, are read-only Finances & Info/Transfers tabs, profile subtabs, competition/fixture/table routes, then representative search/nation/training families. Each batch must record identity, entry/prerequisite/action, back **observed or unexercised**, active tab/modal, image hash/encoding/dimensions, and time/state effects **observed or unknown**. Do not manufacture empty states or make transactions merely for coverage. Newly exposed labels expand the uncaptured frontier and unknown sections; the census does not assume the starting menu exhausts the app.
+## Identity, privacy and verification
 
-Run the standalone consistency/privacy checker normally and under optimized Python:
+Each retained image keeps its executable/configuration/origin-save context. Original GDI A/B, later unverified B, partial restart, failed launch and restored A4 contexts remain separate. A4 uses the existing restored context: exact GDI executable, original duplicated input save, revalidated 784-file configuration and explicit launch working directory. The post-batch receipt rechecks disk inputs. An origin-save hash does not identify the post-match in-memory state. During post-match navigation the visible rail date/phase remained unchanged; internal cache/RNG/other state effects are unknown. Future dates inside fixture content do not show world-time advancement. Index timestamps are retention times following observation, not exact screenshot/input times.
+
+The retained full action index is an opaque private receipt, SHA-256 `22b7a469643ca7860043f76044e85eba002e61d972d0133f11f35c7dd2fb4e48`; its declarations are operator evidence, not cryptographic proof of actions. All 67 new images are JPEG, 802 × 627 outer pixels, with an approximately 800 × 600 game client at `(1, 27)`. Earlier native error dialogs retain their smaller actual dimensions. Raw screenshots, installed assets, executables, saves, bulk game databases and local capture paths remain outside Git. Individual player names and short displayed values are permitted; the checker does not classify them as private bytes. Source evidence is preserved in the operator's restore-tested local archive; no off-host durability claim is made here. Asset-to-screen binding, exact typography/palette, keyboard behavior and native handlers remain unknown.
+
+Python 3.12+ is required for the standalone checker; the root check requires Node 24+ and Python 3.12+ as documented in the repository README. The root runner retains its explicit Python executable prerequisite.
+
+The checker deliberately extends the reviewed batch pins for every state declaration, full frontier, contexts/evidence/layouts/transitions/requests, aliases and top-level scope. It validates the explicit batch delta, prior topology preservation, selected-context variants, unknown Back targets, endpoint/context evidence and action receipts. Both the complete public UI report and the tracked operator report are checked after CRLF-to-LF normalization; private receipts retain raw-byte hashes. The merged path/payload guard, including rendered Markdown/HTML and Unicode-boundary checks, scans the census and both reports. Normal and optimized Python execute the same consistency/privacy checks; the root Node 24 check invokes public mode. Optional private mode compares all 94 image hashes/JPEG dimensions and the two new raw-byte receipt hashes. It has no player-string scanner or snapshot option. These checks do not replay original navigation.
 
 ```text
 python scripts/check_ui_census_41.py
@@ -52,11 +79,11 @@ python -O scripts/check_ui_census_41.py
 python scripts/check_ui_census_41.py --private-root PRIVATE_CAPTURE_ROOT --private-aliases PRIVATE_ALIAS_JSON
 ```
 
-The checker seals this complete public UI report by a reviewed UTF-8 digest, so its coverage totals and prose cannot drift from the census without an intentional pin update. It also reads the public operator report and verifies its complete UTF-8 file digest after CRLF-to-LF normalization only, matching Git's retained LF blob. LF and CRLF checkouts must produce the same digest; altered source content and an altered expected digest are rejected. Private operator-note/index receipts explicitly retain raw-byte hashes and are labelled as not loaded by the public check.
+Next requests remain with sole game operator R41-A: safe manager/news hit testing, Training/default/search/nation menus, competition statistical/history views and View/Stage menus, retained completed-match views, exact direct-source gaps and the 21 Back routes. Capture actual prerequisites/actions/returns and any state change; no Clear Squad, fixture cancellation, offer/contract/tactics edits or world-time advancement merely for coverage. The reference viewer below remains unchanged and has no game commands.
 
-The optional private check verifies screenshot hashes, JPEG encoding and dimensions against the public evidence index. Individual player names and short on-screen labels or values are not treated as private bytes by this checker. The publication boundary remains raw screenshots, installed assets, executables, saves, bulk game databases and local capture paths; these stay outside Git. The path/payload guard scans the census, UI report and tracked operator report. One hundred and twenty-two public negative probes and twelve path near-miss probes check the census and path rules. Normal and optimized Python checks verify all 27 private images; the Node 24 repository check and whitespace check pass. No browser, game, process or native database access is used. Private cutoff/alias annotations are local; source capture preservation remains with R41-A4, without an off-host durability claim here. The prior asset inventory and React viewer are preserved; their narrower scope follows.
+## R41-C2: bounded journey and reference viewer (historical narrower cutoff)
 
-## R41-C2: bounded journey and reference viewer
+The following catalogue and untested statements describe the earlier C2 viewer cutoff. C4 observations above supersede its navigation gaps only where exact source actions are retained.
 
 The actual observed route is **restore → evening fixtures → squad → player profile → Back → tactics → Cancel → squad → match confirmation → pre-kickoff → running match → result**. R41-A alone operated the disposable GDI game and recorded the actions. R41-C2 inspected the retained screenshots offline and built a bounded squad/profile reference viewer from their visible values. This establishes UI navigation/display evidence, not reconstructed game execution.
 
