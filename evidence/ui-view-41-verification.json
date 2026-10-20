@@ -39,8 +39,7 @@
   "transcription_correction": {
     "local_row_id": "row11",
     "field": "form",
-    "previous": "7-7-7-7-7",
-    "corrected": "7-7-6-7-7",
+    "values_retained_privately": true,
     "source_capture_ids": [
       "r41-ui-04-squad",
       "r41-ui-07-squad-after-tactics"
