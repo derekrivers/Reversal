@@ -1,0 +1,143 @@
+{
+  "schema": "reversal.runtime-effect-input-41.validation.v1",
+  "scope": "tool only; no game process operated",
+  "gdi_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+  "entry_va": "0062e6e0",
+  "return_va": "006cf8f7",
+  "constant_rva": "00567f28",
+  "constant_width": 4,
+  "attribute_offset": 45,
+  "attribute_width": 1,
+  "added_max_bytes_per_boundary": 5,
+  "added_max_bytes_per_pair": 10,
+  "unpaired_read_scope_unchanged": true,
+  "normal_optimized_identical": true,
+  "checks": {
+    "closure": {
+      "schema": "reversal.runtime-effect-input-41.check.v1",
+      "cases": [
+        "return-both-pointers",
+        "return-slot-pointer",
+        "return-staff-pointer",
+        "return-slot-register",
+        "return-return-short",
+        "unpaired-unchanged",
+        "valid",
+        "null",
+        "overflow",
+        "last-valid-byte",
+        "unmapped",
+        "short",
+        "staff-alias",
+        "attribute-alias",
+        "caller",
+        "missing-slot",
+        "constant-short",
+        "relocated"
+      ],
+      "scope": "synthetic fake memory only"
+    },
+    "paired": {
+      "schema": "reversal.runtime-paired-return-41.check.v1",
+      "cases": [
+        {
+          "case": "Normal",
+          "passed": true,
+          "stop_reason": "paired_return"
+        },
+        {
+          "case": "WrongCaller",
+          "passed": true,
+          "stop_reason": "entry_caller_or_stack_mismatch"
+        },
+        {
+          "case": "WrongStack",
+          "passed": true,
+          "stop_reason": "return_stack_mismatch"
+        },
+        {
+          "case": "NestedMismatch",
+          "passed": true,
+          "stop_reason": "return_stack_mismatch"
+        },
+        {
+          "case": "Timeout",
+          "passed": true,
+          "stop_reason": "return_not_observed"
+        },
+        {
+          "case": "Exception",
+          "passed": true,
+          "stop_reason": "paired_return"
+        },
+        {
+          "case": "ReadFailure",
+          "passed": true,
+          "stop_reason": "paired_return"
+        },
+        {
+          "case": "RearmFailure",
+          "passed": true,
+          "stop_reason": "paired_return"
+        },
+        {
+          "case": "ContinueFailure",
+          "passed": true,
+          "stop_reason": "paired_return"
+        }
+      ],
+      "deterministic_queued_event_cases": [
+        {
+          "case": "queued_entry_return",
+          "passed": true
+        },
+        {
+          "case": "queued_entry_timeout",
+          "passed": true
+        },
+        {
+          "case": "queued_entry_drain_failure",
+          "passed": true
+        }
+      ],
+      "scope": "owned synthetic WOW64 processes only; no game observation"
+    },
+    "legacy": {
+      "real_hits": 3,
+      "timeout_cleanup": true,
+      "target_alive": true,
+      "application_breakpoint_handler_observed": true,
+      "optional_slot_regression_cases": 3,
+      "fs_head_complete": true
+    }
+  },
+  "node24_full_check_passed": true,
+  "source_sha256": {
+    "scripts/runtime_capture_41.py": {
+      "file": "f69149fa80721b31ce17f112623733a7369cd2c44c2224f385abbebda883542b",
+      "normalized_lf": "2201cee84fbb2d79b20e5c5c727c539d4e95d3b2b6382dbc8416849c195290e1"
+    },
+    "scripts/check_runtime_effect_input_41.py": {
+      "file": "cfbbc4a04a10be1caf598c3288a88e400fd111f2a380fbf93bc51ecae82deb59",
+      "normalized_lf": "cfbbc4a04a10be1caf598c3288a88e400fd111f2a380fbf93bc51ecae82deb59"
+    },
+    "reports/runtime-effect-input-41.md": {
+      "file": "d63a57c1594315de5889ba0ba98b203b9d7c56c1106bfa1a012ae4185e2315a7",
+      "normalized_lf": "d63a57c1594315de5889ba0ba98b203b9d7c56c1106bfa1a012ae4185e2315a7"
+    }
+  },
+  "backup": {
+    "archive_sha256": "acd314974faaf04a82cea2e14e7298fed1c94eaf86136a5766225d056d5edccc",
+    "archive_bytes": 20857,
+    "data_files": 10,
+    "hash_manifest_files": 1,
+    "restored_all_hashes_match": true
+  },
+  "limits": [
+    "two existing boundary observations only",
+    "no live capture in this assignment",
+    "fixed entry-address rereads; no changed-return-pointer chase",
+    "no effect execution or allocation-lifetime claim"
+  ],
+  "selected_public_privacy_scan_passed": true
+}
