@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '4f25dccaa3ca43440dcb6f84d11710725784e7f2f7ba2d9a03ef422c6ee83a79'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '7238f4a930425f67ffced76fded2b19525d13213e215b6c9cb8beedc5da4597d'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -129,7 +129,7 @@ ROOT_RELATIVE_WINDOWS = re.compile(
 def render_for_privacy(source):
     """Approximate rendered inline text for conservative privacy matching."""
     def render_inline_links(value):
-        opener = re.compile(r'!?\[([^\]\r\n]+)\]\(')
+        opener = re.compile(r'!?\[([^\]\r\n]*)\]\(')
         chunks, pos = [], 0
         while match := opener.search(value, pos):
             cursor, depth = match.end(), 1
@@ -718,7 +718,7 @@ def main():
         raise ValueError('changed public coverage total accepted')
     report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'), b'\n\\My Documents\\capture.png', b'\n\\My capture.png', b'\n`\\UI\\capture.png`', b'\n**\\UI\\capture.png**', b'\n_\\UI\\capture.png_', b'\n__\\UI\\capture.png__', b'\n~~\\UI\\capture.png~~', b'\n__private _\\UI\\capture.png_ location__', b'\n~~private _\\UI\\capture.png_ location~~')
     encoded_report_leaks = (b'\n&#47;home/operator/private/capture.png', b'\nC&#58;\\Users\\operator\\capture.png', b'\n&#92;UI&#92;capture.png')
-    formatted_report_leaks = (b'\nC`:`\\Users\\operator\\private\\capture.png', b'\nC[:](https://example.invalid)\\Users\\operator\\private\\capture.png', b'\nC<code>:</code>\\Users\\operator\\private\\capture.png')
+    formatted_report_leaks = (b'\nC`:`\\Users\\operator\\private\\capture.png', b'\nC[:](https://example.invalid)\\Users\\operator\\private\\capture.png', b'\nC<code>:</code>\\Users\\operator\\private\\capture.png', b'\nC[](/x):\\Users\\operator\\private\\capture.png')
     for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
@@ -762,6 +762,8 @@ def main():
             name_head + ' **' + name_tail + '**',
             name_head + ' `' + name_tail + '`',
             name_head + ' [' + name_tail + '](https://example.invalid)',
+            name_head + ' [](/x)' + name_tail,
+            name_head + ' ![](/x)' + name_tail,
             name_head + ' ![' + name_tail + '](https://example.invalid/image.png)',
             name_head + ' [' + name_tail + '](https://example.invalid/a(b(c)))',
             name_head + ' [' + name_tail + '][reference]\n[reference]: https://example.invalid',
@@ -798,6 +800,7 @@ def main():
             '**' + attribute['label'] + '**: ' + attribute['value'],
             attribute['label'] + ': **`' + attribute['value'] + '`**',
             attribute['label'] + ': [' + attribute['value'] + '](https://example.invalid)',
+            attribute['label'] + ': ' + attribute['value'][0] + '[](/x)' + attribute['value'][1:],
             attribute['label'] + ': ![' + attribute['value'] + '](https://example.invalid/image.png)',
             attribute['label'] + ': [' + attribute['value'] + '][reference]\n[reference]: https://example.invalid',
             attribute['label'] + '<br>' + attribute['value'],
