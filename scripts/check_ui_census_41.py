@@ -113,7 +113,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'c13702462030a9db2d345aefff13c6116fa8a8596049dfb6af2d90797cfa3063'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '85e892f22c51bedf7bd92edb676c0bb206be83df470482ec906d310eacd568a0'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|[A-Za-z]:[\\/]|(?<![A-Za-z0-9:.])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -171,9 +171,9 @@ def render_for_privacy(source):
     html_view.feed(source)
     html_view.close()
     rendered = render_inline_links(''.join(html_view.parts))
-    fold_ref = lambda value: unicodedata.normalize('NFC', value).casefold()
-    references = {fold_ref(match.group(1)) for match in re.finditer(r'(?m)^ {0,3}\[([^\]\r\n]+)\]:\s*\S+', rendered)}
-    rendered = re.sub(r'!?\[([^\]\r\n]*)\]\[([^\]\r\n]*)\]', lambda match: match.group(1) if fold_ref(match.group(2) or match.group(1)) in references else match.group(0), rendered)
+    fold_ref = lambda value: unicodedata.normalize('NFC', re.sub(r'\s+', ' ', value.strip())).casefold()
+    references = {fold_ref(match.group(1)) for match in re.finditer(r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*\S+', rendered)}
+    rendered = re.sub(r'!?\[([^\]\r\n]*)\]\[([^\]]{0,999})\]', lambda match: match.group(1) if fold_ref(match.group(2) or match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_ref(match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'\\[ \t]*\r?\n', ' ', rendered)
     rendered = re.sub(r'\\([\\`*_{}\[\]()#+.!<>~\-])', r'\1', rendered)
@@ -718,8 +718,13 @@ def main():
         raise ValueError('changed public coverage total accepted')
     report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'), b'\n\\My Documents\\capture.png', b'\n\\My capture.png', b'\n`\\UI\\capture.png`', b'\n**\\UI\\capture.png**', b'\n_\\UI\\capture.png_', b'\n__\\UI\\capture.png__', b'\n~~\\UI\\capture.png~~', b'\n__private _\\UI\\capture.png_ location__', b'\n~~private _\\UI\\capture.png_ location~~')
     encoded_report_leaks = (b'\n&#47;home/operator/private/capture.png', b'\nC&#58;\\Users\\operator\\capture.png', b'\n&#92;UI&#92;capture.png')
-    formatted_report_leaks = (b'\nC`:`\\Users\\operator\\private\\capture.png', b'\nC[:](https://example.invalid)\\Users\\operator\\private\\capture.png', b'\nC<code>:</code>\\Users\\operator\\private\\capture.png', b'\nC[](/x):\\Users\\operator\\private\\capture.png', b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]: target')
-    for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks:
+    formatted_report_leaks = (b'\nC`:`\\Users\\operator\\private\\capture.png', b'\nC[:](https://example.invalid)\\Users\\operator\\private\\capture.png', b'\nC<code>:</code>\\Users\\operator\\private\\capture.png', b'\nC[](/x):\\Users\\operator\\private\\capture.png', b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]: target', b'\nC:[][ref one]\\Users\\operator\\private\\capture.png\n\n[ref  one]: target')
+    whitespace_reference_report_leaks = (
+        b'\nC:[][ref\tone]\\Users\\operator\\private\\capture.png\n\n[ref one]: target',
+        b'\nC:[][ref\none]\\Users\\operator\\private\\capture.png\n\n[ref one]: target',
+        b'\nC:[][ref one]\\Users\\operator\\private\\capture.png\n\n[ref\none]: target',
+    )
+    for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks + whitespace_reference_report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
         except ValueError as exc:
@@ -766,6 +771,11 @@ def main():
             name_head + ' ![](/x)' + name_tail,
             name_head + ' [][ref]' + name_tail + '\n\n[ref]: target',
             name_head + ' ![][ref]' + name_tail + '\n\n[ref]: target',
+            name_head + ' [][ref one]' + name_tail + '\n\n[ref  one]: target',
+            name_head + ' ![][ref one]' + name_tail + '\n\n[ref  one]: target',
+            name_head + ' [][ref\tone]' + name_tail + '\n\n[ref one]: target',
+            name_head + ' [][ref\none]' + name_tail + '\n\n[ref one]: target',
+            name_head + ' [][ref one]' + name_tail + '\n\n[ref\none]: target',
             name_head + ' ![' + name_tail + '](https://example.invalid/image.png)',
             name_head + ' [' + name_tail + '](https://example.invalid/a(b(c)))',
             name_head + ' [' + name_tail + '][reference]\n[reference]: https://example.invalid',
@@ -804,6 +814,9 @@ def main():
             attribute['label'] + ': [' + attribute['value'] + '](https://example.invalid)',
             attribute['label'] + ': ' + attribute['value'][0] + '[](/x)' + attribute['value'][1:],
             attribute['label'] + ': ' + attribute['value'][0] + '[][ref]' + attribute['value'][1:] + '\n\n[ref]: target',
+            attribute['label'] + ': ' + attribute['value'][0] + '[][ref one]' + attribute['value'][1:] + '\n\n[ref  one]: target',
+            attribute['label'] + ': ' + attribute['value'][0] + '[][ref\tone]' + attribute['value'][1:] + '\n\n[ref one]: target',
+            attribute['label'] + ': ' + attribute['value'][0] + '[][ref one]' + attribute['value'][1:] + '\n\n[ref\none]: target',
             attribute['label'] + ': ![' + attribute['value'] + '](https://example.invalid/image.png)',
             attribute['label'] + ': [' + attribute['value'] + '][reference]\n[reference]: https://example.invalid',
             attribute['label'] + '<br>' + attribute['value'],
@@ -843,6 +856,7 @@ def main():
         require(len(attribute['value']) >= 2, 'private expression near-miss fixture too short')
         expression_near_miss = attribute['label'] + ': `' + attribute['value'][0] + '*' + attribute['value'][1:] + '`'
         check_private_display(snapshot, public + '\n' + expression_near_miss)
+        check_private_display(snapshot, public + '\n' + name_head + '[][other]' + name_tail + '\n\n[ref one]: target')
         synthetic = copy.deepcopy(snapshot)
         synthetic['squad']['clubLabel'] = 'Synthetic "Club"'
         try:
@@ -884,9 +898,9 @@ def main():
             raise ValueError('Unicode case-folded private label accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 4
+        result['private_near_miss_probes'] = 5
         result['private_escape_probes'] = 5
-    result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks)
+    result['negative_probes'] = len(mutations) + 16 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks)
     result['public_path_near_miss_probes'] = 9
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     result['public_report_checks'] = 'LF/CRLF match; changed coverage total rejected'
