@@ -3,7 +3,7 @@
 The new `scripts/runtime_capture_41.py` uses a Windows debug-event loop and a
 DR0 hardware execution breakpoint. After independent review, it intercepted
 the real GDI RNG entry and then the participant lookup entry during an ordinary
-match. Both captures restored three threads' debug registers and detached.
+match. These two run-A captures restored three threads' debug registers and detached.
 The lookup's actual return address is the effect caller's `006cf8f7`, its status
 stamp matches the current date, and all requested reads and the FS head are
 complete. This resolves the previous host-interception blocker.
@@ -83,7 +83,7 @@ specific behavior exercised here.
 ## Live captures and evidence limits
 
 The [sanitized receipt](../evidence/runtime-capture-41-live-summary.json) records
-capture hashes, identity, timing intervals and mapping. Both captures have
+capture hashes, identity, timing intervals and mapping. The two run-A captures have
 loaded base `00400000`, thread 19248 and x87 control word `027f`.
 
 | Capture | Preferred/runtime VA | RVA / file offset | Event interval UTC |
@@ -107,10 +107,10 @@ ordered effects, slot ownership, producer execution or a complete attempt.
 
 The current tool adds a 446-byte ESI candidate-slot read at the same
 event and records the two pointer equalities and effect-return provenance.
-The corrected extension passed independent review and was attached once for
-run B, but no lookup hit or slot bytes were obtained. Reading a resumed process
-at Lookup A's old addresses
-would not establish the missing same-event state.
+The corrected extension passed independent review. Its first run-B attempt was
+blocked by a security dialog; after the user dismissed that dialog, a fresh
+bounded attempt captured the slot at the actual lookup event. No resumed
+process read at Lookup A's old addresses was substituted for same-event state.
 
 The extension review found that an unrelated caller's ESI near `ffffffff`
 could overflow the optional 446-byte range and abort an otherwise valid capture.
@@ -136,6 +136,26 @@ was attempted while awaiting the user's dismissal of the security prompt.
 The sanitized receipt records the raw-result hash and cleanup facts without
 publishing registers, pointer values or memory.
 
+## Run-B lookup with slot referent
+
+After the user confirmed dismissal, read-only observation found the original
+run-B process and kickoff screen intact. A new 40-second-bounded capture then
+hit `0062e6e0` at `2026-10-20T17:56:02.489953Z`, on thread 25272, approximately
+15.07 seconds after attachment. The operator used the ordinary Kick Off control.
+All selected reads and FS head completed, the x87 control word was `027f`,
+five threads' debug registers were restored, and the debugger detached.
+
+The stack return again identifies the effect call, and both pointer comparisons
+hold at this stopped event: slot `+0x69` equals the staff argument at `[ESP+4]`,
+and slot `+0x6d` equals the staff record's `+0x61` attribute pointer. The selected
+status row has the current date and a null-result mapping. Raw capture SHA-256:
+`174988ab0a5da960a4fc4e1d9e6c02f6616522f3a3b65ee0313578bf0e2e2289`.
+R41-B received this capture read-only for original-instruction/TypeScript replay.
+
+This establishes a genuine effect-to-lookup state edge at one boundary. It does
+not execute the slot producer, prove ownership or lifetime across calls, capture
+the live return, or establish a complete action33 attempt.
+
 ## Paired save experiment
 
 Runs A and B each start a fresh GDI process and load the same unchanged duplicate
@@ -147,7 +167,7 @@ substantiate a condition change caused by those visits.
 Before kickoff, A displayed referee Mohammed Al-Hakim and “Breezy, Shower, 9 C”;
 B displayed referee Drazenko Kovacic and “Breezy, 9 C”. These setup differences
 were observed before the debugger attached to either run. Cosmetic background
-images differed earlier. A subsequently completed 0–1; B remains at kickoff.
+images differed earlier. A subsequently completed 0–1; B completed 3–0.
 The earliest recorded gameplay divergence is therefore setup, not final score.
 
 This is a fresh-process comparison, not a same-process reload test. Time and
@@ -156,9 +176,25 @@ external input detected by the UI bridge. No RNG-initialization, save-restoratio
 or weather/referee cause is inferred. A whole-save deterministic replay remains
 unestablished despite the usable captured function boundary.
 
+The bounded attempt to reload within run B used Game Options → Restart Game →
+Yes. Cancel on “Save Game Before Restart” returned to the results screen.
+Repeating the route and saving under a new filename preserved the original
+experiment save, but the native restart exited process 15240 and created child
+process 24804 with parent 15240 at `17:58:49.881519Z`. The child displayed Setup
+Game. Thus the observed normal Restart route starts a new process; it did not
+provide a same-process reload comparison. No third save load was performed.
+
+Post-restart hashing confirms the input save unchanged and the other original
+manifest entries unchanged, apart from ten root language files now absent in
+the disposable copy. Their removal was not traced. This later state must not be
+confused with the matching 784-file A/B pre-run configuration. Another run needs
+configuration revalidation. The separately saved run-B result is private and
+has SHA-256
+`4bc5e4fa0145994eba5996756963188885471becd865937787e13e6a4671cdd6`.
+
 ## Private preservation and resume
 
-Private results retain 13 journey screenshots, two raw hit captures and one
+Private results retain 16 journey screenshots, three raw hit captures and one
 timeout result,
 scenario and configuration manifests, the duplicated save and the disposable
 game copy. Files named `.png` from the UI bridge contain JPEG bytes; their
@@ -181,8 +217,16 @@ All seven entries were independently extracted and rehashed. This supplement
 preserves the state before this reporting-only wrap-up; the original capture
 archive remains unchanged.
 
-Run B, process 15240, was left before kickoff with no debugger attached. Next:
-after the user confirms dismissal of the security dialog, reobserve the game,
-capture one new lookup event using the reviewed tool and give its slot referent
-to R41-B. Then attempt the same-process reload comparison. No shared registry
-or canonical Ghidra state was changed.
+The follow-up capture, three new screenshots, restart/identity manifest and
+separate post-match save are preserved in a third local archive, SHA-256
+`ae0dcab384cd97569e73dd9d1074a66e7c6af47d67f7dfc375529dbb7917f8de`,
+134,394,431 bytes. All six independently extracted entries match their recorded
+hashes. The two prior archives were preserved.
+
+The remaining process is the restart child, 24804, at Setup Game with no save
+loaded and no debugger attached. The next useful execution observation is a
+paired same-thread lookup entry and actual return at `006cf8f7`: expected
+`ESP = entry ESP + 8` after `RET 4`, EAX, nonvolatile registers, RNG and selected
+row before/after. That needs a separately reviewed bounded two-event extension;
+the current one-hit tool does not establish this join. No additional probing
+was attempted. No shared registry or canonical Ghidra state was changed.

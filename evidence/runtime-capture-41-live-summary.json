@@ -57,10 +57,46 @@
         "RNG table",
         "return and ordered effects"
       ]
+    },
+    {
+      "capture_id": "r41-live-lookup-B2",
+      "sha256": "174988ab0a5da960a4fc4e1d9e6c02f6616522f3a3b65ee0313578bf0e2e2289",
+      "bytes": 15644,
+      "exe_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+      "module_base": 4194304,
+      "boundary": {
+        "preferred_va": 6481632,
+        "rva": 2287328,
+        "runtime_va": 6481632,
+        "file_offset": 2287328
+      },
+      "thread": 25272,
+      "hit": true,
+      "captured_utc": "2026-10-20T17:56:02.489953+00:00",
+      "x87_control_word": 639,
+      "fs_head_complete": true,
+      "restored_thread_count": 5,
+      "detached": true,
+      "elapsed_seconds": 15.073004500000025,
+      "memory_complete": true,
+      "selected_reads_complete": true,
+      "effect_caller_return_matches": true,
+      "slot_staff_pointer_matches": true,
+      "slot_attribute_pointer_matches": true,
+      "selected_row_stamp_matches_current_date": true,
+      "closure_complete": false,
+      "return_observed": false,
+      "lifetime_scope": "pointer equality at one paused effect-to-lookup call; no producer or ownership lifetime execution",
+      "missing": [
+        "staff attributes referent",
+        "refresh-path closure",
+        "RNG table",
+        "return and ordered effects"
+      ]
     }
   ],
   "scope": "GDI observed live entry; no original pinned runtime or return/outcome equivalence",
-  "private_preservation": "separate local archive extracted; all25 entries rehashed; no off-host backup established",
+  "private_preservation": "three separate local archives extracted and rehashed; no off-host backup established",
   "capture_time_intervals": [
     {
       "file": "r41-live-lookup-A.json",
@@ -94,13 +130,14 @@
       "mode": "fresh process",
       "referee": "Drazenko Kovacic",
       "weather": "Breezy, 9 C",
-      "state": "parked before kickoff",
-      "probes": "one 40-second pre-kickoff lookup attempt; no hit; restored and detached; game input blocked by security modal"
+      "state": "completed 3-0; separate postmatch save then native restart created child process",
+      "probes": "one UI-blocked timeout before kickoff, then one successful same-event slot lookup after prompt dismissed",
+      "result": "Newcastle 3-0 Midtjylland"
     },
     "earliest_gameplay_difference_observed": "pre-kickoff referee and weather, before debugger attached to either run",
     "earlier_cosmetic_difference": "menu/fixture backgrounds differ",
     "cause": "unknown; system time, initial RNG, media-dialogue route and process state not controlled",
-    "same_process_reload": "not performed"
+    "same_process_reload": "attempted normal Restart Game route; old PID exited and child PID launched, so no same-process comparison"
   },
   "backup": {
     "sha256": "dc24ef02dda83321b290a48c58d3b393ce65438efa54cb94301757e992fbe38f",
@@ -140,8 +177,26 @@
     "scope": "corrected tool/checker/report, full-check log, timeout result and resume note before reporting-only wrap-up"
   },
   "pending": [
-    "user dismissal of security dialog",
-    "same-event ESI slot capture",
-    "same-process reload comparison"
-  ]
+    "paired live entry/return comparison",
+    "producer/ownership lifetime validation",
+    "supported same-process reload route, if any"
+  ],
+  "restart_observation": {
+    "old_pid": 15240,
+    "old_pid_exited": true,
+    "new_pid": 24804,
+    "new_parent_pid": 15240,
+    "new_creation_utc": "2026-10-20T17:58:49.881519Z",
+    "same_process_reload": false,
+    "current_state": "setup menu; no save loaded into child",
+    "original_save_hash_unchanged": true,
+    "original_configuration_changed_file_count": 10
+  },
+  "followup_backup": {
+    "archive_sha256": "ae0dcab384cd97569e73dd9d1074a66e7c6af47d67f7dfc375529dbb7917f8de",
+    "archive_bytes": 134394431,
+    "entries": 6,
+    "restored_hashes_match": true,
+    "durability": "local separate archive/extracted restore; no off-host assurance"
+  }
 }
