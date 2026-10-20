@@ -1,0 +1,35 @@
+{
+  "schema": "reversal.ui-view-41.verification.v1",
+  "private_snapshot_sha256": "5e7eecc5b1acb1b78d671216c600f3ffe8510d97e3a30e278f116f76a624b654",
+  "source_capture_ids": [
+    "r41-ui-04-squad",
+    "r41-ui-05-player"
+  ],
+  "snapshot_kind": "captured-read-only",
+  "local_id_scope": "capture-local roster ordinal, no native IDs",
+  "transcribed_rows": 13,
+  "transcribed_attributes": 31,
+  "viewport": [
+    800,
+    600
+  ],
+  "build": "pass",
+  "snapshot_validation_rejections": 8,
+  "synthetic_browser_check": "pass",
+  "captured_browser_check": "pass",
+  "external_requests": 0,
+  "captured_renders": [
+    {
+      "id": "ui-view-41-squad",
+      "sha256": "cfab2013e2a4179b294659dfc8b0ff29e92e4a1d6d6c3af9ed9ff90c96acba60",
+      "visually_inspected": true
+    },
+    {
+      "id": "ui-view-41-profile",
+      "sha256": "eaf99ae8b264b8576ca9684d9655cfe85f92e4451a867c1e7bf9ba711e077a8f",
+      "visually_inspected": true
+    }
+  ],
+  "private_data_in_public_app": false,
+  "preservation": "transcription and renders local-only; coordinator backup pending"
+}

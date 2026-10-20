@@ -1,37 +1,53 @@
-# R41-C: journey catalogue and UI evidence boundary
+# R41-C2: observed journey and captured React reference viewer
 
-The coverage target is load → squad → player profile → tactics → fixture → match → result. This is a target, not a claim that these are direct transitions. R41-C has no game/process control. R41-A owns navigation and captures; R41-C inspects files offline.
+The actual observed route is **restore → evening fixtures → squad → player profile → Back → tactics → Cancel → squad → match confirmation → pre-kickoff → running match → result**. R41-A alone operated the disposable GDI game and recorded the actions. R41-C2 inspected the retained screenshots offline and built a bounded squad/profile reference viewer from their visible values. This establishes UI navigation/display evidence, not reconstructed game execution.
 
-The [R40 report](gdi-reference-40.md) records historical GDI load, match and result observations and [R37 readiness](reference-readiness-37.md) records a squad screen. No underlying historical screenshots are available in this worker's private inputs. Their layout, exact fields and actions therefore remain unverified here. The asset inventory establishes available backgrounds/fonts, not a screen/action contract.
+## Identity and source evidence
 
-| Stable state ID | Evidence status | Entry/navigation evidence | State/command boundary |
+The running GDI executable is SHA-256 `0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b`, distinct from the pinned research executable `0c78e7da6d0bcb4603fa179449bbe6d1b6b5e1c627a22c445d14d489bd9bff86`. The duplicated save is SHA-256 `8698569fbd83d9952a9832a95aee17a943c32f18e29621e9396ed228107abbd3`. R41-A's configuration-set digest is `fd4d4fefe5890bc26f7e67722de4efe5738cb76d53035d8953b6bc02cc3a897a`: installed files plus the VirtualStore language/configuration overlay, with the copied save-directory setting changed. That setting's file hash differs from the original installation inventory. The installation is modded; the [asset report](asset-inventory-41.md) separately identifies its update splash and resources.
+
+[The capture receipt](../evidence/ui-view-41-captures.json) records source screenshot hashes and dimensions. Files retain their original `.png` names but contain **JPEG** bytes. Captures 01/02 are 802 × 653; 03–11 are 802 × 627. The game client is approximately 800 × 600, beginning at image `(1, 27)`; extra outer whitespace is present in 01/02. Exact JPEG colors are not authenticated palette values.
+
+Raw files are private under R41-A's ignored `results/`; the public receipt contains hashes and sanitized evidence IDs only. The personal manager label is excluded from the view model. A CD prompt occurred after restore selection, followed by intervening external input; the next retained screen is loaded fixtures. Neither this catalogue nor the viewer attributes dismissal of that prompt to R41-A's click.
+
+## Screen/action catalogue
+
+Capture IDs below abbreviate the `r41-ui-` prefix. Navigation actions are R41-A's recorded observations; appearance and fields were also inspected directly in the named files. A still image alone does not prove an action effect.
+
+| Stable screen/state ID | Capture | Observed entry, visible fields and actions | Boundary and unknowns |
 | --- | --- | --- | --- |
-| `ui41.load.menu` | Historical R37 text only | Restore Saved Game was visibly available; direct R41 capture pending. | Save selection, failure modals and time effects need capture. |
-| `ui41.squad` | Historical R37 text only | Loaded manager's Newcastle squad observed historically; exact route unknown. | No roster view model, sort/filter behavior or native field mapping admitted yet. |
-| `ui41.player.profile` | Unobserved | Request: click one visible squad player and record back navigation. | Visible profile/roster identity relationship must be captured before integration. |
-| `ui41.tactics` | Unobserved | Request: follow actual squad/navigation route without changing tactics. | Tactical reads/writes, unavailable controls and game effect unknown. |
-| `ui41.fixture` | Historical R37 fixtures and R40 opponent context only | Fixture-to-match prerequisites unknown. | Time advancement and selection effects unknown. |
-| `ui41.match` | Historical R40 report only | Same duplicated save loaded in two different runs; outcomes diverged. | Commentary/score observations do not establish reconstructed engine commands. |
-| `ui41.result` | Historical R40 report only | Two different final scores recorded, no direct R41 capture yet. | Commit, continue, persistence and back behavior unknown. |
+| `ui41.load.menu` | `01-menu` | Version 3.9.68; Setup Game grid includes Restore Saved Game, Start New Game, Quick Start Game and other options. Restore opened the file picker. | Other menu actions, keyboard shortcuts and disabled-state behavior untested. |
+| `ui41.load.restore` | `02-restore` | Restore Saved Game / Select File; one duplicated save; file field, Cancel, Info, Ok. Selecting save preceded the CD prompt and fixtures. | CD dismissal has intervening external input; full load/error/persistence contract unknown. |
+| `ui41.fixture.evening` | `03-fixtures` | European Champions Cup, Evening Fixtures; Tuesday 14.10.03 EVE; group labels, team pairings and position badges. Clicking the Newcastle label opened squad. | No evidence that this is a direct route from every fixture view. Competition control and fixture sorting untested. |
+| `ui41.squad.selection` | `04-squad` | Newcastle United; active Squad tab; Selection Info; 13 visible roster rows. Clicking Giorgi Mamardashvili, second visible row, opened profile. | The scrollable roster is larger than its visible slice; no sorting/filtering/selection mutation admitted. |
+| `ui41.player.profile` | `05-player` | Same selected player name, shirt prefix, club; biography, role, 31 integer attributes in three columns, foot/form/morale/condition and a statistics table. Bottom Back returned squad. | Identity link is observed navigation, not a recovered native player ID. Other tabs/action menu, next player and statistics controls untested. |
+| `ui41.tactics.overview` | `06-tactics` | Squad bottom Tactics opened overview; named tactic `iodineCF`; Overview/With Ball/Without Ball; player list, conditions and shirt-number pitch nodes; Cancel returned squad. | No intentional formation or selection edits. Handlers, persistence and tactical engine effects unknown. |
+| `ui41.squad.returned` | `07-squad-after-tactics` | Same visible roster slice and ordering. In 04/06/07 Hall reads 95%, Botman 100%. | Captures are sequential and not atomic. No condition-change or navigation-caused update is established. |
+| `ui41.match.confirm` | `08-proceed-modal` | Continue twice from squad, with an uncaptured pre-match selection step, led to “Proceed to the match ?” with No/Yes. Yes opened pre-kickoff. | First intermediate state's exact layout and No/back behavior unobserved. Continue can invoke game logic; viewer cannot issue it. |
+| `ui41.match.prekickoff` | `09-match-before-kickoff-A` | Newcastle 0–0 Midtjylland at clock 0, Kick Off, Kick Off Match control; referee and weather; overview/statistics/zones/report tabs. | Native match initialization and supported headless commands are not established by this screen. |
+| `ui41.match.running` | `10-match-running-A` | Second Half at 71; scoreboard 0–1 and Osorio 64. Pause Match control. Commentary text names a different scoring event. | Display fields are separate observations. Commentary/score timing relationship and cause are unresolved; no outcome inferred from commentary. |
+| `ui41.result.fulltime` | `11-result-A` | Full Time at 94; Newcastle 0–1 Midtjylland; Osorio 64; attendance 51,590; referee Mohammed Al-Hakim; weather Breezy, Shower, 9°C. Continue Game available. | Later result commit, continue, persistence and return navigation unobserved. This GDI result is not a TypeScript outcome or pinned-runtime equivalence. |
 
-## Targeted capture requests
+## Components, formatting and layout
 
-R41-A was asked first for a squad screenshot and the profile of one player selected from that squad, with capture IDs, executable/data/save identities, observed resolution, exact entry route and back behavior. A second request covers the remaining journey states and one useful disabled state when safe around interception work. Raw screenshots and personal manager names remain private. No aimless full-game tour is required.
+At the observed resolution, the original has an approximately 90-pixel left navigation rail, a wide heading band, horizontal tabs and grey bottom navigation. Background photographs occupy the main pane; this integration uses CSS color panels because original assets remain private. Active tabs have yellow outlines; dark blue/purple navigation, yellow values, cyan position/rating text and orange condition text recur. Arial-like body text and larger bold headings are visible, but exact font metrics remain unresolved by the opaque FNT files. React's browser Arial and colors are approximations, not recovered typography/palette equivalence.
 
-The reusable component specification is provisional until those captures arrive:
+The squad column order is **Pkd, Inf, Name, Position, Form, Morale, Cond., Apps, Av R, Value**. Blank picked/info cells remain blank; display strings preserve punctuation, percent signs, decimal places, currency suffixes and substitute counts such as `2 (1)`. No new sort order, numeric conversion, rating ceiling, attribute units or currency calculation is inferred. The View, Clear Squad and Filter controls are visible but untested. Column-header sorting and keyboard navigation in the original are unknown.
 
-| Component | Evidence required | Current scope |
-| --- | --- | --- |
-| Navigation rail/header/back | Actual labels, active states, back history and dimensions | Unknown |
-| Squad table and player link | Visible columns, exact ordering, formatting and one click-to-profile identity | Unknown |
-| Profile header/attributes | Visible labels, units, grouping, value formatting and unavailable values | Unknown |
-| Tabs/buttons/dialogs | Enabled/disabled appearance, click/keyboard results, dismissal behavior | Unknown |
-| Tactics/fixtures/commentary | Observed fields plus mutation/time/engine dependency | Unknown |
+Profile attributes retain their observed three-column order. Seven attributes occupy the third column, followed by Preferred Foot, Form, Morale and Condition. Biography and Goalkeeper role are displayed verbatim in the private snapshot. The native statistics grid is visible but intentionally outside this bounded view model, with its omission labelled in React. Player details are historical save/mod data; they are not current real-world facts.
 
-Typography, colors, spacing, table sorting/filtering, empty states, keyboard actions, dialogs and underlying native handlers are not inferred from resource filenames. A screenshot can establish visible layout and values; action effects require recorded navigation or execution evidence.
+Reusable elements now have bounded specifications: heading/active tab, roster table with one supported profile link, three attribute columns, status text, captured-source label and Back navigation. Tactics pitch editing, fixture actions, commentary stepping, dialogs and game-state updates remain unavailable in the app. All underlying native UI field offsets, handlers and engine dependencies remain unestablished here; the prior static match-screen contracts are separate evidence.
 
-## React admission rule
+## What runs in React
 
-A useful squad/profile integration requires a captured relationship between a roster row and a profile, stable local IDs, source capture IDs and exact visible strings. It will render captured read-only snapshots as a **reference-data viewer**, load original data privately, and keep unsupported game commands unavailable. Rendering must not advance state or consume RNG. No live native game binding, save parser, original database import, tactics mutation or match outcome is established by this work.
+[The app](../apps/reference-viewer-41/README.md) loads a local JSON transcription and displays **13 captured visible roster rows → one captured player profile with 31 attributes → Back**. Stable IDs are local to the captured slice (`row01`–`row13`), not native record IDs. The profile references its roster row and both screens retain separate capture IDs, GDI/save/configuration identities and resolution. A validator rejects orphan profiles, duplicate IDs, missing provenance, unsupported fields/commands, oversized data and other resolutions.
 
-At this initial offline stage the data boundary is pending R41-A captures. The coordinator requested this bounded offline checkpoint so the runtime interception tool can receive independent review before game attachment. No squad/profile data has been manufactured and no React viewer has been admitted. Resume by inspecting the requested screenshots, transcribing visible values into a private typed snapshot, then building the bounded viewer from that captured boundary.
+Only captured values are transcribed. Public Git includes the typed schema and a clearly labelled synthetic example; the actual view model is private at the worker's ignored `results/r41-squad-profile-A.json`, identified by the [verification receipt](../evidence/ui-view-41-verification.json). The browser reads that file locally without upload, persistence or external resources. It displays CAPTURED · READ ONLY for actual data and SYNTHETIC EXAMPLE for the public fixture. File loading is a viewer action, not original-game save loading. Original screenshots, background images, font data and manager names are absent from the app/build.
+
+Profile navigation only changes React's visible screen. No simulation rule, RNG call, native game command or time advancement exists in the renderer. Controls for continue, tactics, transfers, other profiles and unsupported tabs are disabled/unavailable. Back returns the same captured roster values and order. The application cannot guarantee original-game navigation has no side effects; it is deliberately a captured-data viewer.
+
+## Validation and next boundary
+
+TypeScript compilation and production build passed with Node 24.19.0. Snapshot checks pass with eight meaningful malformed-contract rejections. Browser checks on both synthetic and private captured data passed at **800 × 600**: exact roster order/display fields, all 13 rows fitting, supported profile navigation, Back preservation, disabled game commands, malformed-file rejection and zero external requests. Both captured renders were visually inspected; they fit without truncating the roster, biography, attributes or Back control. Generated captured renders remain ignored/private. The full repository `npm run check` and `git diff --check` passed.
+
+This is a connected display/navigation result, not live game-state binding. Next work requires a native roster/profile producer or an evidenced engine command contract before connecting any state-changing action. The existing private snapshot is locally preserved only until the coordinator records durable backup; raw source captures and their configuration remain owned by R41-A.

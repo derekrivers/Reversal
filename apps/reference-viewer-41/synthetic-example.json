@@ -1,0 +1,37 @@
+{
+  "schema": "reversal.ui-reference-41.v1",
+  "kind": "synthetic-example",
+  "snapshotId": "synthetic-example-41",
+  "provenance": {
+    "executableSha256": null,
+    "configManifestSha256": null,
+    "saveSha256": null,
+    "captureIds": ["synthetic-squad", "synthetic-profile"],
+    "resolution": { "width": 800, "height": 600 }
+  },
+  "squad": {
+    "captureId": "synthetic-squad",
+    "clubLabel": "Example Club",
+    "dateLabel": "Synthetic date",
+    "rows": [
+      { "id": "example-keeper", "picked": "GK", "info": "", "name": "Example Keeper", "position": "GK", "form": "6-6-6", "morale": "Example", "condition": "90%", "apps": "2", "averageRating": "6.00", "value": "£1M" },
+      { "id": "example-defender", "picked": "DC", "info": "", "name": "Example Defender", "position": "D C", "form": "7-6-7", "morale": "Example", "condition": "95%", "apps": "1 (1)", "averageRating": "6.50", "value": "£2M" }
+    ]
+  },
+  "profile": {
+    "playerId": "example-keeper",
+    "captureId": "synthetic-profile",
+    "title": "Example Keeper (Example Club)",
+    "bio": "Synthetic demonstration values — no original game data",
+    "role": "Goalkeeper",
+    "attributeColumns": [
+      [{ "label": "Acceleration", "value": "10" }, { "label": "Agility", "value": "11" }],
+      [{ "label": "Handling", "value": "12" }, { "label": "Reflexes", "value": "13" }],
+      [{ "label": "Stamina", "value": "14" }, { "label": "Work Rate", "value": "15" }]
+    ],
+    "preferredFoot": "Example",
+    "form": "6-6-6",
+    "morale": "Example",
+    "condition": "90%"
+  }
+}
