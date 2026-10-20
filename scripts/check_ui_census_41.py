@@ -316,6 +316,13 @@ def jpeg_size(data):
 
 def check_private_display(snapshot, public):
     """Reject copied display values; tiny/generic values need their field label."""
+    # Decode JSON escapes in copied text before comparison, including Unicode,
+    # quotes and separators; the original text is still scanned below.
+    escapes = {'"': '"', '\\': '\\', '/': '/', 'b': '\b', 'f': '\f', 'n': '\n', 'r': '\r', 't': '\t'}
+    def unescape(match):
+        token = match.group(1)
+        return chr(int(token[1:], 16)) if token.startswith('u') else escapes[token]
+    public = re.sub(r'\\(u[0-9a-fA-F]{4}|["\\/bfnrt])', unescape, public)
     exact = set()
     labelled = set()
     def add(label, value, generic=False):
@@ -341,7 +348,7 @@ def check_private_display(snapshot, public):
         key, val = re.escape(label), re.escape(value)
         direct = rf'(?<!\w)["\x27]?{key}["\x27]?\s*(?::|\|)\s*["\x27]?{val}["\x27]?(?!\w)'
         prose = rf'(?<!\w){key}\s+{val}(?!\w)'
-        object_pair = rf'["\x27]label["\x27]\s*:\s*["\x27]{key}["\x27]\s*,\s*["\x27]value["\x27]\s*:\s*["\x27]?{val}["\x27]?'
+        object_pair = rf'["\x27]label["\x27]\s*:\s*["\x27]{key}["\x27]\s*,\s*["\x27]value["\x27]\s*:\s*["\x27]?{val}["\x27]?(?!\w)'
         return any(re.search(pattern, public, re.IGNORECASE) for pattern in (direct, prose, object_pair))
     require(not any(labelled_leak(label, value) for label,value in labelled), 'private captured labelled value present in public catalogue/report')
 
@@ -533,6 +540,8 @@ def main():
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
         ])
+        escaped_name = next(row['name'] for row in snapshot['squad']['rows'] if any(ord(ch) > 127 for ch in row['name']))
+        private_leaks.append(json.dumps({'name': escaped_name}))
         for field in private_leaks:
             try:
                 check_private_display(snapshot, public + '\n' + field)
@@ -540,8 +549,20 @@ def main():
                 pass
             else:
                 raise ValueError('private display leak probe accepted')
+        near_miss = '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '0"}'
+        check_private_display(snapshot, public + '\n' + near_miss)
+        synthetic = copy.deepcopy(snapshot)
+        synthetic['squad']['clubLabel'] = 'Synthetic "Club"'
+        try:
+            check_private_display(synthetic, public + '\n' + json.dumps({'clubLabel': synthetic['squad']['clubLabel']}))
+        except ValueError:
+            pass
+        else:
+            raise ValueError('JSON-escaped private display leak probe accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
+        result['private_near_miss_probes'] = 1
+        result['private_escape_probes'] = 1
     result['negative_probes'] = len(mutations) + 1 + len(report_leaks)
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     print(json.dumps(result,sort_keys=True))
