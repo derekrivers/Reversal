@@ -1,6 +1,6 @@
 {
   "schema": "reversal.ui-view-41.verification.v1",
-  "private_snapshot_sha256": "5e7eecc5b1acb1b78d671216c600f3ffe8510d97e3a30e278f116f76a624b654",
+  "private_snapshot_sha256": "0dc7e7ee26eedffa8c17f79dc143188a84921013c11c0180f25887815432e6f6",
   "source_capture_ids": [
     "r41-ui-04-squad",
     "r41-ui-05-player"
@@ -16,20 +16,45 @@
   "build": "pass",
   "snapshot_validation_rejections": 8,
   "synthetic_browser_check": "pass",
-  "captured_browser_check": "pass",
+  "captured_browser_check": "previous input passed; corrected input pending user dismissal of security modal",
   "external_requests": 0,
   "captured_renders": [
     {
       "id": "ui-view-41-squad",
       "sha256": "cfab2013e2a4179b294659dfc8b0ff29e92e4a1d6d6c3af9ed9ff90c96acba60",
-      "visually_inspected": true
+      "visually_inspected": true,
+      "input_snapshot_sha256": "5e7eecc5b1acb1b78d671216c600f3ffe8510d97e3a30e278f116f76a624b654",
+      "status": "historical render; corrected-input browser render pending"
     },
     {
       "id": "ui-view-41-profile",
       "sha256": "eaf99ae8b264b8576ca9684d9655cfe85f92e4451a867c1e7bf9ba711e077a8f",
-      "visually_inspected": true
+      "visually_inspected": true,
+      "input_snapshot_sha256": "5e7eecc5b1acb1b78d671216c600f3ffe8510d97e3a30e278f116f76a624b654",
+      "status": "historical render; corrected-input browser render pending"
     }
   ],
   "private_data_in_public_app": false,
-  "preservation": "transcription and renders local-only; coordinator backup pending"
+  "preservation": "transcription and renders local-only; coordinator backup pending",
+  "transcription_correction": {
+    "local_row_id": "row11",
+    "field": "form",
+    "previous": "7-7-7-7-7",
+    "corrected": "7-7-6-7-7",
+    "source_capture_ids": [
+      "r41-ui-04-squad",
+      "r41-ui-07-squad-after-tactics"
+    ],
+    "previous_snapshot_sha256": "5e7eecc5b1acb1b78d671216c600f3ffe8510d97e3a30e278f116f76a624b654",
+    "basis": "independent screenshot comparison; corrected source transcription and private reproduction script"
+  },
+  "corrected_offline_render": {
+    "id": "ui-view-41-squad-corrected-static",
+    "format": "HTML",
+    "sha256": "1ca1dcb467235983993ab9468637f90fd7fd25213d116777d984acf418288946",
+    "method": "React static markup from current component with corrected initial snapshot; CSS inline; no browser or listening server",
+    "corrected_form_present": true,
+    "visually_inspected": false,
+    "limitations": "does not replace a browser pixel render or interaction rerun"
+  }
 }
