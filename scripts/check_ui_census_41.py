@@ -114,8 +114,8 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'fb6c5232a5fb42d77bf83721be3e711a064de823dcf0eaf20b0ddca5985b83ee'  # Complete public report, normalized CRLF to LF.
-PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9:./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
+REVIEWED_UI_REPORT_SHA256 = '2d6a981a6241433557126815981fe9ba40ea49ae2a35adceef85123b68218a6f'  # Complete public report, normalized CRLF to LF.
+PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9:./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
     # directory name (including names ending in + or @) does not.
@@ -166,7 +166,14 @@ def render_for_privacy(source):
     source = ''.join(fenced)
     fold_ref = lambda value: unicodedata.normalize('NFC', re.sub(r'\s+', ' ', value.strip())).casefold()
     reference_pattern = r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]*)?\S+'
-    reference_line = re.compile(reference_pattern + r'[^\r\n]*')
+    # A CommonMark reference title may start on the next line and may itself
+    # span lines, but cannot contain a blank line.
+    quoted_title = r'"(?:\\[^\r\n]|[^"\\\r\n]|\r?\n(?![ \t]*\r?\n))*"'
+    single_title = r"'(?:\\[^\r\n]|[^'\\\r\n]|\r?\n(?![ \t]*\r?\n))*'"
+    parenthesized_title = r'\((?:\\[^\r\n]|[^)\\\r\n]|\r?\n(?![ \t]*\r?\n))*\)'
+    title = '(?:' + '|'.join((quoted_title, single_title, parenthesized_title)) + ')'
+    title_after_destination = r'(?:[ \t]+|[ \t]*\r?\n[ \t]*)' + title + r'[ \t]*(?=\r?$)'
+    reference_line = re.compile(reference_pattern + r'(?:' + title_after_destination + r')?[^\r\n]*')
     source_references = {fold_ref(match.group(1)) for match in reference_line.finditer(source)}
     source = reference_line.sub('', source)
     def render_inline_links(value):
@@ -196,11 +203,13 @@ def render_for_privacy(source):
         def __init__(self):
             super().__init__(convert_charrefs=True)
             self.parts = []
+            self.attribute_values = []
         def handle_starttag(self, tag, attrs):
             if tag in self.BLOCK_TAGS:
                 self.parts.append(' ')
-            if tag == 'img':
-                self.parts.extend(value for key,value in attrs if key == 'alt' and value)
+            # Public HTML attributes can expose text as tooltips, form values
+            # or accessibility labels. Scan every value conservatively.
+            self.attribute_values.extend(value for _,value in attrs if value)
         def handle_startendtag(self, tag, attrs):
             self.handle_starttag(tag, attrs)
         def handle_endtag(self, tag):
@@ -211,7 +220,8 @@ def render_for_privacy(source):
     html_view = RenderedHTML()
     html_view.feed(source)
     html_view.close()
-    rendered = render_inline_links(''.join(html_view.parts))
+    attributes = ' ' + ' '.join(html_view.attribute_values) if html_view.attribute_values else ''
+    rendered = render_inline_links(''.join(html_view.parts) + attributes)
     # HTML parsing consumes an angle-bracketed Markdown destination as a tag.
     references = source_references | {fold_ref(match.group(1)) for match in re.finditer(reference_pattern, rendered)}
     rendered = reference_line.sub('', rendered)
@@ -810,6 +820,7 @@ def main():
     else:
         raise ValueError('changed public coverage total accepted')
     report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'), b'\n\\My Documents\\capture.png', b'\n\\My capture.png', b'\n`\\UI\\capture.png`', b'\n**\\UI\\capture.png**', b'\n_\\UI\\capture.png_', b'\n__\\UI\\capture.png__', b'\n~~\\UI\\capture.png~~', b'\n__private _\\UI\\capture.png_ location__', b'\n~~private _\\UI\\capture.png_ location~~')
+    slash_root_report_leaks = (b'\n//server/share/private/capture.png', b'\n//tmp/private/capture.png')
     encoded_report_leaks = (b'\n&#47;home/operator/private/capture.png', b'\nC&#58;\\Users\\operator\\capture.png', b'\n&#92;UI&#92;capture.png')
     formatted_report_leaks = (b'\nC`:`\\Users\\operator\\private\\capture.png', b'\nC[:](https://example.invalid)\\Users\\operator\\private\\capture.png', b'\nC<code>:</code>\\Users\\operator\\private\\capture.png', b'\nC[](/x):\\Users\\operator\\private\\capture.png', b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]: target', b'\nC:[][ref one]\\Users\\operator\\private\\capture.png\n\n[ref  one]: target')
     whitespace_reference_report_leaks = (
@@ -836,7 +847,7 @@ def main():
         '\nlocation\u115f\\Users\\operator\\private\\capture.png'.encode('utf-8'),
         '\nlocation\u3164\\Users\\operator\\private\\capture.png'.encode('utf-8'),
     )
-    for leaked in report_leaks + encoded_report_leaks + formatted_report_leaks + whitespace_reference_report_leaks + next_line_reference_report_leaks + unicode_boundary_report_leaks:
+    for leaked in report_leaks + slash_root_report_leaks + encoded_report_leaks + formatted_report_leaks + whitespace_reference_report_leaks + next_line_reference_report_leaks + unicode_boundary_report_leaks:
         try:
             validate(data, assets, report_reader=lambda: report + leaked)
         except ValueError as exc:
@@ -1000,6 +1011,20 @@ def main():
             'note ```literal\n\n' + name_head + '\n```text\n' + name_tail + '\n```',
             name_head + '\n\n[ref]: /x\n\n' + name_tail,
             attribute['label'] + ':\n\n[ref]: /x\n\n' + attribute['value'],
+            name_head + '\n\n[ref]: target\n "hidden title"\n\n' + name_tail,
+            name_head + "\n\n[ref]: target\n 'hidden title'\n\n" + name_tail,
+            name_head + '\n\n[ref]: target\n (hidden title)\n\n' + name_tail,
+            name_head + '\n\n[ref]: target\n"hidden title"\n\n' + name_tail,
+            name_head + '\n\n[ref]:\n target\n "hidden title"\n\n' + name_tail,
+            name_head + '\n\n[ref]: target\n "hidden\n title"\n\n' + name_tail,
+            name_head + '\n\n[ref]: target "hidden\n title"\n\n' + name_tail,
+            attribute['label'] + ':\n\n[ref]: target\n "hidden title"\n\n' + attribute['value'],
+            attribute['label'] + ":\n\n[ref]: target\n 'hidden title'\n\n" + attribute['value'],
+            attribute['label'] + ':\n\n[ref]: target\n (hidden title)\n\n' + attribute['value'],
+            attribute['label'] + ':\n\n[ref]: target\n"hidden title"\n\n' + attribute['value'],
+            attribute['label'] + ':\n\n[ref]:\n target\n "hidden title"\n\n' + attribute['value'],
+            attribute['label'] + ':\n\n[ref]: target\n "hidden\n title"\n\n' + attribute['value'],
+            attribute['label'] + ':\n\n[ref]: target "hidden\n title"\n\n' + attribute['value'],
             attribute['label'] + ': ' + attribute['value'] + '.',
             attribute['label'] + ' ' + attribute['value'] + '.',
             '{"' + attribute['label'] + '":"' + attribute['value'] + '"}',
@@ -1032,6 +1057,11 @@ def main():
             attribute['label'] + ': ' + attribute['value'][0] + '<!-- note -->' + attribute['value'][1:],
             '<h3>' + attribute['label'] + '</h3>' + attribute['value'],
             '<section>' + attribute['label'] + '</section>' + attribute['value'],
+            '<span title="' + multiword_name + '">profile</span>',
+            '<input value="' + multiword_name + '">',
+            '<span aria-label="' + multiword_name + '">profile</span>',
+            attribute['label'] + ': <input value="' + attribute['value'] + '">',
+            '<span aria-label="' + attribute['label'] + ': ' + attribute['value'] + '">profile</span>',
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
@@ -1129,7 +1159,7 @@ def main():
         result['private_leak_probes'] = len(private_leaks)
         result['private_near_miss_probes'] = 19
         result['private_escape_probes'] = 6
-    result['negative_probes'] = len(mutations) + 17 + len(report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
+    result['negative_probes'] = len(mutations) + 17 + len(report_leaks) + len(slash_root_report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 12
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
     result['public_report_checks'] = 'LF/CRLF match; changed coverage total rejected'
