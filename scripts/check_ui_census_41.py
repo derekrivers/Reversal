@@ -116,7 +116,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'ee0ddbcbb54a9031b79a7dfa3c6f23c582f5afaae0207277092278870f730414'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '1543e8c9529dba19811f90439239226052d68728a4f7783a854ab188c8d2e267'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -212,9 +212,14 @@ def render_for_privacy(source):
             pos = cursor
         chunks.append(value[pos:])
         return ''.join(chunks)
+    autolink_pattern = re.compile(r'<([A-Za-z][A-Za-z0-9+.-]{1,31}:[^<>\s]+|[^<>\s@]+@[^<>\s@]+\.[^<>\s@]+)>')
+    autolink_targets = []
+    def capture_autolinks(value):
+        autolink_targets.extend(match.group(1) for match in autolink_pattern.finditer(value))
     # Inspect the Markdown source before HTML parsing consumes angle-bracketed
     # destinations as tags. The rendered pass below still supplies link text.
     render_inline_links(source)
+    capture_autolinks(source)
     class RenderedHTML(HTMLParser):
         BLOCK_TAGS = frozenset(('address', 'article', 'aside', 'blockquote', 'br', 'canvas', 'dd', 'details', 'dialog', 'div', 'dl', 'dt', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'legend', 'li', 'main', 'nav', 'ol', 'p', 'pre', 'section', 'summary', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'ul'))
         def __init__(self):
@@ -259,11 +264,19 @@ def render_for_privacy(source):
                 self.add_text(' ')
         def handle_data(self, data):
             self.add_text(data)
-    html_view = RenderedHTML()
-    html_view.feed(source)
-    html_view.close()
-    body_view = ''.join(html_view.parts)
-    views = [body_view] + [''.join(parts) for parts in html_view.attribute_views.values()] + [''.join(parts) for parts in html_view.paired_attribute_views.values()]
+    def html_views(value):
+        html_view = RenderedHTML()
+        html_view.feed(value)
+        html_view.close()
+        body_view = ''.join(html_view.parts)
+        return [body_view] + [''.join(parts) for parts in html_view.attribute_views.values()] + [''.join(parts) for parts in html_view.paired_attribute_views.values()]
+    views = html_views(source)
+    for body in footnote_bodies:
+        # A moved footnote can contain the same visible HTML, entities, and
+        # link metadata as the in-flow body; scan each rendered view in full.
+        render_inline_links(body)
+        capture_autolinks(body)
+        views.extend(html_views(body))
     punctuation_escape = re.compile(r'\\([' + re.escape(string.punctuation) + r'])')
     code_spans = re.compile(r'(?<!`)(?P<ticks>`+)(?!`)(?P<body>[\s\S]*?)(?<!`)(?P=ticks)(?!`)')
     markup = re.compile(r'(?P<marker>\*\*|__|~~|``|\*|_|`)(?P<body>[^\r\n]+?)(?P=marker)')
@@ -290,8 +303,8 @@ def render_for_privacy(source):
         rendered += ' ␞ ' + ' ␞ '.join(punctuation_escape.sub(r'\1', html.unescape(value)) for value in visible_titles)
     if link_destinations:
         rendered += ' ␞ ' + ' ␞ '.join(punctuation_escape.sub(r'\1', html.unescape(value)) for value in link_destinations)
-    if footnote_bodies:
-        rendered += ' ␞ ' + ' ␞ '.join(render_view(value) for value in footnote_bodies)
+    if autolink_targets:
+        rendered += ' ␞ ' + ' ␞ '.join(punctuation_escape.sub(r'\1', html.unescape(value)) for value in autolink_targets)
     return re.sub(r'\s+', ' ', rendered)
 
 
@@ -1145,6 +1158,10 @@ def main():
             'profile[^1]\n\n[^1]: ' + attribute['label'] + ': ' + attribute['value'],
             'profile[^1]\n\n' + name_head + '\n\n[^1]: note\n\n' + name_tail,
             attribute['label'] + ':\n\n[^1]: note\n\n' + attribute['value'],
+            'profile[^1]\n\n[^1]: ' + name_head + ' <em>' + name_tail + '</em>',
+            'profile[^1]\n\n[^1]: ' + attribute['label'] + ': <em>' + attribute['value'] + '</em>',
+            'profile[^1]\n\n[^1]: ' + attribute['label'] + ': ' + ''.join('&#' + str(ord(char)) + ';' for char in attribute['value']),
+            'profile[^1]\n\n[^1]: <input aria-label="' + attribute['label'] + '" value="' + attribute['value'] + '">',
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
@@ -1209,6 +1226,15 @@ def main():
             pass
         else:
             raise ValueError('JSON-escaped private display leak probe accepted')
+        autolink_snapshot = copy.deepcopy(snapshot)
+        autolink_snapshot['squad']['clubLabel'] = 'PrivateClub'
+        for autolink in ('<https://example.invalid/PrivateClub>', '<PrivateClub@example.invalid>'):
+            try:
+                check_private_display(autolink_snapshot, public + '\n' + autolink)
+            except ValueError:
+                pass
+            else:
+                raise ValueError('Markdown autolink private display leak probe accepted')
         synthetic['profile']['attributeColumns'][0][0] = {'label': 'Café', 'value': 'Élite'}
         unicode_pair = {'VALUE': unicodedata.normalize('NFD', 'Élite'), 'LABEL': unicodedata.normalize('NFD', 'Café')}
         try:
@@ -1249,7 +1275,7 @@ def main():
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
         result['private_near_miss_probes'] = 22
-        result['private_escape_probes'] = 6
+        result['private_escape_probes'] = 8
     result['negative_probes'] = len(mutations) + 17 + len(report_leaks) + len(slash_root_report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 12
     result['tracked_source_checks'] = 'LF/CRLF match; changed digest/content rejected'
