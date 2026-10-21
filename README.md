@@ -45,7 +45,7 @@ Start with [investigation 08](reports/investigation-08.md), [the current researc
 
 ## Run the checks
 
-With **Node.js 24+**:
+With **Node.js 24+** and **Python 3.12+** (`python3` on Linux/macOS, `python` on Windows; or set `PYTHON` to its executable path):
 
 ```sh
 npm run check
