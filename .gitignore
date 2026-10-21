@@ -24,6 +24,8 @@
 
 # Runtime and tooling output.
 node_modules/
+apps/ui-demo-41/dist/
+apps/ui-demo-41/test-results/
 __pycache__/
 *.pyc
 .venv/

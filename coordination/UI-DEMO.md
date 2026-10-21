@@ -12,8 +12,8 @@ Status codes: **S** retained original screenshot; **N** native action and return
 
 | Area | Representative stable IDs and journey | Evidence | Demo status |
 | --- | --- | --- | --- |
-| Core | `ui41.load.menu`, `.restore`, `.restore.selected`, `ui41.fixture.evening`, `.evening_results` | S; restore/fixture actions N in A4 | UI-D1 pending |
-| Club/person | `ui41.squad.selection` → `ui41.player.profile` → Back to Squad; Squad Back to originating fixtures/results | S/N; prior reference viewer has narrow R/B | UI-D1 pending |
+| Core | `ui41.load.menu`, `.restore`, `.restore.selected`, `ui41.fixture.evening`, `.evening_results` | S; restore/fixture actions N in A4 | UI-D1 R/B for synthetic entry and fixture/results navigation |
+| Club/person | `ui41.squad.selection` → `ui41.player.profile` → Back to Squad; Squad Back to originating fixtures/results | S/N; prior reference viewer has narrow R/B | UI-D1 R/B for all fictional fixture clubs; N only for observed native route |
 | Club modes | `ui41.club.info.*`, `.transfers.*`, `.fixtures`, `.next_match` | S; some N, 21 bottom-Back source gaps remain | UI-D2 pending |
 | Player/tactics/training | `ui41.player.*`, `.history.*`, `ui41.tactics.overview`; newer private Training views | S; selected N | UI-D2 pending |
 | Competition/match | `ui41.competition.*`, `ui41.match.*`, `ui41.result.fulltime` | S; selected N; passive match frames are sequences | UI-D3 pending |
@@ -21,7 +21,7 @@ Status codes: **S** retained original screenshot; **N** native action and return
 
 ## Current milestone
 
-**UI-D1**: fixed 800 × 600 game canvas; reusable rail, heading, tabs, tables, menu and footer; stable fictional club/player/competition fixtures; menu/restore, Evening Fixtures/Results, Squad/Profile navigation; context-preserving Back; visible unavailable operation controls; predictable start/reset. Browser checks must cover outward and return journeys, no broken destinations, and dialog dismissal. Visually compare rendered screens with private evidence. Run frontend build/type/browser checks and root `npm run check`. Open one PR, wait for completed Codex review on the final head, resolve findings, then merge before UI-D2 implementation.
+**UI-D1**: fixed 800 × 600 game canvas; reusable rail, heading, tabs, tables, menu and footer; stable fictional club/player/competition fixtures; menu/restore, Evening Fixtures/Results, Squad/Profile navigation; context-preserving Back; visible unavailable operation controls; predictable start/reset. Browser checks cover outward and return journeys, populated squads for every fixture club, and dialog dismissal. Rendered Fixtures, Squad, Profile, Setup, and Results were visually compared with private evidence. Frontend build/type/browser checks and root `npm run check` are required before PR. Wait for completed Codex review on the final head, resolve findings, then merge before UI-D2 implementation.
 
 ## Remaining uncertainty
 

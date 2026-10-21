@@ -65,6 +65,30 @@ const players: Record<string, Player> = {
   'ryan-hartnell': player('ryan-hartnell', 'Ryan Hartnell', 'S C', 13, 'English', 21, '30 January 1982', 13, '18 (9)', '7.02', '£275K'),
 };
 
+// Every club reachable from a fixture has a small, stable fictional squad.
+// The managed club above is intentionally denser for the primary Squad journey.
+const visitingPlayers: Record<string, readonly string[]> = {
+  northmere: ['Hugo Penrose', 'Ellis Trinder', 'Kian Bellamy', 'Mason Torley', 'Jude Norcott', 'Alec Winstanley'],
+  westhaven: ['Otis Harrow', 'Evan Bursley', 'Luca Seddon', 'Rory Gilling', 'Nico Hartley', 'Toby Sorrell'],
+  moorwick: ['Arlo Pritchard', 'Jonah Firth', 'Miles Tatham', 'Theo Brunton', 'Felix Corby', 'Eli Whitlow'],
+  copperdale: ['Samir Hensley', 'Isaac Crowther', 'Robin Bleakley', 'Dylan Ferrow', 'Louis Frayne', 'Benji Tatlock'],
+  thornby: ['Oscar Melton', 'Harris Brindle', 'Aidan Worsley', 'Noah Carrow', 'Finn Rawley', 'Cody Halden'],
+  seabourne: ['Emmett Vale', 'Quinn Darrow', 'Levi Morley', 'Bobby Haldane', 'Asher Kestrel', 'Jacob Nettle'],
+  eldersfield: ['Tate Greaves', 'Freddie Carlin', 'Ivo Sanderson', 'Charlie Becket', 'Cameron Varlow', 'Reuben Thistle'],
+};
+const visitingPositions = ['GK', 'D R', 'D C', 'M C', 'AM L', 'S C'];
+for (const [clubId, names] of Object.entries(visitingPlayers)) {
+  names.forEach((name, index) => {
+    const id = `${clubId}-${index + 1}`;
+    players[id] = {
+      ...player(id, name, visitingPositions[index], index + 1, 'English', 21 + index,
+        `${3 + index} June ${1982 - index}`, 20 + index, `${12 + index * 3}`, '6.90', `£${110 + index * 45}K`),
+      clubId,
+      bio: `${21 + index}-year-old English ${visitingPositions[index]} for ${clubs[clubId].name}.`,
+    };
+  });
+}
+
 const competition: Competition = {
   id: 'north-coast-cup', name: 'North Coast Cup',
   groups: [

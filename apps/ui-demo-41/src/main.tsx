@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { demoData } from './data';
 import type { Club, Fixture, Player } from './types';
@@ -26,7 +26,6 @@ function App() {
   const [notice, setNotice] = useState<Notice | null>(null);
   const view = route.view;
   const managedClub = demoData.clubs[demoData.managedClubId];
-  const players = useMemo(() => Object.values(demoData.players).filter(player => player.clubId === demoData.managedClubId), []);
 
   useEffect(() => {
     if (!window.history.state?.demo) window.history.replaceState(initialRoute, '', window.location.pathname);
@@ -76,7 +75,7 @@ function App() {
         <div className="rail-date">{demoData.dateLabel}</div>
         <div className="rail-arrows"><button onClick={() => show('Previous date')}>◀</button><button onClick={() => show('Next date')}>▶</button></div>
         <button className="rail-item" onClick={() => show('Continue Game')}>Continue<br/>Game</button>
-        <button className="rail-item manager" onClick={() => toggleMenu('manager')}>Alex<br/>Rowan</button>
+        <button className="rail-item manager" onClick={() => toggleMenu('manager')}>{managedClub.manager.split(' ')[0]}<br/>{managedClub.manager.split(' ').slice(1).join(' ')}</button>
         <button className="rail-item" onClick={() => toggleMenu('competitions')}>Competitions</button>
         <button className="rail-item" onClick={() => toggleMenu('nations')}>Nations<br/>&amp; Clubs</button>
         <button className="rail-item" onClick={() => toggleMenu('find')}>Find</button>
@@ -89,7 +88,7 @@ function App() {
         {view.kind === 'setup' && <Setup openRestore={() => go({kind:'restore',selected:false})} show={show} />}
         {view.kind === 'restore' && <Restore selected={view.selected} select={() => go({kind:'restore',selected:true},true)} proceed={() => go({kind:'fixtures',mode:'fixtures'},true)} cancel={back} show={show} />}
         {view.kind === 'fixtures' && <Fixtures mode={view.mode} clubClick={clubId => go({kind:'club',clubId,tab:'squad'})} show={show} />}
-        {club && <ClubScreen club={club} players={players} openPlayer={playerId => go({kind:'player',playerId,tab:'profile'})} show={show} />}
+        {club && <ClubScreen club={club} players={Object.values(demoData.players).filter(player => player.clubId === club.id)} openPlayer={playerId => go({kind:'player',playerId,tab:'profile'})} show={show} />}
         {player && <PlayerScreen player={player} show={show} />}
         <footer className="game-footer"><button disabled={!backEnabled} onClick={back}>Back</button><button disabled title="Navigation is not observed for this control">Next</button></footer>
       </main>
@@ -138,7 +137,7 @@ function ClubScreen({club,players,openPlayer,show}:{club:Club;players:Player[];o
 const profileTabs = ['Profile','Injuries & Bans','Contract','Transfer','History'];
 function PlayerScreen({player,show}:{player:Player;show:(label:string)=>void}) {
   const columns=[player.attributes.slice(0,12),player.attributes.slice(12,24),player.attributes.slice(24,31)];
-  return <section className="player-screen"><nav className="tabs" aria-label="Player tabs">{profileTabs.map((tab,index)=><button key={tab} className={index===0?'active':''} onClick={() => index!==0 && show(tab)}>{tab}</button>)}</nav><h2 className="player-bio">{player.bio}</h2><div className="attributes">{columns.map((column,index)=><div key={index}>{column.map(([label,value])=><div className="attribute" key={label}><span>{label}</span><strong>{value}</strong></div>)}{index===2&&[['Preferred Foot',player.preferredFoot],['Form',player.form],['Morale',player.morale],['Condition',player.condition]].map(([label,value])=><div className="attribute" key={label}><span>{label}</span><strong className="orange">{value}</strong></div>)}</div>)}</div><div className="player-stats"><div className="stat-head"><span></span>{['Apps','Con','Asts','MoM','Pass','Tck','Drb','Av R'].map(v=><span key={v}>{v}</span>)}</div>{['Non Competitive','League','Cup','Continental','International','Senior Club'].map((row,i)=><div className="stat-row" key={row}><span>{row}</span><span>{i*3+2}</span><span>{i+1}</span><span>{i===1?2:0}</span><span>0</span><span>{i?`${50+i}%`:'-'}</span><span>{i?`${(i/3).toFixed(1)}`:'-'}</span><span>0.0</span><span className="rating">{i?`${(6.4+i/10).toFixed(2)}`:'-----'}</span></div>)}</div><div className="player-role">{player.position.startsWith('GK')?'Goalkeeper':'Footballer'}</div></section>;
+  return <section className="player-screen"><nav className="tabs" aria-label="Player tabs">{profileTabs.map((tab,index)=><button key={tab} className={index===0?'active':''} onClick={() => index!==0 && show(tab)}>{tab}</button>)}</nav><h2 className="player-bio">Born {player.born} (Age {player.age}). {player.nationality}.</h2><div className="attributes">{columns.map((column,index)=><div key={index}>{column.map(([label,value])=><div className="attribute" key={label}><span>{label}</span><strong>{value}</strong></div>)}{index===2&&[['Preferred Foot',player.preferredFoot],['Form',player.form],['Morale',player.morale],['Condition',player.condition]].map(([label,value])=><div className="attribute" key={label}><span>{label}</span><strong className="orange">{value}</strong></div>)}</div>)}</div><div className="player-stats"><div className="stat-head"><span></span>{['Apps','Con','Asts','MoM','Pass','Tck','Drb','Av R'].map(v=><span key={v}>{v}</span>)}</div>{['Non Competitive','League','Cup','Continental','International','Senior Club'].map((row,i)=><div className="stat-row" key={row}><span>{row}</span><span>{i*3+2}</span><span>{i+1}</span><span>{i===1?2:0}</span><span>0</span><span>{i?`${50+i}%`:'-'}</span><span>{i?`${(i/3).toFixed(1)}`:'-'}</span><span>0.0</span><span className="rating">{i?`${(6.4+i/10).toFixed(2)}`:'-----'}</span></div>)}</div><div className="player-role">{player.position.startsWith('GK')?'Goalkeeper':'Footballer'}</div></section>;
 }
 
 createRoot(document.getElementById('root')!).render(<App />);
