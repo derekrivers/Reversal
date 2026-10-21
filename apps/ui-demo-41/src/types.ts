@@ -53,6 +53,7 @@ export interface DemoData {
   clubs: Record<string, Club>;
   players: Record<string, Player>;
   fixtures: ReadonlyArray<Fixture>;
+  leagueFixtures: ReadonlyArray<Fixture>;
   competition: Competition;
   dateLabel: string;
 }
