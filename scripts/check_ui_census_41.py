@@ -116,7 +116,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '360dd724d25237957d8eda6df8f8b0bf979ed1a60bcab14e8b30c89417bbbeae'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'd284c9b3ea1c31100b961cfb3083ff67817495190dc85be5d48d833dcc333deb'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -624,13 +624,16 @@ def check_private_display(snapshot, public):
     # can corrupt valid objects when a separate property contains quotes/braces.
     pairs = {(fold_display(label), fold_display(value)) for label,value in labelled}
     decoder = json.JSONDecoder(object_pairs_hook=unique_json_pairs)
+    def field_views(value):
+        return {fold_display(part.strip()) for part in render_for_privacy(value).split('␞') if part.strip()}
     def inspect_value(value, depth):
         require(depth < 32, 'excessively nested structured display text')
         if isinstance(value, dict):
             display_fields = {}
             for key, child in value.items():
-                folded_key = fold_display(render_for_privacy(key))
-                if folded_key in ('label', 'value'):
+                recognized = field_views(key) & {'label', 'value'}
+                require(len(recognized) <= 1, 'ambiguous rendered display key')
+                for folded_key in recognized:
                     require(folded_key not in display_fields, 'duplicate case-varied display key')
                     display_fields[folded_key] = child
             displayed = display_fields.get('value')
@@ -639,9 +642,9 @@ def check_private_display(snapshot, public):
             elif isinstance(displayed, float):
                 displayed = str(int(displayed)) if math.isfinite(displayed) and displayed.is_integer() else str(displayed)
             if isinstance(display_fields.get('label'), str) and isinstance(displayed, str):
-                rendered_label = fold_display(render_for_privacy(display_fields['label']))
-                rendered_value = fold_display(render_for_privacy(displayed))
-                require((rendered_label, rendered_value) not in pairs, 'private captured structured value present in public catalogue/report')
+                rendered_labels = field_views(display_fields['label'])
+                rendered_values = field_views(displayed)
+                require(not any((label, value) in pairs for label in rendered_labels for value in rendered_values), 'private captured structured value present in public catalogue/report')
             for child in value.values():
                 inspect_value(child, depth + 1)
         elif isinstance(value, list):
@@ -1139,6 +1142,10 @@ def main():
             '{"value":"' + attribute['value'] + '","source":"capture","label":"' + attribute['label'] + '"}',
             json.dumps({'value': attribute['value'], 'source': 'quoted "capture"', 'label': attribute['label']}),
             json.dumps({'value': attribute['value'], 'source': '{capture}', 'label': attribute['label']}),
+            json.dumps({'value': '<em class="x">' + attribute['value'] + '</em>', 'note': 'context', 'label': attribute['label']}),
+            json.dumps({'value': attribute['value'], 'note': 'context', 'label': '<em class="x">' + attribute['label'] + '</em>'}),
+            json.dumps({'value': attribute['value'], 'note': 'context', '<em class="x">label</em>': attribute['label']}),
+            json.dumps({'<em class="x">value</em>': attribute['value'], 'note': 'context', 'label': attribute['label']}),
             json.dumps({'Value': attribute['value'], 'source': 'capture', 'Label': attribute['label']}),
             json.dumps({'VALUE': attribute['value'], 'source': 'capture', 'LABEL': attribute['label']}),
             json.dumps({'value': 'unrelated', 'Value': attribute['value'], 'Label': attribute['label']}),
@@ -1182,6 +1189,8 @@ def main():
         check_private_display(snapshot, public + '\n' + name_head + '\n\n[ref]:\n\n /x\n\n' + name_tail)
         check_private_display(snapshot, public + '\n' + json.dumps({'value': attribute['value'] + '.5', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'value': '<em>' + attribute['value'][0] + '*' + attribute['value'][1:] + '</em>', 'label': attribute['label']}))
+        check_private_display(snapshot, public + '\n' + json.dumps({'value': '<em class="x">' + attribute['value'] + '.5</em>', 'label': attribute['label']}))
+        check_private_display(snapshot, public + '\n' + json.dumps({'value': '<em class="x">' + attribute['value'][0] + '*' + attribute['value'][1:] + '</em>', 'label': attribute['label']}))
         check_private_display(snapshot, public + '\n' + json.dumps({'v&#97;lues': attribute['value'], 'label': attribute['label']}))
         synthetic = copy.deepcopy(snapshot)
         synthetic['squad']['clubLabel'] = 'Synthetic "Club"'
@@ -1230,7 +1239,7 @@ def main():
             raise ValueError('Unicode case-folded private label accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 20
+        result['private_near_miss_probes'] = 22
         result['private_escape_probes'] = 6
     result['negative_probes'] = len(mutations) + 17 + len(report_leaks) + len(slash_root_report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 12
