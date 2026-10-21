@@ -115,7 +115,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '258c4f8cca9e4ab90112e36c1dee444cae47ecb955cd90abf0917035dc7dfadb'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'b643aff4cc36a1eb68b88e4d2cbe099bc678b98d2f0cef9f6ce02cf1ed229099'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -250,7 +250,8 @@ def render_for_privacy(source):
     rendered = re.sub(r'!?\[([^\]\r\n]*)\]\[([^\]]{0,999})\]', lambda match: match.group(1) if fold_ref(match.group(2) or match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_ref(match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'\\[ \t]*\r?\n', ' ', rendered)
-    rendered = re.sub(r'\\([' + re.escape(string.punctuation) + r'])', r'\1', rendered)
+    punctuation_escape = re.compile(r'\\([' + re.escape(string.punctuation) + r'])')
+    rendered = punctuation_escape.sub(r'\1', rendered)
     code_spans = re.compile(r'(?<!`)(?P<ticks>`+)(?!`)(?P<body>[\s\S]*?)(?<!`)(?P=ticks)(?!`)')
     rendered = code_spans.sub(lambda match: re.sub(r'\s+', ' ', match.group('body')), rendered)
     markup = re.compile(r'(?P<marker>\*\*|__|~~|``|\*|_|`)(?P<body>[^\r\n]+?)(?P=marker)')
@@ -260,7 +261,7 @@ def render_for_privacy(source):
         if rendered == previous:
             break
     if visible_titles:
-        rendered += ' ' + ' '.join(html.unescape(value) for value in visible_titles)
+        rendered += ' ' + ' '.join(punctuation_escape.sub(r'\1', html.unescape(value)) for value in visible_titles)
     return re.sub(r'\s+', ' ', rendered)
 
 
@@ -1099,6 +1100,10 @@ def main():
             '[profile][ref]\n\n[ref]: /x "' + attribute['label'] + ': ' + attribute['value'] + '"',
             '[profile](/x "' + multiword_name + '")',
             '[profile](/x "' + attribute['label'] + ': ' + attribute['value'] + '")',
+            '[profile][ref]\n\n[ref]: /x "' + attribute['label'] + '\\: ' + attribute['value'] + '"',
+            '[profile](/x "' + attribute['label'] + '\\: ' + attribute['value'] + '")',
+            '[profile][ref]\n\n[ref]: /x "' + attribute['label'] + ' \\| ' + attribute['value'] + '"',
+            '[profile](/x "' + attribute['label'] + ' \\| ' + attribute['value'] + '")',
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
