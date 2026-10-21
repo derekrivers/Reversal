@@ -115,8 +115,8 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'd0d62f0d7b8f348ef7f4634db3b39f5686af4ee5be3738939e5b0518c2ef6236'  # Complete public report, normalized CRLF to LF.
-PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
+REVIEWED_UI_REPORT_SHA256 = 'f46ee45bd916a3afba15937b96553ae2288ea25723eae6be057d7611481cf67d'  # Complete public report, normalized CRLF to LF.
+PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9_])[A-Za-z][A-Za-z0-9_]*_[A-Za-z0-9_]*://[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
     # directory name (including names ending in + or @) does not.
@@ -780,7 +780,7 @@ def main():
     else:
         raise ValueError('changed public coverage total accepted')
     report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'), b'\n\\My Documents\\capture.png', b'\n\\My capture.png', b'\n`\\UI\\capture.png`', b'\n**\\UI\\capture.png**', b'\n_\\UI\\capture.png_', b'\n__\\UI\\capture.png__', b'\n~~\\UI\\capture.png~~', b'\n__private _\\UI\\capture.png_ location__', b'\n~~private _\\UI\\capture.png_ location~~')
-    slash_root_report_leaks = (b'\n//server/share/private/capture.png', b'\n//tmp/private/capture.png', b'\nlocation:/home/operator/private/capture.png')
+    slash_root_report_leaks = (b'\n//server/share/private/capture.png', b'\n//tmp/private/capture.png', b'\nlocation:/home/operator/private/capture.png', b'\ncapture_path://server/share/private/capture.png')
     encoded_report_leaks = (b'\n&#47;home/operator/private/capture.png', b'\nC&#58;\\Users\\operator\\capture.png', b'\n&#92;UI&#92;capture.png')
     formatted_report_leaks = (b'\nC`:`\\Users\\operator\\private\\capture.png', b'\nC[:](https://example.invalid)\\Users\\operator\\private\\capture.png', b'\nC<code>:</code>\\Users\\operator\\private\\capture.png', b'\nC[](/x):\\Users\\operator\\private\\capture.png', b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]: target', b'\nC:[][ref one]\\Users\\operator\\private\\capture.png\n\n[ref  one]: target')
     whitespace_reference_report_leaks = (
