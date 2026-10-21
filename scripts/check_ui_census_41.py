@@ -9,6 +9,7 @@ import copy
 import hashlib
 import html
 from html.parser import HTMLParser
+from itertools import combinations
 import json
 import math
 import re
@@ -115,7 +116,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'b643aff4cc36a1eb68b88e4d2cbe099bc678b98d2f0cef9f6ce02cf1ed229099'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'a144b86e680a094e21ffbf3d909f5f3e6c5b74fdb187d57412dfe03df37bdb49'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -210,9 +211,12 @@ def render_for_privacy(source):
             super().__init__(convert_charrefs=True)
             self.parts = []
             self.attribute_views = {}
+            self.paired_attribute_views = {}
         def add_text(self, value):
             self.parts.append(value)
             for parts in self.attribute_views.values():
+                parts.append(value)
+            for parts in self.paired_attribute_views.values():
                 parts.append(value)
         def handle_starttag(self, tag, attrs):
             if tag in self.BLOCK_TAGS:
@@ -227,10 +231,17 @@ def render_for_privacy(source):
             for key in values:
                 if key not in self.attribute_views:
                     self.attribute_views[key] = self.parts.copy()
+            for pair in combinations(sorted(values), 2):
+                if pair not in self.paired_attribute_views:
+                    self.paired_attribute_views[pair] = self.parts.copy()
             for key,parts in self.attribute_views.items():
                 value = ''.join(values.get(key, ()))
                 if value:
                     parts.append(value if key == 'alt' else ' ' + value + ' ')
+            for pair,parts in self.paired_attribute_views.items():
+                selected = [''.join(values[key]) for key in pair if key in values]
+                if selected:
+                    parts.append(' ' + ' '.join(selected) + ' ')
         def handle_startendtag(self, tag, attrs):
             self.handle_starttag(tag, attrs)
         def handle_endtag(self, tag):
@@ -242,7 +253,7 @@ def render_for_privacy(source):
     html_view.feed(source)
     html_view.close()
     body_view = ''.join(html_view.parts)
-    views = [body_view] + [''.join(parts) for parts in html_view.attribute_views.values()]
+    views = [body_view] + [''.join(parts) for parts in html_view.attribute_views.values()] + [''.join(parts) for parts in html_view.paired_attribute_views.values()]
     rendered = render_inline_links(' '.join(dict.fromkeys(views)))
     # HTML parsing consumes an angle-bracketed Markdown destination as a tag.
     references = source_references | {fold_ref(match.group(1)) for match in re.finditer(reference_pattern, rendered)}
@@ -1096,6 +1107,8 @@ def main():
             name_head + '<img src="portrait.png" alt=" ' + name_tail + '"> trailing text',
             name_head + ' ' + name_tail[:2] + '<img alt="' + name_tail[2:] + '"> trailing text',
             attribute['label'] + ': <input type="text" value="' + attribute['value'] + '"> trailing text',
+            '<input aria-label="' + attribute['label'] + '" value="' + attribute['value'] + '"> trailing text',
+            '<input type="text" aria-label="' + attribute['label'] + ':" value="' + attribute['value'] + '"> trailing text',
             '[profile][ref]\n\n[ref]: /x "' + multiword_name + '"',
             '[profile][ref]\n\n[ref]: /x "' + attribute['label'] + ': ' + attribute['value'] + '"',
             '[profile](/x "' + multiword_name + '")',
