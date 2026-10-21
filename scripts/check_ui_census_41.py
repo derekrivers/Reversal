@@ -116,7 +116,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'a144b86e680a094e21ffbf3d909f5f3e6c5b74fdb187d57412dfe03df37bdb49'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'c61ab4a03222f0dacd3ebc8cce18dfc01ab6305a8812ecd37ddc917fc16a9b09'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -167,7 +167,7 @@ def render_for_privacy(source):
         fenced.append(line)
     source = ''.join(fenced)
     fold_ref = lambda value: unicodedata.normalize('NFC', re.sub(r'\s+', ' ', value.strip())).casefold()
-    reference_pattern = r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]*)?(?:<[^>\r\n]*>|\S+)'
+    reference_pattern = r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]*)?(?P<destination><[^>\r\n]*>|\S+)'
     # A CommonMark reference title may start on the next line and may itself
     # span lines, but cannot contain a blank line.
     quoted_title = r'"(?:\\[^\r\n]|[^"\\\r\n]|\r?\n(?![ \t]*\r?\n))*"'
@@ -179,6 +179,7 @@ def render_for_privacy(source):
     reference_matches = list(reference_line.finditer(source))
     source_references = {fold_ref(match.group(1)) for match in reference_matches}
     visible_titles = [match.group('title') for match in reference_matches if match.group('title')]
+    link_destinations = [match.group('destination') for match in reference_matches]
     source = reference_line.sub('', source)
     def render_inline_links(value):
         opener = re.compile(r'!?\[([^\]\r\n]*)\]\(')
@@ -201,10 +202,14 @@ def render_for_privacy(source):
             inline_title = re.search(r'[ \t]+(' + title + r')[ \t]*$', value[match.end():cursor-1])
             if inline_title:
                 visible_titles.append(inline_title.group(1))
+            link_destinations.append(value[match.end():cursor-1])
             chunks.extend((value[pos:match.start()], match.group(1)))
             pos = cursor
         chunks.append(value[pos:])
         return ''.join(chunks)
+    # Inspect the Markdown source before HTML parsing consumes angle-bracketed
+    # destinations as tags. The rendered pass below still supplies link text.
+    render_inline_links(source)
     class RenderedHTML(HTMLParser):
         BLOCK_TAGS = frozenset(('address', 'article', 'aside', 'blockquote', 'br', 'canvas', 'dd', 'details', 'dialog', 'div', 'dl', 'dt', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'legend', 'li', 'main', 'nav', 'ol', 'p', 'pre', 'section', 'summary', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'ul'))
         def __init__(self):
@@ -254,25 +259,32 @@ def render_for_privacy(source):
     html_view.close()
     body_view = ''.join(html_view.parts)
     views = [body_view] + [''.join(parts) for parts in html_view.attribute_views.values()] + [''.join(parts) for parts in html_view.paired_attribute_views.values()]
-    rendered = render_inline_links(' '.join(dict.fromkeys(views)))
-    # HTML parsing consumes an angle-bracketed Markdown destination as a tag.
-    references = source_references | {fold_ref(match.group(1)) for match in re.finditer(reference_pattern, rendered)}
-    rendered = reference_line.sub('', rendered)
-    rendered = re.sub(r'!?\[([^\]\r\n]*)\]\[([^\]]{0,999})\]', lambda match: match.group(1) if fold_ref(match.group(2) or match.group(1)) in references else match.group(0), rendered)
-    rendered = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_ref(match.group(1)) in references else match.group(0), rendered)
-    rendered = re.sub(r'\\[ \t]*\r?\n', ' ', rendered)
     punctuation_escape = re.compile(r'\\([' + re.escape(string.punctuation) + r'])')
-    rendered = punctuation_escape.sub(r'\1', rendered)
     code_spans = re.compile(r'(?<!`)(?P<ticks>`+)(?!`)(?P<body>[\s\S]*?)(?<!`)(?P=ticks)(?!`)')
-    rendered = code_spans.sub(lambda match: re.sub(r'\s+', ' ', match.group('body')), rendered)
     markup = re.compile(r'(?P<marker>\*\*|__|~~|``|\*|_|`)(?P<body>[^\r\n]+?)(?P=marker)')
-    while True:
-        previous = rendered
-        rendered = markup.sub(lambda match: match.group('body'), rendered)
-        if rendered == previous:
-            break
+    def render_view(value):
+        rendered = render_inline_links(value)
+        # HTML parsing consumes an angle-bracketed Markdown destination as a tag.
+        references = source_references | {fold_ref(match.group(1)) for match in re.finditer(reference_pattern, rendered)}
+        rendered = reference_line.sub('', rendered)
+        rendered = re.sub(r'!?\[([^\]\r\n]*)\]\[([^\]]{0,999})\]', lambda match: match.group(1) if fold_ref(match.group(2) or match.group(1)) in references else match.group(0), rendered)
+        rendered = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_ref(match.group(1)) in references else match.group(0), rendered)
+        rendered = re.sub(r'\\[ \t]*\r?\n', ' ', rendered)
+        rendered = punctuation_escape.sub(r'\1', rendered)
+        rendered = code_spans.sub(lambda match: re.sub(r'\s+', ' ', match.group('body')), rendered)
+        while True:
+            previous = rendered
+            rendered = markup.sub(lambda match: match.group('body'), rendered)
+            if rendered == previous:
+                break
+        return re.sub(r'\s+', ' ', rendered).strip()
+    # A non-whitespace separator prevents tokens and markup from pairing across
+    # independent body/attribute views.
+    rendered = ' ␞ '.join(render_view(value) for value in dict.fromkeys(views))
     if visible_titles:
-        rendered += ' ' + ' '.join(punctuation_escape.sub(r'\1', html.unescape(value)) for value in visible_titles)
+        rendered += ' ␞ ' + ' ␞ '.join(punctuation_escape.sub(r'\1', html.unescape(value)) for value in visible_titles)
+    if link_destinations:
+        rendered += ' ␞ ' + ' ␞ '.join(punctuation_escape.sub(r'\1', html.unescape(value)) for value in link_destinations)
     return re.sub(r'\s+', ' ', rendered)
 
 
@@ -1117,6 +1129,8 @@ def main():
             '[profile](/x "' + attribute['label'] + '\\: ' + attribute['value'] + '")',
             '[profile][ref]\n\n[ref]: /x "' + attribute['label'] + ' \\| ' + attribute['value'] + '"',
             '[profile](/x "' + attribute['label'] + ' \\| ' + attribute['value'] + '")',
+            '[profile][ref]\n\n[ref]: <https://example.invalid/' + snapshot['squad']['clubLabel'] + '>',
+            '[profile](<https://example.invalid/' + snapshot['squad']['clubLabel'] + '>)',
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
@@ -1150,6 +1164,8 @@ def main():
         require(len(attribute['value']) >= 2, 'private expression near-miss fixture too short')
         expression_near_miss = attribute['label'] + ': `' + attribute['value'][0] + '*' + attribute['value'][1:] + '`'
         check_private_display(snapshot, public + '\n' + expression_near_miss)
+        paired_attribute_near_miss = '<input type="text" aria-label="' + attribute['label'] + '" value="' + attribute['value'][0] + '*' + attribute['value'][1:] + '"> trailing text'
+        check_private_display(snapshot, public + '\n' + paired_attribute_near_miss)
         check_private_display(snapshot, public + '\n' + name_head + '[][other]' + name_tail + '\n\n[ref one]: target')
         check_private_display(snapshot, public + '\n' + name_head + '[][ref]' + name_tail + '\n\n[ref]:\n\n target')
         check_private_display(snapshot, public + '\n' + name_head + ' ````' + name_tail + '\n```')
@@ -1212,7 +1228,7 @@ def main():
             raise ValueError('Unicode case-folded private label accepted')
         result['private_token_checks'] = 'pass'
         result['private_leak_probes'] = len(private_leaks)
-        result['private_near_miss_probes'] = 19
+        result['private_near_miss_probes'] = 20
         result['private_escape_probes'] = 6
     result['negative_probes'] = len(mutations) + 17 + len(report_leaks) + len(slash_root_report_leaks) + len(encoded_report_leaks) + len(formatted_report_leaks) + len(whitespace_reference_report_leaks) + len(next_line_reference_report_leaks) + len(unicode_boundary_report_leaks)
     result['public_path_near_miss_probes'] = 12
