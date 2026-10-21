@@ -409,7 +409,7 @@ REVIEWED_STATE_IDS = frozenset({
 REVIEWED_ROUTE_SHA256 = '7389b0c08522e9821943a2b96e427d3ff61f4b415ddeaabac02065f612b80292'
 REVIEWED_STATE_CLAIMS_SHA256 = '23e4d59e560b81b9935a44915fb191872d9ed0a64fe90129d3e87cc07dad590f'
 REVIEWED_UNKNOWN_SECTIONS_SHA256 = 'ef594ff35e5a3add0543db42260213d285774a5c5878cbe319963b37dcc93f6a'
-REVIEWED_BATCH_SECTION_SHA256 = {'contexts': 'c732d0015cb29c35ab2ddbe83adc056e63689d2abd4fc8097ac1c0af19a22778', 'evidence': 'f201101d5e3ab07ea7ec5390dc49984bc129332c3c393bcc2ab944b5e1506dd1', 'layouts': 'c7446b5dd96c2c875c7c822b5cdc82b859cc3802432d0bc133db540b90a34f8f', 'transitions': 'b6f6cbea16d5c4331a31af6fad5af47461f301dae8ec296248b52878279a8d7c', 'capture_requests': 'e66a0a8927570584b2ec2d2f90a70c5beb78611356bdc5d38db2e7d31456a8dc'}
+REVIEWED_BATCH_SECTION_SHA256 = {'contexts': 'c732d0015cb29c35ab2ddbe83adc056e63689d2abd4fc8097ac1c0af19a22778', 'evidence': 'f201101d5e3ab07ea7ec5390dc49984bc129332c3c393bcc2ab944b5e1506dd1', 'layouts': 'c7446b5dd96c2c875c7c822b5cdc82b859cc3802432d0bc133db540b90a34f8f', 'transitions': 'b6f6cbea16d5c4331a31af6fad5af47461f301dae8ec296248b52878279a8d7c', 'capture_requests': 'e3968195489832af60556ab4ad25a3d6db0aedf2538c7df7ed4ed7d2175d654a'}
 REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5eaf0a0d1560300fa7a'
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = 'e0aec5864e94c5b764081c7214f436727eb7ed51e88bed6b50b4f9248e5e831c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
@@ -432,7 +432,7 @@ REVIEWED_ROOT_FIELDS = frozenset({
     'capture_protocol',
     'batch_delta',
 })
-REVIEWED_UI_REPORT_SHA256 = '04c569fe4d106fef382127ca31ad7316b17b0fd45db772f4dbc7c2ec3aef2c13'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = 'a373423c2e3613f616ec5881f926a85a5df1cd0b9a805af8bb9d3580411317e7'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9_])[A-Za-z][A-Za-z0-9_]*_[A-Za-z0-9_]*://[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative

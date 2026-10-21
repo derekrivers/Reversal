@@ -10487,7 +10487,7 @@
         "route.fixture.evening_results.nations",
         "route.fixture.evening_results.manager"
       ],
-      "procedure": "Start parked post-match Evening Results. Use its Find, Nations & Clubs and manager menu controls only for the three Results-source route IDs. For Training first click the managed club label to Squad, then open Training. Capture each actual source/action/default/menu and Back. Earlier Evening Fixtures-source routes remain unexercised and cannot close from Results. Red News indicator is a separate hit-test unknown. Record unread effects; no sends, accepts, edits or Continue Game.",
+      "procedure": "Future prerequisite: reach the declared entry and route-source states through separately evidenced steps; no current parked process is assumed. This request itself establishes no route coverage. Once post-match Evening Results is available, Use its Find, Nations & Clubs and manager menu controls only for the three Results-source route IDs. For Training first click the managed club label to Squad, then open Training. Capture each actual source/action/default/menu and Back. Earlier Evening Fixtures-source routes remain unexercised and cannot close from Results. Red News indicator is a separate hit-test unknown. Record unread effects; no sends, accepts, edits or Continue Game.",
       "entry_state_id": "ui41.fixture.evening_results",
       "source_state_ids": [
         "ui41.fixture.evening_results",
@@ -10506,7 +10506,7 @@
         "route.competition.stages.view",
         "route.competition.stages.stage"
       ],
-      "procedure": "Evening Results to Competition to Stages, then listed defaults/menus; observe direct returns. Do not invoke dim Print or advance world time. Other group selections are finite variants, not new screens by default.",
+      "procedure": "Future prerequisite: reach the declared entry and route-source states through separately evidenced steps; no current parked process is assumed. This request itself establishes no route coverage. Evening Results to Competition to Stages, then listed defaults/menus; observe direct returns. Do not invoke dim Print or advance world time. Other group selections are finite variants, not new screens by default.",
       "entry_state_id": "ui41.fixture.evening_results",
       "source_state_ids": [
         "ui41.competition.stages"
@@ -10525,7 +10525,7 @@
         "route.squad.selection.league",
         "route.squad.selection.history"
       ],
-      "procedure": "Start Evening Results, click managed club label to Squad; click captured player row to Profile when needed. Exercise each listed control only at its route source. Half-time match tabs do not cover pre-kickoff sources. Do not Clear Squad, cancel a fixture, edit tactics or issue offers.",
+      "procedure": "Future prerequisite: reach the declared entry and route-source states through separately evidenced steps; no current parked process is assumed. This request itself establishes no route coverage. Once Evening Results is available, click managed club label to Squad; click captured player row to Profile when needed. Exercise each listed control only at its route source. Half-time match tabs do not cover pre-kickoff sources. Do not Clear Squad, cancel a fixture, edit tactics or issue offers.",
       "entry_state_id": "ui41.fixture.evening_results",
       "source_state_ids": [
         "ui41.player.profile",
@@ -10559,7 +10559,7 @@
         "route.competition.results.back",
         "route.competition.fixtures.back"
       ],
-      "procedure": "Exercise one visible bottom Back source at a time, retain before/after and actual target. Profile tab returns are not Back. Do not extrapolate across finance/transfer/history/competition modes.",
+      "procedure": "Future prerequisite: reach the declared entry and route-source states through separately evidenced steps; no current parked process is assumed. This request itself establishes no route coverage. Exercise one visible bottom Back source at a time, retain before/after and actual target. Profile tab returns are not Back. Do not extrapolate across finance/transfer/history/competition modes.",
       "entry_state_id": "ui41.fixture.evening_results",
       "source_state_ids": [
         "ui41.club.fixtures",
