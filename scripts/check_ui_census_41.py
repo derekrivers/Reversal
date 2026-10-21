@@ -114,7 +114,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '2d6a981a6241433557126815981fe9ba40ea49ae2a35adceef85123b68218a6f'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '48fc6512b7aa23e000b93b96226d22163228ce1de5770c20595ba8b1948be0c8'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9:./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -165,7 +165,7 @@ def render_for_privacy(source):
         fenced.append(line)
     source = ''.join(fenced)
     fold_ref = lambda value: unicodedata.normalize('NFC', re.sub(r'\s+', ' ', value.strip())).casefold()
-    reference_pattern = r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]*)?\S+'
+    reference_pattern = r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]*)?(?:<[^>\r\n]*>|\S+)'
     # A CommonMark reference title may start on the next line and may itself
     # span lines, but cannot contain a blank line.
     quoted_title = r'"(?:\\[^\r\n]|[^"\\\r\n]|\r?\n(?![ \t]*\r?\n))*"'
@@ -203,25 +203,29 @@ def render_for_privacy(source):
         def __init__(self):
             super().__init__(convert_charrefs=True)
             self.parts = []
-            self.attribute_values = []
+            self.inline_parts = []
         def handle_starttag(self, tag, attrs):
             if tag in self.BLOCK_TAGS:
                 self.parts.append(' ')
+                self.inline_parts.append(' ')
             # Public HTML attributes can expose text as tooltips, form values
-            # or accessibility labels. Scan every value conservatively.
-            self.attribute_values.extend(value for _,value in attrs if value)
+            # or accessibility labels. Preserve both body-only and local order.
+            self.inline_parts.extend(' ' + value + ' ' for _,value in attrs if value)
         def handle_startendtag(self, tag, attrs):
             self.handle_starttag(tag, attrs)
         def handle_endtag(self, tag):
             if tag in self.BLOCK_TAGS:
                 self.parts.append(' ')
+                self.inline_parts.append(' ')
         def handle_data(self, data):
             self.parts.append(data)
+            self.inline_parts.append(data)
     html_view = RenderedHTML()
     html_view.feed(source)
     html_view.close()
-    attributes = ' ' + ' '.join(html_view.attribute_values) if html_view.attribute_values else ''
-    rendered = render_inline_links(''.join(html_view.parts) + attributes)
+    body_view = ''.join(html_view.parts)
+    inline_view = ''.join(html_view.inline_parts)
+    rendered = render_inline_links(body_view + (' ' + inline_view if inline_view != body_view else ''))
     # HTML parsing consumes an angle-bracketed Markdown destination as a tag.
     references = source_references | {fold_ref(match.group(1)) for match in re.finditer(reference_pattern, rendered)}
     rendered = reference_line.sub('', rendered)
@@ -1018,6 +1022,7 @@ def main():
             name_head + '\n\n[ref]:\n target\n "hidden title"\n\n' + name_tail,
             name_head + '\n\n[ref]: target\n "hidden\n title"\n\n' + name_tail,
             name_head + '\n\n[ref]: target "hidden\n title"\n\n' + name_tail,
+            name_head + '\n\n[ref]: <target space>\n "hidden title"\n\n' + name_tail,
             attribute['label'] + ':\n\n[ref]: target\n "hidden title"\n\n' + attribute['value'],
             attribute['label'] + ":\n\n[ref]: target\n 'hidden title'\n\n" + attribute['value'],
             attribute['label'] + ':\n\n[ref]: target\n (hidden title)\n\n' + attribute['value'],
@@ -1025,6 +1030,7 @@ def main():
             attribute['label'] + ':\n\n[ref]:\n target\n "hidden title"\n\n' + attribute['value'],
             attribute['label'] + ':\n\n[ref]: target\n "hidden\n title"\n\n' + attribute['value'],
             attribute['label'] + ':\n\n[ref]: target "hidden\n title"\n\n' + attribute['value'],
+            attribute['label'] + ':\n\n[ref]: <target space>\n "hidden title"\n\n' + attribute['value'],
             attribute['label'] + ': ' + attribute['value'] + '.',
             attribute['label'] + ' ' + attribute['value'] + '.',
             '{"' + attribute['label'] + '":"' + attribute['value'] + '"}',
@@ -1062,6 +1068,8 @@ def main():
             '<span aria-label="' + multiword_name + '">profile</span>',
             attribute['label'] + ': <input value="' + attribute['value'] + '">',
             '<span aria-label="' + attribute['label'] + ': ' + attribute['value'] + '">profile</span>',
+            name_head + '<img alt=" ' + name_tail + '"> trailing text',
+            attribute['label'] + ': <input value="' + attribute['value'] + '"> trailing text',
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
