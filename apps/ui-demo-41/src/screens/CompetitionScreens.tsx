@@ -11,6 +11,7 @@ interface CompetitionScreensProps {
   kind: CompetitionKind;
   mode: CompetitionMode;
   selectedGroup: string;
+  clubId: string;
   onMode: (mode: CompetitionMode) => void;
   onGroup: (groupId: string) => void;
   onClub: (clubId: string) => void;
@@ -96,11 +97,11 @@ function StageMatches({fixtures, onClub}: {fixtures: readonly Fixture[]; onClub:
   </div>;
 }
 
-function MatchDay({fixtures, kind, mode, onClub}: {fixtures: readonly Fixture[]; kind: CompetitionKind; mode: 'results' | 'fixtures'; onClub: (clubId: string) => void}) {
+function MatchDay({fixtures, standingsFixtures, leagueClubIds, kind, mode, onClub}: {fixtures: readonly Fixture[]; standingsFixtures: readonly Fixture[]; leagueClubIds: readonly string[]; kind: CompetitionKind; mode: 'results' | 'fixtures'; onClub: (clubId: string) => void}) {
   const date = fixtures[0]?.date;
   const groups = kind === 'cup' ? demoData.competition.groups : [{id: 'division', name: '', clubIds: []}];
   const allPositions = new Map<string, number>();
-  groups.forEach(group => standings(group.clubIds.length ? group.clubIds : Object.values(demoData.clubs).filter(item => item.division === demoData.clubs[demoData.managedClubId].division).map(item => item.id), kind === 'cup' ? allFixtures : leagueFixtures).forEach((row, index) => allPositions.set(row.clubId, index + 1)));
+  groups.forEach(group => standings(group.clubIds.length ? group.clubIds : leagueClubIds, standingsFixtures).forEach((row, index) => allPositions.set(row.clubId, index + 1)));
   const rank = (id: string) => { const n = allPositions.get(id); return n ? `${n}${n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th'}` : '—'; };
   return <div className="uicom-day">
     <h2>{date ? dateParts(date).long : mode === 'results' ? 'Results' : 'Fixtures'}</h2>
@@ -129,19 +130,20 @@ function Schedule({fixtures, kind}: {fixtures: readonly Fixture[]; kind: Competi
   </div>)}</div>;
 }
 
-export function CompetitionScreens({kind, mode, selectedGroup, onMode, onGroup, onClub, show}: CompetitionScreensProps) {
+export function CompetitionScreens({kind, mode, selectedGroup, clubId, onMode, onGroup, onClub, show}: CompetitionScreensProps) {
   const [groupMenuOpen, setGroupMenuOpen] = useState(false);
   usePopupDismiss(groupMenuOpen, () => setGroupMenuOpen(false), '.uicom-group-wrap');
   const group = demoData.competition.groups.find(item => item.id === selectedGroup) ?? demoData.competition.groups[0];
-  const leagueClubIds = Object.values(demoData.clubs).filter(item => item.division === demoData.clubs[demoData.managedClubId].division).map(item => item.id);
-  const sourceFixtures = kind === 'cup' ? allFixtures : leagueFixtures;
+  const division = demoData.clubs[clubId].division;
+  const leagueClubIds = Object.values(demoData.clubs).filter(item => item.division === division).map(item => item.id);
+  const sourceFixtures = kind === 'cup' ? allFixtures : leagueFixtures.filter(item => leagueClubIds.includes(item.homeClubId) && leagueClubIds.includes(item.awayClubId));
   const activeMode = kind === 'cup' && mode === 'table' ? 'stages' : kind === 'league' && mode === 'stages' ? 'table' : mode;
   const modes: CompetitionMode[] = kind === 'cup' ? ['stages', 'results', 'fixtures', 'schedule'] : ['table', 'results', 'fixtures', 'schedule'];
   const filteredFixtures = sourceFixtures.filter(item => activeMode === 'results' ? complete(item) : !complete(item));
   const selectedDate = activeMode === 'results' ? filteredFixtures.at(-1)?.date : filteredFixtures[0]?.date;
   const dayFixtures = filteredFixtures.filter(item => item.date === selectedDate);
   const isTable = activeMode === 'stages' || activeMode === 'table';
-  return <section className={`uicom-screen uicom-${kind}`} aria-label={kind === 'cup' ? demoData.competition.name : demoData.clubs[demoData.managedClubId].division}>
+  return <section className={`uicom-screen uicom-${kind}`} aria-label={kind === 'cup' ? demoData.competition.name : division}>
     <nav className="uicom-tabs" aria-label={kind === 'cup' ? 'Cup views' : 'League views'}>{modes.map(item => <button key={item} className={activeMode === item ? 'uicom-active' : ''} aria-current={activeMode === item ? 'page' : undefined} onClick={() => { setGroupMenuOpen(false); onMode(item); }}>{item[0].toUpperCase() + item.slice(1)}</button>)}</nav>
     {isTable ? <>
       <div className="uicom-toolbar">
@@ -159,7 +161,7 @@ export function CompetitionScreens({kind, mode, selectedGroup, onMode, onGroup, 
       </div>
     </> : activeMode === 'schedule' ? <Schedule fixtures={sourceFixtures} kind={kind}/> : <>
       <div className="uicom-toolbar uicom-date-tools"><button className="uicom-tool" onClick={() => show('Previous date')}>&lt;&lt; Date</button><button className="uicom-tool" onClick={() => show('Next date')}>Date &gt;&gt;</button></div>
-      <MatchDay fixtures={dayFixtures} kind={kind} mode={activeMode as 'results' | 'fixtures'} onClub={onClub}/>
+      <MatchDay fixtures={dayFixtures} standingsFixtures={sourceFixtures} leagueClubIds={leagueClubIds} kind={kind} mode={activeMode as 'results' | 'fixtures'} onClub={onClub}/>
     </>}
     <div className="uicom-bottom-strip">{(kind === 'cup' ? ['Seedings', 'Team Stats', 'Player Stats', 'History'] : ['Team Stats', 'Player Stats', 'Referee Stats', 'Awards', 'History']).map(label => <button key={label} onClick={() => show(label)}>{label}{label === 'History' || label === 'Awards' ? '  ▸' : ''}</button>)}</div>
   </section>;

@@ -113,6 +113,10 @@ const leagueFixtures: ReadonlyArray<Fixture> = [
   { id: 'lg-2003-07-05-2', competitionId: 'second-division', phase: 'League', date: '2003-07-05', homeClubId: 'westhaven', awayClubId: 'northmere', homeScore: 0, awayScore: 0, venue: clubs.westhaven.stadium },
   { id: 'lg-2003-07-19-1', competitionId: 'second-division', phase: 'League', date: '2003-07-19', homeClubId: 'northmere', awayClubId: 'brackenford', venue: clubs.northmere.stadium },
   { id: 'lg-2003-07-19-2', competitionId: 'second-division', phase: 'League', date: '2003-07-19', homeClubId: 'moorwick', awayClubId: 'westhaven', venue: clubs.moorwick.stadium },
+  { id: 'lg-2003-07-05-3', competitionId: 'third-division', phase: 'League', date: '2003-07-05', homeClubId: 'copperdale', awayClubId: 'thornby', homeScore: 1, awayScore: 0, venue: clubs.copperdale.stadium },
+  { id: 'lg-2003-07-05-4', competitionId: 'third-division', phase: 'League', date: '2003-07-05', homeClubId: 'seabourne', awayClubId: 'eldersfield', homeScore: 2, awayScore: 2, venue: clubs.seabourne.stadium },
+  { id: 'lg-2003-07-19-3', competitionId: 'third-division', phase: 'League', date: '2003-07-19', homeClubId: 'eldersfield', awayClubId: 'copperdale', venue: clubs.eldersfield.stadium },
+  { id: 'lg-2003-07-19-4', competitionId: 'third-division', phase: 'League', date: '2003-07-19', homeClubId: 'thornby', awayClubId: 'seabourne', venue: clubs.thornby.stadium },
 ];
 
 export const demoData: DemoData = {

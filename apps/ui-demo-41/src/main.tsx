@@ -26,9 +26,9 @@ type View =
   | { kind: 'club'; clubId: string; tab: ClubTab; squadView?: SquadView; squadAttributeGroup?: string; subview?: ClubSubview }
   | { kind: 'player'; playerId: string; tab: PlayerTab; historyView?: PlayerHistoryView }
   | { kind: 'training' | 'tactics' | 'club-history'; clubId: string }
-  | { kind: 'competition'; competition: CompetitionKind; mode: CompetitionMode; selectedGroup: string }
+  | { kind: 'competition'; competition: CompetitionKind; mode: CompetitionMode; selectedGroup: string; clubId: string }
   | { kind: 'global'; mode: GlobalMode; tab: string; page: number; query: string }
-  | { kind: 'match'; mode: MatchMode; tab: MatchTab; phase: MatchPhase };
+  | { kind: 'match'; mode: MatchMode; tab: MatchTab; phase: MatchPhase; clubId: string };
 
 interface RouteState { demo: true; view: View; depth: number }
 interface Notice { title: string; detail: string }
@@ -79,11 +79,11 @@ function App() {
   function openClubBottom(kind: 'training' | 'tactics' | 'club-history') {
     if (view.kind === 'club') go({ kind, clubId: view.clubId });
   }
-  function openCompetition(competition: CompetitionKind = 'cup', mode: CompetitionMode = 'stages') {
-    go({ kind: 'competition', competition, mode, selectedGroup: demoData.competition.groups[0].id });
+  function openCompetition(competition: CompetitionKind = 'cup', mode: CompetitionMode = 'stages', clubId = demoData.managedClubId) {
+    go({ kind: 'competition', competition, mode, selectedGroup: demoData.competition.groups[0].id, clubId });
   }
   function openGlobal(mode: GlobalMode, tab = '', page = 1) { go({ kind: 'global', mode, tab, page, query: '' }); }
-  function openMatch(mode: MatchMode) { go({ kind: 'match', mode, tab: 'ratings', phase: 'pre-kickoff' }); }
+  function openMatch(mode: MatchMode, clubId = demoData.managedClubId) { go({ kind: 'match', mode, tab: 'ratings', phase: 'pre-kickoff', clubId }); }
   function back() { if (route.depth > 0) window.history.back(); }
   function reset(nextView: View = { kind: 'setup' }) {
     const next: RouteState = { demo: true, view: nextView, depth: 0 };
@@ -95,7 +95,7 @@ function App() {
   const club = 'clubId' in view ? demoData.clubs[view.clubId] : undefined;
   const player = view.kind === 'player' ? demoData.players[view.playerId] : undefined;
   const header = view.kind === 'fixtures' ? demoData.competition.name
-    : view.kind === 'competition' ? view.competition === 'cup' ? demoData.competition.name : managedClub.division
+    : view.kind === 'competition' ? view.competition === 'cup' ? demoData.competition.name : demoData.clubs[view.clubId].division
     : view.kind === 'global' ? view.mode === 'find' ? `Find ${view.tab === 'Non-Player' ? 'Non-Player' : view.tab || 'Player'}` : globalHeaders[view.mode]
     : view.kind === 'club' ? club?.name
     : view.kind === 'player' ? `${player?.squadNumber}. ${player?.name} (${demoData.clubs[player?.clubId ?? '']?.shortName ?? ''})`
@@ -110,7 +110,7 @@ function App() {
       <button onClick={() => reset({ kind: 'setup' })}>Reset to menu</button>
       <button onClick={() => reset({ kind: 'fixtures', mode: 'fixtures' })}>Start at fixtures</button>
       <button onClick={() => reset({ kind: 'fixtures', mode: 'results' })}>Start at results</button>
-      <button onClick={() => reset({ kind: 'match', mode: 'reference', tab: 'ratings', phase: 'pre-kickoff' })}>Static match reference</button>
+      <button onClick={() => reset({ kind: 'match', mode: 'reference', tab: 'ratings', phase: 'pre-kickoff', clubId: demoData.managedClubId })}>Static match reference</button>
       {view.kind === 'match' && view.mode === 'reference' && <select aria-label="Static match phase" value={view.phase} onChange={event => go({...view,phase:event.target.value as MatchPhase},true)}>{(['pre-kickoff','running','half-time','full-time'] as MatchPhase[]).map(phase => <option key={phase} value={phase}>{phase.replace('-', ' ')}</option>)}</select>}
     </div>
     <div className="game" aria-label="Synthetic Championship Manager interface demonstration">
@@ -131,15 +131,15 @@ function App() {
         {view.kind === 'setup' && <Setup openRestore={() => go({kind:'restore',selected:false})} show={show} />}
         {view.kind === 'restore' && <Restore selected={view.selected} select={() => go({kind:'restore',selected:true},true)} proceed={() => reset({kind:'fixtures',mode:'fixtures'})} cancel={back} show={show} />}
         {view.kind === 'fixtures' && <Fixtures mode={view.mode} clubClick={clubId => go({kind:'club',clubId,tab:'squad'})} openCompetition={() => openCompetition('cup')} show={show} />}
-        {view.kind === 'competition' && <CompetitionScreens kind={view.competition} mode={view.mode} selectedGroup={view.selectedGroup} onMode={mode => go({...view,mode},true)} onGroup={selectedGroup => go({...view,selectedGroup},true)} onClub={clubId => go({kind:'club',clubId,tab:'squad'})} show={show} />}
+        {view.kind === 'competition' && <CompetitionScreens kind={view.competition} mode={view.mode} selectedGroup={view.selectedGroup} clubId={view.clubId} onMode={mode => go({...view,mode},true)} onGroup={selectedGroup => go({...view,selectedGroup},true)} onClub={clubId => go({kind:'club',clubId,tab:'squad'})} show={show} />}
         {view.kind === 'global' && <GlobalScreens mode={view.mode} tab={view.tab} page={view.page} query={view.query} onTab={tab => go({...view,tab,query:'',page:1},true)} onPage={page => go({...view,page},true)} onQuery={query => go({...view,query,page:1},true)} onPlayer={playerId => go({kind:'player',playerId,tab:'profile'})} onClub={clubId => go({kind:'club',clubId,tab:'squad'})} onClose={back} show={show} />}
-        {view.kind === 'match' && <MatchScreens mode={view.mode} tab={view.tab} phase={view.phase} onTab={tab => go({...view,tab},true)} show={show} />}
+        {view.kind === 'match' && <MatchScreens mode={view.mode} tab={view.tab} phase={view.phase} clubId={view.clubId} onTab={tab => go({...view,tab},true)} show={show} />}
         {club && view.kind === 'club' && <section className="club-screen">
           <nav className="tabs" aria-label="Club tabs">{clubTabs.map(([label, tab]) => <button key={tab} className={view.tab === tab ? 'active' : ''} onClick={() => setClubTab(tab)}>{label}</button>)}</nav>
           {view.tab === 'squad'
             ? <ClubScreen club={club} players={Object.values(demoData.players).filter(item => item.clubId === club.id)} squadView={view.squadView ?? 'Selection'} attributeGroup={view.squadAttributeGroup ?? 'Physical'} onSquadView={squadView => go({...view,squadView},true)} onGroup={squadAttributeGroup => go({...view,squadAttributeGroup},true)} openPlayer={playerId => go({kind:'player',playerId,tab:'profile'})} show={show} />
             : <ClubModes key={view.tab} club={club} mode={view.tab} subview={view.subview} onSubview={subview => go({...view,subview},true)} onClub={clubId => go({kind:'club',clubId,tab:'squad'})} onPlayer={playerId => go({kind:'player',playerId,tab:'profile'})} show={show} />}
-          <div className="bottom-strip">{['Tactics','Training','Last Match',club.division,'History'].map(label => <button key={label} onClick={() => label === 'Tactics' ? openClubBottom('tactics') : label === 'Training' ? openClubBottom('training') : label === 'Last Match' ? openMatch('last-match') : label === club.division ? openCompetition('league','table') : openClubBottom('club-history')}>{label} ▸</button>)}</div>
+          <div className="bottom-strip">{['Tactics','Training','Last Match',club.division,'History'].map(label => <button key={label} onClick={() => label === 'Tactics' ? openClubBottom('tactics') : label === 'Training' ? openClubBottom('training') : label === 'Last Match' ? openMatch('last-match',view.clubId) : label === club.division ? openCompetition('league','table',view.clubId) : openClubBottom('club-history')}>{label} ▸</button>)}</div>
         </section>}
         {player && view.kind === 'player' && <section className="player-screen">
           <nav className="tabs" aria-label="Player tabs">{profileTabs.map(([label, tab]) => <button key={tab} className={view.tab === tab ? 'active' : ''} onClick={() => setPlayerTab(tab)}>{label}</button>)}</nav>
@@ -161,7 +161,7 @@ const globalHeaders: Record<GlobalMode,string> = {
   'manager-status': 'Manager Status', 'selected-leagues': 'Selected Leagues',
   'game-settings': 'Game Settings', search: 'Player & Staff Search',
 };
-function Menu({ name, managedClub, openClub, openFixtures, openCompetition, openGlobal, show, close }: {name:string;managedClub:Club;openClub:()=>void;openFixtures:()=>void;openCompetition:(kind:CompetitionKind,mode?:CompetitionMode)=>void;openGlobal:(mode:GlobalMode,tab?:string,page?:number)=>void;show:(label:string)=>void;close:()=>void}) {
+function Menu({ name, managedClub, openClub, openFixtures, openCompetition, openGlobal, show, close }: {name:string;managedClub:Club;openClub:()=>void;openFixtures:()=>void;openCompetition:(kind:CompetitionKind,mode?:CompetitionMode,clubId?:string)=>void;openGlobal:(mode:GlobalMode,tab?:string,page?:number)=>void;show:(label:string)=>void;close:()=>void}) {
   const lists: Record<string, string[]> = {
     manager: [`${managedClub.shortName} Squad`, `${managedClub.shortName} Reserves`, 'Board Confidence', 'News', 'Player & Staff Search', 'Manager Stats', 'Job Information', 'Transfers', 'History'],
     competitions: [demoData.competition.name, 'Domestic League', 'Domestic Cup'],

@@ -157,6 +157,15 @@ try {
     await page.locator('.player-screen').waitFor();
     await page.getByRole('button', { name: 'Back', exact: true }).click();
     await page.getByRole('heading', { name: fullName }).waitFor();
+    await page.locator('.bottom-strip').getByRole('button', { name: /^Last Match/ }).click();
+    assert.match(await page.locator('.match-scoreboard').innerText(), new RegExp(shortName), `${shortName} Last Match uses its own fixture`);
+    await page.getByRole('button', { name: 'Back', exact: true }).click();
+    const division = ['Copperdale','Thornby','Seabourne','Eldersfield'].includes(shortName) ? 'Third Division' : 'Second Division';
+    await page.locator('.bottom-strip').getByRole('button', { name: new RegExp(`^${division}`) }).click();
+    await page.getByRole('heading', { name: division }).waitFor();
+    await page.getByRole('table', { name: 'League table' }).getByRole('button', { name: shortName }).waitFor();
+    await page.getByRole('button', { name: 'Back', exact: true }).click();
+    await page.getByRole('heading', { name: fullName }).waitFor();
     await page.getByRole('button', { name: 'Back', exact: true }).click();
     await page.getByRole('heading', { name: 'Evening Fixtures' }).waitFor();
   }
@@ -211,6 +220,9 @@ try {
   await page.keyboard.press('Escape');
   assert.equal(await page.getByRole('dialog').count(), 0);
   await page.getByRole('button', { name: 'Static match reference' }).click();
+  assert.ok((await page.locator('.match-ratings').innerText()).includes('—'), 'pre-kickoff ratings have no completed ratings');
+  await page.getByRole('navigation', { name: 'Match views' }).getByRole('button', { name: 'Action Zones' }).click();
+  assert.match(await page.locator('.zones-markings').innerText(), /0%\s+0%\s+0%/, 'pre-kickoff zones are empty');
   await page.getByLabel('Static match phase').selectOption('half-time');
   await page.getByRole('navigation', { name: 'Match views' }).getByRole('button', { name: 'Match Overview' }).click();
   assert.match(await page.locator('.match-scoreboard').innerText(), /1\s+Westhaven\s+0/);
