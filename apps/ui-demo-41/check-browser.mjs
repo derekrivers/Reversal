@@ -231,9 +231,9 @@ try {
   await page.getByRole('button', { name: 'Start at fixtures' }).click();
   await page.getByRole('button', { name: 'Find', exact: true }).click();
   await page.getByRole('menuitem', { name: 'Player', exact: true }).click();
-  await page.getByRole('heading', { name: 'Find Player' }).waitFor();
+  await page.getByRole('heading', { name: 'Championship Manager 2001/02' }).waitFor();
   await page.getByRole('navigation', { name: 'Find categories' }).getByRole('button', { name: 'Club' }).click();
-  await page.getByRole('heading', { name: 'Find Club' }).waitFor();
+  await page.getByRole('heading', { name: 'All Clubs' }).waitFor();
   await page.getByRole('navigation', { name: 'Find categories' }).getByRole('button', { name: 'Player', exact: true }).click();
   await page.getByLabel('Search fictional results').fill('Milo');
   await page.locator('.gsc-find-row').getByText('Milo Fenwick').click();
@@ -252,10 +252,67 @@ try {
   await page.getByRole('menuitem', { name: 'Manager Stats' }).click();
   await page.getByRole('heading', { name: 'Manager Stats' }).waitFor();
   await page.getByRole('button', { name: 'Back', exact: true }).click();
+  for (const label of ['Board Confidence','News','Player & Staff Search','Job Information','Transfers','History']) {
+    await page.getByRole('button', { name: 'Adrian Selby' }).click();
+    await page.getByRole('menuitem', { name: label, exact: true }).click();
+    await page.locator('.gsc-screen').waitFor();
+    await page.locator('.game').screenshot({ path: resolve(output, `manager-${label.toLowerCase().replaceAll(/[^a-z]+/g, '-')}.png`) });
+    if (label === 'Player & Staff Search') {
+      await page.getByRole('navigation', { name: 'Player and staff search tabs' }).getByRole('button', { name: 'Staff Search' }).click();
+      await page.locator('.gsc-dialog-actions').getByRole('button', { name: 'Cancel' }).click();
+    } else {
+      if (label === 'Job Information' || label === 'Transfers') {
+        await page.locator('.gsc-popup-wrap').getByRole('button', { name: /View/ }).click();
+        await page.getByRole('menuitemradio', { name: 'France' }).click();
+        await page.getByText(/No fictional/).waitFor();
+        await page.locator('.gsc-popup-wrap').getByRole('button', { name: /View/ }).click();
+        await page.keyboard.press('Escape');
+        assert.equal(await page.getByRole('menu', { name: 'View choices' }).count(), 0);
+      }
+      await page.getByRole('button', { name: 'Back', exact: true }).click();
+    }
+    await page.getByRole('heading', { name: 'Evening Fixtures' }).waitFor();
+  }
+  await page.getByRole('button', { name: 'Nations & Clubs' }).click();
+  await page.locator('.game').screenshot({ path: resolve(output, 'nations-menu.png') });
+  for (const label of ['Nations','Under-21s','Major Clubs','League','Non-League','Other'])
+    await page.getByRole('menuitem', { name: `${label} ▸`, exact: true }).waitFor();
+  await page.getByRole('menuitem', { name: 'Major Clubs ▸' }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Close' }).click();
+  await page.getByRole('button', { name: 'Competitions' }).click();
+  await page.locator('.game').screenshot({ path: resolve(output, 'competitions-menu.png') });
+  for (const label of ['World Cup','International','Worldwide Club','European','England','France','Germany','Italy','Spain'])
+    await page.getByRole('menuitem', { name: `${label} ▸`, exact: true }).waitFor();
+  await page.getByRole('menuitem', { name: 'European ▸' }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Close' }).click();
   await page.getByRole('button', { name: 'Game Options' }).click();
+  await page.getByRole('menuitem', { name: 'Manager Status' }).click();
+  await page.getByRole('heading', { name: 'Manager Status', level: 1 }).waitFor();
+  await page.locator('.game').screenshot({ path: resolve(output, 'manager-status.png') });
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await page.getByRole('button', { name: 'Game Options' }).click();
+  await page.getByRole('menuitem', { name: 'Selected Leagues' }).click();
+  await page.getByRole('heading', { name: 'Selected League(s)' }).waitFor();
+  await page.locator('.game').screenshot({ path: resolve(output, 'selected-leagues.png') });
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await page.getByRole('button', { name: 'Game Options' }).click();
+  await page.getByRole('menuitem', { name: 'Web Sites' }).waitFor();
   await page.getByRole('menuitem', { name: 'Game Settings' }).click();
+  assert.ok(await page.locator('.fixtures-screen').isVisible(), 'Game Settings keeps source fixtures visible beneath the modal');
+  await page.locator('.game').screenshot({ path: resolve(output, 'game-settings-overlay.png') });
   await page.getByRole('dialog', { name: 'Game Settings' }).getByRole('button', { name: 'Cancel' }).click();
   await page.getByRole('heading', { name: 'Evening Fixtures' }).waitFor();
+  await page.getByRole('button', { name: 'Brackenford', exact: true }).first().click();
+  await page.getByRole('button', { name: 'Game Options' }).click();
+  await page.getByRole('menuitem', { name: 'Game Settings' }).click();
+  assert.ok(await page.locator('.club-screen').isVisible(), 'Game Settings preserves a club source screen');
+  await page.getByRole('dialog', { name: 'Game Settings' }).getByRole('button', { name: 'Cancel' }).click();
+  await page.getByRole('heading', { name: 'Brackenford Athletic' }).waitFor();
+  await page.getByRole('button', { name: 'Game Options' }).click();
+  await page.getByRole('menuitem', { name: 'Game Settings' }).click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('dialog', { name: 'Game Settings' }).count(), 0);
+  await page.getByRole('heading', { name: 'Brackenford Athletic' }).waitFor();
   await page.getByRole('button', { name: 'Reset to menu' }).click();
   await page.getByRole('heading', { name: 'Setup Game' }).waitFor();
   assert.deepEqual(errors, []);
@@ -266,7 +323,11 @@ try {
     clubModes: ['info', 'transfers', 'next match', 'fixtures'],
     playerModes: ['injuries', 'contract', 'transfer', 'history'],
     bottomModes: ['training', 'tactics', 'club history'], localMenus: 'Escape and outside click',
-    resultsReturn: 'browser Back', dialogDismissal: 'Escape', reset: 'menu', externalRequests: 0 }));
+    competition: ['cup stages/results/fixtures/schedule', 'league table', 'group choice'],
+    matches: ['all club last matches', 'static phase references'],
+    global: ['Find', 'News', 'manager', 'options', 'observed rail menu labels'],
+    settingsOverlay: ['fixtures', 'club'], resultsReturn: 'browser Back',
+    dialogDismissal: 'Escape', reset: 'menu', externalRequests: 0 }));
 } finally {
   await browser?.close();
   await server.close();

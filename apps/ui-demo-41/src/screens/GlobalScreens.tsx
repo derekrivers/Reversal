@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { demoData } from '../data';
 import type { Club, Player } from '../types';
+import { usePopupDismiss } from '../usePopupDismiss';
 import './GlobalScreens.css';
 
 export type GlobalMode =
@@ -45,6 +46,14 @@ function Pager({ page, total, onPage }: { page: number; total: number; onPage: (
     <span>Pg {current}/{Math.max(1, total)}</span>
     <button type="button" aria-label="Next page" disabled={current >= total} onClick={() => onPage(current + 1)}>▶</button>
     <button type="button" aria-label="Last page" disabled={current >= total} onClick={() => onPage(total)}>▶▶</button>
+  </div>;
+}
+
+function ViewPicker({label,selected,choices,onSelect}:{label:string;selected:string;choices:readonly string[];onSelect:(value:string)=>void}) {
+  const [open,setOpen] = useState(false);
+  usePopupDismiss(open, () => setOpen(false), '.gsc-popup-wrap');
+  return <div className="gsc-popup-wrap"><button type="button" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen(value => !value)}>{label} ▾</button>
+    {open && <div className="gsc-option-menu" role="menu" aria-label={`${label} choices`}>{choices.map(choice => <button type="button" key={choice} role="menuitemradio" aria-checked={selected === choice} onClick={() => { onSelect(choice); setOpen(false); }}>{choice}</button>)}</div>}
   </div>;
 }
 
@@ -124,7 +133,7 @@ function JobInfo({ tab, onTab, onClub, show }: GlobalScreensProps) {
   const nation = tab && tab !== 'All' ? tab : 'England';
   const jobs = clubs.filter(club => club.nation === nation).slice(3, 7);
   return <section className="gsc-screen gsc-manager-list"><h2 className="gsc-section-title">{nation}</h2>
-    <div className="gsc-list-tools"><button type="button" onClick={() => onTab(nation === 'England' ? 'Scotland' : 'England')}>View ▾</button></div>
+    <div className="gsc-list-tools"><ViewPicker label="View" selected={nation} choices={['International','England','France','Germany','Italy','Spain']} onSelect={onTab}/></div>
     <div className="gsc-manager-rows">{jobs.map((club, index) => <div className="gsc-manager-row gsc-job-row" key={club.id}><strong>{index === 0 ? 'No Manager' : club.manager}</strong><button type="button" onClick={() => onClub(club.id)}>{club.shortName}</button><b>{club.nation}</b><span>{club.division}</span><em>{index === 0 ? 'Available' : 'Secure'}</em></div>)}{jobs.length === 0 && <div className="gsc-empty">No fictional vacancies for {nation}.</div>}</div>
     <button type="button" className="gsc-text-action" onClick={() => show('Job Application')}>View job details</button>
   </section>;
@@ -132,11 +141,19 @@ function JobInfo({ tab, onTab, onClub, show }: GlobalScreensProps) {
 
 function ManagerTransfers({ tab, page, onTab, onPage, onPlayer, onClub, show }: GlobalScreensProps) {
   const selected = tab && tab !== 'All' ? tab : 'All Transfers';
-  const items = players.slice(0, 20).map((player, index) => ({ player, from: demoData.clubs[player.clubId], to: clubs[(index + 2) % clubs.length], day: 15 - index % 12 }));
-  const visible = items.slice((Math.max(1, page || 1) - 1) * 12, Math.max(1, page || 1) * 12);
+  const items = players.slice(0, 20).map((player, index) => {
+    const to = demoData.clubs[player.clubId];
+    const candidate = clubs[(index + 2) % clubs.length];
+    const from = candidate.id === to.id ? clubs[(index + 3) % clubs.length] : candidate;
+    return { player, from, to, day: 15 - index % 12 };
+  });
+  const filtered = selected === 'All Transfers' ? items : items.filter(({from,to}) => from.nation === selected || to.nation === selected);
+  const total = Math.max(1,Math.ceil(filtered.length / 12));
+  const current = Math.min(Math.max(1,page || 1),total);
+  const visible = filtered.slice((current - 1) * 12, current * 12);
   return <section className="gsc-screen gsc-manager-list"><h2 className="gsc-section-title">July 2003 <button type="button" onClick={() => show('Transfer month')}>◀ ▶</button></h2>
-    <div className="gsc-list-tools"><button type="button" onClick={() => onTab(selected === 'All Transfers' ? 'England' : 'All Transfers')}>View ▾ {selected}</button><Pager page={page} total={2} onPage={onPage} /></div>
-    <div className="gsc-transfer-list">{visible.map(({ player, from, to, day }) => <div className="gsc-transfer-row" key={player.id}><span>{day}th Jul</span><button type="button" onClick={() => onPlayer(player.id)}>{player.name}</button><button type="button" onClick={() => onClub(from.id)}>{from.shortName}</button><span>to</span><button type="button" onClick={() => onClub(to.id)}>{to.shortName}</button><em>{player.value}</em></div>)}</div>
+    <div className="gsc-list-tools"><ViewPicker label="View" selected={selected} choices={['All Transfers','England','France','Germany','Italy','Spain']} onSelect={onTab}/><span>{selected}</span><Pager page={current} total={total} onPage={onPage} /></div>
+    <div className="gsc-transfer-list">{visible.map(({ player, from, to, day }) => <div className="gsc-transfer-row" key={player.id}><span>{day}th Jul</span><button type="button" onClick={() => onPlayer(player.id)}>{player.name}</button><button type="button" onClick={() => onClub(from.id)}>{from.shortName}</button><span>to</span><button type="button" onClick={() => onClub(to.id)}>{to.shortName}</button><em>{player.value}</em></div>)}{!visible.length && <div className="gsc-empty">No fictional transfers in {selected}.</div>}</div>
   </section>;
 }
 
