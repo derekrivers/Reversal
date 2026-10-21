@@ -1,0 +1,131 @@
+{
+  "schema": "reversal.runtime-ui-batch5-41.summary.v1",
+  "status": "blocked-at-load-media-check",
+  "base_commit": "def6b837947862112c5c4c701a3883ba41c732ca",
+  "game_inputs": {
+    "exe_sha256": "0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b",
+    "configuration_manifest_sha256": "92aa3097961c972c8bd868d33766bcec59f0c9f799236a3b46c07044d13b1843",
+    "origin_save_sha256": "8698569fbd83d9952a9832a95aee17a943c32f18e29621e9396ed228107abbd3",
+    "baseline_file_count": 784,
+    "preflight_all_match": true,
+    "postflight_unchanged_files": 783,
+    "postflight_changed_files": [
+      "game.cfg"
+    ],
+    "origin_save_unchanged": true,
+    "game_cfg": {
+      "before_sha256": "8d35d1cef56360742ddb87995e4a81c3c1f56ed0f5420838e92f7315dc0a66d7",
+      "after_sha256": "e3a0c7fbad42fe1f7713a65237610566ff452ed6ff3bdbeca079b4442e44f318",
+      "before_bytes": 535,
+      "after_bytes": 535,
+      "differing_byte_offsets_count": 162,
+      "cause": "not established; no explicit setting edit performed"
+    }
+  },
+  "process": {
+    "previous_pid_absent": 6268,
+    "new_pid": 13428,
+    "launch_working_directory_explicit": true,
+    "parked_state": "Insert CD game modal",
+    "debugger_used": false
+  },
+  "media": {
+    "already_mounted": true,
+    "loaded": true,
+    "volume_files_readable": true,
+    "accepted_by_this_launch": false,
+    "ok_attempts": 1,
+    "earlier_a4": "CD Not Required informational modal, followed by successful load",
+    "cause": "unproven"
+  },
+  "captures": {
+    "count": 6,
+    "input_action_edges": 4,
+    "natural_splash_to_setup_transition": true,
+    "index_sha256": "612b58c15e49b54ed1a4929134035a8cceef27c61abfb7c94f4c82715a3fbddb",
+    "timestamp_semantics": "retention after observation, not exact acquisition/input time",
+    "images": [
+      {
+        "capture_id": "a6-001",
+        "sha256": "0acc6b5ce05462c51d89e9f4785679a3d5603a5dcb96697be59d29ed1759bcac",
+        "bytes": 72406,
+        "encoding": "JPEG",
+        "width": 802,
+        "height": 653
+      },
+      {
+        "capture_id": "a6-002",
+        "sha256": "22ec84e090c45daf785bc39555ecbfe0f6b35153e484709e5330cc6ff12042bf",
+        "bytes": 110027,
+        "encoding": "JPEG",
+        "width": 802,
+        "height": 653
+      },
+      {
+        "capture_id": "a6-003",
+        "sha256": "11ce8a1ea15df87e9ba64a6b42500cc14582b19cc2e629e97bcc67f0d3f76c10",
+        "bytes": 95093,
+        "encoding": "JPEG",
+        "width": 802,
+        "height": 653
+      },
+      {
+        "capture_id": "a6-004",
+        "sha256": "75018ce811e7e616c86e201a4da4de4b98cb5dd8ff52673676bbce14ff03ce43",
+        "bytes": 95578,
+        "encoding": "JPEG",
+        "width": 802,
+        "height": 653
+      },
+      {
+        "capture_id": "a6-005",
+        "sha256": "467f69a1fa49c8fe4f0443783a94f5004084bd77a01c3ee9e5ad09d0151e0152",
+        "bytes": 91039,
+        "encoding": "JPEG",
+        "width": 802,
+        "height": 627
+      },
+      {
+        "capture_id": "a6-006",
+        "sha256": "19c50a331605160226e25de81e8b284cc36ef4c2b232044052b3cacf2067e22a",
+        "bytes": 91150,
+        "encoding": "JPEG",
+        "width": 802,
+        "height": 627
+      }
+    ]
+  },
+  "requested_routes_observed": [],
+  "unobserved_families": [
+    "News/inbox",
+    "Training",
+    "Find",
+    "Nations & Clubs",
+    "manager navigation",
+    "competition statistics/history/stage menus",
+    "completed-match views",
+    "squad view/filter/league/history",
+    "source-specific bottom Back gaps"
+  ],
+  "lost_postmatch_state_restorable": false,
+  "backup": {
+    "archive_sha256": "83e4db4736623c7a6950e4ec3a277e9fa8fd3c3107268c9941e457ba136de172",
+    "archive_bytes": 528332,
+    "data_files": 15,
+    "hash_manifest_files": 1,
+    "restored_all_hashes_match": true
+  },
+  "checks": {
+    "image_hash_encoding_geometry": true,
+    "action_references": true,
+    "node24_full_check": true,
+    "public_privacy": true
+  },
+  "limits": [
+    "no loaded-game UI reached",
+    "no Continue Game or simulation",
+    "no transactions/saves/tactical edits/debugger",
+    "no media or configuration causal inference",
+    "no mounted media or installed data modification"
+  ]
+}
