@@ -116,7 +116,7 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = 'c61ab4a03222f0dacd3ebc8cce18dfc01ab6305a8812ecd37ddc917fc16a9b09'  # Complete public report, normalized CRLF to LF.
+REVIEWED_UI_REPORT_SHA256 = '360dd724d25237957d8eda6df8f8b0bf979ed1a60bcab14e8b30c89417bbbeae'  # Complete public report, normalized CRLF to LF.
 PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
@@ -167,7 +167,7 @@ def render_for_privacy(source):
         fenced.append(line)
     source = ''.join(fenced)
     fold_ref = lambda value: unicodedata.normalize('NFC', re.sub(r'\s+', ' ', value.strip())).casefold()
-    reference_pattern = r'(?m)^ {0,3}\[([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]*)?(?P<destination><[^>\r\n]*>|\S+)'
+    reference_pattern = r'(?m)^ {0,3}\[(?!\^)([^\]]{1,999})\]:[ \t]*(?:\r?\n[ \t]*)?(?P<destination><[^>\r\n]*>|\S+)'
     # A CommonMark reference title may start on the next line and may itself
     # span lines, but cannot contain a blank line.
     quoted_title = r'"(?:\\[^\r\n]|[^"\\\r\n]|\r?\n(?![ \t]*\r?\n))*"'
@@ -1131,6 +1131,8 @@ def main():
             '[profile](/x "' + attribute['label'] + ' \\| ' + attribute['value'] + '")',
             '[profile][ref]\n\n[ref]: <https://example.invalid/' + snapshot['squad']['clubLabel'] + '>',
             '[profile](<https://example.invalid/' + snapshot['squad']['clubLabel'] + '>)',
+            'profile[^1]\n\n[^1]: ' + multiword_name,
+            'profile[^1]\n\n[^1]: ' + attribute['label'] + ': ' + attribute['value'],
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
