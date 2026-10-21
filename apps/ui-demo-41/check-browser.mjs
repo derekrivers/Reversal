@@ -220,7 +220,8 @@ try {
   await page.keyboard.press('Escape');
   assert.equal(await page.getByRole('dialog').count(), 0);
   await page.getByRole('button', { name: 'Static match reference' }).click();
-  assert.ok((await page.locator('.match-ratings').innerText()).includes('—'), 'pre-kickoff ratings have no completed ratings');
+  const preKickoffRatings = await page.locator('.match-team-ratings em').allTextContents();
+  assert.ok(preKickoffRatings.length > 0 && preKickoffRatings.every(value => value.trim() === '—'), 'every pre-kickoff rating is blank');
   await page.getByRole('navigation', { name: 'Match views' }).getByRole('button', { name: 'Action Zones' }).click();
   assert.match(await page.locator('.zones-markings').innerText(), /0%\s+0%\s+0%/, 'pre-kickoff zones are empty');
   await page.getByLabel('Static match phase').selectOption('half-time');
