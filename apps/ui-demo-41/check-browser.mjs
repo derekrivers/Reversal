@@ -55,6 +55,95 @@ try {
   assert.equal(await page.locator('.roster tbody').innerText(), rosterBefore, 'Profile Back restores the squad');
   await page.getByRole('button', { name: 'Back', exact: true }).click();
   await page.getByRole('heading', { name: 'Evening Fixtures' }).waitFor();
+  await page.getByRole('button', { name: 'Brackenford', exact: true }).first().click();
+  await page.getByRole('button', { name: 'Finances & Info' }).click();
+  await page.getByRole('heading', { name: 'General Info' }).waitFor();
+  await page.locator('.game').screenshot({ path: resolve(output, 'club-info.png') });
+  await page.locator('.uic-club-modes').getByRole('button', { name: /View/ }).click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('menu', { name: 'View choices' }).count(), 0);
+  await page.locator('.uic-club-modes').getByRole('button', { name: /View/ }).click();
+  await page.getByRole('heading', { name: 'General Info' }).click();
+  assert.equal(await page.getByRole('menu', { name: 'View choices' }).count(), 0);
+  await page.locator('.uic-club-modes').getByRole('button', { name: /View/ }).click();
+  await page.getByRole('menuitemradio', { name: /Stats/ }).click();
+  await page.getByRole('heading', { name: 'Stats' }).waitFor();
+  await page.locator('.uic-stat-line button').first().click();
+  await page.locator('.player-screen').waitFor();
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await page.getByRole('heading', { name: 'Stats' }).waitFor();
+  await page.locator('.uic-club-modes').getByRole('button', { name: /View/ }).click();
+  await page.getByRole('menuitemradio', { name: /Finances/ }).click();
+  await page.getByRole('heading', { name: 'Finances' }).waitFor();
+  await page.locator('.game').screenshot({ path: resolve(output, 'club-finances.png') });
+  await page.getByRole('button', { name: 'Transfers', exact: true }).click();
+  await page.getByRole('heading', { name: /Players In/ }).waitFor();
+  await page.locator('.uic-club-modes').getByRole('button', { name: /View/ }).click();
+  await page.getByRole('menuitemradio', { name: /Staff Out/ }).click();
+  await page.getByRole('heading', { name: /Staff Out/ }).waitFor();
+  await page.locator('.game').screenshot({ path: resolve(output, 'transfers.png') });
+  await page.getByRole('button', { name: 'Next Match', exact: true }).click();
+  await page.locator('.uic-club-modes').getByRole('heading', { name: /Northmere/ }).waitFor();
+  await page.locator('.game').screenshot({ path: resolve(output, 'next-match.png') });
+  await page.getByRole('button', { name: 'Fixtures', exact: true }).click();
+  assert.ok(await page.locator('.uic-club-modes').getByText('Northmere').count());
+  await page.getByRole('button', { name: 'Squad', exact: true }).click();
+  await page.locator('.subtools').getByRole('button', { name: /View/ }).click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('menu', { name: 'Squad View' }).count(), 0);
+  await page.locator('.subtools').getByRole('button', { name: /View/ }).click();
+  await page.getByRole('menuitem', { name: /Attributes/ }).click();
+  await page.getByRole('menuitem', { name: /Mental/ }).click();
+  await page.getByRole('button', { name: 'Milo Fenwick' }).click();
+  await page.getByRole('heading', { name: /Milo Fenwick/ }).waitFor();
+  for (const tab of ['Injuries & Bans', 'Contract', 'Transfer', 'History']) {
+    await page.getByRole('button', { name: tab, exact: true }).click();
+    await page.locator('.pmd-body').waitFor();
+    if (tab === 'Contract' || tab === 'History') await page.locator('.game').screenshot({ path: resolve(output, `player-${tab.toLowerCase()}.png`) });
+  }
+  await page.locator('.pmd-body').getByRole('button', { name: /View/ }).click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('menu', { name: 'Player history views' }).count(), 0);
+  await page.locator('.pmd-body').getByRole('button', { name: /View/ }).click();
+  await page.getByRole('menuitemradio', { name: /Bans/ }).click();
+  await page.getByLabel('No fictional ban history entries').waitFor();
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await page.getByRole('heading', { name: 'Brackenford Athletic' }).waitFor();
+  assert.ok(await page.getByRole('heading', { name: 'Attributes Info' }).isVisible(), 'profile Back restores squad attribute view');
+  await page.locator('.bottom-strip').getByRole('button', { name: /^Training/ }).click();
+  await page.getByRole('heading', { name: 'Brackenford Training' }).waitFor();
+  await page.getByRole('button', { name: /General \(13\)/ }).click();
+  await page.locator('.training-tools').getByRole('button', { name: /View/ }).click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('menu', { name: 'Training View' }).count(), 0);
+  await page.locator('.training-tools').getByRole('button', { name: /View/ }).click();
+  await page.getByRole('menuitem', { name: 'Attributes' }).click();
+  await page.getByRole('menuitem', { name: /Mental/ }).click();
+  await page.locator('.game').screenshot({ path: resolve(output, 'training.png') });
+  await page.locator('.training-tools').getByRole('button', { name: /View/ }).click();
+  await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await page.getByRole('heading', { name: 'Brackenford Training' }).waitFor();
+  await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await page.getByRole('heading', { name: 'Brackenford Athletic' }).waitFor();
+  await page.locator('.bottom-strip').getByRole('button', { name: /^Tactics/ }).click();
+  await page.getByRole('heading', { name: 'Brackenford Athletic Tactics' }).waitFor();
+  await page.getByRole('button', { name: 'With Ball' }).click();
+  await page.locator('.game').screenshot({ path: resolve(output, 'tactics.png') });
+  await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await page.getByRole('heading', { name: 'Brackenford Athletic' }).waitFor();
+  await page.locator('.bottom-strip').getByRole('button', { name: /^History/ }).click();
+  await page.getByRole('heading', { name: 'Brackenford History' }).waitFor();
+  await page.locator('.history-toolbar').getByRole('button', { name: /View/ }).click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('menu', { name: 'History View' }).count(), 0);
+  await page.locator('.history-toolbar').getByRole('button', { name: /View/ }).click();
+  await page.getByRole('menuitem', { name: /This Season/ }).click();
+  await page.getByRole('heading', { name: 'This Season' }).waitFor();
+  await page.locator('.game').screenshot({ path: resolve(output, 'club-history.png') });
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await page.getByRole('heading', { name: 'Brackenford Athletic' }).waitFor();
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await page.getByRole('heading', { name: 'Evening Fixtures' }).waitFor();
   for (const [shortName, fullName] of [
     ['Northmere', 'Northmere Rovers'], ['Westhaven', 'Westhaven City'],
     ['Moorwick', 'Moorwick United'], ['Copperdale', 'Copperdale Town'],
@@ -96,6 +185,9 @@ try {
   console.log(JSON.stringify({ browser: 'pass', viewport: [800, 600], fixtures: fixtureCount,
     rosterRows: 13, journey: 'restore -> fixtures -> squad -> player -> Back -> Back',
     visitorSquads: 7, managerMenu: 'squad and Back', restoreCancel: 'menu',
+    clubModes: ['info', 'transfers', 'next match', 'fixtures'],
+    playerModes: ['injuries', 'contract', 'transfer', 'history'],
+    bottomModes: ['training', 'tactics', 'club history'], localMenus: 'Escape and outside click',
     resultsReturn: 'browser Back', dialogDismissal: 'Escape', reset: 'menu', externalRequests: 0 }));
 } finally {
   await browser?.close();
