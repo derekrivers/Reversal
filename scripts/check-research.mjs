@@ -76,6 +76,14 @@ const checks=[
  ['reconstruction/check-penalty-keeper-entry.ts','evidence/penalty-keeper-entry-validation/oracle.json','evidence/random-validation/random-table.bin','results/penalty-keeper-entry.json']
 ];
 for(const args of checks){const r=spawnSync(process.execPath,args,{stdio:'inherit'});if(r.status!==0)process.exit(r.status??1);}
+// R41-C3 validates the public UI census and its tracked report provenance.
+// Private screenshot and captured-token checks remain separate optional inputs.
+{
+ const python=process.env.PYTHON??(process.platform==='win32'?'python':'python3');
+ const r=spawnSync(python,['scripts/check_ui_census_41.py'],{stdio:'inherit'});
+ if(r.error)throw r.error;
+ if(r.status!==0)process.exit(r.status??1);
+}
 // R30-A checks original-entry evidence; it is not a TypeScript equivalence scope.
 {
  const r=spawnSync(process.execPath,['scripts/check-action33-prefix-30.mjs'],{stdio:'inherit'});

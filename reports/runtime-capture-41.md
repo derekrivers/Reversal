@@ -10,7 +10,7 @@ complete. This resolves the previous host-interception blocker.
 
 The production CLI accepts only the separately identified GDI executable SHA-256
 `0e50572c292bdfb9de8b3e087dd29043a13bcd0985ed198c9011e5a0f694388b`,
-inside this worktree's ignored `results/game-copy`. Synthetic capture is available
+inside this worktree's ignored local game copy. Synthetic capture is available
 only to the Python checker with its own live `Popen` child and the system x86
 PowerShell image; the CLI cannot select that profile. Disk hash, process path,
 WOW64 architecture, module/header identity and 16 live entry bytes are checked.
@@ -51,7 +51,7 @@ effects and ordered calls remain explicit. Even complete requested reads do not
 make a complete replay fixture. No pinned-build runtime equivalence is claimed.
 
 Output uses the existing guarded exclusive private JSON writer beneath ignored
-`results/`. Raw captures, saves, game files and screenshots are excluded from Git.
+an ignored local capture directory. Raw captures, saves, game files and screenshots are excluded from Git.
 The working copy overlays the installed base files with the user's VirtualStore
 language/configuration files, omitting saves and temporary files. Its duplicated
 experiment save has SHA-256
