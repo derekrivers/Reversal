@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { demoData } from '../data';
 import type { Club, Player } from '../types';
+import { usePopupDismiss } from '../usePopupDismiss';
 import './TrainingTactics.css';
 
 interface CommonProps {
@@ -29,6 +30,7 @@ export function TrainingScreen({ club, onClose, show }: CommonProps) {
   const [view, setView] = useState('Summary');
   const [category, setCategory] = useState('Physical');
   const [menu, setMenu] = useState<'view' | 'category' | null>(null);
+  usePopupDismiss(menu !== null, () => setMenu(null), '.training-popup,.training-menu-trigger,.training-footer button:first-child');
   const visiblePlayers = tab.startsWith('No Training') || tab.startsWith('Fitness') || tab.startsWith('Shooting') ? [] : players;
   const labels = groupLabels[category];
   function cancel() {
@@ -39,8 +41,8 @@ export function TrainingScreen({ club, onClose, show }: CommonProps) {
     <nav className="tabs" aria-label="Training tabs">{trainingTabs.map(label => <button key={label} className={tab === label ? 'active' : ''} onClick={() => { setTab(label); setMenu(null); }}>{label === 'General' ? `General (${players.length})` : label}</button>)}</nav>
     <div className="training-tools">
       <button onClick={() => show('Training Schedule')}>Schedule ▾</button>
-      <button onClick={() => setMenu(menu === 'view' ? null : 'view')}>View ▾</button>
-      {view === 'Attributes' && <button onClick={() => setMenu(menu === 'category' ? null : 'category')}>{category} ▾</button>}
+      <button className="training-menu-trigger" onClick={() => setMenu(menu === 'view' ? null : 'view')}>View ▾</button>
+      {view === 'Attributes' && <button className="training-menu-trigger" onClick={() => setMenu(menu === 'category' ? null : 'category')}>{category} ▾</button>}
       <span />
       <button onClick={() => show(tab === 'Overview' ? 'Coaches' : 'Training Edit')}>{tab === 'Overview' ? 'Coaches' : 'Edit'} ▾</button>
       <button onClick={() => show('Training Filter')}>Filter ▾</button>
@@ -82,6 +84,7 @@ export function ClubHistory({ club, onClose, show }: CommonProps) {
   const [tab, setTab] = useState('Records');
   const [period, setPeriod] = useState('Modern Day');
   const [menu, setMenu] = useState(false);
+  usePopupDismiss(menu, () => setMenu(false), '.history-popup,.history-toolbar button');
   const completed = demoData.fixtures.filter(fixture =>
     (fixture.homeClubId === club.id || fixture.awayClubId === club.id) && fixture.homeScore !== undefined);
   const scores = completed.map(fixture => {

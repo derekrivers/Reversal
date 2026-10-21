@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { demoData } from '../data';
 import type { Club, Fixture, Player } from '../types';
+import { usePopupDismiss } from '../usePopupDismiss';
 import './ClubModes.css';
 
 export type ClubDetailMode = 'transfers' | 'next-match' | 'fixtures' | 'info';
@@ -84,15 +85,17 @@ function transferRows(club: Club, view: TransferView): TransferRow[] {
 }
 
 function ViewMenu<T extends ClubSubview>({
-  label, choices, selected, open, toggle, select,
+  label, choices, selected, open, toggle, close, select,
 }: {
   label: string;
   choices: readonly (readonly [T, string])[];
   selected: T;
   open: boolean;
   toggle: () => void;
+  close: () => void;
   select: (id: T) => void;
 }) {
+  usePopupDismiss(open, close, '.uic-view-wrap');
   return <div className="uic-view-wrap">
     <button className="uic-tool-button uic-view-trigger" onClick={toggle}
       aria-haspopup="menu" aria-expanded={open}>{label} <span aria-hidden="true">▾</span></button>
@@ -129,6 +132,7 @@ export function ClubModes({ club, mode, onClub, onPlayer, show, subview, onSubvi
       <div className="uic-toolbar">
         <ViewMenu label="View" choices={infoViews} selected={infoView}
           open={openMenu === 'info'} toggle={() => setOpenMenu(openMenu === 'info' ? null : 'info')}
+          close={() => setOpenMenu(null)}
           select={chooseInfo} />
       </div>
       <h2 className="uic-section-title">{labelFor(infoViews, infoView)}</h2>
@@ -146,6 +150,7 @@ export function ClubModes({ club, mode, onClub, onPlayer, show, subview, onSubvi
         </div>
         <ViewMenu label="View" choices={transferViews} selected={transferView}
           open={openMenu === 'transfers'} toggle={() => setOpenMenu(openMenu === 'transfers' ? null : 'transfers')}
+          close={() => setOpenMenu(null)}
           select={chooseTransfer} />
       </div>
       <h2 className="uic-section-title">{labelFor(transferViews, transferView)} - Season 2003/4</h2>

@@ -60,6 +60,12 @@ try {
   await page.getByRole('heading', { name: 'General Info' }).waitFor();
   await page.locator('.game').screenshot({ path: resolve(output, 'club-info.png') });
   await page.locator('.uic-club-modes').getByRole('button', { name: /View/ }).click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('menu', { name: 'View choices' }).count(), 0);
+  await page.locator('.uic-club-modes').getByRole('button', { name: /View/ }).click();
+  await page.getByRole('heading', { name: 'General Info' }).click();
+  assert.equal(await page.getByRole('menu', { name: 'View choices' }).count(), 0);
+  await page.locator('.uic-club-modes').getByRole('button', { name: /View/ }).click();
   await page.getByRole('menuitemradio', { name: /Stats/ }).click();
   await page.getByRole('heading', { name: 'Stats' }).waitFor();
   await page.locator('.uic-stat-line button').first().click();
@@ -83,6 +89,9 @@ try {
   assert.ok(await page.locator('.uic-club-modes').getByText('Northmere').count());
   await page.getByRole('button', { name: 'Squad', exact: true }).click();
   await page.locator('.subtools').getByRole('button', { name: /View/ }).click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('menu', { name: 'Squad View' }).count(), 0);
+  await page.locator('.subtools').getByRole('button', { name: /View/ }).click();
   await page.getByRole('menuitem', { name: /Attributes/ }).click();
   await page.getByRole('menuitem', { name: /Mental/ }).click();
   await page.getByRole('button', { name: 'Milo Fenwick' }).click();
@@ -93,6 +102,9 @@ try {
     if (tab === 'Contract' || tab === 'History') await page.locator('.game').screenshot({ path: resolve(output, `player-${tab.toLowerCase()}.png`) });
   }
   await page.locator('.pmd-body').getByRole('button', { name: /View/ }).click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('menu', { name: 'Player history views' }).count(), 0);
+  await page.locator('.pmd-body').getByRole('button', { name: /View/ }).click();
   await page.getByRole('menuitemradio', { name: /Bans/ }).click();
   await page.getByLabel('No fictional ban history entries').waitFor();
   await page.getByRole('button', { name: 'Back', exact: true }).click();
@@ -101,6 +113,9 @@ try {
   await page.locator('.bottom-strip').getByRole('button', { name: /^Training/ }).click();
   await page.getByRole('heading', { name: 'Brackenford Training' }).waitFor();
   await page.getByRole('button', { name: /General \(13\)/ }).click();
+  await page.locator('.training-tools').getByRole('button', { name: /View/ }).click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('menu', { name: 'Training View' }).count(), 0);
   await page.locator('.training-tools').getByRole('button', { name: /View/ }).click();
   await page.getByRole('menuitem', { name: 'Attributes' }).click();
   await page.getByRole('menuitem', { name: /Mental/ }).click();
@@ -118,6 +133,9 @@ try {
   await page.getByRole('heading', { name: 'Brackenford Athletic' }).waitFor();
   await page.locator('.bottom-strip').getByRole('button', { name: /^History/ }).click();
   await page.getByRole('heading', { name: 'Brackenford History' }).waitFor();
+  await page.locator('.history-toolbar').getByRole('button', { name: /View/ }).click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.getByRole('menu', { name: 'History View' }).count(), 0);
   await page.locator('.history-toolbar').getByRole('button', { name: /View/ }).click();
   await page.getByRole('menuitem', { name: /This Season/ }).click();
   await page.getByRole('heading', { name: 'This Season' }).waitFor();
@@ -169,7 +187,7 @@ try {
     visitorSquads: 7, managerMenu: 'squad and Back', restoreCancel: 'menu',
     clubModes: ['info', 'transfers', 'next match', 'fixtures'],
     playerModes: ['injuries', 'contract', 'transfer', 'history'],
-    bottomModes: ['training', 'tactics', 'club history'],
+    bottomModes: ['training', 'tactics', 'club history'], localMenus: 'Escape and outside click',
     resultsReturn: 'browser Back', dialogDismissal: 'Escape', reset: 'menu', externalRequests: 0 }));
 } finally {
   await browser?.close();

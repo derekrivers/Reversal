@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { demoData } from '../data';
 import type { Player } from '../types';
+import { usePopupDismiss } from '../usePopupDismiss';
 import './PlayerModes.css';
 
 export type PlayerDetailMode = 'injuries-bans' | 'contract' | 'transfer' | 'history';
@@ -109,6 +110,7 @@ function HistoryBody({ player, view, show }: { player: Player; view: PlayerHisto
 export function PlayerModes({ player, mode, show, historyView, onHistoryView }: PlayerModesProps) {
   const [localHistoryView, setLocalHistoryView] = useState<PlayerHistoryView>('Playing Career');
   const [viewOpen, setViewOpen] = useState(false);
+  usePopupDismiss(viewOpen, () => setViewOpen(false), '.pmd-view-wrap');
   const activeHistoryView = historyView ?? localHistoryView;
 
   useEffect(() => setViewOpen(false), [mode, player.id]);

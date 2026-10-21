@@ -7,6 +7,7 @@ import type { ClubDetailMode, ClubSubview } from './screens/ClubModes';
 import { PlayerModes } from './screens/PlayerModes';
 import type { PlayerDetailMode, PlayerHistoryView } from './screens/PlayerModes';
 import { ClubHistory, TacticsScreen, TrainingScreen } from './screens/TrainingTactics';
+import { usePopupDismiss } from './usePopupDismiss';
 import './style.css';
 
 type ClubTab = 'squad' | ClubDetailMode;
@@ -185,6 +186,7 @@ function ClubScreen({players,squadView,attributeGroup,onSquadView,onGroup,openPl
 }) {
   const [viewMenu, setViewMenu] = useState(false);
   const [categoryMenu, setCategoryMenu] = useState(false);
+  usePopupDismiss(viewMenu || categoryMenu, () => { setViewMenu(false); setCategoryMenu(false); }, '.squad-view-menu,.squad-category-menu,.squad-view-trigger');
   const labels = groupLabels[attributeGroup] ?? groupLabels.Physical;
   function chooseView(label:string) {
     setViewMenu(false);
@@ -194,7 +196,7 @@ function ClubScreen({players,squadView,attributeGroup,onSquadView,onGroup,openPl
     } else show(`Squad ${label} view`);
   }
   return <>
-    <div className="subtools"><button onClick={() => setViewMenu(!viewMenu)}>View ▾</button><h2>{squadView} Info</h2><button onClick={() => show('Clear Squad')}>Clear Squad</button><button onClick={() => show('Filter')}>Filter ▾</button></div>
+    <div className="subtools"><button className="squad-view-trigger" onClick={() => setViewMenu(!viewMenu)}>View ▾</button><h2>{squadView} Info</h2><button onClick={() => show('Clear Squad')}>Clear Squad</button><button onClick={() => show('Filter')}>Filter ▾</button></div>
     {viewMenu && <div className="squad-view-menu" role="menu" aria-label="Squad View">{squadViewItems.map(label => <button key={label} role="menuitem" onClick={() => chooseView(label)}>{squadView===label?'✓ ':''}{label}</button>)}</div>}
     {categoryMenu && <div className="squad-category-menu" role="menu" aria-label="Attribute categories">{attributeGroups.map(label => <button key={label} role="menuitem" onClick={() => { onGroup(label); setCategoryMenu(false); }}>{attributeGroup===label?'✓ ':''}{label}</button>)}</div>}
     <div className="roster-scroller"><table className="roster"><thead><tr>{squadView === 'Selection'
