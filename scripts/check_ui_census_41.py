@@ -12,6 +12,7 @@ from html.parser import HTMLParser
 import json
 import math
 import re
+import string
 import unicodedata
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -114,8 +115,8 @@ REVIEWED_STATE_ALIASES_SHA256 = '28045612fd7a3eee022916196df8746b34057dacd4d1e5e
 REVIEWED_TOP_LEVEL_CLAIMS_SHA256 = '67fcce40c96f6cc24cb5bb59cbfc03403cca1a8ce71f1eca66d50fa75f04dd8c'
 REVIEWED_DENOMINATOR_SCOPE = 'finite catalogue frontier only; not the entire application'
 REVIEWED_ROOT_FIELDS = frozenset(('schema', 'cutoff', 'completion_claim', 'coverage_definitions', 'capture_protocol', 'contexts', 'evidence', 'layouts', 'states', 'transitions', 'observed_adjacency', 'discovered_routes', 'capture_requests', 'denominator', 'unknown_sections', 'state_aliases'))
-REVIEWED_UI_REPORT_SHA256 = '48fc6512b7aa23e000b93b96226d22163228ce1de5770c20595ba8b1948be0c8'  # Complete public report, normalized CRLF to LF.
-PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9:./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
+REVIEWED_UI_REPORT_SHA256 = '258c4f8cca9e4ab90112e36c1dee444cae47ecb955cd90abf0917035dc7dfadb'  # Complete public report, normalized CRLF to LF.
+PRIVATE_PATH_PAYLOAD = re.compile(r'\\\\[^\\/\s"]+[\\/][^\\/\s"]+|(?<![A-Za-z0-9:])//[^/\s"\\]+(?:/[^/\s"\\]+)+|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|(?<![A-Za-z0-9./])/[^/\s"\\]+(?:/[^/\s"\\]+)*|(?<![A-Za-z0-9._-])(?:results|private-checkpoints|private-native-verify|runtime-capture-41|ui-view-41)[/\\]|\bfile:|\bdata:image|\bbase64\b', re.IGNORECASE)
 ROOT_RELATIVE_WINDOWS = re.compile(
     # A rooted path starts a text token; an interior separator of any relative
     # directory name (including names ending in + or @) does not.
@@ -172,9 +173,11 @@ def render_for_privacy(source):
     single_title = r"'(?:\\[^\r\n]|[^'\\\r\n]|\r?\n(?![ \t]*\r?\n))*'"
     parenthesized_title = r'\((?:\\[^\r\n]|[^)\\\r\n]|\r?\n(?![ \t]*\r?\n))*\)'
     title = '(?:' + '|'.join((quoted_title, single_title, parenthesized_title)) + ')'
-    title_after_destination = r'(?:[ \t]+|[ \t]*\r?\n[ \t]*)' + title + r'[ \t]*(?=\r?$)'
+    title_after_destination = r'(?:[ \t]+|[ \t]*\r?\n[ \t]*)(?P<title>' + title + r')[ \t]*(?=\r?$)'
     reference_line = re.compile(reference_pattern + r'(?:' + title_after_destination + r')?[^\r\n]*')
-    source_references = {fold_ref(match.group(1)) for match in reference_line.finditer(source)}
+    reference_matches = list(reference_line.finditer(source))
+    source_references = {fold_ref(match.group(1)) for match in reference_matches}
+    visible_titles = [match.group('title') for match in reference_matches if match.group('title')]
     source = reference_line.sub('', source)
     def render_inline_links(value):
         opener = re.compile(r'!?\[([^\]\r\n]*)\]\(')
@@ -194,6 +197,9 @@ def render_for_privacy(source):
                 chunks.append(value[pos:match.end()])
                 pos = match.end()
                 continue
+            inline_title = re.search(r'[ \t]+(' + title + r')[ \t]*$', value[match.end():cursor-1])
+            if inline_title:
+                visible_titles.append(inline_title.group(1))
             chunks.extend((value[pos:match.start()], match.group(1)))
             pos = cursor
         chunks.append(value[pos:])
@@ -203,36 +209,48 @@ def render_for_privacy(source):
         def __init__(self):
             super().__init__(convert_charrefs=True)
             self.parts = []
-            self.inline_parts = []
+            self.attribute_views = {}
+        def add_text(self, value):
+            self.parts.append(value)
+            for parts in self.attribute_views.values():
+                parts.append(value)
         def handle_starttag(self, tag, attrs):
             if tag in self.BLOCK_TAGS:
-                self.parts.append(' ')
-                self.inline_parts.append(' ')
+                self.add_text(' ')
             # Public HTML attributes can expose text as tooltips, form values
-            # or accessibility labels. Preserve both body-only and local order.
-            self.inline_parts.extend(' ' + value + ' ' for _,value in attrs if value)
+            # or accessibility labels. Each local view omits other attributes,
+            # so src/type metadata cannot split an adjacent visible value.
+            values = {}
+            for key,value in attrs:
+                if value:
+                    values.setdefault(key, []).append(value)
+            for key in values:
+                if key not in self.attribute_views:
+                    self.attribute_views[key] = self.parts.copy()
+            for key,parts in self.attribute_views.items():
+                value = ''.join(values.get(key, ()))
+                if value:
+                    parts.append(value if key == 'alt' else ' ' + value + ' ')
         def handle_startendtag(self, tag, attrs):
             self.handle_starttag(tag, attrs)
         def handle_endtag(self, tag):
             if tag in self.BLOCK_TAGS:
-                self.parts.append(' ')
-                self.inline_parts.append(' ')
+                self.add_text(' ')
         def handle_data(self, data):
-            self.parts.append(data)
-            self.inline_parts.append(data)
+            self.add_text(data)
     html_view = RenderedHTML()
     html_view.feed(source)
     html_view.close()
     body_view = ''.join(html_view.parts)
-    inline_view = ''.join(html_view.inline_parts)
-    rendered = render_inline_links(body_view + (' ' + inline_view if inline_view != body_view else ''))
+    views = [body_view] + [''.join(parts) for parts in html_view.attribute_views.values()]
+    rendered = render_inline_links(' '.join(dict.fromkeys(views)))
     # HTML parsing consumes an angle-bracketed Markdown destination as a tag.
     references = source_references | {fold_ref(match.group(1)) for match in re.finditer(reference_pattern, rendered)}
     rendered = reference_line.sub('', rendered)
     rendered = re.sub(r'!?\[([^\]\r\n]*)\]\[([^\]]{0,999})\]', lambda match: match.group(1) if fold_ref(match.group(2) or match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'!?\[([^\]\r\n]+)\]', lambda match: match.group(1) if fold_ref(match.group(1)) in references else match.group(0), rendered)
     rendered = re.sub(r'\\[ \t]*\r?\n', ' ', rendered)
-    rendered = re.sub(r'\\([\\`*_{}\[\]()#+.!<>~\-])', r'\1', rendered)
+    rendered = re.sub(r'\\([' + re.escape(string.punctuation) + r'])', r'\1', rendered)
     code_spans = re.compile(r'(?<!`)(?P<ticks>`+)(?!`)(?P<body>[\s\S]*?)(?<!`)(?P=ticks)(?!`)')
     rendered = code_spans.sub(lambda match: re.sub(r'\s+', ' ', match.group('body')), rendered)
     markup = re.compile(r'(?P<marker>\*\*|__|~~|``|\*|_|`)(?P<body>[^\r\n]+?)(?P=marker)')
@@ -241,6 +259,8 @@ def render_for_privacy(source):
         rendered = markup.sub(lambda match: match.group('body'), rendered)
         if rendered == previous:
             break
+    if visible_titles:
+        rendered += ' ' + ' '.join(html.unescape(value) for value in visible_titles)
     return re.sub(r'\s+', ' ', rendered)
 
 
@@ -824,7 +844,7 @@ def main():
     else:
         raise ValueError('changed public coverage total accepted')
     report_leaks = (b'\n/tmp/capture.jpg', b'\nresults/private-capture.json', b'\nResults/private-capture.json', b'\nDATA:IMAGE/JPEG;BASE64,AAAA', b'\n\\\\server\\share\\private\\capture.png', b'\n\\Users\\operator\\private\\capture.png', b'\n\\capture.png', b'\n\\UI\\capture.png', '\n\\Équipe\\capture.png'.encode('utf-8'), b'\n\\My Documents\\capture.png', b'\n\\My capture.png', b'\n`\\UI\\capture.png`', b'\n**\\UI\\capture.png**', b'\n_\\UI\\capture.png_', b'\n__\\UI\\capture.png__', b'\n~~\\UI\\capture.png~~', b'\n__private _\\UI\\capture.png_ location__', b'\n~~private _\\UI\\capture.png_ location~~')
-    slash_root_report_leaks = (b'\n//server/share/private/capture.png', b'\n//tmp/private/capture.png')
+    slash_root_report_leaks = (b'\n//server/share/private/capture.png', b'\n//tmp/private/capture.png', b'\nlocation:/home/operator/private/capture.png')
     encoded_report_leaks = (b'\n&#47;home/operator/private/capture.png', b'\nC&#58;\\Users\\operator\\capture.png', b'\n&#92;UI&#92;capture.png')
     formatted_report_leaks = (b'\nC`:`\\Users\\operator\\private\\capture.png', b'\nC[:](https://example.invalid)\\Users\\operator\\private\\capture.png', b'\nC<code>:</code>\\Users\\operator\\private\\capture.png', b'\nC[](/x):\\Users\\operator\\private\\capture.png', b'\nC:[][ref]\\Users\\operator\\private\\capture.png\n\n[ref]: target', b'\nC:[][ref one]\\Users\\operator\\private\\capture.png\n\n[ref  one]: target')
     whitespace_reference_report_leaks = (
@@ -1001,6 +1021,8 @@ def main():
             'picked: ' + picked,
             'info: ' + info,
             attribute['label'] + ': ' + attribute['value'],
+            attribute['label'] + '\\: ' + attribute['value'],
+            '| ' + attribute['label'] + ' \\| ' + attribute['value'] + ' |',
             attribute['label'] + ':\n> - ' + attribute['value'],
             attribute['label'] + ':\n> # ' + attribute['value'],
             '# ' + attribute['label'] + ' ###\n' + attribute['value'],
@@ -1070,6 +1092,13 @@ def main():
             '<span aria-label="' + attribute['label'] + ': ' + attribute['value'] + '">profile</span>',
             name_head + '<img alt=" ' + name_tail + '"> trailing text',
             attribute['label'] + ': <input value="' + attribute['value'] + '"> trailing text',
+            name_head + '<img src="portrait.png" alt=" ' + name_tail + '"> trailing text',
+            name_head + ' ' + name_tail[:2] + '<img alt="' + name_tail[2:] + '"> trailing text',
+            attribute['label'] + ': <input type="text" value="' + attribute['value'] + '"> trailing text',
+            '[profile][ref]\n\n[ref]: /x "' + multiword_name + '"',
+            '[profile][ref]\n\n[ref]: /x "' + attribute['label'] + ': ' + attribute['value'] + '"',
+            '[profile](/x "' + multiword_name + '")',
+            '[profile](/x "' + attribute['label'] + ': ' + attribute['value'] + '")',
             '{"role":"' + snapshot['profile']['role'] + '"}',
             '{"label":"' + attribute['label'] + '","value":"' + attribute['value'] + '"}',
             '{"value":"' + attribute['value'] + '","label":"' + attribute['label'] + '"}',
