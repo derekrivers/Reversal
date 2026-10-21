@@ -2,20 +2,20 @@ import type { Club, Competition, DemoData, Fixture, Player } from './types';
 
 // Fictional demonstration data. These names and figures are not transcribed game data.
 const attributeLabels = [
-  'Crossing', 'Dribbling', 'Finishing', 'First Touch', 'Heading',
-  'Long Shots', 'Marking', 'Passing', 'Tackling', 'Technique',
-  'Handling', 'One on Ones', 'Reflexes',
-  'Aggression', 'Anticipation', 'Bravery', 'Composure', 'Concentration',
-  'Decisions', 'Determination', 'Flair', 'Off The Ball', 'Positioning',
-  'Teamwork', 'Work Rate',
-  'Acceleration', 'Agility', 'Jumping', 'Pace', 'Stamina', 'Strength',
+  'Acceleration', 'Aggression', 'Agility', 'Anticipation', 'Balance',
+  'Bravery', 'Creativity', 'Crossing', 'Decisions', 'Determination',
+  'Dribbling', 'Finishing',
+  'Flair', 'Handling', 'Heading', 'Influence', 'Jumping', 'Long Shots',
+  'Marking', 'Off The Ball', 'Pace', 'Passing', 'Positioning', 'Reflexes',
+  'Set Pieces', 'Stamina', 'Strength', 'Tackling', 'Teamwork',
+  'Technique', 'Work Rate',
 ] as const;
 
 function attributesFor(position: string, seed: number): Player['attributes'] {
   return attributeLabels.map((label, index) => {
     let value = 6 + ((seed * 7 + index * 3) % 10);
-    if (position === 'GK' && ['Handling', 'One on Ones', 'Reflexes'].includes(label)) value += 4;
-    if (position !== 'GK' && ['Handling', 'One on Ones', 'Reflexes'].includes(label)) value = 2 + ((seed + index) % 5);
+    if (position === 'GK' && ['Handling', 'Reflexes'].includes(label)) value += 4;
+    if (position !== 'GK' && ['Handling', 'Reflexes'].includes(label)) value = 2 + ((seed + index) % 5);
     if (position.includes('D') && ['Marking', 'Tackling', 'Positioning'].includes(label)) value += 3;
     if (position.includes('M') && ['Passing', 'Teamwork', 'Work Rate'].includes(label)) value += 2;
     if (position.includes('S') && ['Finishing', 'Off The Ball', 'Pace'].includes(label)) value += 3;
@@ -86,5 +86,5 @@ const fixtures: ReadonlyArray<Fixture> = [
 
 export const demoData: DemoData = {
   managedClubId: 'brackenford', clubs, players, fixtures, competition,
-  dateLabel: 'Wednesday 16 July 2003',
+  dateLabel: 'Wednesday\n16.7.03 EVE',
 };
