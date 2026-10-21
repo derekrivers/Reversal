@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { demoData } from '../data';
 import type { Fixture } from '../types';
+import { usePopupDismiss } from '../usePopupDismiss';
 import './CompetitionScreens.css';
 
 export type CompetitionKind = 'cup' | 'league';
@@ -28,6 +29,7 @@ interface Standing {
 }
 
 const allFixtures = [...demoData.fixtures].sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
+const leagueFixtures = [...demoData.leagueFixtures].sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
 const complete = (fixture: Fixture): boolean => fixture.homeScore !== undefined && fixture.awayScore !== undefined;
 const club = (id: string) => demoData.clubs[id];
 
@@ -98,7 +100,7 @@ function MatchDay({fixtures, kind, mode, onClub}: {fixtures: readonly Fixture[];
   const date = fixtures[0]?.date;
   const groups = kind === 'cup' ? demoData.competition.groups : [{id: 'division', name: '', clubIds: []}];
   const allPositions = new Map<string, number>();
-  groups.forEach(group => standings(group.clubIds.length ? group.clubIds : Object.values(demoData.clubs).filter(item => item.division === demoData.clubs[demoData.managedClubId].division).map(item => item.id), allFixtures).forEach((row, index) => allPositions.set(row.clubId, index + 1)));
+  groups.forEach(group => standings(group.clubIds.length ? group.clubIds : Object.values(demoData.clubs).filter(item => item.division === demoData.clubs[demoData.managedClubId].division).map(item => item.id), kind === 'cup' ? allFixtures : leagueFixtures).forEach((row, index) => allPositions.set(row.clubId, index + 1)));
   const rank = (id: string) => { const n = allPositions.get(id); return n ? `${n}${n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th'}` : '—'; };
   return <div className="uicom-day">
     <h2>{date ? dateParts(date).long : mode === 'results' ? 'Results' : 'Fixtures'}</h2>
@@ -129,9 +131,9 @@ function Schedule({fixtures, kind}: {fixtures: readonly Fixture[]; kind: Competi
 
 export function CompetitionScreens({kind, mode, selectedGroup, onMode, onGroup, onClub, show}: CompetitionScreensProps) {
   const [groupMenuOpen, setGroupMenuOpen] = useState(false);
+  usePopupDismiss(groupMenuOpen, () => setGroupMenuOpen(false), '.uicom-group-wrap');
   const group = demoData.competition.groups.find(item => item.id === selectedGroup) ?? demoData.competition.groups[0];
   const leagueClubIds = Object.values(demoData.clubs).filter(item => item.division === demoData.clubs[demoData.managedClubId].division).map(item => item.id);
-  const leagueFixtures = allFixtures.filter(item => leagueClubIds.includes(item.homeClubId) && leagueClubIds.includes(item.awayClubId));
   const sourceFixtures = kind === 'cup' ? allFixtures : leagueFixtures;
   const activeMode = kind === 'cup' && mode === 'table' ? 'stages' : kind === 'league' && mode === 'stages' ? 'table' : mode;
   const modes: CompetitionMode[] = kind === 'cup' ? ['stages', 'results', 'fixtures', 'schedule'] : ['table', 'results', 'fixtures', 'schedule'];

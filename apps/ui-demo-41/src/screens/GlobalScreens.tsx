@@ -12,8 +12,10 @@ interface GlobalScreensProps {
   mode: GlobalMode;
   tab: string;
   page: number;
+  query: string;
   onTab: (tab: string) => void;
   onPage: (page: number) => void;
+  onQuery: (query: string) => void;
   onPlayer: (id: string) => void;
   onClub: (id: string) => void;
   onClose: () => void;
@@ -60,15 +62,14 @@ function findRows(tab: string): FindRow[] {
   return clubs.map(club => ({ id: club.id, name: club.manager, middle: club.shortName, last: club.division, kind: 'staff' }));
 }
 
-function FindScreen({ tab, page, onTab, onPage, onPlayer, onClub, show }: GlobalScreensProps) {
+function FindScreen({ tab, page, query, onTab, onPage, onQuery, onPlayer, onClub, show }: GlobalScreensProps) {
   const selected = activeTab(tab, findTabs, 'Player');
-  const [query, setQuery] = useState('');
   const rows = findRows(selected).filter(row => row.name.toLowerCase().includes(query.trim().toLowerCase()));
   const perPage = 16;
   const total = Math.max(1, Math.ceil(rows.length / perPage));
   const current = Math.min(Math.max(1, page || 1), total);
   const visible = rows.slice((current - 1) * perPage, current * perPage);
-  function selectTab(next: string) { setQuery(''); onTab(next); }
+  function selectTab(next: string) { onTab(next); }
   function openRow(row: FindRow) {
     if (row.kind === 'player') onPlayer(row.id);
     else if (row.kind === 'club') onClub(row.id);
@@ -76,7 +77,7 @@ function FindScreen({ tab, page, onTab, onPage, onPlayer, onClub, show }: Global
   }
   return <section className="gsc-screen gsc-find">
     <Tabs labels={findTabs} selected={selected} onTab={selectTab} name="Find categories" />
-    <div className="gsc-find-tools"><label>Search For <input value={query} onChange={event => { setQuery(event.target.value); onPage(1); }} aria-label="Search fictional results" /></label><Pager page={current} total={total} onPage={onPage} /></div>
+    <div className="gsc-find-tools"><label>Search For <input value={query} onChange={event => onQuery(event.target.value)} aria-label="Search fictional results" /></label><Pager page={current} total={total} onPage={onPage} /></div>
     <h2 className="gsc-section-title">All {selected === 'Non-Player' ? 'Non-Players' : `${selected}s`}</h2>
     <div className="gsc-find-list" aria-label={`${selected} results`}>{visible.map(row => <button type="button" className="gsc-find-row" key={`${row.kind}-${row.id}`} onClick={() => openRow(row)}><strong>{row.name}</strong><span>{row.middle}</span><em>{row.last}</em></button>)}
       {visible.length === 0 && <div className="gsc-empty">No fictional results match this search.</div>}
