@@ -71,10 +71,9 @@ interface TransferRow {
 }
 function transferRows(club: Club, view: TransferView): TransferRow[] {
   const roster = allPlayers(club.id);
-  const others = Object.values(demoData.players).filter(player => player.clubId !== club.id);
   const otherClubs = Object.values(demoData.clubs).filter(other => other.id !== club.id);
   const incoming = view === 'players-in';
-  const source = incoming ? roster.slice(0, 3) : view === 'players-out' ? others.slice(0, 2) : view === 'loans-out' ? others.slice(2, 3) : [];
+  const source = incoming ? roster.slice(0, 3) : view === 'players-out' ? roster.slice(3, 5) : view === 'loans-out' ? roster.slice(5, 6) : [];
   return source.map((player, index) => ({
     id: `${view}-${player.id}`,
     date: [`28.6.03`, `4.7.03`, `12.7.03`][index],

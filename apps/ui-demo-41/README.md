@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite. The toolbar can reset to the menu or start directly at Evening Fixtures or Results. The menu journey is **Restore Saved Game → demo-season.sav → Ok**. The file name is a synthetic selection; there is no save read. In fixtures or results, choose a club, then a player. The bottom **Back** button and browser Back restore the previous view. Menus close by choosing a row, clicking outside, or pressing Escape. Operations and views outside this milestone show an unavailable dialog; Escape, Close, or clicking outside dismisses it.
+Open the local URL printed by Vite. The toolbar can reset to the menu or start directly at Evening Fixtures or Results. The menu journey is **Restore Saved Game → demo-season.sav → Ok**. The file name is a synthetic selection; there is no save read. In fixtures or results, choose a club, then a player. Club tabs open Transfers, Next Match, Fixtures, and Finances & Info. Player tabs open Injuries & Bans, Contract, Transfer, and History. The squad's lower strip opens Tactics, Training, and club History. View menus reveal the observed subviews. The bottom **Back** button and browser Back restore the originating view. Menus close by choosing a row, clicking outside, or pressing Escape. Operations and views outside this milestone show an unavailable dialog; Escape, Close, or clicking outside dismisses it.
 
 ## Verify
 
@@ -20,6 +20,6 @@ npm run build
 npm run check:browser
 ```
 
-The browser check saves screenshots in `test-results/` and covers restore/cancel, fixtures, all reachable club squads and player profiles, manager menu, results, Back paths, reset, and unavailable operation dismissal. This output is ignored by Git. Run the repository's root `npm run check` as well.
+The browser check saves screenshots in `test-results/` and covers restore/cancel, fixtures, all reachable club squads and player profiles, club and player tabs, transfer/finance/history View menus, training/tactics/club-history journeys, manager menu, results, Back paths, reset, and unavailable operation dismissal. This output is ignored by Git. Run the repository's root `npm run check` as well.
 
 The source checklist and evidence boundary are in [`coordination/UI-DEMO.md`](../../coordination/UI-DEMO.md). Private native captures are intentionally outside this app and outside Git.

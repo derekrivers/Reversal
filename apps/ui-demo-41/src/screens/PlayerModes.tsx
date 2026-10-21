@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { demoData } from '../data';
 import type { Player } from '../types';
 import './PlayerModes.css';
 
@@ -18,7 +19,7 @@ const statColumns = ['Apps', 'Con', 'Asts', 'MoM', 'Pass', 'Tck', 'Drb', 'Sh Tar
 const statSections = ['Non Competitive', 'League', 'Cup', 'Continental', 'International', 'Senior Club'];
 
 function fictionalClub(player: Player): string {
-  return player.clubId.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
+  return demoData.clubs[player.clubId]?.shortName ?? player.clubId;
 }
 
 function numericAppearances(player: Player): number {
