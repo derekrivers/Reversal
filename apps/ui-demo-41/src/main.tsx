@@ -43,6 +43,7 @@ function App() {
   const [route, setRoute] = useState<RouteState>(() => window.history.state?.demo ? window.history.state as RouteState : initialRoute);
   const [menu, setMenu] = useState<string | null>(null);
   const [notice, setNotice] = useState<Notice | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const view = route.view;
   const managedClub = demoData.clubs[demoData.managedClubId];
 
@@ -52,23 +53,24 @@ function App() {
       setRoute(event.state?.demo ? event.state as RouteState : initialRoute);
       setMenu(null);
       setNotice(null);
+      setSettingsOpen(false);
     };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') { setNotice(null); setMenu(null); }
+      if (event.key === 'Escape') { setNotice(null); setMenu(null); if (!notice) setSettingsOpen(false); }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [notice]);
 
   function show(label: string) { setMenu(null); setNotice(unavailable(label)); }
   function go(nextView: View, replace = false) {
     const next: RouteState = { demo: true, view: nextView, depth: replace ? route.depth : route.depth + 1 };
     window.history[replace ? 'replaceState' : 'pushState'](next, '', window.location.pathname);
-    setRoute(next); setMenu(null); setNotice(null);
+    setRoute(next); setMenu(null); setNotice(null); setSettingsOpen(false);
   }
   function setClubTab(tab: ClubTab) {
     if (view.kind === 'club') go({ ...view, tab }, true);
@@ -82,13 +84,16 @@ function App() {
   function openCompetition(competition: CompetitionKind = 'cup', mode: CompetitionMode = 'stages', clubId = demoData.managedClubId) {
     go({ kind: 'competition', competition, mode, selectedGroup: demoData.competition.groups[0].id, clubId });
   }
-  function openGlobal(mode: GlobalMode, tab = '', page = 1) { go({ kind: 'global', mode, tab, page, query: '' }); }
+  function openGlobal(mode: GlobalMode, tab = '', page = 1) {
+    if (mode === 'game-settings') { setMenu(null); setNotice(null); setSettingsOpen(true); return; }
+    go({ kind: 'global', mode, tab, page, query: '' });
+  }
   function openMatch(mode: MatchMode, clubId = demoData.managedClubId) { go({ kind: 'match', mode, tab: 'ratings', phase: 'pre-kickoff', clubId }); }
-  function back() { if (route.depth > 0) window.history.back(); }
+  function back() { if (settingsOpen) setSettingsOpen(false); else if (route.depth > 0) window.history.back(); }
   function reset(nextView: View = { kind: 'setup' }) {
     const next: RouteState = { demo: true, view: nextView, depth: 0 };
     window.history.replaceState(next, '', window.location.pathname);
-    setRoute(next); setMenu(null); setNotice(null);
+    setRoute(next); setMenu(null); setNotice(null); setSettingsOpen(false);
   }
   function toggleMenu(name: string) { setNotice(null); setMenu(current => current === name ? null : name); }
 
@@ -96,7 +101,11 @@ function App() {
   const player = view.kind === 'player' ? demoData.players[view.playerId] : undefined;
   const header = view.kind === 'fixtures' ? demoData.competition.name
     : view.kind === 'competition' ? view.competition === 'cup' ? demoData.competition.name : demoData.clubs[view.clubId].division
-    : view.kind === 'global' ? view.mode === 'find' ? `Find ${view.tab === 'Non-Player' ? 'Non-Player' : view.tab || 'Player'}` : globalHeaders[view.mode]
+    : view.kind === 'global' ? view.mode === 'find' ? 'Championship Manager 2001/02'
+      : view.mode === 'news' ? `${managedClub.manager} News`
+      : view.mode === 'manager-history' ? `${managedClub.manager} (${managedClub.shortName})`
+      : view.mode === 'board-confidence' ? managedClub.name
+      : globalHeaders[view.mode]
     : view.kind === 'club' ? club?.name
     : view.kind === 'player' ? `${player?.squadNumber}. ${player?.name} (${demoData.clubs[player?.clubId ?? '']?.shortName ?? ''})`
     : view.kind === 'training' ? `${club?.shortName} Training`
@@ -125,7 +134,7 @@ function App() {
         <button className="rail-item options" onClick={() => toggleMenu('options')}>Game<br/>Options</button>
         <button className="rail-news" onClick={() => openGlobal('news','all')}>You Have<br/>News</button>
       </aside>
-      {menu && <Menu name={menu} managedClub={managedClub} openClub={() => go({kind:'club',clubId:managedClub.id,tab:'squad'})} openFixtures={() => go({kind:'fixtures',mode:'fixtures'})} openCompetition={openCompetition} openGlobal={openGlobal} show={show} close={() => setMenu(null)} />}
+      {menu && <Menu name={menu} managedClub={managedClub} openClub={() => go({kind:'club',clubId:managedClub.id,tab:'squad'})} openGlobal={openGlobal} show={show} close={() => setMenu(null)} />}
       <main className={`game-main ${view.kind === 'setup' || view.kind === 'restore' ? 'menu-background' : ''} ${view.kind === 'training' ? 'training-background' : ''} ${view.kind === 'match' ? 'match-background' : ''}`}>
         {view.kind !== 'match' && <header className={`game-header ${view.kind === 'fixtures' || view.kind === 'competition' ? 'blue' : view.kind === 'global' && ['find','manager-status','selected-leagues'].includes(view.mode) ? 'red' : 'black'}`}><span className="header-arrow">▸</span><h1>{header}</h1>{view.kind === 'club' || view.kind === 'player' || view.kind === 'competition' ? <button className="header-action" onClick={() => show(view.kind === 'player' ? 'Action' : 'Print')}>{view.kind === 'player' ? 'Action ▾' : 'Print ▾'}</button> : null}</header>}
         {view.kind === 'setup' && <Setup openRestore={() => go({kind:'restore',selected:false})} show={show} />}
@@ -150,6 +159,7 @@ function App() {
         {club && view.kind === 'club-history' && <ClubHistory club={club} onClose={back} show={show} />}
         {!['training','tactics','club-history'].includes(view.kind) && <footer className="game-footer"><button disabled={!backEnabled} onClick={back}>Back</button><button disabled title="Navigation is not observed for this control">Next</button></footer>}
       </main>
+      {settingsOpen && <GlobalScreens mode="game-settings" tab="" page={1} query="" onTab={() => {}} onPage={() => {}} onQuery={() => {}} onPlayer={() => {}} onClub={() => {}} onClose={() => setSettingsOpen(false)} show={show} />}
       {notice && <div className="dialog-layer" onMouseDown={event => { if (event.target === event.currentTarget) setNotice(null); }}><div className="dialog" role="dialog" aria-modal="true" aria-label={notice.title}><h2>{notice.title}</h2><p>{notice.detail}</p><button onClick={() => setNotice(null)}>Close</button></div></div>}
     </div>
   </div>;
@@ -161,13 +171,13 @@ const globalHeaders: Record<GlobalMode,string> = {
   'manager-status': 'Manager Status', 'selected-leagues': 'Selected Leagues',
   'game-settings': 'Game Settings', search: 'Player & Staff Search',
 };
-function Menu({ name, managedClub, openClub, openFixtures, openCompetition, openGlobal, show, close }: {name:string;managedClub:Club;openClub:()=>void;openFixtures:()=>void;openCompetition:(kind:CompetitionKind,mode?:CompetitionMode,clubId?:string)=>void;openGlobal:(mode:GlobalMode,tab?:string,page?:number)=>void;show:(label:string)=>void;close:()=>void}) {
+function Menu({ name, managedClub, openClub, openGlobal, show, close }: {name:string;managedClub:Club;openClub:()=>void;openGlobal:(mode:GlobalMode,tab?:string,page?:number)=>void;show:(label:string)=>void;close:()=>void}) {
   const lists: Record<string, string[]> = {
     manager: [`${managedClub.shortName} Squad`, `${managedClub.shortName} Reserves`, 'Board Confidence', 'News', 'Player & Staff Search', 'Manager Stats', 'Job Information', 'Transfers', 'History'],
-    competitions: [demoData.competition.name, 'Domestic League', 'Domestic Cup'],
-    nations: ['England', 'France', 'Germany', 'Italy', 'Spain'],
+    competitions: ['World Cup ▸', 'International ▸', 'Worldwide Club ▸', 'European ▸', 'England ▸', 'France ▸', 'Germany ▸', 'Italy ▸', 'Spain ▸'],
+    nations: ['Nations ▸', 'Under-21s ▸', 'Major Clubs ▸', 'League ▸', 'Non-League ▸', 'Other ▸'],
     find: ['Nation', 'Club', 'Non-Player', 'Player', 'Written History'],
-    options: ['Save Game', 'Add Manager', 'Manager Status', 'Game Settings', 'Selected Leagues', 'Hall of Fame', 'Game Credits', 'Restart Game', 'Exit Game']
+    options: ['Save Game', 'Add Manager', 'Manager Status', 'Game Settings', 'Selected Leagues', 'Hall of Fame', 'Game Credits', 'Web Sites', 'Restart Game', 'Exit Game']
   };
   const top: Record<string, number> = { manager: 144, competitions: 193, nations: 240, find: 285, options: 332 };
   return <div className="menu-scrim" onMouseDown={close}><div className="green-menu" style={{top:top[name] ?? 144}} onMouseDown={event => event.stopPropagation()} role="menu" aria-label={`${name} menu`}>
@@ -177,7 +187,7 @@ function Menu({ name, managedClub, openClub, openFixtures, openCompetition, open
         if (index === 0) return openClub();
         if (managerRoutes[index]) return openGlobal(managerRoutes[index]);
       }
-      if (name === 'competitions') { if (index === 0) return openFixtures(); return openCompetition(index === 1 ? 'league' : 'cup', index === 1 ? 'table' : 'stages'); }
+      if (name === 'competitions') return show(`${label.replace(' ▸', '')} competitions`);
       if (name === 'find' && index < 4) return openGlobal('find',label.toLowerCase());
       if (name === 'options') { const optionRoutes: Record<number,GlobalMode> = {2:'manager-status',3:'game-settings',4:'selected-leagues'}; if (optionRoutes[index]) return openGlobal(optionRoutes[index]); }
       show(label);
